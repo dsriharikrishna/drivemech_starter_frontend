@@ -1,13 +1,13 @@
 "use client"
-import { redirect } from "next/navigation";
-import HomePage from "./(drivemech)/home/page";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function RootPage() {
-  const shouldRedirect = false;
+  const router = useRouter();
 
-  if (shouldRedirect) {
-    redirect("/home");
-  }
+  useEffect(() => {
+    router.replace("/home");
+  }, [router]);
 
-  return <HomePage />;
+  return null;
 }

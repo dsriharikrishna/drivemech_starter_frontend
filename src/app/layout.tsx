@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "../styles/global.css";
 import React from "react";
+import Providers from "./providers";
 
 export const metadata: Metadata = {
   title: "Drive Mech",
@@ -18,7 +19,9 @@ export default function RootLayout({
       <body
         className="min-h-screen bg-gray-50"
       >
-        {children}
+        <Providers>
+          {children}
+        </Providers>
       </body>
     </html>
   );
