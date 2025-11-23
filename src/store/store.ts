@@ -1,7 +1,27 @@
 import { configureStore, Middleware, isRejectedWithValue } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import {
+  persistStore,
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from "redux-persist";
+import storage from "redux-persist/lib/storage";
 
 import authReducer, { logout } from "./slicers/authSlicer";
+
+
+const authPersistConfig = {
+  key: "auth",
+  storage,
+  whitelist: ["accessToken", "refreshToken", "user"],
+};
+
+const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
 
 // ---------------- Error handling middleware ----------------
 const rtkErrorLogger: Middleware = (store) => (next) => (action) => {
@@ -22,12 +42,18 @@ const rtkErrorLogger: Middleware = (store) => (next) => (action) => {
 // ---------------- Store configuration ----------------
 export const store = configureStore({
   reducer: {
-    auth: authReducer,
+    auth: persistedAuthReducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(rtkErrorLogger),
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }).concat(rtkErrorLogger),
   devTools: process.env.NODE_ENV !== "production",
 });
+
+export const persistor = persistStore(store);
 
 // ---------------- Types & Typed hooks ----------------
 export type RootState = ReturnType<typeof store.getState>;
