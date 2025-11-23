@@ -20,7 +20,16 @@ export interface AuthState {
 
 export interface LoginPayload {
   email: string;
-  password: string;
+  password?: string;
+  phone?:string
+}
+
+export interface RegisterPayload {
+  firstName:string
+  lastName: string
+  email: string;
+  phone?:string
+
 }
 
 export interface AuthResponseData {

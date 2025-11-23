@@ -1,8 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { CheckCircle, WarningCircle, Info, Warning, X } from "phosphor-react";
+import {
+  CheckCircle,
+  WarningCircle,
+  Info,
+  Warning,
+  X,
+} from "phosphor-react";
 
 type ToastType = "success" | "error" | "warning" | "info";
 
@@ -12,75 +18,86 @@ interface Toast {
   type: ToastType;
 }
 
-let toastId = 0;
-
 export default function ToastManager() {
   const [toasts, setToasts] = useState<Toast[]>([]);
-  const [, setQueue] = useState<Toast[]>([]);
+  const [queue, setQueue] = useState<Toast[]>([]);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const toastIdRef = useRef(0);
 
-  const addToast = (message: string, type: ToastType = "success") => {
-    const id = ++toastId;
+  /** Add a toast */
+  const addToast = useCallback((message: string, type: ToastType = "success") => {
+    const id = ++toastIdRef.current;
     const newToast = { id, message, type };
 
-    setToasts((prev) => {
-      if (prev.length === 0) {
-        // Show immediately if no active toast
-        setTimeout(() => removeToast(id), 2500);
+    setToasts((active) => {
+      if (active.length === 0) {
+        startTimer(id);
         return [newToast];
-      } else {
-        // Queue it if one is active
-        setQueue((q) => [...q, newToast]);
-        return prev;
       }
+      setQueue((q) => [...q, newToast]);
+      return active;
     });
+  }, []);
+
+  /** Auto-remove timer */
+  const startTimer = (id: number) => {
+    if (timerRef.current) clearTimeout(timerRef.current);
+
+    timerRef.current = setTimeout(() => removeToast(id), 2500);
   };
 
-  const removeToast = (id: number) => {
-    setToasts((prev) => prev.filter((toast) => toast.id !== id));
+  /** Remove toast and process queue */
+  const removeToast = useCallback((id: number) => {
+    setToasts((prev) => prev.filter((t) => t.id !== id));
 
-    // After removal, show next from queue
     setQueue((q) => {
       if (q.length > 0) {
         const [next, ...rest] = q;
         setToasts([next]);
-        setTimeout(() => removeToast(next.id), 2500);
+        startTimer(next.id);
         return rest;
       }
       return q;
     });
-  };
+  }, []);
 
-  // Expose globally
-  (window as any).addToast = addToast;
+  /** Register global function once */
+  useEffect(() => {
+    (window as any).addToast = addToast;
 
-  const toastData = {
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, [addToast]);
+
+  const toastStyles = {
     success: {
       icon: <CheckCircle size={24} className="text-green-600" />,
       bg: "bg-green-100",
-      text: "Success",
+      title: "Success",
       titleClass: "text-green-800",
-      messageClass: "text-green-700",
+      msgClass: "text-green-700",
     },
     error: {
       icon: <WarningCircle size={24} className="text-red-600" />,
       bg: "bg-red-100",
-      text: "Error",
+      title: "Error",
       titleClass: "text-red-800",
-      messageClass: "text-red-700",
+      msgClass: "text-red-700",
     },
     warning: {
       icon: <Warning size={24} className="text-yellow-600" />,
       bg: "bg-yellow-100",
-      text: "Warning",
+      title: "Warning",
       titleClass: "text-yellow-800",
-      messageClass: "text-yellow-700",
+      msgClass: "text-yellow-700",
     },
     info: {
       icon: <Info size={24} className="text-blue-600" />,
       bg: "bg-blue-100",
-      text: "Info",
+      title: "Info",
       titleClass: "text-blue-800",
-      messageClass: "text-blue-700",
+      msgClass: "text-blue-700",
     },
   };
 
@@ -88,7 +105,8 @@ export default function ToastManager() {
     <div className="fixed top-6 right-6 z-50 flex flex-col gap-4 max-w-xs w-full">
       <AnimatePresence>
         {toasts.map(({ id, message, type }) => {
-          const { icon, bg, text, titleClass, messageClass } = toastData[type];
+          const style = toastStyles[type];
+
           return (
             <motion.div
               key={id}
@@ -96,24 +114,24 @@ export default function ToastManager() {
               initial={{ opacity: 0, x: 200 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 200 }}
-              transition={{ duration: 0.3 }}
-              className={`${bg} rounded-lg shadow-lg p-4 flex items-center space-x-3`}
+              transition={{ duration: 0.25 }}
+              className={`${style.bg} rounded-lg shadow-lg p-4 flex items-center space-x-3`}
             >
-              <div className="shrink-0">{icon}</div>
+              <div className="shrink-0">{style.icon}</div>
+
               <div className="flex flex-col flex-grow">
-                <div
-                  className={`font-semibold leading-tight mb-1 select-none ${titleClass}`}
-                >
-                  {text}
+                <div className={`font-semibold mb-1 select-none ${style.titleClass}`}>
+                  {style.title}
                 </div>
-                <div className={`text-sm select-text ${messageClass}`}>
+                <div className={`text-sm select-text ${style.msgClass}`}>
                   {message}
                 </div>
               </div>
+
               <button
                 aria-label="Dismiss toast"
                 onClick={() => removeToast(id)}
-                className="p-1 rounded-md cursor-pointer text-gray-400 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-orange-400"
+                className="p-1 rounded-md text-gray-400 hover:text-gray-700"
               >
                 <X size={18} weight="bold" />
               </button>
@@ -124,3 +142,10 @@ export default function ToastManager() {
     </div>
   );
 }
+
+
+
+// addToast("Login successful!", "success");
+// addToast("Invalid credentials", "error");
+// addToast("Warning: Low balance", "warning");
+// addToast("Information message", "info");

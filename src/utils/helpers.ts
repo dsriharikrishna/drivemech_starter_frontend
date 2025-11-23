@@ -24,7 +24,7 @@ export function formatRelativeTime(date: string | Date): string {
   if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)} minutes ago`;
   if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)} hours ago`;
   if (diffInSeconds < 604800) return `${Math.floor(diffInSeconds / 86400)} days ago`;
-  
+
   return formatDate(d);
 }
 
@@ -87,10 +87,18 @@ export function debounce<T extends (...args: any[]) => any>(
   };
 }
 
-/**
- * Generates a random ID
- */
-export function generateId(): string {
-  return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+
+// generate flag based on the coutry code 
+export function getFlagUrl(iso: string) {
+  return `https://flagcdn.com/${iso.toLowerCase()}.svg`;
 }
 
+
+export function isPhoneInput(value: string): boolean {
+  if (!value) return false;                
+  return /^[0-9]+$/.test(value.trim());   
+}
+
+export function isEmailInput(value: string): boolean {
+  return /\S+@\S+\.\S+/.test(value);
+}

@@ -4,6 +4,7 @@ const BASE_API = config.Auth;
 
 const AUTH_ENDPOINTS = {
   LOGIN: `${BASE_API}/login`,
+  REGISTER:  `${BASE_API}/register`,
   LOGOUT: `${BASE_API}/logout`,
   REFRESH_TOKEN: `${BASE_API}/refresh-token`,
 

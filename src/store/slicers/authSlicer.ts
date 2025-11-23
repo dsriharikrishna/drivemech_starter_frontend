@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk, createSelector } from "@reduxjs/toolkit"
 import { RootState } from "@/store/store";
 import { API_CONFIG } from "@/services/apiConfig";
 import apiService from "@/services/apiService";
-import { AuthState, AuthResponseData, LoginPayload, User } from "@/types/authTypes";
+import { AuthState, AuthResponseData, LoginPayload, User, RegisterPayload } from "@/types/authTypes";
 
 // Helper functions for localStorage
 const storageService = {
@@ -167,6 +167,29 @@ export const loginUser = createAsyncThunk<
   }
 });
 
+export const registerUser = createAsyncThunk<
+  AuthResponseData,
+  RegisterPayload,
+  { rejectValue: string }
+>("auth/registerUser", async (credentials, { rejectWithValue }) => {
+  try {
+    const response = await apiService.post(API_CONFIG.ENDPOINTS.REGISTER, credentials);
+
+    // Handle potential stringified response
+    const responseData = typeof response.data === 'string' 
+      ? JSON.parse(response.data) 
+      : response.data;
+
+    const innerData = responseData.data || responseData;
+
+    return innerData;
+  } catch (error: any) {
+    return rejectWithValue(
+      error?.response?.data?.message || error.message || "Authentication failed"
+    );
+  }
+});
+
 export const refreshToken = createAsyncThunk<
   { accessToken: string; refreshToken: string },
   void,
@@ -273,6 +296,22 @@ const authSlice = createSlice({
         state.loading = "failed";
         state.accessToken = null;
         state.refreshToken = null;
+        state.user = null;
+        state.error = action.payload ?? "Login failed";
+        state.lastFetched = Date.now();
+      });
+
+      // Register
+    builder
+      .addCase(registerUser.pending, handlePending)
+      .addCase(registerUser.fulfilled, (state, { payload }) => {
+        state.loading = "succeeded";
+        state.user = payload.user;
+        state.error = null;
+        state.lastFetched = Date.now();
+      })
+      .addCase(registerUser.rejected, (state, action) => {
+        state.loading = "failed";
         state.user = null;
         state.error = action.payload ?? "Login failed";
         state.lastFetched = Date.now();

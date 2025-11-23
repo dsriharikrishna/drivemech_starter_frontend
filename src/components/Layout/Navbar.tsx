@@ -1,13 +1,17 @@
 "use client";
 import { Menu } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import RightDrawer from "../ui/RightDrawer";
+import { useRouter } from "next/navigation";
+import Button from "../ui/Button";
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+
+  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -17,6 +21,15 @@ export default function Navbar() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [scrolled]);
+
+  const handleNavigation = useCallback((path: string) => {
+    console.log(path)
+    if (path === "customer") {
+      router.push("/customer/auth/login");
+    } else {
+      router.push("/workshop/auth/login")
+    }
+  }, [router])
 
   return (
     <header
@@ -49,48 +62,50 @@ export default function Navbar() {
             />
             <span className="text-[15px] font-medium text-[#333]">Hyderabad</span>
           </div>
-          </div>
+        </div>
 
-          {/* --- Right: Language + Buttons --- */}
-          <div className="hidden lg:flex items-center space-x-4">
-            {/* Language Selector */}
-            <button className="flex items-center border border-gray-200 rounded-md px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 transition">
-              <Image
-                src="/images/UK.png"
-                alt="English"
-                width={20}
-                height={20}
-                className="mr-2"
-              />
-              Eng
-            </button>
+        {/* --- Right: Language + Buttons --- */}
+        <div className="hidden lg:flex items-center space-x-4">
+          {/* Language Selector */}
+          <button className="flex items-center border border-gray-200 rounded-md px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 transition">
+            <Image
+              src="/images/UK.png"
+              alt="English"
+              width={20}
+              height={20}
+              className="mr-2"
+            />
+            Eng
+          </button>
 
-            {/* Buttons */}
-            <Link
-              href="#"
-              className="border border-[#FF5C00] text-[#FF5C00] hover:bg-[#FF5C00] hover:text-white transition-all duration-200 px-5 py-2 rounded-md text-sm font-medium whitespace-nowrap"
-            >
-              Login as Workshop
-            </Link>
+          {/* Buttons */}
+          <Button
+            onClick={() => { handleNavigation("workshop") }}
+            variant="primary"
+            className="border border-[#FF5C00] text-[#FF5C00] hover:bg-[#FF5C00] hover:text-white transition-all duration-200 px-5 py-2 rounded-md text-sm font-medium whitespace-nowrap"
+          >
+            Login as Workshop
+          </Button>
 
-            <Link
-              href="#"
-              className="bg-[#FF5C00] hover:bg-[#E55200] text-white transition-all duration-200 px-5 py-2 rounded-md text-sm font-medium whitespace-nowrap"
-            >
-              Login as Customer
-            </Link>
-          </div>
+          <Button
+            onClick={() => { handleNavigation("customer") }}
+            variant="primary"
+            className="bg-[#FF5C00] hover:bg-[#E55200] text-white transition-all duration-200 px-5 py-2 rounded-md text-sm font-medium whitespace-nowrap"
+          >
+            Login as Customer
+          </Button>
+        </div>
 
-          {/* --- Mobile Menu Button --- */}
-          <div className="flex lg:hidden">
-            <button
-              type="button"
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:bg-gray-100 focus:outline-none"
-              onClick={() => setMobileMenuOpen(true)}
-            >
-              <Menu className="h-6 w-6" />
-            </button>
-          </div>
+        {/* --- Mobile Menu Button --- */}
+        <div className="flex lg:hidden">
+          <button
+            type="button"
+            className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:bg-gray-100 focus:outline-none"
+            onClick={() => setMobileMenuOpen(true)}
+          >
+            <Menu className="h-6 w-6" />
+          </button>
+        </div>
       </nav>
 
       {/* Mobile Drawer */}
@@ -169,20 +184,20 @@ export default function Navbar() {
 
           {/* Auth Buttons */}
           <div className="p-4 border-t border-gray-100 space-y-3">
-            <Link
-              href="/workshop-login"
-              onClick={() => setMobileMenuOpen(false)}
+            <Button
+              variant="gradient"
+              onClick={() => { handleNavigation("workshop") }}
               className="block w-full text-center border border-[#FF5C00] text-[#FF5C00] hover:bg-[#FF5C00]/5 px-4 py-2.5 rounded-md font-medium text-sm"
             >
               Login as Workshop
-            </Link>
-            <Link
-              href="/customer-login"
-              onClick={() => setMobileMenuOpen(false)}
+            </Button>
+            <Button
+              variant="gradient"
+              onClick={() => { handleNavigation("customer") }}
               className="block w-full text-center bg-[#FF5C00] hover:bg-[#E55200] text-white px-4 py-2.5 rounded-md font-medium text-sm"
             >
               Login as Customer
-            </Link>
+            </Button>
           </div>
         </div>
       </RightDrawer>
