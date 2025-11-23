@@ -1,0 +1,214 @@
+@import "tailwindcss";
+
+/* =========================
+   Global Theme Variables
+========================= */
+:root {
+  /* Background & Foreground */
+  --background: hsl(0 0% 99%);
+  --foreground: hsl(224 12% 15%);
+  --border: hsl(220 15% 92%);
+  
+  /* Primary Colors (Orange) */
+  --color-primary-50: #fff5f0;
+  --color-primary-100: #ffddd1;
+  --color-primary-200: #ffbda3;
+  --color-primary-300: #ff9c75;
+  --color-primary-400: #ff7c47;
+  --color-primary-500: #FF5C00; /* Base orange */
+  --color-primary-600: #e55200;
+  --color-primary-700: #cc4900;
+  --color-primary-800: #b23f00;
+  --color-primary-900: #993600;
+  
+  /* Neutral Colors */
+  --color-neutral-50: #f8f9fa;
+  --color-neutral-100: #f1f3f5;
+  --color-neutral-200: #e9ecef;
+  --color-neutral-300: #dee2e6;
+  --color-neutral-400: #ced4da;
+  --color-neutral-500: #adb5bd;
+  --color-neutral-600: #868e96;
+  --color-neutral-700: #495057;
+  --color-neutral-800: #343a40;
+  --color-neutral-900: #212529;
+  
+  /* Success Colors (Green) */
+  --color-success-50: #f0fdf4;
+  --color-success-100: #dcfce7;
+  --color-success-500: #22c55e;
+  --color-success-700: #15803d;
+  
+  /* Warning Colors (Amber) */
+  --color-warning-50: #fffbeb;
+  --color-warning-100: #fef3c7;
+  --color-warning-500: #f59e0b;
+  --color-warning-700: #b45309;
+  
+  /* Error Colors (Red) */
+  --color-error-50: #fef2f2;
+  --color-error-100: #fee2e2;
+  --color-error-500: #ef4444;
+  --color-error-700: #b91c1c;
+  
+  /* Info Colors (Blue) */
+  --color-info-50: #eff6ff;
+  --color-info-100: #dbeafe;
+  --color-info-500: #3b82f6;
+  --color-info-700: #1d4ed8;
+  
+  /* White & Black */
+  --color-white: #ffffff;
+  --color-black: #000000;
+}
+
+/* =========================
+   Tailwind Inline Theme Mapping
+   (Scales like Tailwind's default)
+========================= */
+@theme inline {
+  /* Base */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-border: var(--border);
+
+  /* ========== Primary (Orange Brand) ========== */
+  --color-primary-50:  hsl(24 100% 97%);
+  --color-primary-100: hsl(24 100% 92%);
+  --color-primary-200: hsl(24 100% 85%);
+  --color-primary-300: hsl(24 100% 75%);
+  --color-primary-400: hsl(24 100% 65%);
+  --color-primary-500: hsl(24 100% 50%); /* Base */
+  --color-primary-600: hsl(24 100% 42%);
+  --color-primary-700: hsl(24 100% 35%);
+  --color-primary-800: hsl(24 100% 25%);
+  --color-primary-900: hsl(24 100% 15%);
+
+  /* ========== Secondary (Grayish) ========== */
+  --color-secondary-50:  hsl(220 15% 98%);
+  --color-secondary-100: hsl(220 15% 96%);
+  --color-secondary-200: hsl(220 15% 92%);
+  --color-secondary-300: hsl(220 15% 85%);
+  --color-secondary-400: hsl(220 15% 70%);
+  --color-secondary-500: hsl(224 12% 55%);
+  --color-secondary-600: hsl(224 12% 40%);
+  --color-secondary-700: hsl(224 12% 30%);
+  --color-secondary-800: hsl(224 12% 20%);
+  --color-secondary-900: hsl(224 12% 12%);
+
+  /* ========== Success (Green) ========== */
+  --color-success-50:  hsl(142 71% 97%);
+  --color-success-100: hsl(142 71% 92%);
+  --color-success-200: hsl(142 71% 85%);
+  --color-success-300: hsl(142 71% 75%);
+  --color-success-400: hsl(142 71% 65%);
+  --color-success-500: hsl(142 71% 45%); /* Base */
+  --color-success-600: hsl(142 71% 35%);
+  --color-success-700: hsl(142 71% 25%);
+  --color-success-800: hsl(142 71% 15%);
+  --color-success-900: hsl(142 71% 10%);
+
+  /* ========== Warning (Amber) ========== */
+  --color-warning-50:  hsl(38 92% 97%);
+  --color-warning-100: hsl(38 92% 92%);
+  --color-warning-200: hsl(38 92% 85%);
+  --color-warning-300: hsl(38 92% 75%);
+  --color-warning-400: hsl(38 92% 65%);
+  --color-warning-500: hsl(38 92% 50%); /* Base */
+  --color-warning-600: hsl(38 92% 42%);
+  --color-warning-700: hsl(38 92% 35%);
+  --color-warning-800: hsl(38 92% 25%);
+  --color-warning-900: hsl(38 92% 15%);
+
+  /* ========== Info (Blue) ========== */
+  --color-info-50:  hsl(210 98% 97%);
+  --color-info-100: hsl(210 98% 92%);
+  --color-info-200: hsl(210 98% 85%);
+  --color-info-300: hsl(210 98% 75%);
+  --color-info-400: hsl(210 98% 65%);
+  --color-info-500: hsl(210 98% 50%); /* Base */
+  --color-info-600: hsl(210 98% 42%);
+  --color-info-700: hsl(210 98% 35%);
+  --color-info-800: hsl(210 98% 25%);
+  --color-info-900: hsl(210 98% 15%);
+
+  /* ========== Danger (Red) ========== */
+  --color-danger-50:  hsl(0 84% 97%);
+  --color-danger-100: hsl(0 84% 92%);
+  --color-danger-200: hsl(0 84% 85%);
+  --color-danger-300: hsl(0 84% 75%);
+  --color-danger-400: hsl(0 84% 65%);
+  --color-danger-500: hsl(0 84% 60%); /* Base */
+  --color-danger-600: hsl(0 84% 50%);
+  --color-danger-700: hsl(0 84% 40%);
+  --color-danger-800: hsl(0 84% 30%);
+  --color-danger-900: hsl(0 84% 20%);
+
+  /* Fonts */
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* =========================
+   Base Styles
+========================= */
+.bg-hero {
+  background-image: url('/images/HeroBg.png');
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans, Arial, Helvetica, sans-serif);
+}
+
+@keyframes gradient-x {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-gradient-x {
+  background-size: 200% 200%;
+  animation: gradient-x 15s ease infinite;
+}
+
+/* =========================
+   Universal Custom Scrollbar
+   Matching Your Theme
+========================= */
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-secondary-300) var(--color-secondary-50);
+}
+
+/* WebKit browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-secondary-50);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-secondary-300);
+  border-radius: 4px;
+  border: 1px solid var(--color-secondary-50);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-secondary-400);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: var(--color-secondary-500);
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--color-secondary-50);
+}
