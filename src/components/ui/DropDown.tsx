@@ -54,14 +54,9 @@ export default function ModalDropdown({
         type="button"
         onClick={() => !disabled && setIsOpen(!isOpen)}
         disabled={disabled}
-        className={`
-          w-full h-full px-4 text-left rounded-lg
-          focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500
-          transition-all duration-200 flex items-center justify-between
-          ${disabled ? "bg-gray-100 cursor-not-allowed opacity-60" : "hover:border-gray-400"}
-          ${isOpen ? "border-blue-500 ring-2 ring-blue-500 ring-opacity-20" : ""}
-          ${buttonClassName}
-        `}
+        className={`flex items-center justify-between w-full px-4 h-[40px] text-sm text-left bg-white border rounded-xl ${buttonClassName} ${
+          disabled ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500'
+        }`}
       >
         <span
           className={`text-[14px] truncate ${
@@ -71,7 +66,7 @@ export default function ModalDropdown({
           {selectedItem ? selectedItem.name : placeholder}
         </span>
         <ChevronDown
-          className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${
+          className={`w-4 h-4 text-gray-900 transition-transform duration-200 ${
             isOpen ? "rotate-180" : ""
           } ${disabled ? "opacity-50" : ""}`}
         />
@@ -94,7 +89,7 @@ export default function ModalDropdown({
                   className={`
                     w-full px-4 py-3 text-left transition-colors duration-150
                     hover:bg-gray-50 border-b border-gray-100 last:border-b-0
-                    ${selectedItem?.id === item.id ? "bg-blue-50 text-blue-700" : "text-gray-700"}
+                    ${selectedItem?.id === item.id ? "bg-orange-50 text-orange-700" : "text-gray-700"}
                   `}
                 >
                   <div className="flex flex-col">

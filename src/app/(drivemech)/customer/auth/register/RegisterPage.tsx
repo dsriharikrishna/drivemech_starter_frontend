@@ -75,7 +75,7 @@ export default function RegisterPage() {
   }, [error]);
 
   return (
-    <div className="w-full max-w-md bg-white rounded-2xl shadow-xl border border-gray-200 p-8">
+    <div className="w-full max-w-md bg-white rounded-2xl shadow-md border border-gray-200 p-8">
       {/* Logo */}
       <div className="text-center mb-2">
         <Image
@@ -90,75 +90,75 @@ export default function RegisterPage() {
         </h2>
       </div>
 
-          {/* FORM */}
-          <FormProvider {...methods}>
-            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
+      {/* FORM */}
+      <FormProvider {...methods}>
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
 
-              {/* First + Last Name */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 w-full">
-                <CommonTextInput
-                  name="firstName"
-                  label="First Name"
-                  placeholder="Enter First Name"
-                  rules={{ required: "First name is required" }}
-                  required
-                />
+          {/* First + Last Name */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 w-full">
+            <CommonTextInput
+              name="firstName"
+              label="First Name"
+              placeholder="Enter First Name"
+              rules={{ required: "First name is required" }}
+              required
+            />
 
-                <CommonTextInput
-                  name="lastName"
-                  label="Last Name"
-                  placeholder="Enter Last Name"
-                  rules={{ required: "Last name is required" }}
-                  required
-                />
-              </div>
+            <CommonTextInput
+              name="lastName"
+              label="Last Name"
+              placeholder="Enter Last Name"
+              rules={{ required: "Last name is required" }}
+              required
+            />
+          </div>
 
-              {/* Phone */}
-              <PhoneInput
-                name="phone"
-                label="Mobile Number"
-                placeholder="1234 567 890"
-                rules={{ required: "Phone number is required" }}
-                countryOptions={countryOptions}
-                required
-              />
+          {/* Phone */}
+          <PhoneInput
+            name="phone"
+            label="Mobile Number"
+            placeholder="1234 567 890"
+            rules={{ required: "Phone number is required" }}
+            countryOptions={countryOptions}
+            required
+          />
 
-              {/* Email */}
-              <CommonTextInput
-                name="email"
-                label="Email ID"
-                placeholder="example@gmail.com"
-                rules={{ required: "Email is required" }}
-                required
-              />
+          {/* Email */}
+          <CommonTextInput
+            name="email"
+            label="Email ID"
+            placeholder="example@gmail.com"
+            rules={{ required: "Email is required" }}
+            required
+          />
 
-              {/* REGISTER BUTTON */}
-              <Button
-                type="submit"
-                disabled={!getValidation()}
-                className={`w-full text-white py-3 rounded-xl font-semibold 
+          {/* REGISTER BUTTON */}
+          <Button
+            type="submit"
+            disabled={!getValidation()}
+            className={`w-full text-white py-3 rounded-xl font-semibold 
                    ${getValidation()
-                     ? "bg-orange-500 hover:bg-orange-600"
-                     : "bg-orange-300 cursor-not-allowed"
-                   }`}
-              >
-                Register
-              </Button>
+                ? "bg-orange-500 hover:bg-orange-600"
+                : "bg-orange-300 cursor-not-allowed"
+              }`}
+          >
+            Register
+          </Button>
 
-              {/* Already have account? */}
-              <p className="text-center text-sm text-gray-500">
-                Already have an account?
-              </p>
+          {/* Already have account? */}
+          <p className="text-center text-sm text-gray-500">
+            Already have an account?
+          </p>
 
-              <Button
-                type="button"
-                onClick={() => router.replace("/customer/auth/login")}
-                className="w-full bg-gray-900 hover:bg-black text-white py-3 rounded-xl font-semibold"
-              >
-                Login
-              </Button>
-            </form>
-          </FormProvider>
+          <Button
+            type="button"
+            onClick={() => router.replace("/customer/auth/login")}
+            className="w-full bg-gray-900 hover:bg-black text-white py-3 rounded-xl font-semibold"
+          >
+            Login
+          </Button>
+        </form>
+      </FormProvider>
     </div>
   );
 }

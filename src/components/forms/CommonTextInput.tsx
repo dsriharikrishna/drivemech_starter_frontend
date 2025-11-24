@@ -55,7 +55,7 @@ export default function CommonTextInput({
           placeholder={placeholder}
           disabled={disabled}
           autoComplete={autoComplete}
-          className={`border placeHolder text-sm rounded-xl block w-full px-3 py-3 focus:border-blue-500 focus:ring-1 focus:ring-blue-500
+          className={`border text-sm rounded-xl block w-full h-[40px] px-3 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 placeholder-gray-400
             ${error ? "border-red-500 bg-red-50" : "border-gray-300"}
             ${leftIcon ? "pl-12" : "pl-3"}
           `}

@@ -13,7 +13,7 @@ export default function AuthLayout({
       {/* LEFT SIDE - 60% */}
       <div className="hidden md:flex md:w-[60%] relative overflow-hidden">
         <Image
-          src="/mnt/data/7b0c02c8-4e10-410b-8f70-47d9054bd119.png"
+          src="/images/HeroBg.png"
           alt="Garage Illustration"
           fill
           className="object-cover"
