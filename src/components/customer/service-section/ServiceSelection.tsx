@@ -46,33 +46,33 @@ export default function ServiceSelection() {
 
   return (
     <div className="max-w-7xl mx-auto p-4 md:p-6">
-      <div className="flex flex-col md:flex-row gap-6">
+      <div className="flex flex-col lg:flex-row gap-6">
         {/* Main Content */}
-        <div className="md:w-2/3">
+        <div className="lg:w-2/3">
           {/* Header with Back Button */}
           <div className="flex items-center gap-3 mb-6">
-            <button className="p-1 rounded-full hover:bg-gray-100">
+            <button className="p-1.5 rounded-full hover:bg-gray-100 transition-colors">
               <ArrowLeft className="h-5 w-5 text-gray-600" />
             </button>
             <h1 className="text-2xl font-bold text-gray-900">What are you looking for?</h1>
           </div>
           
           {/* Search Bar */}
-          <div className="relative mb-6">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+          <div className="relative mb-8">
+            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
               <Search className="h-5 w-5 text-gray-400" />
             </div>
             <input
               type="text"
               placeholder="Search Services"
-              className="w-full pl-10 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+              className="w-full pl-12 pr-4 py-3.5 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-700 placeholder-gray-400"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
           
           {/* Services Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
             {filteredServices.map(service => (
               <ServiceCard
                 key={service.id}
@@ -84,22 +84,22 @@ export default function ServiceSelection() {
           </div>
 
           {/* Can't find what you're looking for */}
-          <div className="mb-6">
-            <h3 className="text-sm font-medium text-gray-500 mb-2">
+          <div className="mb-8">
+            <h3 className="text-sm font-medium text-gray-500 mb-3">
               Can't find what you are looking for?
             </h3>
             <textarea
               placeholder="Describe your issue"
-              className="w-full p-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent min-h-[100px]"
+              className="w-full p-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent min-h-[120px] text-gray-700 placeholder-gray-400 resize-none"
             />
           </div>
 
           {/* Next Button */}
           <div className="flex justify-end">
             <button
-              className={`px-6 py-3 rounded-xl font-medium transition-colors duration-200 ${
+              className={`px-8 py-3.5 rounded-xl font-medium transition-colors duration-200 text-base ${
                 selectedServices.length > 0
-                  ? 'bg-orange-500 text-white hover:bg-orange-600'
+                  ? 'bg-orange-500 text-white hover:bg-orange-600 shadow-md hover:shadow-lg'
                   : 'bg-gray-200 text-gray-500 cursor-not-allowed'
               }`}
               disabled={selectedServices.length === 0}
@@ -110,8 +110,8 @@ export default function ServiceSelection() {
         </div>
 
         {/* Cart Sidebar */}
-        <div className="md:w-1/3">
-          <div className="bg-white rounded-2xl shadow-md p-6 border border-gray-100 sticky top-6">
+        <div className="lg:w-1/3">
+          <div className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100 sticky top-6">
             {/* Vehicle Info */}
             <div className="mb-6">
               <div className="flex justify-between items-center mb-2">
@@ -119,13 +119,10 @@ export default function ServiceSelection() {
                 <button className="text-blue-600 text-sm font-medium">Change</button>
               </div>
               
-              <div className="relative h-32 bg-gray-100 rounded-xl overflow-hidden mb-3">
-                <Image
-                  src="/images/vehicles/toyota-hilux.png"
-                  alt={`${vehicleInfo.make} ${vehicleInfo.model}`}
-                  fill
-                  className="object-cover"
-                />
+              <div className="relative h-32 bg-gray-50 rounded-xl overflow-hidden mb-4 border border-gray-100">
+                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100">
+                  <span className="text-4xl">🚗</span>
+                </div>
               </div>
               
               <h3 className="font-medium">{vehicleInfo.make} {vehicleInfo.model}</h3>
@@ -138,26 +135,36 @@ export default function ServiceSelection() {
             </div>
 
             {/* Cart */}
-            <div>
-              <div className="flex items-center gap-2 mb-4">
-                <ShoppingCart className="h-5 w-5 text-gray-600" />
-                <h3 className="text-lg font-semibold">Your Cart ({selectedServices.length})</h3>
+            <div className="mt-8">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="p-1.5 bg-gray-100 rounded-lg">
+                  <ShoppingCart className="h-5 w-5 text-gray-700" />
+                </div>
+                <h3 className="text-lg font-semibold text-gray-900">Your Cart ({selectedServices.length})</h3>
               </div>
               
               {selectedServices.length === 0 ? (
-                <p className="text-gray-500 text-sm">
-                  Your cart is empty. Please add an service item to get a quote.
-                </p>
+                <div className="bg-gray-50 rounded-xl p-6 text-center">
+                  <p className="text-gray-500 text-sm">
+                    Your cart is empty. Please add a service to get a quote.
+                  </p>
+                </div>
               ) : (
                 <div className="space-y-3">
                   {selectedServices.map(serviceId => {
                     const service = services.find(s => s.id === serviceId);
                     return (
-                      <div key={serviceId} className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                        <span className="font-medium">{service?.name}</span>
+                      <div key={serviceId} className="flex justify-between items-center p-3.5 bg-gray-50 rounded-xl border border-gray-100">
+                        <div className="flex items-center gap-3">
+                          <div className="text-xl">{service?.icon}</div>
+                          <span className="font-medium text-gray-900">{service?.name}</span>
+                        </div>
                         <button 
-                          className="text-red-500 hover:text-red-600 text-sm"
-                          onClick={() => toggleService(serviceId)}
+                          className="text-red-500 hover:text-red-600 text-sm font-medium"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            toggleService(serviceId);
+                          }}
                         >
                           Remove
                         </button>
