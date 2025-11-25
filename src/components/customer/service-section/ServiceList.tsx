@@ -14,7 +14,7 @@ interface Props {
 
 export default function ServiceList({ services, selectedServices, onToggle, className = '' }: Props) {
   return (
-    <section className={`w-full ${className}`}>
+    <section className={`w-full bg-white p-2 rounded-xl ${className}`}>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {services.map((service) => (
           <ServiceCard

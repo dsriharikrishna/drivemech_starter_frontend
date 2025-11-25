@@ -8,7 +8,7 @@ interface Props {
 
 const LeftLayout: React.FC<Props> = ({ children }) => {
   return (
-    <div className="w-full lg:flex-3 space-y-8">
+    <div className="w-full lg:flex-3 space-y-4">
       {children}
     </div>
   );
