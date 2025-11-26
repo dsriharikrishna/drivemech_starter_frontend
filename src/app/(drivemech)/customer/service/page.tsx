@@ -1,52 +1,36 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import LeftLayout from './LeftLayout';
 import RightLayout from './RightLayout';
 import ServiceHeader from '@/components/customer/service-section/ServiceHeader';
 import ServiceList from '@/components/customer/service-section/ServiceList';
 import CartSidebar from '@/components/customer/service-section/CartSidebar';
 import { services } from '@/components/data/services';
-import { VehicleInfo } from '@/components/customer/service-section/CartSidebar';
 import { FormProvider, useForm } from 'react-hook-form';
+import { RootState } from '@/store/store';
 
 export default function ServicePage() {
-
   const methods = useForm({
     defaultValues: {
       selectedServices: [],
       searchQuery: ''
     }
   });
-  const [selectedServices, setSelectedServices] = useState<string[]>([]);
-  const [searchQuery, setSearchQuery] = useState('');
 
-  const vehicleInfo: VehicleInfo = {
-    registration: 'ABC 1234 D',
-    make: 'Toyota',
-    model: 'Hilux',
-    year: 2021,
-    fuelType: 'Petrol',
-    transmission: 'Automatic',
-    engine: '2.5 Liters',
-    drive: 'Hybrid AWD-i'
-  };
+  // Use Redux state instead of local state
+  const selectedServices = useSelector((state: RootState) => state.service.selectedServices);
+  const searchQuery = useSelector((state: RootState) => state.service.searchQuery);
 
-  const toggleService = (serviceId: string) => {
-    setSelectedServices(prev =>
-      prev.includes(serviceId)
-        ? prev.filter(id => id !== serviceId)
-        : [...prev, serviceId]
-    );
-  };
-
+  // Filter services based on search query
   const filteredServices = services.filter(s =>
     s.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
-    <FormProvider {...methods} >
-      <main className="max-w-7xl mx-auto p-4 md:p-6  bg-gray-50">
+    <FormProvider {...methods}>
+      <main className="max-w-7xl mx-auto p-4 md:p-6 bg-gray-50">
         <div className="flex flex-col lg:flex-row gap-4 lg:gap-6">
           <LeftLayout>
             {/* Header */}
@@ -75,10 +59,11 @@ export default function ServicePage() {
             <div className="flex justify-end">
               <button
                 disabled={selectedServices.length === 0}
-                className={`px-8 py-3.5 rounded-xl font-medium text-base transition-colors duration-200 ${selectedServices.length > 0
-                  ? 'bg-orange-500 text-white hover:bg-orange-600 shadow-md hover:shadow-lg'
-                  : 'bg-gray-200 text-gray-500 cursor-not-allowed'
-                  }`}
+                className={`px-8 py-3.5 rounded-xl font-medium text-base transition-colors duration-200 ${
+                  selectedServices.length > 0
+                    ? 'bg-orange-500 text-white hover:bg-orange-600 shadow-md hover:shadow-lg'
+                    : 'bg-gray-200 text-gray-500 cursor-not-allowed'
+                }`}
               >
                 Next
               </button>
@@ -87,12 +72,11 @@ export default function ServicePage() {
 
           <RightLayout>
             <CartSidebar
-              vehicleInfo={vehicleInfo}
               services={services}
             />
           </RightLayout>
         </div>
-      </main >
+      </main>
     </FormProvider>
   );
 }

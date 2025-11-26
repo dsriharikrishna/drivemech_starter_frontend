@@ -14,8 +14,7 @@ import storage from "redux-persist/lib/storage";
 
 import authReducer, { logout } from "./slicers/authSlicer";
 import serviceReducer from './slicers/serviceSlicer';
-
-
+import carReducer from './slicers/carSlicer';
 
 const authPersistConfig = {
   key: "auth",
@@ -23,7 +22,14 @@ const authPersistConfig = {
   whitelist: ["accessToken", "refreshToken", "user"],
 };
 
+const carPersistConfig = {
+  key: "car",
+  storage,
+  whitelist: ["currentVehicle", "savedVehicles"],
+};
+
 const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
+const persistedCarReducer = persistReducer(carPersistConfig, carReducer);
 
 // ---------------- Error handling middleware ----------------
 const rtkErrorLogger: Middleware = (store) => (next) => (action) => {
@@ -46,6 +52,7 @@ export const store = configureStore({
   reducer: {
     auth: persistedAuthReducer,
     service: serviceReducer,
+    car: persistedCarReducer,
 
   },
   middleware: (getDefaultMiddleware) =>
