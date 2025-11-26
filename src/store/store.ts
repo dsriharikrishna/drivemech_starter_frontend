@@ -13,6 +13,8 @@ import {
 import storage from "redux-persist/lib/storage";
 
 import authReducer, { logout } from "./slicers/authSlicer";
+import serviceReducer from './slicers/serviceSlicer';
+
 
 
 const authPersistConfig = {
@@ -43,6 +45,8 @@ const rtkErrorLogger: Middleware = (store) => (next) => (action) => {
 export const store = configureStore({
   reducer: {
     auth: persistedAuthReducer,
+    service: serviceReducer,
+
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

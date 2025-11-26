@@ -1,27 +1,38 @@
-// components/customer/service-section/ServiceList.tsx
 'use client';
 
-import React from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store/store';
 import ServiceCard from './ServiceCard';
-import { Service } from '@/components/data/services';
+import HeaderServiceCard from './HeaderServiceCard';
+import { headerServices, Service } from '@/components/data/services';
 
-interface Props {
-  services: Service[];
-  selectedServices: string[];
-  onToggle: (serviceId: string) => void;
-  className?: string;
-}
+export default function ServiceList({ services }: { services: Service[] }) {
+  const selectedServices = useSelector((state: RootState) => state.service.selectedServices);
 
-export default function ServiceList({ services, selectedServices, onToggle, className = '' }: Props) {
   return (
-    <section className={`w-full bg-white p-2 rounded-xl ${className}`}>
+    <section className="w-full mt-4">
+      
+      {/* Header Cards */}
+      <h3 className="text-lg font-semibold text-gray-900 mb-4">Popular Services</h3>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+        {headerServices.map((s) => (
+          <HeaderServiceCard
+            key={s.id}
+            id={s.id}
+            icon={s.icon}
+            title={s.name}
+            badge={s.isPopular ? 'Popular' : undefined}
+          />
+        ))}
+      </div>
+
+      {/* Regular Services */}
+      <h3 className="text-lg font-semibold text-gray-900 mb-4">All Services</h3>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {services.map((service) => (
-          <ServiceCard
-            key={service.id}
-            service={service}
-            isSelected={selectedServices.includes(service.id)}
-            onClick={() => onToggle(service.id)}
+        {services.map((s) => (
+          <ServiceCard 
+            key={s.id} 
+            service={s} 
           />
         ))}
       </div>

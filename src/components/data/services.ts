@@ -5,8 +5,8 @@ export interface Service {
   icon: string;
 }
 
-export const services: Service[] = [
-  {
+export const headerServices : Service[] = [
+   {
     id: 'logbook-service',
     name: 'Logbook Service',
     isPopular: true,
@@ -22,6 +22,9 @@ export const services: Service[] = [
     name: 'Breakdown',
     icon: '🛠️'
   },
+]
+
+export const services: Service[] = [
   {
     id: 'air-conditioning',
     name: 'Air Conditioning',

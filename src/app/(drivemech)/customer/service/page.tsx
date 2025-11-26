@@ -50,16 +50,11 @@ export default function ServicePage() {
         <div className="flex flex-col lg:flex-row gap-4 lg:gap-6">
           <LeftLayout>
             {/* Header */}
-            <ServiceHeader
-              searchQuery={searchQuery}
-              onSearchChange={setSearchQuery}
-            />
+            <ServiceHeader />
 
             {/* Services Grid */}
             <ServiceList
               services={filteredServices}
-              selectedServices={selectedServices}
-              onToggle={toggleService}
             />
 
             {/* Can't find / textarea */}
@@ -94,8 +89,6 @@ export default function ServicePage() {
             <CartSidebar
               vehicleInfo={vehicleInfo}
               services={services}
-              selectedServices={selectedServices}
-              onToggleService={toggleService}
             />
           </RightLayout>
         </div>
