@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store/store';
 import ServiceCard from './ServiceCard';
 import HeaderServiceCard from './HeaderServiceCard';
-import { headerServices, Service } from '@/components/data/services';
+import { headerServices, Service } from '../../../data/services';
 
 export default function ServiceList({ services }: { services: Service[] }) {
   const selectedServices = useSelector((state: RootState) => state.service.selectedServices);

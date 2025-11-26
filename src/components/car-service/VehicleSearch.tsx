@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { useFormContext } from "react-hook-form";
 import PhoneInput from "../forms/PhoneInput";
-import { makes, models, states } from "../data/vehicle";
+import { makes, models, states } from "../../data/vehicle";
 
 type VehicleSearchProps = {
     selectedMake: string;

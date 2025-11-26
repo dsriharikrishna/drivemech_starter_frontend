@@ -2,7 +2,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import { ChevronRight } from 'lucide-react';
-import { Service } from '@/components/data/services';
+import { Service } from '../../../data/services';
 import { RootState } from '@/store/store';
 import { toggleService } from '@/store/slicers/serviceSlicer';
 

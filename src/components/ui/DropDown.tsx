@@ -74,7 +74,7 @@ export default function ModalDropdown({
 
       {/* Dropdown Menu */}
       {isOpen && (
-        <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-auto">
+        <div className="absolute z-100 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-auto">
           <div className="py-1">
             {items.length === 0 ? (
               <div className="px-4 py-3 text-sm text-gray-500 text-center">

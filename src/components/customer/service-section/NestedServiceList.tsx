@@ -1,6 +1,6 @@
 'use client';
 
-import { NestedService } from '@/components/data/services';
+import { NestedService } from '../../../data/services';
 
 interface Props {
   nestedServices: NestedService[];

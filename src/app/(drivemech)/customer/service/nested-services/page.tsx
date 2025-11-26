@@ -6,11 +6,11 @@ import { ArrowLeft, Search } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import ServiceHeader from '@/components/customer/service-section/ServiceHeader';
 import ServiceCard from '@/components/customer/service-section/ServiceCard';
-import CartSidebar from '@/components/customer/service-section/CartSidebar';
-import { services } from '@/components/data/services';
+import CartSidebar from '@/components/customer/cart/CartSidebar';
+import { services } from '../../../../../data/services';
 import { FormProvider, useForm } from 'react-hook-form';
-import LeftLayout from '../LeftLayout';
-import RightLayout from '../RightLayout';
+import LeftLayout from '../../../../../components/Layout/LeftLayout';
+import RightLayout from '../../../../../components/Layout/RightLayout';
 import { RootState } from '@/store/store';
 import { toggleNestedService, setNestedSearchQuery } from '@/store/slicers/serviceSlicer';
 

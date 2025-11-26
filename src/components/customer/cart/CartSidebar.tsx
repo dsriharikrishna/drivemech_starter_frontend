@@ -1,7 +1,7 @@
 'use client';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { Service } from '@/components/data/services';
+import { Service } from '../../../data/services';
 import { ShoppingCart } from 'lucide-react';
 import { RootState } from '@/store/store';
 import { toggleService } from '@/store/slicers/serviceSlicer';
@@ -35,7 +35,7 @@ export default function CartSidebar({ services }: { services: Service[] }) {
   };
 
   return (
-    <aside className="w-full lg:w-[330px] sticky top-4 space-y-4">
+    <aside className="w-full lg:w-[330px] space-y-4">
 
       {/* Vehicle Card */}
       <CarCard 
@@ -161,6 +161,15 @@ export default function CartSidebar({ services }: { services: Service[] }) {
           )}
         </div>
       </div>
+
+      {/* Next Button */}
+      {selectedList.length > 0 && (
+        <div className="bg-white rounded-2xl border border-gray-200 p-5">
+          <button className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200">
+            Next
+          </button>
+        </div>
+      )}
 
     </aside>
   );

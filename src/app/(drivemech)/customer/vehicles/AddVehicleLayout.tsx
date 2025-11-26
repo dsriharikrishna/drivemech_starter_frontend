@@ -6,7 +6,7 @@ import { useForm, FormProvider } from "react-hook-form";
 import Button from "@/components/ui/Button";
 import CommonTextInput from "@/components/forms/CommonTextInput";
 import ModalDropdown from "@/components/ui/DropDown";
-import { makes, models } from "@/components/data/vehicle";
+import { makes, models } from "../../../../data/vehicle";
 import FloatingLabelInput from "@/components/forms/FloatingLabelInput";
 
 type DropdownItem = { id: string; name: string; makeId?: string };
