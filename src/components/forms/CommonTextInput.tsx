@@ -1,14 +1,15 @@
 "use client";
 import React, { InputHTMLAttributes } from "react";
-import { useFormContext, RegisterOptions } from "react-hook-form";
+import { useFormContext, RegisterOptions, UseFormReturn } from "react-hook-form";
 
-interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
+interface TextInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'form'> {
   name: string;
   label: string;
   icon?: React.ReactNode;
   leftIcon?: React.ReactNode;
   className?: string;
   rules?: RegisterOptions;
+  form?: UseFormReturn<any>;
 }
 
 export default function CommonTextInput({
@@ -23,16 +24,17 @@ export default function CommonTextInput({
   icon,
   leftIcon,
   rules = {},
+  form,
   ...rest
 }: TextInputProps) {
   const {
     register,
     formState: { errors },
-  } = useFormContext();
+  } = form || useFormContext();
 
   // FIXED: Safe type handling
-  const fieldError = errors[name as keyof typeof errors];
-  const error = (fieldError as any)?.message as string | undefined;
+  const fieldError = errors[name];
+  const error = fieldError?.message as string | undefined;
 
   return (
     <div className={`flex flex-col ${className}`}>
