@@ -7,14 +7,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import ServiceHeader from '@/components/customer/service-section/ServiceHeader';
 import ServiceCard from '@/components/customer/service-section/ServiceCard';
 import CartSidebar from '@/components/customer/cart/CartSidebar';
-import { services } from '../../../../../data/services';
+import { services } from '../../../../data/services';
 import { FormProvider, useForm } from 'react-hook-form';
-import LeftLayout from '../../../../../components/Layout/LeftLayout';
-import RightLayout from '../../../../../components/Layout/RightLayout';
+import LeftLayout from '../../../../components/Layout/LeftLayout';
+import RightLayout from '../../../../components/Layout/RightLayout';
 import { RootState } from '@/store/store';
 import { toggleNestedService, setNestedSearchQuery } from '@/store/slicers/serviceSlicer';
 
-export default function NestedServicesPage() {
+export default function NestedServicesLayout() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const dispatch = useDispatch();
