@@ -1,5 +1,5 @@
 import { CalendarIcon } from "lucide-react";
-import BookingCard from "./BookingCard";
+import CustomCard from "../ui/CustomCard";
 
 interface Props {
   date: string;
@@ -9,10 +9,10 @@ interface Props {
 
 export default function ServiceDateCard({ date, time, onReschedule }: Props) {
   return (
-    <BookingCard>
+    <CustomCard>
       <p className="text-sm text-gray-500 mb-2">Service Date & Time</p>
 
-      <div className="flex items-start gap-3">
+      <div className="flex items-start gap-3 border-border ">
         <CalendarIcon className="w-10 h-10 text-gray-700" />
 
         <div>
@@ -29,6 +29,6 @@ export default function ServiceDateCard({ date, time, onReschedule }: Props) {
           )}
         </div>
       </div>
-    </BookingCard>
+    </CustomCard>
   );
 }

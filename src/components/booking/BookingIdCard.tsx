@@ -1,4 +1,4 @@
-import BookingCard from "./BookingCard";
+import CustomCard from "../ui/CustomCard";
 
 interface Props {
   bookingId: string;
@@ -13,10 +13,10 @@ export default function BookingIdCard({ bookingId, status }: Props) {
   }[status];
 
   return (
-    <BookingCard>
+    <CustomCard>
       <p className="text-sm text-gray-500 mb-2">Booking ID</p>
 
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-3 border-border">
         <div className="w-10 h-10 rounded bg-gray-100 flex items-center justify-center text-lg">
           #
         </div>
@@ -29,6 +29,6 @@ export default function BookingIdCard({ bookingId, status }: Props) {
           </span>
         </div>
       </div>
-    </BookingCard>
+    </CustomCard>
   );
 }

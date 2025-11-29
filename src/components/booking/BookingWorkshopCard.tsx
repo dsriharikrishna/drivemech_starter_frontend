@@ -1,5 +1,5 @@
 import Image from "next/image";
-import BookingCard from "./BookingCard";
+import CustomCard from "../ui/CustomCard";
 
 interface Props {
   name: string;
@@ -15,7 +15,7 @@ export default function BookingWorkshopCard({
   img = "/workshop.png",
 }: Props) {
   return (
-    <BookingCard>
+    <CustomCard>
       <p className="text-sm text-gray-500 mb-2">Workshop</p>
 
       <div className="flex items-center gap-3">
@@ -32,6 +32,6 @@ export default function BookingWorkshopCard({
           📞
         </button>
       </div>
-    </BookingCard>
+    </CustomCard>
   );
 }
