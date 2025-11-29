@@ -1,8 +1,7 @@
 "use client";
 
-import { ArrowLeft } from "lucide-react";
-import TrackingSummary from "@/components/tracking/TrackingSummary";
-import TimelineList from "@/components/tracking/TimelineList";
+import TrackingHeader from "@/components/tracking/TrackingHeader";
+import TrackingCard from "@/components/tracking/TrackingCard";
 
 export default function TrackBookingLayout() {
   const timeline = [
@@ -83,24 +82,18 @@ export default function TrackBookingLayout() {
   return (
     <div className="p-6 max-w-6xl mx-auto">
 
-      {/* Header */}
-      <div className="flex items-center gap-2 mb-6">
-        <ArrowLeft className="w-5 h-5 text-gray-600" />
-        <h2 className="text-lg font-semibold text-gray-800">Track Booking</h2>
-      </div>
+      {/* HEADER */}
+      <TrackingHeader onBack={() => history.back()} />
 
-      <div className="bg-white border rounded-xl shadow-sm p-6">
-
-        {/* SUMMARY */}
-        <TrackingSummary
-          status="Booking Confirmed"
-          stage="Service in Progress"
-          estimate="Today, 2:00 PM - 3:00 PM"
-        />
-
-        {/* TIMELINE */}
-        <TimelineList steps={timeline} />
-      </div>
+      {/* MAIN TRACKING CARD */}
+      <TrackingCard
+        summary={{
+          status: "Booking Confirmed",
+          stage: "Service in Progress",
+          estimate: "Today, 2:00 PM - 3:00 PM",
+        }}
+        steps={timeline}
+      />
     </div>
   );
 }

@@ -26,7 +26,7 @@ export default function BookingSuccess() {
             <h3 className="text-sm text-gray-500 mb-2">Vehicle</h3>
             <div className="flex items-center gap-3">
               <Image
-                src="/car.png" // replace with your asset
+                src="/car.png" 
                 alt="car"
                 width={40}
                 height={40}

@@ -63,7 +63,7 @@ export default function AddVehicleLayout() {
 
     return (
         <FormProvider {...methods}>
-            <div className="relative min-h-screen bg-cover bg-center  bg-no-repeat bg-hero">
+            <div className="relative max-h-full bg-cover bg-center  bg-no-repeat bg-hero overflow-hidden">
 
                 {/* Dark overlay */}
                 <div className="absolute inset-0 bg-black/60"></div>
@@ -91,11 +91,11 @@ export default function AddVehicleLayout() {
 
                                 {/* Registration Number */}
                                 {/* <CommonTextInput
-                name="registrationNumber"
-                label="Vehicle Registration Number"
-                placeholder="Enter your vehicle number (KA01AB1234)"
-                className="w-full"
-              /> */}
+                                    name="registrationNumber"
+                                    label="Vehicle Registration Number"
+                                    placeholder="Enter your vehicle number (KA01AB1234)"
+                                    className="w-full"
+                                /> */}
 
                                 <div className="relative">
                                     <FloatingLabelInput

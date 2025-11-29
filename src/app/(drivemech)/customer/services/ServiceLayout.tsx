@@ -9,7 +9,7 @@ import { useAppSelector } from '@/store/store';
 import { services } from '../../../../data/services';
 import { FormProvider, useForm } from 'react-hook-form';
 
-const ServiceLayout = () => {
+export const ServicesLayout = () => {
 
      const methods = useForm({
         defaultValues: {
@@ -78,5 +78,3 @@ const ServiceLayout = () => {
 
     )
 }
-
-export default ServiceLayout;
