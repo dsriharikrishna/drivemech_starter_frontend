@@ -27,7 +27,7 @@ export default function ServiceCard({ service, onToggle, isSelected: propIsSelec
       onToggle();
     } else if (service.hasNested) {
       // Navigate to nested services page
-      router.push(`/customer/service/nested-services?service=${service.id}`);
+      router.push(`/customer/nested-services?service=${service.id}`);
     } else {
       // Toggle service selection
       dispatch(toggleService(service.id));
