@@ -1,12 +1,12 @@
 "use client";
 
 import { ArrowLeftIcon } from "lucide-react";
-import BookingIdCard from "@/components/booking/BookingIdCard";
-import ServiceDateCard from "@/components/booking/ServiceDateCard";
-import VehicleCard from "@/components/booking/VehicleCard";
-import BookingWorkshopCard from "@/components/booking/BookingWorkshopCard";
-import BookingFooter from "@/components/booking/BookingFooter";
 import CustomCard from "@/components/ui/CustomCard";
+import BookingIdCard from "@/components/customer/booking/BookingIdCard";
+import ServiceDateCard from "@/components/customer/booking/ServiceDateCard";
+import VehicleCard from "@/components/customer/booking/VehicleCard";
+import BookingWorkshopCard from "@/components/customer/booking/BookingWorkshopCard";
+import BookingFooter from "@/components/customer/booking/BookingFooter";
 
 interface BookingDetailsProps {
   bookingId: string;

@@ -1,7 +1,7 @@
 "use client";
 
-import TrackingHeader from "@/components/tracking/TrackingHeader";
-import TrackingCard from "@/components/tracking/TrackingCard";
+import TrackingHeader from "@/components/customer/tracking/TrackingHeader";
+import TrackingCard from "@/components/customer/tracking/TrackingCard";
 
 export default function TrackBookingLayout() {
   const timeline = [

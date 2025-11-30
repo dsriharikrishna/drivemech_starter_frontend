@@ -1,6 +1,6 @@
 "use client";
 
-import BookingDetailsCard from "@/components/booking/BookingDetailsCard";
+import BookingDetailsCard from "@/components/customer/booking/BookingDetailsCard";
 import { CheckCircleIcon } from "lucide-react";
 
 export default function BookingSuccessLayout() {
