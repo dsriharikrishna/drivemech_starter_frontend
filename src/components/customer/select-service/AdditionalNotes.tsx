@@ -34,7 +34,7 @@ export default function RichNoteEditor({ form }: Props) {
   }, [form]);
 
   return (
-    <div className="p-4 border rounded-xl bg-white relative">
+    <div className="p-4 border border-gray-200 rounded-xl bg-white relative">
 
       {/* Header */}
       <div className="flex justify-between items-center">
@@ -43,7 +43,7 @@ export default function RichNoteEditor({ form }: Props) {
       </div>
 
       {/* Editor Box */}
-      <div className="mt-3 border rounded-lg p-3 min-h-[150px]">
+      <div className="mt-3 border border-gray-200 rounded-lg p-3 min-h-[150px]">
 
         {/* Placeholder logic */}
         <div

@@ -5,6 +5,8 @@ export interface Service {
   icon: string;
   hasNested?: boolean;
   nestedServices?: NestedService[];
+  price?: number;
+  description?: string;
 }
 
 export interface NestedService {

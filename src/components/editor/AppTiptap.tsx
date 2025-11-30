@@ -57,7 +57,7 @@ export default function AppTiptap({
   if (!editor) return null;
 
   return (
-    <div className="p-4 border rounded-xl bg-white">
+    <div className="p-4 border border-gray-200 rounded-xl bg-white">
 
       {/* Header */}
       <div className="flex justify-between items-center">
@@ -66,7 +66,7 @@ export default function AppTiptap({
       </div>
 
       {/* Editor Box */}
-      <div className="mt-3 border rounded-lg p-3">
+      <div className="mt-3 border border-gray-200 rounded-lg p-3">
 
         <EditorContent editor={editor} />
 

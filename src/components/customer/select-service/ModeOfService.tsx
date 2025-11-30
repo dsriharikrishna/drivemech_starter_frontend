@@ -2,35 +2,44 @@ import { UseFormReturn } from "react-hook-form";
 
 interface Props {
   form: UseFormReturn<any>;
+  modes?: Array<{
+    id: string;
+    label: string;
+    description?: string;
+    icon?: string;
+  }>;
 }
 
-export default function ModeOfService({ form }: Props) {
+export default function ModeOfService({ form, modes = [] }: Props) {
   const mode = form.watch("mode");
 
+  // Default modes if not provided
+  const defaultModes = [
+    { id: "pickup", label: "Pickup", description: "We'll pick up your vehicle" },
+    { id: "walkin", label: "Walk In", description: "Visit our workshop directly" },
+  ];
+
+  const serviceModes = modes.length > 0 ? modes : defaultModes;
+
   return (
-    <div className="p-4 border rounded-xl bg-white">
+    <div className="p-4 border border-gray-200 rounded-xl bg-white">
       <p className="font-medium mb-3">Mode Of Service</p>
 
-      <div className="flex gap-6">
-        <label className="flex items-center gap-2 cursor-pointer">
-          <input
-            type="radio"
-            value="pickup"
-            {...form.register("mode")}
-            checked={mode === "pickup"}
-          />
-          Pickup
-        </label>
-
-        <label className="flex items-center gap-2 cursor-pointer">
-          <input
-            type="radio"
-            value="walkin"
-            {...form.register("mode")}
-            checked={mode === "walkin"}
-          />
-          Walk In
-        </label>
+      <div className="flex flex-col md:flex-row item-center flex-wrap gap-6">
+        {serviceModes.map((serviceMode) => (
+          <label key={serviceMode.id} className="flex-1 flex items-center gap-2 cursor-pointer">
+            <input
+              type="radio"
+              value={serviceMode.id}
+              {...form.register("mode")}
+              checked={mode === serviceMode.id}
+              className="w-4 h-4 text-orange-500 border-gray-300 focus:ring-orange-500"
+            />
+            <div>
+              <span className="font-medium text-gray-900">{serviceMode.label}</span>
+            </div>
+          </label>
+        ))}
       </div>
     </div>
   );

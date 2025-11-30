@@ -8,7 +8,7 @@ interface Props {
 
 export default function PreferredDateTime({ form }: Props) {
   return (
-    <div className="p-4 border rounded-xl bg-white">
+    <div className="p-4 border border-gray-200 rounded-xl bg-white">
       <p className="font-medium mb-3">Preferred Date & Time *</p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
