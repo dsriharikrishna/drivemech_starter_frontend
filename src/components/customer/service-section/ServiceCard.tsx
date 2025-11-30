@@ -37,7 +37,7 @@ export default function ServiceCard({ service, onToggle, isSelected: propIsSelec
   return (
     <div
       onClick={handleClick}
-      className={`flex items-center justify-between p-3 rounded-xl border-2 cursor-pointer transition-all ${
+      className={`flex items-center bg-white justify-between p-3 rounded-xl border-2 cursor-pointer transition-all ${
         isSelected
           ? 'border-orange-500 bg-orange-50'
           : 'border-gray-200 hover:border-orange-300 hover:bg-orange-50/50'

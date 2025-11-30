@@ -41,7 +41,7 @@ export default function AddOns({
     }
   };
 
-  const isMaxSelectionsReached = maxSelections && selected.length >= maxSelections;
+  const isMaxSelectionsReached = Boolean(maxSelections && selected.length >= maxSelections);
 
   const AddOnCard = ({ service }: { service: AddOnService }) => {
     const isSelected = selected.includes(service.id);

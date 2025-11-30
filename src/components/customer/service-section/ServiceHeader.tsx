@@ -11,7 +11,7 @@ export default function ServiceHeader() {
   const searchQuery = useSelector((state: RootState) => state.service.searchQuery);
 
   return (
-    <header className="w-full bg-white border border-gray-100 rounded-xl px-4 py-5 md:px-6 md:py-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+    <header className="w-full bg-white border border-gray-100 rounded-xl px-2.5 py-5 md:px-4 md:py-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
       
       <div className="flex items-center gap-3">
         <button className="p-2 rounded-xl bg-gray-50 hover:bg-gray-100 border border-gray-200">

@@ -28,7 +28,7 @@ export const ServicesLayout = () => {
 
     return (
         <FormProvider {...methods}>
-            <main className="max-w-7xl mx-auto p-4 md:p-6 bg-gray-50">
+            <main className="max-w-7xl mx-auto p-4 md:p-6 ">
                 <div className="flex flex-col lg:flex-row gap-4 lg:gap-6">
                     <LeftLayout>
                         {/* Header */}
@@ -40,7 +40,7 @@ export const ServicesLayout = () => {
                         />
 
                         {/* Can't find / textarea */}
-                        <section>
+                        <div className='bg-white p-3 rounded-2xl'>
                             <h3 className="text-sm font-medium text-gray-500 mb-3">
                                 Can't find what you are looking for?
                             </h3>
@@ -51,7 +51,7 @@ export const ServicesLayout = () => {
                                focus:ring-2 focus:ring-orange-500 focus:border-transparent min-h-[120px]
                                text-gray-700 placeholder-gray-400 resize-none"
                             />
-                        </section>
+                        </div>
 
                         {/* Next */}
                         <div className="flex justify-end">

@@ -13,8 +13,8 @@ export default function ServiceList({ services }: { services: Service[] }) {
     <section className="w-full mt-4">
       
       {/* Header Cards */}
-      <h3 className="text-lg font-semibold text-gray-900 mb-4">Popular Services</h3>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+      {/* <h3 className="text-lg font-semibold text-gray-900 mb-4">Popular Services</h3> */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-2 bg-[#F1F5F9] p-3 rounded-2xl">
         {headerServices.map((s) => (
           <HeaderServiceCard
             key={s.id}
@@ -27,8 +27,8 @@ export default function ServiceList({ services }: { services: Service[] }) {
       </div>
 
       {/* Regular Services */}
-      <h3 className="text-lg font-semibold text-gray-900 mb-4">All Services</h3>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      {/* <h3 className="text-lg font-semibold text-gray-900 mb-4">All Services</h3> */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 bg-white p-3 rounded-2xl gap-4 ">
         {services.map((s) => (
           <ServiceCard 
             key={s.id} 
