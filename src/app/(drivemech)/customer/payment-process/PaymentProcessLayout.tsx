@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { FormProvider, useForm } from "react-hook-form";
 import PaymentMethodList from "@/components/payment/PaymentMethodList";
 import SavedCardsPanel from "@/components/payment/panels/SavedCardsPanel";
 import UpiPanel from "@/components/payment/panels/UpiPanel";
@@ -15,6 +16,17 @@ export default function PaymentProcessLayout() {
   const [upiId, setUpiId] = useState("");
   const [selectedBank, setSelectedBank] = useState("Hong Leong Bank");
 
+  const form = useForm({
+    defaultValues: {
+      upiId: upiId,
+      cardNumber: "",
+      expiry: "",
+      cvv: "",
+      nameOnCard: "",
+      savedCardCvv: ""
+    }
+  });
+
   const savedCards: SavedCard[] = [
     { id: "1", bankName: "Visa", masked: "****1234", expiry: "12/25" },
     { id: "2", bankName: "Visa", masked: "****9876", expiry: "12/25" },
@@ -23,52 +35,51 @@ export default function PaymentProcessLayout() {
   const banks: BankOption[] = [
     { name: "HSBC Bank Malaysia", logo: "/hsbc.png" },
     { name: "Hong Leong Bank", logo: "/hong.png" },
-    { name: "RHB Bank", logo: "/rhb.png" },
-    { name: "Standard Chartered Malaysia", logo: "/sc.png" },
-    { name: "Affin Bank", logo: "/affin.png" },
   ];
 
   return (
-    <div className="p-6 max-w-6xl mx-auto">
+    <FormProvider {...form}>
+      <div className="p-6 max-w-6xl mx-auto border-border">
 
-      <h2 className="text-lg font-semibold mb-4">Complete Payment</h2>
+        <h2 className="text-lg font-semibold mb-4">Complete Payment</h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 bg-white p-6 rounded-xl border shadow-sm">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 border-border bg-white p-6 rounded-xl shadow-sm">
 
-        {/* LEFT LIST */}
-        <PaymentMethodList selected={method} onSelect={setMethod} />
+          {/* LEFT LIST */}
+          <PaymentMethodList selected={method} onSelect={setMethod} />
 
-        {/* RIGHT DYNAMIC PANEL */}
-        <div>
-          {method === "saved" && (
-            <SavedCardsPanel
-              cards={savedCards}
-              selected={selectedCard}
-              setSelected={setSelectedCard}
-            />
-          )}
+          {/* RIGHT DYNAMIC PANEL */}
+          <div className="p-4 border border-gray-200  rounded-2xl">
+            {method === "saved" && (
+              <SavedCardsPanel
+                cards={savedCards}
+                selected={selectedCard}
+                setSelected={setSelectedCard}
+              />
+            )}
 
-          {method === "upi" && (
-            <UpiPanel upiId={upiId} setUpiId={setUpiId} />
-          )}
+            {method === "upi" && (
+              <UpiPanel upiId={upiId} setUpiId={setUpiId} />
+            )}
 
-          {method === "card" && <CardPanel />}
+            {method === "card" && <CardPanel />}
 
-          {method === "online" && (
-            <OnlineBankingPanel
-              banks={banks}
-              selected={selectedBank}
-              setSelected={setSelectedBank}
-            />
-          )}
+            {method === "online" && (
+              <OnlineBankingPanel
+                banks={banks}
+                selected={selectedBank}
+                setSelected={setSelectedBank}
+              />
+            )}
 
-          {method === "workshop" && (
-            <div className="border rounded-xl p-4 text-gray-700">
-              Pay at Workshop selected
-            </div>
-          )}
+            {method === "workshop" && (
+              <div className="border-border rounded-xl p-4 text-gray-700">
+                Pay at Workshop selected
+              </div>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </FormProvider>
   );
 }

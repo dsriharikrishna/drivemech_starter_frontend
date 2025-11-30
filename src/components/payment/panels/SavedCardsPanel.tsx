@@ -1,4 +1,8 @@
+"use client";
+import { useFormContext } from "react-hook-form";
+import CommonTextInput from "@/components/forms/CommonTextInput";
 import { SavedCard } from "@/types/payment";
+import { CreditCard, HelpCircle } from "lucide-react";
 
 interface Props {
   cards: SavedCard[];
@@ -7,40 +11,68 @@ interface Props {
 }
 
 export default function SavedCardsPanel({ cards, selected, setSelected }: Props) {
+  const form = useFormContext();
+
   return (
-    <div className="border rounded-xl p-4 flex flex-col gap-4">
+    <div className="bg-white rounded-3xl p-6 border border-gray-200 shadow-sm">
+      {cards.map((card, idx) => (
+        <div key={card.id}>
+          {/* Card Row */}
+          <div
+            onClick={() => setSelected(card.id)}
+            className={`flex flex-col gap-3 py-4 cursor-pointer`}
+          >
+            <div className="flex items-center justify-between">
+              {/* Left: Radio + Details */}
+              <div className="flex items-center gap-3">
+                <input
+                  type="radio"
+                  name="savedCard"
+                  checked={selected === card.id}
+                  onChange={() => setSelected(card.id)}
+                  className="w-5 h-5 text-blue-500 focus:ring-blue-500"
+                />
+                <div>
+                  <p className="font-semibold text-[#1A2B4C]">
+                    {card.bankName} {card.masked}
+                  </p>
+                  <p className="text-sm text-gray-500">Expires {card.expiry}</p>
+                </div>
+              </div>
 
-      {cards.map((card) => (
-        <div
-          key={card.id}
-          onClick={() => setSelected(card.id)}
-          className={`flex items-center gap-4 p-3 border rounded-lg cursor-pointer
-            ${selected === card.id ? "border-blue-500 bg-blue-50" : "border-gray-300"}
-          `}
-        >
-          <input type="radio" checked={selected === card.id} readOnly />
+              {/* Right icon bubble */}
+              <div className="w-10 h-10 rounded-full bg-[#EEF3FA] flex items-center justify-center">
+                <CreditCard className="w-5 h-5 text-[#9BA6B8]" />
+              </div>
+            </div>
 
-          <div className="flex-1">
-            <p className="font-medium">{card.bankName} {card.masked}</p>
-            <span className="text-xs text-gray-500">Expires {card.expiry}</span>
+            {/* CVV + Pay (only for selected card) */}
+            {selected === card.id && (
+              <div className="flex items-end gap-4 mt-2 ml-8">
+                <div className="relative w-[160px]">
+                  <CommonTextInput
+                    name="savedCardCvv"
+                    label=""
+                    placeholder="CVV"
+                    form={form}
+                    className="pr-10"
+                  />
+                  <HelpCircle className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                </div>
+
+                <button className="bg-gradient-to-r from-[#FF7B34] to-[#FF8F3C] text-white py-3 px-10 rounded-xl font-semibold shadow hover:opacity-90 transition">
+                  Pay $579
+                </button>
+              </div>
+            )}
           </div>
 
-          <button className="text-gray-400 hover:text-gray-600">🗑</button>
+          {/* Divider (only between cards) */}
+          {idx !== cards.length - 1 && (
+            <div className="border-b border-gray-200 my-2 ml-8" />
+          )}
         </div>
       ))}
-
-      {/* CVV + Pay */}
-      <div className="flex gap-3 items-center">
-        <input
-          type="text"
-          placeholder="CVV"
-          className="border rounded-lg px-3 py-2 w-32"
-        />
-
-        <button className="bg-orange-500 text-white px-6 py-2 rounded-lg">
-          Pay $579
-        </button>
-      </div>
     </div>
   );
 }

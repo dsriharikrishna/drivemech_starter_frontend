@@ -16,6 +16,7 @@ interface Props {
 export default function PaymentMethodList({ selected, onSelect }: Props) {
   return (
     <div className="flex flex-col gap-3">
+      <h1 className="text-lg font-semibold">Payment Options</h1>
 
       {/* Saved Cards */}
       <PaymentOptionButton
@@ -55,9 +56,9 @@ export default function PaymentMethodList({ selected, onSelect }: Props) {
 
       {/* OR Separator */}
       <div className="flex items-center gap-3 mt-2">
-        <div className="flex-grow border-t" />
+        <div className="flex-grow border-t border-border" />
         <span className="text-gray-400 text-sm">or</span>
-        <div className="flex-grow border-t" />
+        <div className="flex-grow border-t border-border" />
       </div>
 
       {/* Pay at Workshop */}
