@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import Button from "../ui/Button";
 import UserDropdown from "../modals/UserDropdown";
 import Dialog from "../modals/Dialog";
-import AvatarMenu from "../profile/AvatarMenu";
+import AvatarMenu from "../customer/profile/AvatarMenu";
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { ChevronDown } from "lucide-react";
-import UserDropdown from "../modals/UserDropdown";
+import UserDropdown from "@/components/modals/UserDropdown";
 
 interface AvatarMenuProps {
   onLogout?: () => void;

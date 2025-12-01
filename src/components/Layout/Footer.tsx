@@ -1,6 +1,21 @@
+"use client";
+
 import Link from 'next/link';
+import { useSelector } from 'react-redux';
+import { selectIndianStates, getCitiesByState } from '@/store/slicers/locationSlicer';
 
 export default function Footer() {
+  const states = useSelector(selectIndianStates);
+  
+  // Get popular states (first 6)
+  const popularStates = states.slice(0, 6);
+  
+  // Get popular cities from major states
+  const getPopularCity = (state: string): string => {
+    const cities = getCitiesByState(state);
+    return cities[0] || ''; // Get first city or empty string
+  };
+
   return (
     <footer className="bg-gray-900 text-white pt-12 pb-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -9,9 +24,9 @@ export default function Footer() {
           <div className="lg:col-span-2">
             <h3 className="text-lg font-semibold mb-4">ABOUT US</h3>
             <p className="text-gray-400 mb-4 leading-relaxed">
-              Your trusted partner for all vehicle service needs. We provide quality automotive services 
+              Your trusted partner for all vehicle service needs across India. We provide quality automotive services 
               with certified mechanics and genuine parts. Experience convenience and reliability with our 
-              comprehensive vehicle care solutions.
+              comprehensive vehicle care solutions in all major cities.
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-gray-400 hover:text-white transition-colors">
@@ -83,16 +98,23 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* POPULAR AREAS NEAR YOU */}
+          {/* POPULAR LOCATIONS IN INDIA */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">POPULAR AREAS NEAR YOU</h3>
+            <h3 className="text-lg font-semibold mb-4">POPULAR LOCATIONS IN INDIA</h3>
             <ul className="space-y-2 text-gray-400">
-              <li><Link href="/location/mallegado" className="hover:text-white transition-colors">Garage near me in Mallegado</Link></li>
-              <li><Link href="/location/santenegali" className="hover:text-white transition-colors">Garage near me in Santenegali</Link></li>
-              <li><Link href="/location/vincuencia" className="hover:text-white transition-colors">Garage near me in Vincuencia</Link></li>
-              <li><Link href="/location/chiselau-port" className="hover:text-white transition-colors">Garage near me in Chiselau port</Link></li>
-              <li><Link href="/location/mangalagri" className="hover:text-white transition-colors">Garage near me in Mangalagri</Link></li>
-              <li><Link href="/location/bapatia" className="hover:text-white transition-colors">Garage near me in Bapatia</Link></li>
+              {popularStates.map((state) => {
+                const popularCity = getPopularCity(state);
+                return (
+                  <li key={state}>
+                    <Link 
+                      href={`/location/${state.toLowerCase().replace(/\s+/g, '-')}`}
+                      className="hover:text-white transition-colors"
+                    >
+                      Garage near me in {popularCity}, {state}
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
           </div>
         </div>
@@ -101,7 +123,7 @@ export default function Footer() {
         <div className="mt-12 pt-6 border-t border-gray-800">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-500 text-sm">
-              &copy; {new Date().getFullYear()} DriveCare. All rights reserved.
+              &copy; {new Date().getFullYear()} DriveMech. All rights reserved.
             </p>
             <div className="flex space-x-6 mt-4 md:mt-0">
               <Link href="/privacy" className="text-gray-500 hover:text-white text-sm transition-colors">
