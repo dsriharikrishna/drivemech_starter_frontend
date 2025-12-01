@@ -1,5 +1,5 @@
+import CustomCard from "@/components/ui/CustomCard";
 import Image from "next/image";
-import CustomCard from "../ui/CustomCard";
 
 interface Props {
   name: string;

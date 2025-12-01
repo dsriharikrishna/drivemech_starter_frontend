@@ -1,5 +1,5 @@
+import CustomCard from "@/components/ui/CustomCard";
 import { CalendarIcon } from "lucide-react";
-import CustomCard from "../ui/CustomCard";
 
 interface Props {
   date: string;

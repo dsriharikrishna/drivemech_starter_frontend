@@ -1,4 +1,4 @@
-import CustomCard from "../ui/CustomCard";
+import CustomCard from "@/components/ui/CustomCard";
 
 interface Props {
   bookingId: string;
