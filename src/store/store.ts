@@ -15,6 +15,7 @@ import storage from "redux-persist/lib/storage";
 import authReducer, { logout } from "./slicers/authSlicer";
 import serviceReducer from './slicers/serviceSlicer';
 import carReducer from './slicers/carSlicer';
+import locationReducer from './slicers/locationSlicer';
 
 const authPersistConfig = {
   key: "auth",
@@ -53,6 +54,7 @@ export const store = configureStore({
     auth: persistedAuthReducer,
     service: serviceReducer,
     car: persistedCarReducer,
+    location: locationReducer,
 
   },
   middleware: (getDefaultMiddleware) =>
