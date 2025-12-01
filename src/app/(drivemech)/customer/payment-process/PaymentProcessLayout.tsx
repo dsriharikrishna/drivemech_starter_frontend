@@ -1,13 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import PaymentMethodList from "@/components/payment/PaymentMethodList";
-import SavedCardsPanel from "@/components/payment/panels/SavedCardsPanel";
-import UpiPanel from "@/components/payment/panels/UpiPanel";
-import OnlineBankingPanel from "@/components/payment/panels/OnlineBankingPanel";
+import PaymentMethodList from "@/components/customer/payment/PaymentMethodList";
+import SavedCardsPanel from "@/components/customer/payment/panels/SavedCardsPanel";
+import UpiPanel from "@/components/customer/payment/panels/UpiPanel";
+import OnlineBankingPanel from "@/components/customer/payment/panels/OnlineBankingPanel";
 
 import { PaymentMethod, SavedCard, BankOption } from "@/types/payment";
-import CardPanel from "@/components/payment/panels/CardPanel";
+import CardPanel from "@/components/customer/payment/panels/CardPanel";
 
 export default function PaymentProcessLayout() {
   const [method, setMethod] = useState<PaymentMethod>("saved");

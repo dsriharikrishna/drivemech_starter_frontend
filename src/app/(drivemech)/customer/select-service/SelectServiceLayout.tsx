@@ -2,12 +2,12 @@
 
 import { FormProvider, useForm } from "react-hook-form";
 
-import ModeOfService from "@/components/select-service/ModeOfService";
-import PreferredDateTime from "@/components/select-service/PreferredDateTime";
-import PersonalDetails from "@/components/select-service/PersonalDetails";
-import AddOns from "@/components/select-service/AddOns";
-import AdditionalNotes from "@/components/select-service/AdditionalNotes";
-import GuestToggle from "@/components/select-service/GuestToggle";
+import ModeOfService from "@/components/customer/select-service/ModeOfService";
+import PreferredDateTime from "@/components/customer/select-service/PreferredDateTime";
+import PersonalDetails from "@/components/customer/select-service/PersonalDetails";
+import AddOns from "@/components/customer/select-service/AddOns";
+import AdditionalNotes from "@/components/customer/select-service/AdditionalNotes";
+import GuestToggle from "@/components/customer/select-service/GuestToggle";
 import AppTiptap from "@/components/editor/AppTiptap";
 
 export default function SelectServiceLayout() {

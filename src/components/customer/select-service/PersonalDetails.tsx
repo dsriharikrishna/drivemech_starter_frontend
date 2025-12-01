@@ -1,6 +1,6 @@
 import { UseFormReturn } from "react-hook-form";
 import { User, Phone, Mail } from "lucide-react";
-import CommonTextInput from "../forms/CommonTextInput";
+import CommonTextInput from "../../forms/CommonTextInput";
 
 interface Props {
   form: UseFormReturn<any>;

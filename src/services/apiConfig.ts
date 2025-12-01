@@ -24,5 +24,17 @@ const API_CONFIG: ApiConfig = {
   ENDPOINTS: frozenEndpoints,
 };
 
+// Add nested endpoints for location services
+export const LOCATION_ENDPOINTS = {
+  LOCATIONS: {
+    ALL: '/locations',
+    BY_ID: '/locations',
+  },
+  GARAGES: {
+    SEARCH: '/garages/search',
+    BY_ID: '/garages',
+  },
+} as const;
+
 export default API_CONFIG;
 export { API_CONFIG };
