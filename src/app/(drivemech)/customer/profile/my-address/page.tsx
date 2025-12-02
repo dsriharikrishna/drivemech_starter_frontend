@@ -1,7 +1,7 @@
 "use client";
 
+import AddAddressForm from "@/components/customer/profile/address/AddAddressForm";
 import { useState } from "react";
-import AddAddressForm from "../address/AddAddressForm";
 
 interface Address {
   id: string;

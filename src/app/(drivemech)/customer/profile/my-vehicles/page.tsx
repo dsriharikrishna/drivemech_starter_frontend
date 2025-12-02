@@ -1,7 +1,8 @@
+"use client";
+import AddVehicleForm from "@/components/customer/profile/vehicles/AddVehicleForm";
+import DefaultVehicleNote from "@/components/customer/profile/vehicles/DefaultVehicleNote";
+import VehicleCard, { Vehicle } from "@/components/customer/profile/vehicles/VehicleCard";
 import React from "react";
-import DefaultVehicleNote from "../vehicles/DefaultVehicleNote";
-import VehicleCard, { Vehicle } from "../vehicles/VehicleCard";
-import AddVehicleForm from "../vehicles/AddVehicleForm";
 
 
 export default function VehiclesTab() {
@@ -59,7 +60,7 @@ export default function VehiclesTab() {
       {/* List */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
         {vehicles.map((v) => (
-          <VehicleCard
+          <VehicleCard 
             key={v.id}
             vehicle={v}
             onEdit={handleEdit}

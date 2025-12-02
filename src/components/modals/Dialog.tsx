@@ -9,24 +9,18 @@ interface DialogProps {
 }
 
 export default function Dialog({ children, isOpen, onClose }: DialogProps) {
-  // Close modal on ESC key
+  // ESC key closes modal
   useEffect(() => {
     function handleEsc(e: KeyboardEvent) {
       if (e.key === "Escape") onClose();
     }
-
     if (isOpen) document.addEventListener("keydown", handleEsc);
     return () => document.removeEventListener("keydown", handleEsc);
   }, [isOpen, onClose]);
 
-  // Lock background scroll
+  // Prevent background scrolling
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-
+    document.body.style.overflow = isOpen ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
     };
@@ -36,7 +30,7 @@ export default function Dialog({ children, isOpen, onClose }: DialogProps) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-[2px]"
       onClick={onClose}
       role="presentation"
     >

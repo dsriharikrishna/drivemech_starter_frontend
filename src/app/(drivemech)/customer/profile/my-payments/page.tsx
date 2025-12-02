@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-export default function PaymentsTab() {
+export default function PaymentsPage() {
   const [activeFilter, setActiveFilter] = useState("all");
 
   const filters = ["all", "services", "spares", "towing", "insurance"];
