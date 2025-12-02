@@ -35,7 +35,7 @@ export default function ProfileSidebar() {
   ];
 
   return (
-    <div className="w-64 bg-white rounded-xl shadow p-3 min-h-[calc(100vh-100px)]">
+    <div className="w-64 bg-white rounded-xl shadow p-3">
       <ul className="space-y-1">
         {menu.map((item) => (
           <li

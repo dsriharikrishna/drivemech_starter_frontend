@@ -46,7 +46,7 @@ export default function ProfileTab() {
   };
 
   return (
-    <div className="flex-1 p-6 bg-white rounded-xl shadow">
+    <div className="flex-1 p-8 bg-white rounded-xl shadow">
       <FormProvider {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)}>
           
