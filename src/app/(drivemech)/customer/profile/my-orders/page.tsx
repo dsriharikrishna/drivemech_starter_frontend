@@ -1,55 +1,40 @@
-import OrderCard from "@/components/customer/profile/orders/services/OrderCard";
+"use client";
 
-export default function MyOrdersPage() {
-  const orders = [
-    {
-      garageName: "A to Z Garage",
-      orderId: "#SRV-001",
-      date: "30 July 2025, 2:00 PM",
-      registration: "ABC1234 D",
-      status: "Completed" as const,
-      image: "/garage.jpg",
-      bookedItems: [
-        { label: "Periodic Maintenance", price: 149 },
-        { label: "AC Gas Refill", price: 85 },
-        { label: "Wheel Alignment", price: 45 },
-      ],
-    },
-    {
-      garageName: "A to Z Garage",
-      orderId: "#SRV-001",
-      date: "30 July 2025, 2:00 PM",
-      registration: "ABC1234 D",
-      status: "In Progress" as const,
-      image: "/garage.jpg",
-      bookedItems: [
-        { label: "Periodic Maintenance", price: 149 },
-        { label: "AC Gas Refill", price: 85 },
-        { label: "Wheel Alignment", price: 45 },
-      ],
-    },
-    {
-      garageName: "A to Z Garage",
-      orderId: "#SRV-001",
-      date: "30 July 2025, 2:00 PM",
-      registration: "ABC1234 D",
-      status: "Cancelled" as const,
-      image: "/garage.jpg",
-      bookedItems: [
-        { label: "Periodic Maintenance", price: 149 },
-        { label: "AC Gas Refill", price: 85 },
-        { label: "Wheel Alignment", price: 45 },
-      ],
-    },
-  ];
+import React from "react";
+import { useRouter, usePathname } from "next/navigation";
+
+const tabs = [
+  { label: "Services", path: "/customer/profile/my-orders/services" },
+  { label: "Spares", path: "/customer/profile/my-orders/spares" },
+  { label: "Towing", path: "/customer/profile/my-orders/towing" },
+  { label: "Insurance", path: "/customer/profile/my-orders/insurance" },
+];
+
+export default function OrdersTabs() {
+  const router = useRouter();
+  const pathname = usePathname();
 
   return (
-    <div className="p-6 space-y-6">
-      <h1 className="text-2xl font-bold mb-4">My Orders</h1>
+    <div className="flex gap-2 mb-4">
+      {tabs.map((tab) => {
+        const isActive = pathname === tab.path;
 
-      {orders.map((order, idx) => (
-        <OrderCard key={idx} {...order} />
-      ))}
+        return (
+          <button
+            key={tab.label}
+            onClick={() => router.push(tab.path)}
+            className={`px-4 py-2 rounded-lg border flex items-center gap-2 text-sm transition
+              ${
+                isActive
+                  ? "bg-orange-500 text-white border-orange-500"
+                  : "bg-white text-gray-600 border-gray-200 hover:bg-gray-100"
+              }
+            `}
+          >
+            {tab.label}
+          </button>
+        );
+      })}
     </div>
   );
 }
