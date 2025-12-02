@@ -26,13 +26,13 @@ export default function ProfileSidebar({ activeTab, setActiveTab }: Props) {
   ];
 
   return (
-    <div className="w-64 bg-white rounded-xl shadow p-5">
+    <div className="w-64 bg-white rounded-xl shadow p-3">
       <ul className="space-y-1">
         {menu.map((item) => (
           <li
             key={item.label}
             onClick={() => setActiveTab(item.label)}
-            className={`flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg cursor-pointer
+            className={`flex items-center gap-4 px-2.5 py-1.5 text-sm font-medium rounded-lg cursor-pointer
               ${
                 activeTab === item.label
                   ? "bg-orange-500 text-white"
@@ -46,7 +46,7 @@ export default function ProfileSidebar({ activeTab, setActiveTab }: Props) {
         ))}
       </ul>
 
-      <button className="flex items-center gap-3 px-4 py-3 mt-6 text-sm text-red-600 border border-red-300 rounded-lg hover:bg-red-50">
+      <button className="w-full flex items-center justify-center gap-3 px-2.5 py-1.5 mt-3 text-sm text-red-600 border border-red-300 rounded-lg hover:bg-red-50">
         🔐 Logout
       </button>
     </div>

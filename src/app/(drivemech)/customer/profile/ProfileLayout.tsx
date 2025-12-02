@@ -35,8 +35,14 @@ export default function ProfileLayout() {
 
   return (
     <div className="flex gap-6 bg-[#f6f7fa] min-h-screen p-6">
-      <ProfileSidebar activeTab={activeTab} setActiveTab={setActiveTab} />
-      <div className="flex-1">{renderTabContent()}</div>
+      <aside className="max-h-[380px] overflow-y-auto">
+        <ProfileSidebar activeTab={activeTab} setActiveTab={setActiveTab} />
+      </aside>
+
+      <main className="flex-1">
+        {renderTabContent()}
+      </main>
     </div>
+
   );
 }
