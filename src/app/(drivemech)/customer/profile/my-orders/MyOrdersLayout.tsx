@@ -1,7 +1,9 @@
 "use client";
 
+import InsuranceTab from "@/components/customer/profile/orders/tabs/insurance/InsuranceTab";
 import ServicesTab from "@/components/customer/profile/orders/tabs/services/ServicesTab";
 import SparesTab from "@/components/customer/profile/orders/tabs/spares/SparesTab";
+import TowingTab from "@/components/customer/profile/orders/tabs/towing/TowingTab";
 import React from "react";
 
 const tabs = [
@@ -32,10 +34,9 @@ export default function MyOrdersLayout() {
               key={tab.label}
               onClick={() => setActiveTab(tab.label)}
               className={`px-4 py-2 whitespace-nowrap rounded-lg border flex items-center gap-2 text-sm transition
-                ${
-                  isActive
-                    ? "bg-orange-500 text-white border-orange-500"
-                    : "bg-white text-gray-600 border-gray-200 hover:bg-gray-100"
+                ${isActive
+                  ? "bg-orange-500 text-white border-orange-500"
+                  : "bg-white text-gray-600 border-gray-200 hover:bg-gray-100"
                 }
               `}
             >
@@ -55,11 +56,11 @@ export default function MyOrdersLayout() {
         )}
 
         {activeTab === "Towing" && (
-          <div className="text-sm text-gray-600">Towing Content</div>
+          <TowingTab />
         )}
 
         {activeTab === "Insurance" && (
-          <div className="text-sm text-gray-600">Insurance Content</div>
+          <InsuranceTab />
         )}
 
       </div>
