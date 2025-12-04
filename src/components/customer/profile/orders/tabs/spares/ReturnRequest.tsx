@@ -1,126 +1,165 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
-import { ChevronDown, Upload } from "lucide-react";
+import { ChevronDown, Upload, ArrowLeft } from "lucide-react";
+import { useRouter } from "next/navigation";
+import ConfirmReturn from "@/components/customer/profile/orders/tabs/spares/ConfirmReturn";
+import ReturnSubmitted from "./ReturnSubmitted";
 
-const products = [
-  { id: "p1", name: "Bosch Brake Pad Set", brand: "Bosch", qty: 2, price: 118.0, img: "/images/spares/brakepad.png" },
-  { id: "p2", name: "Bosch Air Filter", brand: "Bosch", qty: 1, price: 28.0, img: "/images/spares/airfilter.png" },
-  { id: "p3", name: "Wiper Blades Set", brand: "Bosch", qty: 1, price: 22.0, img: "/images/spares/wiper.png" },
-];
+export function ReturnRequest({ id }: { id: string }) {
+  const router = useRouter();
 
-export default function ReturnRequest({ orderId = "SPR-001", onConfirm }: { orderId?: string; onConfirm?: (data: any) => void }) {
-  const [productId, setProductId] = useState("");
+  const [selectedProduct, setSelectedProduct] = useState("");
   const [reason, setReason] = useState("");
   const [comments, setComments] = useState("");
   const [files, setFiles] = useState<File[]>([]);
-  const [refundMethod, setRefundMethod] = useState("original");
+  const [stage, setStage] = useState<"form" | "confirm" | "success">("form");
 
-  const reasons = ["Wrong item delivered", "Damaged item", "Missing parts", "Quality issue", "Other"];
+  const products = [
+    { label: "Bosch Brake Pad Set", value: "p1", amount: 118 },
+    { label: "Bosch Air Filter", value: "p2", amount: 28 },
+    { label: "Wiper Blades Set", value: "p3", amount: 22 },
+  ];
 
-  const handleFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const reasons = [
+    "Wrong Item Delivered",
+    "Damaged Product",
+    "Not as Described",
+    "Missing Items",
+    "Other",
+  ];
+
+  const selectedItem = products.find((p) => p.value === selectedProduct);
+
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) setFiles(Array.from(e.target.files));
   };
 
-  const handleSubmit = () => {
-    if (!productId || !reason) {
-      alert("Please select product and reason");
-      return;
-    }
-    const selected = products.find(p => p.id === productId);
-    const payload = { orderId, productId, reason, comments, files, refundMethod, amount: selected?.price || 0 };
-    // pass to confirmation modal
-    onConfirm?.(payload);
-  };
+  // ✅ FIXED CONFIRM STAGE
+  if (stage === "confirm" && selectedItem) {
+    return (
+      <ConfirmReturn
+        payload={{
+          productName: selectedItem.label,
+          amount: selectedItem.amount,
+          reason,
+          comments,
+          files,
+          refundMethod: "original",
+          address: "123 Main Street, Apartment 4B",
+        }}
+        onBack={() => setStage("form")}
+        onSubmit={() => setStage("success")}
+      />
+    );
+  }
 
+  // SUCCESS STAGE (unchanged)
+  if (stage === "success") {
+    return (
+      <ReturnSubmitted
+        returnId={id}
+        onClose={() => router.push("/customer/profile/my-orders/spares")}
+      />
+
+    );
+  }
+
+  // FORM STAGE (unchanged)
   return (
-    <div className="w-full max-w-3xl mx-auto p-6 space-y-6">
-      <h2 className="text-lg font-semibold">Return or Replace</h2>
+    <div className="max-w-4xl mx-auto p-6 space-y-6">
+      {/* Header */}
+      <div className="flex items-center gap-3">
+        <button onClick={() => router.back()} className="p-2 hover:bg-gray-100 rounded-lg">
+          <ArrowLeft size={20} />
+        </button>
+        <h1 className="text-xl font-semibold">Return or Replace</h1>
+      </div>
 
-      <div className="border rounded-xl p-4">
-        <p className="font-semibold mb-2">Product Details</p>
-        {products.map((p, i) => (
-          <div key={p.id} className={`flex items-center justify-between py-3 ${i !== products.length - 1 ? "border-b" : ""}`}>
+      {/* Product List */}
+      <div className="border rounded-xl p-5 bg-white space-y-4">
+        <p className="font-semibold text-gray-700">Product Details</p>
+        <p className="text-xs text-gray-500">Order ID: {id}</p>
+
+        {products.map((item) => (
+          <div key={item.value} className="flex justify-between border-b last:border-none py-3">
             <div className="flex items-center gap-3">
-              <Image src={p.img} width={44} height={44} alt={p.name} className="rounded-lg" />
-              <div>
-                <p className="font-medium">{p.name}</p>
-                <p className="text-sm text-gray-500">{p.brand} • Qty: {p.qty}</p>
-              </div>
+              <Image src="/images/spares/brakepad.png" width={40} height={40} alt="product" />
+              <p>{item.label}</p>
             </div>
-            <div className="text-orange-500 font-semibold">${p.price.toFixed(2)}</div>
+            <p className="text-orange-500 font-semibold">${item.amount}</p>
           </div>
         ))}
       </div>
 
-      <div className="space-y-3">
+      {/* Select Product */}
+      <div className="border rounded-xl p-4 bg-white">
         <label className="text-sm font-medium">Select Product to Return *</label>
-        <select value={productId} onChange={e => setProductId(e.target.value)} className="w-full p-3 border rounded-xl">
+        <select
+          value={selectedProduct}
+          onChange={(e) => setSelectedProduct(e.target.value)}
+          className="w-full mt-2 p-3 border rounded-xl"
+        >
           <option value="">Select a product</option>
-          {products.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
+          {products.map((p) => (
+            <option key={p.value} value={p.value}>
+              {p.label}
+            </option>
+          ))}
         </select>
+      </div>
 
+      {/* Reason */}
+      <div className="border rounded-xl p-4 bg-white">
         <label className="text-sm font-medium">Reason for Return *</label>
-        <select value={reason} onChange={e => setReason(e.target.value)} className="w-full p-3 border rounded-xl">
+        <select
+          value={reason}
+          onChange={(e) => setReason(e.target.value)}
+          className="w-full mt-2 p-3 border rounded-xl"
+        >
           <option value="">Select a reason</option>
-          {reasons.map(r => <option key={r} value={r}>{r}</option>)}
+          {reasons.map((r) => (
+            <option key={r} value={r}>
+              {r}
+            </option>
+          ))}
         </select>
-
-        <label className="text-sm font-medium">Additional Comments (Optional)</label>
-        <textarea value={comments} onChange={e => setComments(e.target.value)} className="w-full h-28 p-3 border rounded-xl" placeholder="Describe the issue..." />
-
-        <div className="border rounded-xl bg-gray-50 p-6 text-center">
-          <Upload className="mx-auto mb-2" />
-          <p className="font-medium mb-1">Upload Photos (Optional)</p>
-          <p className="text-sm text-gray-500 mb-3">Upload photos to help us process faster</p>
-          <label className="px-4 py-2 bg-gray-200 rounded-lg cursor-pointer">
-            Choose Files
-            <input type="file" onChange={handleFiles} className="hidden" multiple />
-          </label>
-          {files.length > 0 && <p className="text-sm text-gray-600 mt-2">{files.length} files selected</p>}
-        </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-3 items-center">
-        <div className="border rounded-xl p-4">
-          <p className="text-sm">Pickup Address</p>
-          <p className="font-medium">123 Main Street, Apartment 4B</p>
-          <button className="text-sm text-orange-500 mt-2">Change Address</button>
-        </div>
-
-        <div className="border rounded-xl p-4">
-          <p className="text-sm">Refund Method</p>
-          <div className="mt-3 space-y-2">
-            <label className={`flex items-center justify-between p-3 border rounded-lg ${refundMethod === "original" ? "border-orange-300 bg-orange-50" : ""}`}>
-              <div>
-                <p className="font-medium">Original Payment Method</p>
-                <p className="text-sm text-gray-500">Refund to card ending in ****1234</p>
-              </div>
-              <input type="radio" checked={refundMethod === "original"} onChange={() => setRefundMethod("original")} />
-            </label>
-
-            <label className={`flex items-center justify-between p-3 border rounded-lg ${refundMethod === "wallet" ? "border-orange-300 bg-orange-50" : ""}`}>
-              <div>
-                <p className="font-medium">DriveMech Wallet</p>
-                <p className="text-sm text-gray-500">Instant credit to your wallet</p>
-              </div>
-              <input type="radio" checked={refundMethod === "wallet"} onChange={() => setRefundMethod("wallet")} />
-            </label>
-          </div>
-        </div>
+      {/* Additional Comments */}
+      <div className="border rounded-xl p-4 bg-white">
+        <label className="text-sm font-medium">Additional Comments</label>
+        <textarea
+          value={comments}
+          onChange={(e) => setComments(e.target.value)}
+          className="w-full p-3 rounded-xl border mt-2 h-28"
+          placeholder="Describe the issue..."
+        />
       </div>
 
-      <div className="bg-green-50 border rounded-xl p-4 text-green-800">
-        <p className="font-semibold">Refund Amount</p>
-        <p className="text-lg font-bold">${products.find(p => p.id === productId)?.price ?? "0.00"}</p>
-        <p className="text-xs mt-1">Refund will be processed within 5-7 business days</p>
+      {/* Upload Photos */}
+      <div className="border rounded-xl p-6 bg-gray-50 text-center">
+        <Upload className="mx-auto text-gray-500 mb-2" />
+
+        <label className="px-4 py-2 bg-gray-200 rounded-lg cursor-pointer text-sm">
+          Choose Files
+          <input type="file" multiple className="hidden" onChange={handleFileUpload} />
+        </label>
+
+        {files.length > 0 && (
+          <p className="text-sm text-gray-600 mt-2">{files.length} file(s) selected</p>
+        )}
       </div>
 
-      <div className="flex gap-3">
-        <button onClick={() => handleSubmit()} className="flex-1 bg-orange-500 text-white py-3 rounded-xl">Submit Return Request</button>
-        <button onClick={() => onConfirm?.({ cancel: true })} className="flex-1 border rounded-xl py-3">Cancel</button>
-      </div>
+      {/* Submit */}
+      <button
+        disabled={!selectedProduct || !reason}
+        onClick={() => setStage("confirm")}
+        className="w-full bg-orange-500 text-white py-3 rounded-xl font-semibold disabled:bg-gray-300"
+      >
+        Submit Return Request
+      </button>
     </div>
   );
 }

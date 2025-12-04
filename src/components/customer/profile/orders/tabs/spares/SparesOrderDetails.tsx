@@ -16,7 +16,6 @@ import Dialog from "@/components/modals/Dialog";
 import DownLoadSpareInvoice from "./DownLoadSpareInvoice";
 import WriteSpareReview from "./WriteSpareReview";
 import RaiseSpareComplaint from "./RaiseSpareComplaint";
-import ReturnRequest from "./ReturnRequest";
 import DialogBody from "@/components/modals/DialogBody";
 
 export default function SparesOrderDetails({ id }: { id: string }) {
@@ -159,11 +158,14 @@ export default function SparesOrderDetails({ id }: { id: string }) {
 
                     {/* RETURN REQUEST */}
                     <button
-                        onClick={() => router.push(`/customer/profile/my-orders/spares/return-request?id=${id}`)}
+                        onClick={() =>
+                            router.push(`/customer/profile/my-orders/spares/return-request/${id}`)
+                        }
                         className="w-full border rounded-xl py-3 text-gray-700 hover:bg-gray-100"
                     >
                         Return Request
                     </button>
+
                 </div>
             </div>
 

@@ -1,8 +1,10 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import React from "react";
 
-export default function ReturnSubmitted({ returnId = "RET-2024-7042", onClose }: { returnId?: string; onClose?: () => void }) {
+export default function ReturnSubmitted({ returnId = "", onClose }: { returnId?: string; onClose?: () => void }) {
+    const router = useRouter();
   return (
     <div className="w-full max-w-3xl mx-auto p-6 text-center">
       <div className="w-20 h-20 mx-auto bg-green-100 rounded-full flex items-center justify-center mb-4">
@@ -23,7 +25,7 @@ export default function ReturnSubmitted({ returnId = "RET-2024-7042", onClose }:
 
       <div className="flex gap-3">
         <button onClick={onClose} className="flex-1 border rounded-xl py-3">Back to Orders</button>
-        <button className="flex-1 bg-orange-500 text-white py-3 rounded-xl">Track Return Status</button>
+        <button onClick={()=>router.push(`/customer/profile/my-orders/spares/return-tracking/${returnId}`)} className="flex-1 bg-orange-500 text-white py-3 rounded-xl">Track Return Status</button>
       </div>
     </div>
   );
