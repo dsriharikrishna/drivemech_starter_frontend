@@ -21,7 +21,7 @@ export default function DownLoadSpareInvoice({ orderId = "SPR-001", onClose }: {
   };
 
   return (
-    <div className="w-full max-w-3xl mx-auto p-6">
+    <div className="w-full md:w-3xl mx-auto">
       <div className="flex items-center gap-4 mb-6">
         <div className="w-16 h-16 rounded-full bg-orange-100 flex items-center justify-center overflow-hidden">
           <Image src={GARAGE_ICON} alt="garage" width={48} height={48} />
@@ -71,13 +71,13 @@ export default function DownLoadSpareInvoice({ orderId = "SPR-001", onClose }: {
       <div className="flex gap-3">
         <button
           onClick={handleDownload}
-          className="flex-1 bg-orange-500 hover:bg-orange-600 text-white rounded-xl py-3 font-semibold"
+          className="flex-1 bg-orange-500 hover:bg-orange-600 text-white rounded-xl py-1.5 font-semibold"
         >
           Download Invoice
         </button>
         <button
           onClick={onClose}
-          className="flex-1 border rounded-xl py-3 font-semibold hover:bg-gray-50"
+          className="flex-1 border rounded-xl py-1.5 font-semibold hover:bg-gray-50"
         >
           Close
         </button>
