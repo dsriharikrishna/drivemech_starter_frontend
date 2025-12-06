@@ -2,21 +2,24 @@
 
 import Image from "next/image";
 import { Star } from "lucide-react";
+import { X } from "phosphor-react";
 
 export default function ThankYouReview({
   rating,
   serviceName,
   onDone,
+  onClose
 }: {
   rating: number;
   serviceName: string;
   onDone?: () => void;
+  onClose?: () => void
 }) {
   return (
-    <div className="w-full max-w-3xl mx-auto bg-white rounded-2xl shadow-lg overflow-hidden">
+    <div className="w-3xl bg-white rounded-2xl flex flex-col gap-2">
 
       {/* Top Green Section */}
-      <div className="bg-gradient-to-b from-green-500 to-green-400 text-center py-10 px-4 text-white relative">
+      <div className="bg-gradient-to-b from-green-500 to-green-400 text-center rounded-2xl py-10 px-2 text-white relative">
         <div className="w-16 h-16 mx-auto bg-white/20 rounded-full flex items-center justify-center mb-4">
           <span className="text-4xl">👍</span>
         </div>
@@ -25,7 +28,7 @@ export default function ThankYouReview({
         <p className="text-sm opacity-90">Your feedback has been submitted</p>
       </div>
 
-      <div className="p-6 space-y-6">
+      <div className="flex flex-col gap-2 ">
 
         {/* Rating Summary Box */}
         <div className="rounded-xl border border-orange-200 bg-orange-50 py-6 px-4 text-center">
@@ -36,11 +39,10 @@ export default function ThankYouReview({
               <Star
                 key={star}
                 size={28}
-                className={`${
-                  rating >= star
-                    ? "fill-orange-500 text-orange-500"
-                    : "text-gray-300"
-                }`}
+                className={`${rating >= star
+                  ? "fill-orange-500 text-orange-500"
+                  : "text-gray-300"
+                  }`}
               />
             ))}
           </div>

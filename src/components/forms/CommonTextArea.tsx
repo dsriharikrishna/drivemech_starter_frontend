@@ -12,6 +12,7 @@ interface TextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   rules?: RegisterOptions;
   rows?: number;
   register?: any;
+  error?: string;
 }
 
 export default function CommonTextArea({
@@ -27,6 +28,7 @@ export default function CommonTextArea({
   rules = {},
   rows = 4,
   register,
+  error,
   ...rest
 }: TextAreaProps) {
   // Safely use form context
@@ -36,7 +38,7 @@ export default function CommonTextArea({
   const actualRegister = register || formContext?.register;
   const errors = formContext?.formState.errors;
 
-  const error = errors?.[name]?.message as string;
+  const formError = error || (errors?.[name]?.message as string);
 
   return (
     <div className={`flex flex-col ${className}`}>
@@ -60,13 +62,12 @@ export default function CommonTextArea({
           disabled={disabled}
           autoComplete={autoComplete}
           className={`border-2 placeHolder text-sm rounded-lg  block w-full px-3 py-2 pr-10 focus:border-primary-500 focus:ring-0
-    ${error ? "border-red-500 bg-red-50" : "border-gray-200"} 
+    ${formError ? "border-red-500 bg-red-50" : "border-gray-200"} 
     ${leftIcon ? "pl-10" : "pl-3"}
     ${disabled ? "bg-gray-100 cursor-not-allowed" : ""}`}
           {...(actualRegister ? actualRegister(name, rules) : {})}
           {...rest}
         />
-
 
         {icon && (
           <div className="absolute top-3 right-3 text-gray-500">
@@ -75,7 +76,9 @@ export default function CommonTextArea({
         )}
       </div>
 
-      {error && <p className="text-sm text-red-500 mt-1">{error}</p>}
+      {formError && (
+        <p className="mt-1 text-sm text-red-600">{formError}</p>
+      )}
     </div>
   );
 }

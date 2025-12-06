@@ -4,6 +4,7 @@ import InsuranceTab from "@/components/customer/profile/orders/tabs/insurance/In
 import ServicesTab from "@/components/customer/profile/orders/tabs/services/ServicesTab";
 import SparesTab from "@/components/customer/profile/orders/tabs/spares/SparesTab";
 import TowingTab from "@/components/customer/profile/orders/tabs/towing/TowingTab";
+import Divider from "@/components/ui/Divider";
 import React from "react";
 
 const tabs = [
@@ -17,12 +18,12 @@ export default function MyOrdersLayout() {
   const [activeTab, setActiveTab] = React.useState(tabs[0].label);
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full p-2">
 
       {/* ---- TABS ---- */}
       <div
         className="
-          flex gap-2 overflow-x-auto scrollbar-hide py-2 
+          flex gap-2 overflow-x-auto scrollbar-hide py-2
           sticky top-0 z-10 bg-white 
         "
       >
@@ -46,8 +47,10 @@ export default function MyOrdersLayout() {
         })}
       </div>
 
+      <Divider variant="solid" className="my-2" />
+    
       {/* ---- TAB CONTENT ---- */}
-      <div className="p-3 md:p-4 mt-2 flex-1">
+      <div className="p-1 md:p-2 mt-2 flex-1">
 
         {activeTab === "Services" && <ServicesTab />}
 

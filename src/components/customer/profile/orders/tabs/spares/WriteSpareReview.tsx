@@ -69,7 +69,7 @@ export default function WriteSpareReview({ orderId = "SPR-001", onClose }: { ord
         <p className="text-sm text-gray-500">Tap to rate</p>
       </div>
 
-      <div className="mb-4">
+      <div className="mb-4 border border-gray-200 ">
         <p className="font-medium mb-2">What did you like? (Optional)</p>
         <div className="flex flex-wrap gap-2">
           {tags.map(t => (

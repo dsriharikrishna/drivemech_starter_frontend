@@ -9,6 +9,10 @@ import WriteReview from "./WriteReview";
 import Dialog from "@/components/modals/Dialog";
 import RaiseComplaint from "./RaiseComplaint";
 import DialogBody from "@/components/modals/DialogBody";
+import Divider from "@/components/ui/Divider";
+import ThankYouReview from "./ThankYouReview";
+import DialogHeader from "@/components/modals/DialogHeader";
+import ComplaintSubmitted from "./ComplaintSubmitted";
 
 const tabs = [
     "Engine Oil Change",
@@ -24,6 +28,11 @@ export default function OrderDetails({ id }: { id: string }) {
     const [isWriteReview, setIsWriteReview] = React.useState(false);
     const [isSendComplaint, setIsSendComplaint] = React.useState(false);
     const [isReorderService, setIsReorderService] = React.useState(false);
+
+    const [isReviewed, setIsReviewed] = React.useState(false);
+    const [rating, setRating] = React.useState(0);
+
+    const [isComplaintSend, setIsComplaintSend] = React.useState(false);
 
     const downloadInvoice = () => {
         console.log("Download invoice for order:", id);
@@ -49,11 +58,12 @@ export default function OrderDetails({ id }: { id: string }) {
         // TODO: Navigate to service booking
     };
 
+
     return (
         <div className="p-6 bg-white flex flex-col">
 
             {/* HEADER */}
-            <div className="flex items-center gap-3 mb-6">
+            <div className="flex items-center gap-3 mb-6 border-b border-gray-200 pb-2">
                 <button
                     onClick={() => router.back()}
                     className="p-2 hover:bg-gray-100 rounded-lg transition"
@@ -67,12 +77,10 @@ export default function OrderDetails({ id }: { id: string }) {
                 </div>
             </div>
 
-            <div className="border-border border-t mb-6"></div>
-
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
                 {/* LEFT SECTION - SERVICE SUMMARY */}
-                <div className="lg:col-span-2 bg-white border-border  rounded-2xl shadow-sm p-6">
+                <div className="lg:col-span-2 bg-white border border-gray-200  rounded-2xl p-6">
                     <h2 className="font-semibold text-lg mb-4">Service Summary</h2>
 
                     <p className="text-gray-500 font-medium mb-2">Tasks Performed</p>
@@ -90,6 +98,7 @@ export default function OrderDetails({ id }: { id: string }) {
                             </li>
                         ))}
                     </ul>
+                    <Divider />
 
                     <p className="text-gray-500 font-medium mb-1">Parts Used</p>
 
@@ -159,20 +168,20 @@ export default function OrderDetails({ id }: { id: string }) {
                     </div>
 
                     {/* Payment Summary */}
-                    <div className="bg-white border-border  rounded-2xl shadow-sm p-5">
+                    <div className="bg-white border-border rounded-2xl shadow-sm p-5">
                         <p className="text-sm font-semibold mb-3">Payment Summary</p>
 
                         <div className="flex justify-between text-sm py-1">
                             <span>Service Charges</span>
                             <span>$92.00</span>
                         </div>
+                        <Divider />
 
                         <div className="flex justify-between text-sm py-1">
                             <span>Parts Cost</span>
                             <span>$57.00</span>
                         </div>
-
-                        <div className="border-border  my-3"></div>
+                        <Divider />
 
                         <div className="flex justify-between font-semibold text-lg text-orange-500">
                             <span>Total Paid</span>
@@ -182,17 +191,17 @@ export default function OrderDetails({ id }: { id: string }) {
 
                     {/* Action Buttons */}
                     <div className="grid grid-cols-3 gap-3">
-                        <button onClick={downloadInvoice} className="border-border  rounded-xl py-4 text-sm flex flex-col items-center gap-2 hover:bg-gray-50">
+                        <button onClick={downloadInvoice} className="border border-gray-200 rounded-xl py-2 text-sm flex flex-col items-center gap-2 hover:bg-gray-50">
                             <span className="text-xl">⬇️</span>
                             Invoice
                         </button>
 
-                        <button onClick={writeReview} className="border-border  rounded-xl py-4 text-sm flex flex-col items-center gap-2 hover:bg-gray-50">
+                        <button onClick={writeReview} className="border border-gray-200  rounded-xl py-2 text-sm flex flex-col items-center gap-2 hover:bg-gray-50">
                             <span className="text-xl">⭐</span>
                             Write Review
                         </button>
 
-                        <button onClick={sendComplaint} className="border-border  rounded-xl py-4 text-sm flex flex-col items-center gap-2 hover:bg-gray-50">
+                        <button onClick={sendComplaint} className="border border-gray-200  rounded-xl py-2 text-sm flex flex-col items-center gap-2 hover:bg-gray-50">
                             <span className="text-xl">💬</span>
                             Complaint
                         </button>
@@ -214,23 +223,68 @@ export default function OrderDetails({ id }: { id: string }) {
                 </Dialog>
             )}
 
-            {isWriteReview && (
-                <Dialog isOpen={isWriteReview} onClose={() => setIsWriteReview(false)}>
-                    <DialogBody>
-                        <WriteReview onClose={() => setIsWriteReview(false)} />
-                    </DialogBody>
+            {/* WRITE REVIEW MODAL */}
+            <Dialog isOpen={isWriteReview} onClose={() => setIsWriteReview(false)}>
+                <DialogBody className="p-4">
+                    <DialogHeader
+                        title={"Rate Your Experience"}
+                        onClose={() => setIsWriteReview(false)}
 
-                </Dialog>
-            )}
+                    />
+                    <WriteReview
+                        onClose={() => setIsWriteReview(false)}
+                        setIsReviewed={(v) => {
+                            setIsWriteReview(false);
+                            setIsReviewed(v);
+                        }}
+                        setRatingFromChild={setRating}
+                    />
+                </DialogBody>
+            </Dialog>
 
+            {/* THANK YOU MODAL */}
+            <Dialog isOpen={isReviewed} onClose={() => setIsReviewed(false)}>
+                <DialogBody className="p-4">
+                    <DialogHeader
+                        title={"Review"}
+                        onClose={() => setIsReviewed(false)}
+
+                    />
+                    <ThankYouReview
+                        rating={rating}
+                        serviceName="Periodic Maintenance"
+                        onDone={() => setIsReviewed(false)}
+                        onClose={() => setIsReviewed(false)}
+                    />
+                </DialogBody>
+            </Dialog>
 
             {isSendComplaint && (
                 <Dialog isOpen={isSendComplaint} onClose={() => setIsSendComplaint(false)}>
-                    <DialogBody>
-                        <RaiseComplaint />
+                    <DialogBody className="p-6">
+                        <DialogHeader
+                            title={"Raise a Complaint"}
+                            onClose={() => setIsReviewed(false)}
+
+                        />
+                        <RaiseComplaint setIsSendComplaint={setIsSendComplaint} setIsComplaintSend={setIsComplaintSend} />
                     </DialogBody>
                 </Dialog>
             )}
+
+            {isComplaintSend && (
+                <Dialog isOpen={isComplaintSend} onClose={() => setIsComplaintSend(false)}>
+                    <DialogBody className="p-4">
+                        <DialogHeader
+                            title={"Comlina issued"}
+                            onClose={() => setIsComplaintSend(false)}
+
+                        />
+                        <ComplaintSubmitted />
+                    </DialogBody>
+                </Dialog>
+            )}
+
         </div>
     );
 }

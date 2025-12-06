@@ -2,7 +2,7 @@ import { CheckCircle, Phone } from "lucide-react";
 
 export default function ComplaintSubmitted() {
   return (
-    <div className="w-full max-w-3xl mx-auto bg-white rounded-2xl shadow overflow-hidden">
+    <div className="w-full md:w-3xl mx-auto bg-white rounded-2xl overflow-hidden">
 
       {/* HEADER */}
       <div className="bg-gradient-to-b from-blue-600 to-blue-500 text-white text-center py-10 relative">
