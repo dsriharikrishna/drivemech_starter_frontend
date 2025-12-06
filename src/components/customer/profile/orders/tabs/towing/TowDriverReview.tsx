@@ -2,10 +2,23 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { X, Star } from "lucide-react";
+import { Star } from "lucide-react";
+import CommonTextArea from "@/components/forms/CommonTextArea";
+
+const likeTags = [
+  "On Time",
+  "Professional Driver",
+  "Friendly Service",
+  "Clean Truck",
+  "Fair Pricing",
+  "Helpful",
+  "Quick Response",
+  "Careful Handling",
+];
 
 export default function TowDriverReview({
   onClose,
+  onSubmitted,
   driver = {
     name: "John Smith",
     avatar: "/images/driver.jpg",
@@ -14,87 +27,121 @@ export default function TowDriverReview({
   },
 }: {
   onClose: () => void;
-  driver?: {
-    name: string;
-    avatar: string;
-    rating: number;
-    trips: number;
-  };
+  onSubmitted: () => void;
+  driver?: { name: string; avatar: string; rating: number; trips: number };
 }) {
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
   const [comment, setComment] = useState("");
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+
+  const toggleTag = (tag: string) => {
+    setSelectedTags((prev) =>
+      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
+    );
+  };
 
   const submitReview = () => {
-    console.log("Driver Review Submitted:", {
+    console.log("Towing Review Submitted:", {
       rating,
+      selectedTags,
       comment,
     });
-    onClose();
+
+    onClose();       // close rating modal
+    onSubmitted();   // open ThankYou modal
   };
 
   return (
-    <div className="w-full max-w-xl mx-auto bg-white p-6 pb-10 rounded-xl">
-      {/* HEADER */}
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-semibold">Rate Your Driver</h2>
-        <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-lg">
-          <X size={20} />
-        </button>
-      </div>
-
-      {/* DRIVER INFO */}
-      <div className="flex items-center gap-4 mb-6">
-        <Image
-          src={driver.avatar}
-          width={70}
-          height={70}
-          alt="driver"
-          className="rounded-full object-cover"
-        />
-
-        <div>
-          <p className="text-lg font-semibold">{driver.name}</p>
-          <p className="text-gray-600 text-sm">
-            ⭐ {driver.rating} • {driver.trips} trips
-          </p>
+    <div className="w-full sm:w-2xl md:w-3xl mx-auto">
+      {/* DRIVER HEADER */}
+      <div className="text-center mb-6">
+        <div className="mx-auto bg-orange-500 w-14 h-14 rounded-full flex items-center justify-center overflow-hidden">
+          <Image
+            src={driver.avatar}
+            width={60}
+            height={60}
+            alt="driver"
+            className="rounded-full object-cover"
+          />
         </div>
+
+        <p className="text-lg font-semibold mt-3">{driver.name}</p>
+        <p className="text-gray-600 text-sm">Flatbed Towing</p>
       </div>
 
       {/* STAR RATING */}
-      <div className="flex gap-2 mb-4">
-        {[1, 2, 3, 4, 5].map((star) => (
-          <Star
-            key={star}
-            size={30}
-            onClick={() => setRating(star)}
-            onMouseEnter={() => setHover(star)}
-            onMouseLeave={() => setHover(0)}
-            className={`cursor-pointer ${
-              (hover || rating) >= star
-                ? "text-yellow-400 fill-yellow-400"
-                : "text-gray-300"
-            }`}
-          />
-        ))}
+      <div className="border border-border rounded-xl p-6 mb-6 bg-gradient-to-b from-[#FFF8F0] to-white text-center">
+        <p className="text-sm text-gray-600 mb-2">How was your experience?</p>
+
+        <div className="flex justify-center gap-3 mb-2">
+          {[1, 2, 3, 4, 5].map((star) => (
+            <Star
+              key={star}
+              size={40}
+              onClick={() => setRating(star)}
+              onMouseEnter={() => setHover(star)}
+              onMouseLeave={() => setHover(0)}
+              className={`cursor-pointer transition ${
+                (hover || rating) >= star
+                  ? "text-orange-400 fill-orange-400"
+                  : "text-gray-300"
+              }`}
+            />
+          ))}
+        </div>
+
+        <p className="text-xs text-gray-500">Tap to rate</p>
       </div>
 
-      {/* COMMENT BOX */}
-      <label className="text-sm font-medium">Write a review (optional)</label>
-      <textarea
-        value={comment}
-        onChange={(e) => setComment(e.target.value)}
-        placeholder="Share your experience with the driver..."
-        className="w-full mt-2 p-3 border rounded-xl h-28 resize-none"
-      />
+      {/* TAGS */}
+      <div className="border border-border rounded-xl p-4 bg-white mb-4">
+        <p className="font-medium text-sm mb-2">What did you like? (Optional)</p>
 
-      {/* SUBMIT BUTTON */}
+        <div className="flex flex-wrap gap-2">
+          {likeTags.map((tag) => (
+            <button
+              key={tag}
+              onClick={() => toggleTag(tag)}
+              className={`px-3 py-1 rounded-full text-xs border transition ${
+                selectedTags.includes(tag)
+                  ? "bg-orange-500 text-white border-orange-500"
+                  : "bg-gray-100 text-gray-700 border-gray-200"
+              }`}
+            >
+              {tag}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* COMMENT */}
+      <div className="border border-border rounded-xl p-4 bg-white">
+        <CommonTextArea
+          label="Write a Review (Optional)"
+          name="driver_review"
+          placeholder="Share details of your experience..."
+          maxLength={500}
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
+        />
+
+        <p className="text-xs text-gray-400 text-right mt-1">
+          {comment.length}/500 characters
+        </p>
+      </div>
+
+      {/* SUBMIT */}
       <button
         onClick={submitReview}
         disabled={rating === 0}
-        className="w-full mt-6 bg-orange-500 hover:bg-orange-600 disabled:bg-gray-300 text-white py-3 rounded-xl font-semibold transition"
+        className={`w-full mt-3 py-1.5 rounded-xl text-white font-semibold transition ${
+          rating === 0
+            ? "bg-gray-300 cursor-not-allowed"
+            : "bg-orange-500 hover:bg-orange-600"
+        }`}
       >
-        Submit Review
+        Submit Rating
       </button>
     </div>
   );

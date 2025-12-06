@@ -59,7 +59,7 @@ export default function TowingTab() {
           onClick={() =>
             router.push(`/customer/profile/my-orders/towing/${order.id}`)
           }
-          className="bg-white border rounded-xl p-5 shadow-sm cursor-pointer hover:shadow-md transition"
+          className="bg-white border border-border rounded-xl p-5 shadow-sm cursor-pointer hover:shadow-md transition"
         >
           {/* STATUS BADGE */}
           <div className="flex justify-end">
@@ -98,7 +98,7 @@ export default function TowingTab() {
           </div>
 
           {/* AMOUNT */}
-          <div className="border-t mt-4 pt-3 flex justify-end">
+          <div className="border-t border-border mt-4 pt-3 flex justify-end">
             <div className="text-right">
               <p className="text-gray-500 text-sm">Total Amount</p>
               <p className="text-orange-500 font-semibold text-lg">

@@ -48,7 +48,7 @@ export default function SparesTab() {
       {orders.map((order) => (
         <div
           key={order.id}
-          className="flex items-center justify-between bg-white border rounded-xl p-4 shadow-sm"
+          className="flex items-center justify-between bg-white border border-gray-200 rounded-xl p-4 hover:shadow-sm"
         >
           {/* LEFT SIDE */}
           <div className="flex items-center gap-4 w-1/3">

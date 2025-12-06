@@ -89,9 +89,9 @@ export default function WriteSpareReview({
               onMouseLeave={() => setHover(0)}
               className={`cursor-pointer transition 
               ${(hover || rating) >= star
-                ? "fill-orange-400 text-orange-400"
-                : "text-gray-300"
-              }`}
+                  ? "fill-orange-400 text-orange-400"
+                  : "text-gray-300"
+                }`}
             />
           ))}
         </div>
@@ -133,7 +133,7 @@ export default function WriteSpareReview({
           name="spareReview"
           placeholder="Share details about the product..."
           value={review}
-          onChange={(val) => setReview(val)}
+          onChange={(e) => setReview(e.target.value)}
         />
 
         <p className="text-xs text-gray-400 text-right mt-1">

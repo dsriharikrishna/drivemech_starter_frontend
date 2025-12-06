@@ -280,7 +280,7 @@ export default function SparesOrderDetails({ id }: { id: string }) {
                         title={"Raise Complaint"}
                         onClose={() => setIsComplaint(false)}
                     />
-                    <RaiseSpareComplaint setIsComplaintSend={setIsComplaintSuccess} />
+                    <RaiseSpareComplaint onClose={() => setIsComplaint(false)} />
                 </DialogBody>
             </Dialog>
 

@@ -10,17 +10,7 @@ export default function TowInvoice({
   onClose: () => void;
 }) {
   return (
-    <div className="w-full max-w-2xl mx-auto bg-white p-6 pb-10 rounded-xl">
-      {/* HEADER */}
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-semibold">Invoice</h2>
-        <button
-          onClick={onClose}
-          className="p-2 hover:bg-gray-100 rounded-lg"
-        >
-          <X size={20} />
-        </button>
-      </div>
+    <div className="w-full sm:w-2xl md:w-3xl mx-auto bg-white pb-10 rounded-xl">
 
       {/* COMPANY INFO */}
       <div className="border rounded-xl p-4 mb-6">
