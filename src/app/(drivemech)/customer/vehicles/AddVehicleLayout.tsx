@@ -8,6 +8,7 @@ import CommonTextInput from "@/components/forms/CommonTextInput";
 import ModalDropdown from "@/components/ui/DropDown";
 import { makes, models } from "../../../../data/vehicle";
 import FloatingLabelInput from "@/components/forms/FloatingLabelInput";
+import Image from "next/image";
 
 type DropdownItem = { id: string; name: string; makeId?: string };
 
@@ -55,10 +56,10 @@ export default function AddVehicleLayout() {
 
         console.log(data);
 
-        // setTimeout(() => {
-        //   (window as any).addToast("Vehicle added successfully!", "success");
-        //   router.push("/vehicles");
-        // }, 1000);
+        setTimeout(() => {
+          (window as any).addToast("Vehicle added successfully!", "success");
+          router.push("/customer/services");
+        }, 1000);
     };
 
     return (
@@ -76,11 +77,14 @@ export default function AddVehicleLayout() {
 
                             {/* Logo + Title */}
                             <div className="text-center mb-8">
-                                <img
-                                    src="/images/drivemech-logo.png"
-                                    alt="DriveMech"
-                                    className="w-32 sm:w-40 mx-auto mb-4"
+                                <Image
+                                    src="/images/DriveMechLogo.png"
+                                    alt="DriveMech Logo"
+                                    width={140}
+                                    height={140}
+                                    className="mx-auto mb-4 object-contain"
                                 />
+
                                 <h2 className="text-xl sm:text-2xl font-bold text-gray-800">
                                     Add Your Vehicle
                                 </h2>

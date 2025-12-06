@@ -6,6 +6,8 @@ export interface ServiceState {
   searchQuery: string;
   nestedServiceParent: string | null;
   nestedSearchQuery: string;
+  addtionalNotes?: string;
+  nestedAddtionalServiceNotes?: string ;
 }
 
 const initialState: ServiceState = {
@@ -14,6 +16,8 @@ const initialState: ServiceState = {
   searchQuery: '',
   nestedServiceParent: null,
   nestedSearchQuery: '',
+  addtionalNotes: '',
+  nestedAddtionalServiceNotes: ''
 };
 
 const serviceSlicer = createSlice({

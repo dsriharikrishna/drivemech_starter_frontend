@@ -30,7 +30,7 @@ interface BookingDetailsCardProps {
 export default function BookingDetailsCard(props: BookingDetailsCardProps) {
   return (
     <div className="
-      border-border rounded-2xl p-5 bg-white shadow-sm w-full
+      border border-gray-200 rounded-2xl p-5 bg-white w-full
       transition-all duration-200 
       hover:shadow-md
     ">

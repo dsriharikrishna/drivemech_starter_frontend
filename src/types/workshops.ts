@@ -14,7 +14,7 @@ export interface WorkshopCardProps {
 
 export interface ServiceItem {
   name: string;
-  price?: number; // fixed price services
+  price?: number; 
 }
 
 export interface WorkshopDetailProps {

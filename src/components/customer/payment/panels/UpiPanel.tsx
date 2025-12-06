@@ -5,9 +5,11 @@ import CommonTextInput from "@/components/forms/CommonTextInput";
 interface Props {
   upiId: string;
   setUpiId: (value: string) => void;
+    handleNext:()=>void
+
 }
 
-export default function UpiPanel({ upiId, setUpiId }: Props) {
+export default function UpiPanel({ upiId, setUpiId ,handleNext }: Props) {
   const form = useFormContext();
 
   const handleUpiIdChange = (value: string) => {
@@ -16,7 +18,7 @@ export default function UpiPanel({ upiId, setUpiId }: Props) {
   };
 
   return (
-    <div className="bg-white rounded-2xl p-6 shadow-sm border border-border flex flex-col gap-6">
+    <div className="bg-white rounded-2xl p-6 border border-border flex flex-col gap-6">
 
       <div className="flex items-center gap-3">
         <input 
@@ -48,7 +50,7 @@ export default function UpiPanel({ upiId, setUpiId }: Props) {
         </div>
       </div>
 
-      <button className="w-full bg-gray-100 text-gray-700 py-3 rounded-xl font-semibold text-base hover:bg-gray-200 transition-colors">
+      <button onClick={handleNext} className="w-full bg-gray-100 text-gray-700 py-3 rounded-xl font-semibold text-base hover:bg-gray-200 transition-colors">
         Proceed to Pay $579
       </button>
     </div>

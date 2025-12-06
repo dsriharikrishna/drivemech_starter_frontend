@@ -13,17 +13,20 @@ import LeftLayout from '../../../../components/Layout/LeftLayout';
 import RightLayout from '../../../../components/Layout/RightLayout';
 import { RootState } from '@/store/store';
 import { toggleNestedService, setNestedSearchQuery } from '@/store/slicers/serviceSlicer';
+import CommonTextArea from '@/components/forms/CommonTextArea';
+import Button from '@/components/ui/Button';
 
 export default function NestedServicesLayout() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const dispatch = useDispatch();
   const serviceId = searchParams.get('service');
-  
+
   const methods = useForm({
     defaultValues: {
       selectedServices: [],
-      searchQuery: ''
+      searchQuery: '',
+      nestedAddtionalServiceNotes: ''
     }
   });
 
@@ -31,9 +34,10 @@ export default function NestedServicesLayout() {
   const selectedNestedServices = useSelector((state: RootState) => state.service.selectedNestedServices);
   const searchQuery = useSelector((state: RootState) => state.service.nestedSearchQuery);
 
+
   // Find the parent service
   const parentService = services.find(s => s.id === serviceId);
-  
+
   // Convert nested services to Service format for ServiceCard component
   const nestedServicesAsServiceCards = parentService?.nestedServices?.map(ns => ({
     id: ns.id,
@@ -57,9 +61,9 @@ export default function NestedServicesLayout() {
   const handleToggleNestedService = (nestedServiceId: string) => {
     // Dispatch Redux action instead of local state
     if (parentService) {
-      dispatch(toggleNestedService({ 
-        serviceId: parentService.id, 
-        nestedServiceId 
+      dispatch(toggleNestedService({
+        serviceId: parentService.id,
+        nestedServiceId
       }));
     }
   };
@@ -73,12 +77,12 @@ export default function NestedServicesLayout() {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">Service Not Found</h2>
-          <button
+          <Button
             onClick={handleBack}
             className="text-orange-500 hover:text-orange-600 font-medium"
           >
             Go Back
-          </button>
+          </Button>
         </div>
       </div>
     );
@@ -93,10 +97,20 @@ export default function NestedServicesLayout() {
             <ServiceHeader />
 
             {/* Service Category Tag */}
-            <div className="mb-6">
+            <div className="mb-4 flex flex-col gap-1">
               <div className="inline-flex items-center bg-blue-100 text-blue-700 px-4 py-2 rounded-full text-sm font-medium">
                 {parentService.name} repairs, Installations & Inspections
               </div>
+            </div>
+
+            <div className="flex justify-end mt-2">
+              <Button
+                onClick={handleBack}
+                className="px-4 py-2.5 rounded-xl font-medium text-base transition-colors duration-200 
+                         bg-orange-500 text-white cursor"
+              >
+                Add More Services
+              </Button>
             </div>
 
             {/* Search Bar - Use Redux state */}
@@ -114,10 +128,10 @@ export default function NestedServicesLayout() {
             </div>
 
             {/* Services Grid - Use same ServiceCard component */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 bg-white p-2 rounded-2xl">
               {filteredNestedServices.map((nestedService) => (
-                <ServiceCard 
-                  key={nestedService.id} 
+                <ServiceCard
+                  key={nestedService.id}
                   service={nestedService}
                   onToggle={() => handleToggleNestedService(nestedService.id)}
                   isSelected={selectedNestedServices.includes(nestedService.id)}
@@ -126,27 +140,29 @@ export default function NestedServicesLayout() {
             </div>
 
             {/* Can't find / textarea */}
-            <section className="mt-6">
-              <h3 className="text-sm font-medium text-gray-500 mb-3">
-                Can't find what you are looking for?
-              </h3>
-              <textarea
-                placeholder="Describe your issue"
-                className="w-full p-4 border-2 border-gray-200 rounded-xl focus:outline-none 
-                               focus:ring-2 focus:ring-orange-500 focus:border-transparent min-h-[120px]
-                               text-gray-700 placeholder-gray-400 resize-none"
+            <div className='bg-white p-4 rounded-2xl'>
+              <label className="block text-sm font-bold text-gray-800 mb-2">
+                Can't find your service? Let us know!
+              </label>
+              <CommonTextArea
+                label=""
+                name='nestedAddtionalServiceNotes'
+                placeholder="Can't find your service? Let us know!"
+                className="w-full"
+                rows={4}
+
               />
-            </section>
+            </div>
 
             {/* Add More Services Button */}
             <div className="flex justify-end mt-6">
-              <button
+              <Button
                 onClick={handleBack}
-                className="px-8 py-3.5 rounded-xl font-medium text-base transition-colors duration-200 
-                         bg-gray-100 text-gray-700 hover:bg-gray-200"
+                className="px-4 py-2.5 rounded-xl font-medium text-base transition-colors duration-200 
+                         bg-orange-500 text-white cursor"
               >
                 Add More Services
-              </button>
+              </Button>
             </div>
           </LeftLayout>
 

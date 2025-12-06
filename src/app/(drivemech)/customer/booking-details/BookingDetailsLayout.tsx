@@ -79,16 +79,16 @@ export default function BookingDetailsPage() {
   const { bookingId, status, serviceDate, serviceTime, vehicle, workshop, services, payment } = bookingData;
   const { items: itemsTotal, addon: addOns, tax, warranty: safetyAndWarranty } = payment.breakdown;
   return (
-    <div className="px-6 py-6 max-w-6xl mx-auto">
+    <div className="px-6 py-6 max-w-7xl mx-auto">
 
       {/* HEADER */}
-      <header className="flex items-center gap-2 mb-6">
+      <header className="flex items-center gap-2 mb-2 bg-white p-4 rounded-2xl">
         <ArrowLeftIcon className="w-5 h-5 text-gray-600" />
         <h2 className="text-lg font-semibold text-gray-800">Booking Details</h2>
       </header>
 
       {/* TOP CARDS */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
 
         {/* BOOKING ID */}
         <BookingIdCard bookingId={bookingId} status={status} />
@@ -109,7 +109,7 @@ export default function BookingDetailsPage() {
       </div>
 
       {/* SERVICE + PAYMENT SECTIONS */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
         {/* SERVICE DETAILS */}
         <CustomCard>
@@ -127,7 +127,7 @@ export default function BookingDetailsPage() {
 
         {/* PAYMENT DETAILS */}
         <CustomCard>
-          <h3 className="font-semibold text-gray-800 mb-4">Payment Details</h3>
+          <h3 className="font-semibold text-gray-800 mb-2">Payment Details</h3>
 
           {/* TOP HEADER ROW */}
           <div className="grid grid-cols-3 text-sm text-gray-500 mb-1">

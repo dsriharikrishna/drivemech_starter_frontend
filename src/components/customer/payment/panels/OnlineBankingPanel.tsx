@@ -6,9 +6,11 @@ interface Props {
   banks: BankOption[];
   selected: string;
   setSelected: (name: string) => void;
+  handleNext: () => void
+
 }
 
-export default function OnlineBankingPanel({ banks, selected, setSelected }: Props) {
+export default function OnlineBankingPanel({ banks, selected, setSelected ,handleNext}: Props) {
   return (
     <div className="border border-gray-200 rounded-3xl p-4 flex flex-col gap-1 bg-white">
 
@@ -37,7 +39,7 @@ export default function OnlineBankingPanel({ banks, selected, setSelected }: Pro
               {/* Logo */}
               <Image
                 src={bank.logo}
-                alt={bank.name.slice(0,1)}
+                alt={bank.name.slice(0, 1)}
                 width={26}
                 height={26}
                 className="object-contain"
@@ -47,7 +49,7 @@ export default function OnlineBankingPanel({ banks, selected, setSelected }: Pro
             {/* CTA button (compact spacing) */}
             {selected === bank.name && (
               <div className="mt-2">
-                <button className="w-full py-3 rounded-xl text-white font-semibold text-[15px] bg-gradient-to-r from-[#FF7B34] to-[#FF8F3C] shadow hover:opacity-95 transition">
+                <button onClick={handleNext} className="w-full py-3 rounded-xl text-white font-semibold text-[15px] bg-gradient-to-r from-[#FF7B34] to-[#FF8F3C] shadow hover:opacity-95 transition">
                   Proceed to Pay $579
                 </button>
               </div>

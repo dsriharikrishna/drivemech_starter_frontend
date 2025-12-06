@@ -8,13 +8,14 @@ interface Props {
   cards: SavedCard[];
   selected: string;
   setSelected: (id: string) => void;
+  handleNext:()=>void
 }
 
-export default function SavedCardsPanel({ cards, selected, setSelected }: Props) {
+export default function SavedCardsPanel({ cards, selected, setSelected , handleNext }: Props) {
   const form = useFormContext();
 
   return (
-    <div className="bg-white rounded-3xl p-6 border border-gray-200 shadow-sm">
+    <div className="bg-white rounded-3xl p-6 border border-gray-200">
       {cards.map((card, idx) => (
         <div key={card.id}>
           {/* Card Row */}
@@ -60,7 +61,7 @@ export default function SavedCardsPanel({ cards, selected, setSelected }: Props)
                   <HelpCircle className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                 </div>
 
-                <button className="bg-gradient-to-r from-[#FF7B34] to-[#FF8F3C] text-white py-3 px-10 rounded-xl font-semibold shadow hover:opacity-90 transition">
+                <button onClick={handleNext} className="bg-gradient-to-r from-[#FF7B34] to-[#FF8F3C] text-white py-3 px-10 rounded-xl font-semibold shadow hover:opacity-90 transition">
                   Pay $579
                 </button>
               </div>

@@ -4,19 +4,24 @@ import ServiceHeader from '@/components/customer/service-section/ServiceHeader';
 import ServiceList from '@/components/customer/service-section/ServiceList';
 import LeftLayout from '@/components/Layout/LeftLayout';
 import RightLayout from '@/components/Layout/RightLayout';
-import React from 'react';
 import { useAppSelector } from '@/store/store';
 import { services } from '../../../../data/services';
 import { FormProvider, useForm } from 'react-hook-form';
+import CommonTextArea from '@/components/forms/CommonTextArea';
+import Button from '@/components/ui/Button';
+import { useRouter } from 'next/navigation';
 
 export const ServicesLayout = () => {
 
-     const methods = useForm({
+    const methods = useForm({
         defaultValues: {
-          selectedServices: [],
-          searchQuery: ''
+            selectedServices: [],
+            searchQuery: '',
+            addtionalNotes: ''
         }
-      });
+    });
+
+    const router = useRouter();
 
     const selectedServices = useAppSelector(state => state.service.selectedServices);
     const searchQuery = useAppSelector(state => state.service.searchQuery);
@@ -40,22 +45,24 @@ export const ServicesLayout = () => {
                         />
 
                         {/* Can't find / textarea */}
-                        <div className='bg-white p-3 rounded-2xl'>
-                            <h3 className="text-sm font-medium text-gray-500 mb-3">
-                                Can't find what you are looking for?
-                            </h3>
+                        <div className='bg-white p-4 rounded-2xl'>
+                            <label className="block text-sm font-bold text-gray-800 mb-2">
+                                Can't find your service? Let us know!
+                            </label>
+                            <CommonTextArea
+                                label=""
+                                name='addtionalNotes'
+                                placeholder="Can't find your service? Let us know!"
+                                className="w-full"
+                                rows={4}
 
-                            <textarea
-                                placeholder="Describe your issue"
-                                className="w-full p-4 border-2 border-gray-200 rounded-xl focus:outline-none 
-                               focus:ring-2 focus:ring-orange-500 focus:border-transparent min-h-[120px]
-                               text-gray-700 placeholder-gray-400 resize-none"
                             />
                         </div>
 
                         {/* Next */}
                         <div className="flex justify-end">
-                            <button
+                            <Button
+                                onClick={()=>router.push("/customer/workshop")}
                                 disabled={selectedServices.length === 0}
                                 className={`px-8 py-3.5 rounded-xl font-medium text-base transition-colors duration-200 ${selectedServices.length > 0
                                     ? 'bg-orange-500 text-white hover:bg-orange-600 shadow-md hover:shadow-lg'
@@ -63,7 +70,7 @@ export const ServicesLayout = () => {
                                     }`}
                             >
                                 Next
-                            </button>
+                            </Button>
                         </div>
                     </LeftLayout>
 

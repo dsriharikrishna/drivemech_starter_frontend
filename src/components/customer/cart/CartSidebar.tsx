@@ -7,9 +7,12 @@ import { RootState } from '@/store/store';
 import { toggleService } from '@/store/slicers/serviceSlicer';
 import { setCurrentVehicle } from '@/store/slicers/carSlicer';
 import CarCard from '@/components/car-service/CarCard';
+import { useRouter } from 'next/navigation';
+import Button from '@/components/ui/Button';
 
 export default function CartSidebar({ services }: { services: Service[] }) {
   const dispatch = useDispatch();
+  const router = useRouter();
   const selectedServices = useSelector((state: RootState) => state.service.selectedServices);
   const selectedNestedServices = useSelector((state: RootState) => state.service.selectedNestedServices);
   const currentVehicle = useSelector((state: RootState) => state.car.currentVehicle);
@@ -165,9 +168,9 @@ export default function CartSidebar({ services }: { services: Service[] }) {
       {/* Next Button */}
       {selectedList.length > 0 && (
         <div className="bg-white rounded-2xl border border-gray-200 p-5">
-          <button className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200">
+          <Button onClick={()=>router.push("/customer/workshop")} className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200">
             Next
-          </button>
+          </Button>
         </div>
       )}
 

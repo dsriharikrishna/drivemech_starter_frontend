@@ -1,9 +1,8 @@
-import CustomCard from "@/components/ui/CustomCard";
 import Image from "next/image";
 
 export default function ServiceHeaderCard() {
   return (
-    <CustomCard>
+    <div className="border-none shadow-none p-4">
       <h2 className="text-[16px] font-semibold mb-1">A to Z Services</h2>
 
       <div className="flex items-center gap-2 text-sm text-gray-600">
@@ -27,6 +26,6 @@ export default function ServiceHeaderCard() {
         className="rounded-xl mt-3 w-full object-cover"
       />
       
-    </CustomCard>
+    </div>
   );
 }

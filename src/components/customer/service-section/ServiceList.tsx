@@ -10,7 +10,7 @@ export default function ServiceList({ services }: { services: Service[] }) {
   const selectedServices = useSelector((state: RootState) => state.service.selectedServices);
 
   return (
-    <section className="w-full mt-4">
+    <section className="w-full mt-4 bg-white p-2 rounded-2xl ">
       
       {/* Header Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-2 bg-[#F1F5F9] p-3 rounded-2xl">

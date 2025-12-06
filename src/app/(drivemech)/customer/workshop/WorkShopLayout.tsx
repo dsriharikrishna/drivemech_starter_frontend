@@ -1,6 +1,6 @@
-"use client"
+"use client";
+
 import AddressCard from "@/components/customer/workshop/AddressCard";
-import BookNowBar from "@/components/customer/workshop/BookNowBar";
 import MechanicCard from "@/components/customer/workshop/MechanicCard";
 import ReviewItem from "@/components/customer/workshop/ReviewItem";
 import ReviewSummaryCard from "@/components/customer/workshop/ReviewSummaryCard";
@@ -10,7 +10,9 @@ import TopRecommendedWorkshops from "@/components/customer/workshop/TopRecommend
 import WorkShopHeader from "@/components/customer/workshop/WorkShopHeader";
 import LeftLayout from "@/components/Layout/LeftLayout";
 import RightLayout from "@/components/Layout/RightLayout";
-import { ArrowLeft } from "phosphor-react";
+import Button from "@/components/ui/Button";
+import { useRouter } from "next/navigation";
+import { useCallback, useState } from "react";
 
 const sampleServices = [
   { title: "Engine Oil Replacement", price: "$25" },
@@ -33,63 +35,92 @@ const tags = [
   "Suspension",
 ];
 
+const workshops = [
+  {
+    id: "workshop_123",
+    logo: "/garage-logo.png",
+    name: "A to Z Services",
+    status: "Open • Closes 9:30 PM",
+    distance: "3.4 km",
+    ratings: "4.5",
+    reviews: "120+",
+  },
+  {
+    id: "workshop_456",
+    logo: "/garage-logo.png",
+    name: "Speed Auto Care",
+    status: "Open • Closes 10:00 PM",
+    distance: "2.1 km",
+    ratings: "4.2",
+    reviews: "98+",
+  },
+  {
+    id: "workshop_789",
+    logo: "/garage-logo.png",
+    name: "Rapid Fix Garage",
+    status: "Open • Closes 8:45 PM",
+    distance: "4.0 km",
+    ratings: "4.8",
+    reviews: "210+",
+  },
+];
 
 export const WorkShopLayout = () => {
-  const handleBack = () => {
-    window.history.back();
-  };
+  const router = useRouter();
+
+  const [selectedWorkShop, setSelectedWorkShop] = useState<{
+    name: string;
+    id: string;
+  } | null>(null);
+
+  const handleBook = useCallback(
+    (name: string, id: string) => {
+      const selected = { name, id };
+      setSelectedWorkShop(selected);
+
+      console.log("✅ ACTIVE WORKSHOP:", selected);
+
+      router.push("/customer/select-service");
+    },
+    [router]
+  );
+
   return (
     <div className="p-4 max-w-7xl mx-auto flex flex-col gap-4">
-
-      {/* Header */}
-      <div className="bg-white border-b border-border px-4 py-2">
-        <div className="mx-auto flex items-center gap-4">
-          <button
-            onClick={handleBack}
-            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-          >
-            <ArrowLeft className="w-5 h-5" />
-          </button>
-          <h1 className="text-xl font-semibold">Select Service</h1>
-        </div>
-      </div>
-
       <div className="flex flex-col lg:flex-row gap-4">
         <LeftLayout>
-          {/* Header */}
           <WorkShopHeader
             title="5 car mechanics in near Madhapur"
             location="Madhapur"
           />
           <TopRecommendedWorkshops />
-          <div className="space-y-5 flex flex-col gap-2">
 
-            {/* Card #1 */}
-            <MechanicCard
-              logo="/garage-logo.png"
-              name="A to Z Services"
-              status="Open • Closes 9:30 PM"
-              distance="3.4 km"
-              ratings="4.5"
-              reviews="120+"
-              tags={tags}
-              highlights={highlights}
-              services={sampleServices}
-              onBookNow={() => alert("Book Now Clicked")}
-            />
+          <div className="space-y-5 flex flex-col gap-2">
+            {workshops.map((workshop) => (
+              <MechanicCard
+                key={workshop.id}
+                {...workshop}
+                tags={tags}
+                highlights={highlights}
+                services={sampleServices}
+                onBookNow={handleBook}
+                isActive={selectedWorkShop?.id === workshop.id}
+              />
+            ))}
           </div>
         </LeftLayout>
+
         <RightLayout>
-          <div className="flex flex-col gap-4 ">
-            <div className="flex flex-col gap-2 bg-white p-2  rounded-2xl">
+          <div className="flex flex-col gap-4 bg-white p-2 rounded-2xl">
+            <div className="flex flex-col gap-2">
               <ServiceHeaderCard />
               <ServiceFeaturesCard />
             </div>
+
             <AddressCard />
             <ReviewSummaryCard />
 
-            {/* Reviews */}
-            <div className="bg-white rounded-xl p-5 shadow-sm border-border">
+            <div className="bg-white rounded-xl p-5">
               <ReviewItem
                 name="Courtney Henry"
                 time="2 mins ago"
@@ -104,11 +135,13 @@ export const WorkShopLayout = () => {
                 review="Lorem ipsum dolor sit amet..."
               />
 
-              <BookNowBar />
+              <Button variant="primary" className="w-full rounded-lg">
+                Book Now
+              </Button>
             </div>
           </div>
         </RightLayout>
       </div>
     </div>
-  )
-}
+  );
+};

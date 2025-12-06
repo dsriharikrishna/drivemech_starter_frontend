@@ -18,9 +18,30 @@ import InfoBlock from "@/components/customer/select-service/InfoBlock";
 import { Star } from "phosphor-react";
 import Image from "next/image";
 import DetailRow from "@/components/customer/select-service/DetailRow";
+import Button from "@/components/ui/Button";
+import { useRouter } from "next/navigation";
+import ModuleHeader from "@/components/common/ModuleHeader";
+
+type SelectServiceForm = {
+    mode: "walkin" | "pickup";
+    date: string;
+    time: string;
+    fullName: string;
+    phone: string;
+    email: string;
+    addOns: string[];
+    notes: string;
+    guest: boolean;
+    location: {
+        address: string;
+        lat: number;
+        lng: number;
+    }
+};
+
 
 export default function SelectServiceLayout() {
-    const form = useForm({
+    const form = useForm<SelectServiceForm>({
         defaultValues: {
             mode: "walkin",
             date: "",
@@ -31,8 +52,15 @@ export default function SelectServiceLayout() {
             addOns: [],
             notes: "",
             guest: false,
+            location: {
+                address: "",
+                lat: 0,
+                lng: 0,
+            }
         },
     });
+
+    const router = useRouter();
 
     // Default add-ons
     const addOns: AddOnService[] = [
@@ -58,7 +86,7 @@ export default function SelectServiceLayout() {
             ...data,
             selectedServices,
             addOnsTotal,
-            totalAmount: addOnsTotal, // Can be extended with service prices
+            totalAmount: addOnsTotal,
             timestamp: new Date().toISOString(),
         };
 
@@ -67,6 +95,8 @@ export default function SelectServiceLayout() {
 
         // Navigate to next page or call API
         console.log("Proceeding with booking:", bookingData);
+
+        router.push("/customer/payment-process")
     };
 
     // Watch form values for real-time validation
@@ -89,27 +119,20 @@ export default function SelectServiceLayout() {
     return (
         <FormProvider {...form}>
             <div className="p-4 max-w-7xl mx-auto flex flex-col gap-4">
-                {/* Header */}
-                <div className="bg-white border-b border-border px-4 py-2">
-                    <div className="mx-auto flex items-center gap-4">
-                        <button
-                            onClick={handleBack}
-                            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                        >
-                            <ArrowLeft className="w-5 h-5" />
-                        </button>
-                        <h1 className="text-xl font-semibold">Select Service</h1>
-                    </div>
-                </div>
                 <div className="flex flex-col lg:flex-row gap-4">
                     <LeftLayout>
                         {/* Main Content */}
-                        <div className="mx-auto p-4">
-                            <form onSubmit={form.handleSubmit(submit)} className="space-y-6">
+                        <div className="mx-auto p-2">
+                            <form onSubmit={form.handleSubmit(submit)} className="flex flex-col gap-2">
+                                {/* Header */}
+                                <ModuleHeader
+                                    title="Select Service"
+                                    onBack={handleBack}
+                                />
 
                                 {/* Selected Services Summary */}
                                 {selectedServices.length > 0 && (
-                                    <div className="bg-white rounded-2xl shadow-lg p-6">
+                                    <div className="bg-white rounded-2xl shadow-lg px-6 py-2">
                                         <h3 className="text-lg font-semibold text-gray-900 mb-4">Selected Services</h3>
                                         <div className="space-y-2">
                                             {selectedServices.map((service) => (
@@ -130,7 +153,7 @@ export default function SelectServiceLayout() {
 
                                     <ModeOfService form={form} />
 
-                                    <PreferredDateTime form={form} />
+                                    <PreferredDateTime form={form} mode={form.getValues("mode")} />
 
                                     <PersonalDetails form={form} />
 
@@ -152,15 +175,17 @@ export default function SelectServiceLayout() {
                                 {/* Footer Section */}
                                 <div className="bg-white rounded-2xl shadow-lg p-4 gap-2 flex flex-col">
                                     <GuestToggle form={form} />
-
-                                    <button
-                                        type="submit"
-                                        disabled={!isFormValid()}
-                                        className="w-full bg-orange-500 text-white py-4 rounded-xl font-semibold text-base shadow-sm hover:bg-orange-600 transition-colors flex items-center justify-center gap-2 disabled:bg-gray-300 disabled:cursor-not-allowed"
-                                    >
-                                        Proceed Booking
-                                        <ArrowLeft className="w-5 h-5 rotate-180" />
-                                    </button>
+                                    <div className="flex flex-col justify-center items-center ">
+                                        <Button
+                                            type="submit"
+                                            disabled={!isFormValid()}
+                                            variant="primary"
+                                            className="rounded-lg"
+                                        >
+                                            Proceed Booking
+                                            <ArrowLeft className="w-5 h-5 rotate-180" />
+                                        </Button>
+                                    </div>
                                 </div>
                             </form>
                         </div>
