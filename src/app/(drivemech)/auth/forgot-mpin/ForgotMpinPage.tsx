@@ -83,7 +83,7 @@ export default function ForgotMpinRightSide() {
     const email = mode === "email" ? data.email : mode === "phone" ? data.phone : data.identifier;
     
     // After successful submission, redirect to verification page
-    router.push(`/customer/auth/forgot-mpin/verify?email=${encodeURIComponent(email)}`);
+    router.push(`/auth/forgot-mpin/verify?email=${encodeURIComponent(email)}`);
   }
 
   return (
@@ -163,7 +163,7 @@ export default function ForgotMpinRightSide() {
           {/* BACK BUTTON — white border, left arrow */}
           <button
             type="button"
-            onClick={() => router.push("/customer/auth/login")}
+            onClick={() => router.push("/auth/login")}
             className="w-full py-3 border border-gray-200 rounded-lg flex items-center justify-center gap-2 text-gray-700 text-sm hover:bg-gray-50"
           >
             <ArrowLeft size={18} /> Back to MPIN Login

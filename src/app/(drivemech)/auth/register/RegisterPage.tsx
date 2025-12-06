@@ -63,7 +63,7 @@ export default function RegisterPage() {
   async function onSubmit(data: any) {
     const result = await dispatch(registerUser(data));
     if ((result as any).type?.endsWith("/fulfilled")) {
-      router.push("/");
+      router.push("/auth/login");
     }
   }
 
@@ -152,7 +152,7 @@ export default function RegisterPage() {
 
           <Button
             type="button"
-            onClick={() => router.replace("/customer/auth/login")}
+            onClick={() => router.replace("/auth/login")}
             className="w-full bg-gray-900 hover:bg-black text-white py-3 rounded-xl font-semibold"
           >
             Login

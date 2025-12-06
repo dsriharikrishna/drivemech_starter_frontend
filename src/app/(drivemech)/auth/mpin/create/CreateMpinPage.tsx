@@ -139,7 +139,7 @@ export default function CreateMpinPage(): React.ReactNode {
     }
 
     console.log("Creating MPIN:", newStr);
-    router.push("/customer/auth/mpin");
+    router.push("/auth/confirm");
   };
 
   const inputClass =

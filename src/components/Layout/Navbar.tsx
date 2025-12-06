@@ -98,25 +98,10 @@ export default function Navbar() {
           </button>
 
           {/* Buttons */}
-          {!isLoggedIn ? (
-            // <div className="relative">
-            //   <button
-            //     onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-            //     className="flex items-center justify-center w-10 h-10 rounded-xl bg-[#FF5C00] hover:bg-[#E55200] transition-colors duration-200"
-            //   >
-            //     <User className="w-5 h-5 text-white" />
-            //     <ChevronDown className="w-5 h-5 text-white"/>
-            //   </button>
-            //   <UserDropdown
-            //     isOpen={userDropdownOpen}
-            //     onClose={() => setUserDropdownOpen(false)}
-            //     onLogout={handleLogout}
-            //   />
-            // </div>
+          {/* {!isLoggedIn ? ( */}
             <AvatarMenu onLogout={handleLogout} />
 
-          ) : (
-            <>
+{/* ?            <> */}
               <Button
                 onClick={() => { handleNavigation("workshop") }}
                 variant="primary"
@@ -132,8 +117,8 @@ export default function Navbar() {
               >
                 Login as Customer
               </Button>
-            </>
-          )}
+            {/* </> */}
+          {/* )} */}
         </div>
 
         {/* --- Mobile Menu Button --- */}
@@ -260,7 +245,7 @@ export default function Navbar() {
 
       {/* Logout Confirmation Dialog */}
       {showLogoutDialog && (
-        <Dialog>
+        <Dialog onClose={() => setShowLogoutDialog(false)} isOpen={showLogoutDialog}>
           <div className="bg-white rounded-lg p-6 max-w-sm w-full mx-4">
             <h3 className="text-lg font-semibold text-gray-900 mb-2">Confirm Logout</h3>
             <p className="text-gray-600 mb-6">Are you sure you want to logout from your account?</p>

@@ -102,7 +102,7 @@ export default function MpinVerifyPage() {
 
     if (ok) {
       // success — route to home or wherever
-      router.push("/");
+      router.push("customer/services");
     } else {
       // failed
       setAttemptsLeft((p) => {
@@ -186,7 +186,7 @@ export default function MpinVerifyPage() {
       <div className="text-center mt-3">
         <button
           type="button"
-          onClick={() => router.push("/customer/auth/forgot-mpin")}
+          onClick={() => router.push("/auth/forgot-mpin")}
           className="text-sm text-blue-600 hover:underline"
         >
           Forgot MPIN?
@@ -217,7 +217,7 @@ export default function MpinVerifyPage() {
           <Button
             type="button"
             variant="outline"
-            onClick={() => router.push("/customer/auth/login?mode=otp")}
+            onClick={() => router.push("/auth/login")}
             className="flex-1 py-2 rounded-md text-black border border-gray-200 hover:bg-gray-50"
           >
             Login with OTP

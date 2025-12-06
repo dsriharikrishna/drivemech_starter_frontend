@@ -118,7 +118,7 @@ export default function LoginPage() {
 
     const result = await dispatch(loginUser(payload));
     if ((result as any).type?.endsWith("/fulfilled")) {
-      router.push("/");
+      router.push("/customer/verify");
     }
   }
 
@@ -235,7 +235,7 @@ export default function LoginPage() {
             type="button"
             variant="outline"
             className="py-2 rounded-xl font-semibold"
-            onClick={() => router.push("/customer/auth/mpin")}
+            onClick={() => router.push("/auth/mpin")}
           >
             MPIN
           </Button>
@@ -248,7 +248,7 @@ export default function LoginPage() {
           <button
             type="button"
             className="w-full py-3 bg-gray-900 hover:bg-black text-white rounded-xl font-semibold"
-            onClick={() => router.push("/customer/auth/register")}
+            onClick={() => router.push("/auth/register")}
           >
             Register
           </button>

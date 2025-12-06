@@ -25,10 +25,10 @@ export default function OtpVerifyPage() {
   }, []);
 
   const handleChange = (index: number, value: string) => {
-    if (value.length > 1) return; // Only allow single digit
+    if (value.length > 1) return; 
 
     const newOtp = [...otp];
-    newOtp[index] = value.replace(/\D/g, ""); // Only numbers
+    newOtp[index] = value.replace(/\D/g, ""); 
     setOtp(newOtp);
 
     // Auto-focus next input
@@ -65,8 +65,8 @@ export default function OtpVerifyPage() {
     const otpCode = otp.join("");
     // TODO: Implement OTP verification API call
     console.log("OTP Code:", otpCode);
-    // After successful verification, redirect
-    // router.push("/customer/auth/confirm");
+    // After successful verification, redirect to confirmation page
+    router.push("/auth/confirm");
   }
 
   return (
