@@ -11,16 +11,25 @@ interface FormData {
     postcode: string;
 }
 
-export default function HeroSection() {
-    const [selectedMake, setSelectedMake] = useState("");
-    const [selectedModel, setSelectedModel] = useState("");
+interface HeroSectionProps {
+    selectedMake: string;
+    setSelectedMake: (make: string) => void;
+    selectedModel: string;
+    setSelectedModel: (model: string) => void;
+}
 
+export default function HeroSection({
+    selectedMake,
+    setSelectedMake,
+    selectedModel,
+    setSelectedModel,
+}: HeroSectionProps) {
     const methods = useForm<FormData>({
         defaultValues: {
             state: "AP",
             rego: "MP 99 BU 0007",
-            make: "",
-            model: "",
+            make: selectedMake,
+            model: selectedModel,
             postcode: "",
         },
         mode: "onChange",
