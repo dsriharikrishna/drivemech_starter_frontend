@@ -47,7 +47,7 @@ export default function InsuranceTab() {
           onClick={() =>
             router.push(`/customer/profile/my-orders/insurance/${item.id}`)
           }
-          className="bg-white border rounded-xl p-5 shadow-sm hover:shadow-md transition cursor-pointer"
+          className="bg-white border border-border rounded-xl p-5 shadow-sm hover:shadow-md transition cursor-pointer"
         >
           {/* TOP ROW */}
           <div className="flex items-center justify-between">
@@ -74,7 +74,7 @@ export default function InsuranceTab() {
           </div>
 
           {/* INSURANCE INFO */}
-          <div className="mt-4 flex items-center justify-between border-t pt-4">
+          <div className="mt-4 flex items-center justify-between border-t  border-border pt-4">
             <div className="flex items-center gap-3">
               <ShieldCheck size={22} className="text-orange-500" />
 

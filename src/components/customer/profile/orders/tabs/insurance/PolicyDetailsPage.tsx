@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { ArrowLeft, Download, ShieldCheck } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import Divider from "@/components/ui/Divider";
 
 /* ------------------------------------------
    MAIN POLICY DETAILS PAGE
@@ -70,7 +71,7 @@ export default function PolicyDetailsPage({ id }: { id: string }) {
                   `/customer/profile/my-orders/insurance/file-claim/${id}`
                 )
               }
-              className="border p-3 rounded-xl flex flex-col items-center hover:bg-gray-50"
+              className="border  border-border p-3 rounded-xl flex flex-col items-center hover:bg-gray-50"
             >
               🧾
               <span className="text-sm mt-1">File Claim</span>
@@ -83,7 +84,7 @@ export default function PolicyDetailsPage({ id }: { id: string }) {
                   `/customer/profile/my-orders/insurance/add-nominee/${id}`
                 )
               }
-              className="border p-3 rounded-xl flex flex-col items-center hover:bg-gray-50"
+              className="border  border-border p-3 rounded-xl flex flex-col items-center hover:bg-gray-50"
             >
               👤+
               <span className="text-sm mt-1">Add Nominee</span>
@@ -96,7 +97,7 @@ export default function PolicyDetailsPage({ id }: { id: string }) {
                   `/customer/profile/my-orders/insurance/modify-policy/${id}`
                 )
               }
-              className="border p-3 rounded-xl flex flex-col items-center hover:bg-gray-50"
+              className="border border-border p-3 rounded-xl flex flex-col items-center hover:bg-gray-50"
             >
               ✏️
               <span className="text-sm mt-1">Modify Policy</span>
@@ -113,8 +114,8 @@ export default function PolicyDetailsPage({ id }: { id: string }) {
           </button>
 
           <div className="grid grid-cols-2 gap-3 mt-3">
-            <button className="border p-3 rounded-xl hover:bg-gray-50">Reminder</button>
-            <button className="border p-3 rounded-xl hover:bg-gray-50">Claims</button>
+            <button className="border border-border p-3 rounded-xl hover:bg-gray-50">Reminder</button>
+            <button className="border border-border p-3 rounded-xl hover:bg-gray-50">Claims</button>
           </div>
 
           <button className="w-full bg-green-100 text-green-700 mt-4 p-3 rounded-xl text-sm font-semibold">
@@ -137,7 +138,7 @@ export default function PolicyDetailsPage({ id }: { id: string }) {
 
 function PolicyInfoCard({ policy }: any) {
   return (
-    <div className="border rounded-xl p-5 bg-white space-y-4">
+    <div className="border border-border rounded-xl p-5 bg-white space-y-4">
       <div className="flex items-center gap-3">
         <Image src="/icons/shield.png" width={40} height={40} alt="insurer" />
 
@@ -192,7 +193,7 @@ function CoverageBox() {
   ];
 
   return (
-    <div className="border rounded-xl p-5 bg-white">
+    <div className="border border-border rounded-xl p-5 bg-white">
       <h2 className="font-semibold mb-3">Coverage Included</h2>
 
       <ul className="space-y-2">
@@ -209,7 +210,7 @@ function CoverageBox() {
 
 function SupportBox({ insurer }: { insurer: string }) {
   return (
-    <div className="border rounded-xl p-5 bg-blue-50">
+    <div className="border  border-border rounded-xl p-5 bg-blue-50">
       <p className="font-semibold">📞 Need Help?</p>
       <p className="text-sm text-gray-600 mt-1">
         For claims or queries, contact {insurer} support or use the DriveMech
@@ -225,7 +226,7 @@ function SupportBox({ insurer }: { insurer: string }) {
 
 function StatusCard({ policy }: any) {
   return (
-    <div className="rounded-xl border p-5 bg-white">
+    <div className="rounded-xl border border-border p-5 bg-white">
       <div className="flex items-center gap-3 p-3 rounded-xl bg-green-50">
         <ShieldCheck className="text-green-600" />
 
@@ -244,13 +245,13 @@ function StatusCard({ policy }: any) {
         </div>
       </div>
 
-      <div className="mt-6 pt-4 border-t text-sm space-y-2">
+      <div className="mt-6 pt-4 border-t border-border text-sm space-y-2">
         <p className="font-semibold">Premium Breakdown</p>
         <BreakdownRow label="Base Premium" value={policy.breakdown.base} />
         <BreakdownRow label="Add-ons" value={policy.breakdown.addons} />
         <BreakdownRow label="Taxes" value={policy.breakdown.tax} />
 
-        <div className="border-t my-2" />
+        <Divider />
 
         <div className="flex justify-between font-semibold text-orange-500 text-lg">
           <span>Total Premium</span>
@@ -283,7 +284,7 @@ function RenewPolicyModal({ policy, onClose }: any) {
           protection.
         </p>
 
-        <div className="border rounded-xl p-4">
+        <div className="border  border-border rounded-xl p-4">
           <p className="font-semibold">Renewal Offer</p>
           <p className="text-sm mt-1 text-gray-600">
             Annual Premium: <strong>${policy.premium}</strong>
