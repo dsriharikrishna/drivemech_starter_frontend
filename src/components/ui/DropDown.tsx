@@ -54,7 +54,7 @@ export default function ModalDropdown({
         type="button"
         onClick={() => !disabled && setIsOpen(!isOpen)}
         disabled={disabled}
-        className={`flex items-center justify-between w-full px-4 h-[40px] text-sm text-left bg-white border rounded-xl ${buttonClassName} ${
+        className={`flex items-center justify-between w-full px-4 h-[40px] text-sm text-left bg-white border border-gray-300  rounded-xl ${buttonClassName} ${
           disabled ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500'
         }`}
       >

@@ -4,7 +4,8 @@ import { ReactNode } from 'react';
 export default function CutomerLayout({ children }: { children: ReactNode }) {
   return (
     <div className="min-h-screen bg-gray-50 flex ">
-      <main className="p-0 flex-1">
+      <Navbar />
+      <main className="p-0 flex-1 mt-16">
         {children}
       </main>
     </div>

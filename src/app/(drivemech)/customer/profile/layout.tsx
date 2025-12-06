@@ -17,8 +17,8 @@ export default function ProfileRootLayout({ children }: { children: ReactNode })
         {/* ---------- DESKTOP SIDEBAR ---------- */}
         <aside
           className="
-            hidden          /* hide on mobile */
-            lg:block        /* show on desktop */
+            hidden         
+            lg:block        
             w-64 
             sticky top-4 
             h-[calc(100vh-2rem)]
