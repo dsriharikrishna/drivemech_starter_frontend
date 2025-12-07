@@ -149,7 +149,7 @@ export default function AddVehicleForm({
         <CustomCard className="p-2">
           <Typography weight="semibold">Vehicle Type *</Typography>
 
-          <div className="flex gap-3 mt-3">
+          <div className="flex gap-3 mt-0">
             {["car", "bike", "truck"].map((t) => (
               <button
                 type="button"
@@ -168,10 +168,10 @@ export default function AddVehicleForm({
         </CustomCard>
 
         {/* ---------------- Vehicle Details (unchanged) ---------------- */}
-        <CustomCard className="p-5 space-y-4">
+        <CustomCard className="p-3 space-y-2">
           <Typography weight="semibold">Add Vehicle Details</Typography>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <Controller
               name="state"
               control={control}
@@ -219,7 +219,7 @@ export default function AddVehicleForm({
         </CustomCard>
 
         {/* Technical details */}
-        <CustomCard className="p-5 space-y-4">
+        <CustomCard className="p-3 space-y-4">
           <Typography weight="semibold">Technical Details</Typography>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -230,7 +230,7 @@ export default function AddVehicleForm({
         </CustomCard>
 
         {/* Insurance info */}
-        <CustomCard className="p-5 space-y-4">
+        <CustomCard className="p-3 space-y-4">
           <Typography weight="semibold">Insurance Information</Typography>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -240,7 +240,7 @@ export default function AddVehicleForm({
         </CustomCard>
 
         {/* Service history */}
-        <CustomCard className="p-5 space-y-4">
+        <CustomCard className="p-3 space-y-4">
           <Typography weight="semibold">Service History</Typography>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -250,7 +250,7 @@ export default function AddVehicleForm({
         </CustomCard>
 
         {/* Default toggle */}
-        <CustomCard className="p-5 bg-orange-50 flex items-center justify-between">
+        <CustomCard className="p-3 bg-orange-50 flex items-center justify-between">
           <div>
             <p className="font-semibold">Set as Default Vehicle</p>
             <Typography variant="small" color="muted">
@@ -269,7 +269,7 @@ export default function AddVehicleForm({
         </CustomCard>
 
         {/* Documents (file uploads) */}
-        <CustomCard className="p-5 space-y-4">
+        <CustomCard className="p-3 space-y-4">
           <Typography weight="semibold">Documents (Optional)</Typography>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
