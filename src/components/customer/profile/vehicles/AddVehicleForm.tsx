@@ -1,23 +1,17 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FormProvider, useForm, Controller } from "react-hook-form";
-import {
-  Car,
-  Truck,
-  FileArrowUp,
-  FileText,
-  Trash,
-} from "phosphor-react";
+import { Car, Truck, FileArrowUp, FileText, Trash } from "phosphor-react";
+import { Motorbike } from "lucide-react";
 
 import Typography from "@/components/ui/Typography";
 import Button from "@/components/ui/Button";
 import CustomCard from "@/components/ui/CustomCard";
 import CommonTextInput from "@/components/forms/CommonTextInput";
 import ToggleSwitch from "@/components/ui/ToogleSwitch";
-import { Motorbike } from "lucide-react";
 
-type VehicleFormValues = {
+export type VehicleFormValues = {
   vehicleType: "car" | "bike" | "truck";
   state: string;
   regNo: string;
@@ -33,12 +27,21 @@ type VehicleFormValues = {
   lastServiceDate: string;
   odometer: string;
   isDefault: boolean;
-  regDocs?: File[]; // mirrors registration uploads
-  insDocs?: File[]; // mirrors insurance uploads
+  regDocs?: File[];
+  insDocs?: File[];
 };
 
-export default function AddVehicleForm({ onClose }: { onClose?: () => void }) {
-  // RHF
+export default function AddVehicleForm({
+  mode = "add",
+  initialData,
+  vehicleId,
+  onClose,
+}: {
+  mode?: "add" | "edit";
+  initialData?: Partial<VehicleFormValues>;
+  vehicleId?: string;
+  onClose?: () => void;
+}) {
   const methods = useForm<VehicleFormValues>({
     defaultValues: {
       vehicleType: "car",
@@ -58,51 +61,48 @@ export default function AddVehicleForm({ onClose }: { onClose?: () => void }) {
       isDefault: false,
       regDocs: [],
       insDocs: [],
+      ...initialData,
     },
   });
 
-  const { handleSubmit, control, setValue, watch, register } = methods;
+  const { handleSubmit, control, setValue, watch } = methods;
 
-  // File upload local state (mirrors into RHF via setValue)
+  const selectedType = watch("vehicleType");
+
+  useEffect(() => {
+    if (initialData) {
+      Object.entries(initialData).forEach(([key, value]) =>
+        setValue(key as keyof VehicleFormValues, value as any)
+      );
+    }
+  }, [initialData]);
+
+  // ---- File Upload Logic (same as before) ----
   const [regFiles, setRegFiles] = useState<File[]>([]);
   const [insFiles, setInsFiles] = useState<File[]>([]);
-
-  // hidden file inputs refs
   const regInputRef = useRef<HTMLInputElement | null>(null);
   const insInputRef = useRef<HTMLInputElement | null>(null);
 
-  // limits
   const MAX_FILES = 5;
-  const MAX_SIZE = 10 * 1024 * 1024; // 10MB
-
-  // helpers
-  const selectedType = watch("vehicleType");
-  const isDefault = watch("isDefault");
+  const MAX_SIZE = 10 * 1024 * 1024;
 
   function addFiles(current: File[], files: File[]) {
-    const filtered = files.filter((f) => f.size <= MAX_SIZE);
-    const combined = [...current, ...filtered].slice(0, MAX_FILES);
-    return combined;
+    const valid = files.filter((f) => f.size <= MAX_SIZE);
+    return [...current, ...valid].slice(0, MAX_FILES);
   }
 
   function handleRegUpload(e: React.ChangeEvent<HTMLInputElement>) {
-    const fl = e.target.files;
-    if (!fl) return;
-    const arr = Array.from(fl);
-    const next = addFiles(regFiles, arr);
+    if (!e.target.files) return;
+    const next = addFiles(regFiles, Array.from(e.target.files));
     setRegFiles(next);
-    setValue("regDocs", next, { shouldDirty: true });
-    if (regInputRef.current) regInputRef.current.value = "";
+    setValue("regDocs", next);
   }
 
   function handleInsUpload(e: React.ChangeEvent<HTMLInputElement>) {
-    const fl = e.target.files;
-    if (!fl) return;
-    const arr = Array.from(fl);
-    const next = addFiles(insFiles, arr);
+    if (!e.target.files) return;
+    const next = addFiles(insFiles, Array.from(e.target.files));
     setInsFiles(next);
-    setValue("insDocs", next, { shouldDirty: true });
-    if (insInputRef.current) insInputRef.current.value = "";
+    setValue("insDocs", next);
   }
 
   function removeRegFile(index: number) {
@@ -122,80 +122,52 @@ export default function AddVehicleForm({ onClose }: { onClose?: () => void }) {
   }
 
   const onSubmit = (data: VehicleFormValues) => {
-    // files are in regFiles & insFiles local state and mirrored to data.regDocs / data.insDocs by setValue
-    const final = {
-      ...data,
-      regDocs: regFiles,
-      insDocs: insFiles,
-    };
+    const final = { ...data, regDocs: regFiles, insDocs: insFiles };
 
-    // Replace with API call when ready (FormData + fetch/upload)
-    console.log("Vehicle submit payload:", final);
+    if (mode === "edit") {
+      console.log("Updating vehicle:", vehicleId, final);
+    } else {
+      console.log("Adding new vehicle:", final);
+    }
 
-    // close dialog if provided
     onClose?.();
   };
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        {/* Vehicle type */}
-        <CustomCard className="p-5">
-          <div className="pb-2 border-b border-border">
-            <Typography weight="semibold" variant="h5">
-              Vehicle Type *
-            </Typography>
-          </div>
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-2">
+
+        {/* HEADER */}
+        <div className="pb-2 border-b border-border ">
+          <Typography variant="h4" weight="semibold" className="p-2">
+            {mode === "edit" ? "Edit Vehicle" : "Add Vehicle"}
+          </Typography>
+        </div>
 
 
-          <div className="flex items-center gap-3 mt-4">
-            <Controller
-              name="vehicleType"
-              control={control}
-              render={({ field }) => (
-                <>
-                  <button
-                    type="button"
-                    onClick={() => field.onChange("car")}
-                    className={`px-4 py-2 rounded-xl border flex items-center gap-3 transition text-sm ${field.value === "car"
-                      ? "bg-orange-500 text-white border-orange-500"
-                      : "border-gray-300 hover:bg-gray-100"
-                      }`}
-                  >
-                    <Car size={20} weight="duotone" />
-                    Car
-                  </button>
+        {/* Vehicle Type */}
+        <CustomCard className="p-2">
+          <Typography weight="semibold">Vehicle Type *</Typography>
 
-                  <button
-                    type="button"
-                    onClick={() => field.onChange("bike")}
-                    className={`px-4 py-2 rounded-xl border flex items-center gap-3 transition text-sm ${field.value === "bike"
-                      ? "bg-orange-500 text-white border-orange-500"
-                      : "border-gray-300 hover:bg-gray-100"
-                      }`}
-                  >
-                    <Motorbike size={20} />
-                    Bike
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => field.onChange("truck")}
-                    className={`px-4 py-2 rounded-xl border flex items-center gap-3 transition text-sm ${field.value === "truck"
-                      ? "bg-orange-500 text-white border-orange-500"
-                      : "border-gray-300 hover:bg-gray-100"
-                      }`}
-                  >
-                    <Truck size={20} weight="duotone" />
-                    Truck
-                  </button>
-                </>
-              )}
-            />
+          <div className="flex gap-3 mt-3">
+            {["car", "bike", "truck"].map((t) => (
+              <button
+                type="button"
+                key={t}
+                onClick={() => setValue("vehicleType", t as any)}
+                className={`px-4 py-2 rounded-xl border flex items-center gap-2 text-sm transition 
+                ${selectedType === t ? "bg-orange-500 text-white" : "border-gray-300 hover:bg-gray-100"}`}
+              >
+                {t === "car" && <Car size={20} />}
+                {t === "bike" && <Motorbike size={20} />}
+                {t === "truck" && <Truck size={20} />}
+                {t.toUpperCase()}
+              </button>
+            ))}
           </div>
         </CustomCard>
 
-        {/* Vehicle details */}
+        {/* ---------------- Vehicle Details (unchanged) ---------------- */}
         <CustomCard className="p-5 space-y-4">
           <Typography weight="semibold">Add Vehicle Details</Typography>
 
@@ -251,7 +223,7 @@ export default function AddVehicleForm({ onClose }: { onClose?: () => void }) {
           <Typography weight="semibold">Technical Details</Typography>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <CommonTextInput label="Chassis Number" placeholder="JT3HN86R9Y0123456"  name="chassisNo" />
+            <CommonTextInput label="Chassis Number" placeholder="JT3HN86R9Y0123456" name="chassisNo" />
             <CommonTextInput label="Insurance Expiry Date" placeholder="DD-MM-YY" type="date" name="insuranceExpiry" />
             <CommonTextInput label="Purchase Date" placeholder="DD-MM-YY" type="date" name="purchaseDate" />
           </div>
@@ -395,10 +367,9 @@ export default function AddVehicleForm({ onClose }: { onClose?: () => void }) {
           </div>
         </CustomCard>
 
-        {/* Submit */}
-        <div className="flex justify-end">
-          <Button type="submit" variant="gradient" className="px-8 py-2">
-            Save Vehicle Details
+        <div className="flex justify-end pt-4">
+          <Button type="submit" variant="gradient">
+            {mode === "edit" ? "Update Vehicle" : "Save Vehicle"}
           </Button>
         </div>
       </form>

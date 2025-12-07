@@ -1,9 +1,5 @@
-import AddVehicleForm from '@/components/customer/profile/vehicles/AddVehicleForm'
+import AddVehicleForm from "@/components/customer/profile/vehicles/AddVehicleForm";
 
-const page = () => {
-  return (
-    <AddVehicleForm />
-  )
+export default function AddPage() {
+  return <AddVehicleForm />;
 }
-
-export default page

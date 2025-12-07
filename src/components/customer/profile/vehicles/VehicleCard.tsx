@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { PencilSimple, Trash, CheckCircle } from "phosphor-react";
 
 export interface Vehicle {
   id: string;
@@ -25,23 +28,25 @@ export default function VehicleCard({
 }: Props) {
   return (
     <div
-      className={`border rounded-2xl p-5 bg-white relative transition 
+      className={`relative rounded-2xl bg-white p-2 border transition-all
       ${
         vehicle.isDefault
-          ? "border-orange-400 shadow-[0_0_0_2px_#ff7a1a40]"
-          : "border-gray-200"
+          ? "border-orange-400 shadow-[0_0_0_2px_rgba(255,122,26,0.25)]"
+          : "border-gray-200 hover:shadow-sm"
       }`}
     >
-      {/* Default badge */}
+
+      {/* Default Badge */}
       {vehicle.isDefault && (
-        <div className="absolute top-3 right-3 bg-orange-500 text-white text-xs px-3 py-1 rounded-full">
-          ✓ Default
+        <div className="absolute top-4 right-4 bg-orange-500 text-white text-xs font-medium px-3 py-1 rounded-full flex items-center gap-1">
+          <CheckCircle size={14} weight="fill" />
+          Default
         </div>
       )}
 
-      {/* Vehicle Header */}
+      {/* Header */}
       <div className="flex items-center gap-4">
-        <div className="w-16 h-16 bg-gray-100 rounded-xl overflow-hidden">
+        <div className="w-16 h-16 rounded-xl bg-gray-100 overflow-hidden shadow-sm">
           <Image
             src={vehicle.image}
             alt={vehicle.name}
@@ -51,48 +56,55 @@ export default function VehicleCard({
           />
         </div>
 
-        <div>
-          <h3 className="font-semibold text-lg">{vehicle.name}</h3>
-          <p className="text-sm text-gray-500">{vehicle.regNo}</p>
+        <div className="flex flex-col">
+          <span className="text-base font-semibold">{vehicle.name}</span>
+          <span className="text-sm text-gray-500">{vehicle.regNo}</span>
         </div>
       </div>
 
-      {/* Insurance / Last Service */}
+      {/* Info Rows */}
       <div className="grid grid-cols-2 gap-4 mt-6">
         <div>
-          <p className="text-sm text-gray-400">Insurance</p>
-          <p className="font-semibold">{vehicle.insuranceDate}</p>
+          <p className="text-sm text-gray-500">Insurance</p>
+          <p className="font-semibold mt-1">{vehicle.insuranceDate}</p>
         </div>
+
         <div>
-          <p className="text-sm text-gray-400">Last Service</p>
-          <p className="font-semibold">{vehicle.lastServiceDate}</p>
+          <p className="text-sm text-gray-500">Last Service</p>
+          <p className="font-semibold mt-1">{vehicle.lastServiceDate}</p>
         </div>
       </div>
 
-      {/* Footer actions */}
+      {/* Footer Actions */}
       <div className="flex items-center gap-3 mt-6">
+
+        {/* Set Default (only if NOT default) */}
         {!vehicle.isDefault && (
           <button
             onClick={() => onSetDefault?.(vehicle.id)}
-            className="flex-1 border bg-gray-50 text-gray-700 rounded-lg py-2 text-sm 
+            className="flex-1 rounded-lg border bg-gray-50 text-gray-700 py-2.5 text-sm 
             hover:bg-gray-100 transition"
           >
             Set as Default
           </button>
         )}
 
+        {/* Edit Button */}
         <button
           onClick={() => onEdit?.(vehicle.id)}
-          className="border rounded-lg py-2 px-4 text-sm flex items-center gap-2 text-gray-700 hover:bg-gray-100"
+          className="flex items-center gap-2 rounded-lg border px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 transition"
         >
-          ✏ Edit
+          <PencilSimple size={16} />
+          Edit
         </button>
 
+        {/* Remove Button */}
         <button
           onClick={() => onRemove?.(vehicle.id)}
-          className="border border-red-300 bg-red-50 text-red-600 rounded-lg py-2 px-4 text-sm flex items-center gap-2 hover:bg-red-100"
+          className="flex items-center gap-2 rounded-lg border border-red-300 bg-red-50 px-4 py-2.5 text-sm text-red-600 hover:bg-red-100 transition"
         >
-          🗑 Remove
+          <Trash size={16} />
+          Remove
         </button>
       </div>
     </div>
