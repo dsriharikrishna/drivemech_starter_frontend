@@ -1,26 +1,52 @@
 "use client";
 
-import AddAddressForm from "@/components/customer/profile/address/AddAddressForm";
 import { useState } from "react";
+import {
+  House,
+  Suitcase,
+  MapPin,
+  Plus,
+  PencilSimple,
+  Trash,
+  WarningCircle,
+} from "phosphor-react";
 
-interface Address {
+import Typography from "@/components/ui/Typography";
+import Button from "@/components/ui/Button";
+import CustomCard from "@/components/ui/CustomCard";
+import { useRouter } from "next/navigation";
+
+// DIALOG COMPONENTS
+import Dialog from "@/components/modals/Dialog";
+import DialogBody from "@/components/modals/DialogBody";
+import DialogHeader from "@/components/modals/DialogHeader";
+import DeleteDialogBody from "@/components/modals/DeleteDialogBody";
+
+type Address = {
   id: string;
   label: string;
-  icon: string;
+  icon: "home" | "office" | "pickup";
   address1: string;
   address2?: string;
   city: string;
   postcode: string;
   isDefault?: boolean;
-}
+};
+
+const ICON = {
+  home: <House size={24} weight="duotone" className="text-orange-500" />,
+  office: <Suitcase size={24} weight="duotone" className="text-orange-500" />,
+  pickup: <MapPin size={24} weight="duotone" className="text-orange-500" />,
+};
 
 export default function AddressTab() {
-  const [isAddOpen, setIsAddOpen] = useState(false);
-  const [addresses] = useState<Address[]>([
+  const router = useRouter();
+
+  const [addresses, setAddresses] = useState<Address[]>([
     {
       id: "1",
       label: "Home",
-      icon: "🏠",
+      icon: "home",
       address1: "123 Main Street, Apartment 4B",
       city: "Downtown, City",
       postcode: "10001",
@@ -29,7 +55,7 @@ export default function AddressTab() {
     {
       id: "2",
       label: "Office",
-      icon: "💼",
+      icon: "office",
       address1: "456 Business Park, Floor 8",
       city: "Commercial District, City",
       postcode: "10020",
@@ -37,84 +63,123 @@ export default function AddressTab() {
     {
       id: "3",
       label: "Garage Pickup",
-      icon: "📍",
+      icon: "pickup",
       address1: "456 Business Park, Floor 8",
       city: "Commercial District, City",
       postcode: "10020",
     },
   ]);
 
+  // DELETE DIALOG CONTROL
+  const [deleteId, setDeleteId] = useState<string | null>(null);
+
+  function handleDeleteConfirm() {
+    if (deleteId) {
+      setAddresses((prev) => prev.filter((a) => a.id !== deleteId));
+    }
+    setDeleteId(null);
+  }
+
   return (
-    <div className="bg-white p-6 rounded-xl shadow space-y-8">
+    <div className="bg-white p-6 rounded-2xl shadow border border-border space-y-5">
 
       {/* HEADER */}
-      <div className="flex justify-between items-center">
-        <h2 className="text-xl font-semibold">My Addresses</h2>
+      <div className="flex items-center justify-between">
+        <Typography variant="h4" weight="semibold">My Addresses</Typography>
 
-        <button onClick={() => setIsAddOpen(true)} className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg flex items-center gap-2">
-          ➕ Add New Address
-        </button>
+        <Button
+          variant="gradient"
+          className="flex items-center gap-2 px-5"
+          onClick={() => router.push("/customer/profile/my-address/add")}
+        >
+          <Plus size={18} weight="bold" /> Add New Address
+        </Button>
       </div>
 
-      {/* LIST */}
+      <div className="border-t border-gray-200" />
+
+      {/* ADDRESS GRID */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {addresses.map((a) => (
-          <div
+          <CustomCard
             key={a.id}
-            className={`border rounded-2xl p-5 bg-white transition shadow-sm
-            ${a.isDefault
-                ? "border-orange-400 shadow-[0_0_0_2px_#ff7a1a40]"
-                : "border-gray-200"
+            className={`p-5 rounded-2xl border transition ${a.isDefault ? "border-orange-400 ring-2 ring-orange-100" : "border-gray-200"
               }`}
           >
-            {/* ICON + LABEL */}
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-xl bg-gray-100 flex items-center justify-center text-2xl">
-                {a.icon}
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 rounded-xl bg-orange-50 flex items-center justify-center">
+                {ICON[a.icon]}
               </div>
 
-              <div>
-                <p className="font-semibold">{a.label}</p>
+              <div className="flex-1">
+                <div className="flex items-center gap-3">
+                  <Typography weight="medium">{a.label}</Typography>
 
-                {a.isDefault && (
-                  <span className="text-xs bg-orange-500 text-white px-2 py-1 rounded-md ml-2">
-                    Default
-                  </span>
-                )}
+                  {a.isDefault && (
+                    <span className="text-xs bg-orange-500 text-white px-2 py-0.5 rounded-md">
+                      Default
+                    </span>
+                  )}
+                </div>
+
+                <p className="text-sm text-gray-700 mt-3">{a.address1}</p>
+                {a.address2 && <p className="text-sm text-gray-700">{a.address2}</p>}
+                <p className="text-sm text-gray-700">{a.city} - {a.postcode}</p>
               </div>
             </div>
 
-            {/* ADDRESS LINES */}
-            <p className="mt-4 text-gray-700">{a.address1}</p>
-            {a.address2 && <p className="text-gray-700">{a.address2}</p>}
-            <p className="text-gray-700">{a.city} - {a.postcode}</p>
+            {/* ACTION BUTTONS */}
+            <div className="grid grid-cols-[1fr_auto] gap-3 mt-4 pt-4 border-t">
 
-            {/* ACTIONS */}
-            <div className="border-t mt-4 pt-4 flex items-center justify-between">
-              <button className="flex items-center gap-2 px-4 py-2 rounded-lg border hover:bg-gray-100 text-sm">
-                ✏ Edit
+              {/* EDIT */}
+              <button
+                onClick={() => router.push(`/customer/profile/my-address/edit/${a.id}`)}
+                className="flex items-center justify-center gap-2 border border-gray-300 rounded-lg py-2 text-sm hover:bg-gray-50"
+              >
+                <PencilSimple size={16} />
+                Edit
               </button>
 
-              <button className="flex items-center gap-2 px-4 py-2 rounded-lg border border-red-300 bg-red-50 hover:bg-red-100 text-sm text-red-600">
-                🗑 Delete
+              {/* DELETE BUTTON (opens dialog) */}
+              <button
+                onClick={() => setDeleteId(a.id)}
+                className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg border border-red-300 bg-red-50 text-red-600 text-sm hover:bg-red-100"
+              >
+                <Trash size={16} />
+                Delete
               </button>
             </div>
-          </div>
+          </CustomCard>
         ))}
       </div>
 
       {/* QUICK ACCESS BOX */}
-      <div className="bg-blue-50 border border-blue-100 p-5 rounded-xl">
-        <p className="font-semibold">📍 Quick Access</p>
-        <p className="text-gray-700 text-sm mt-1">
-          Save frequently used addresses for faster checkout during spare parts delivery,
-          service bookings, and towing requests.
-        </p>
-      </div>
+      <CustomCard className="bg-blue-50 border border-blue-100 p-5 rounded-xl">
+        <div className="flex items-start gap-3">
+          <div className="text-xl">📍</div>
+          <div>
+            <Typography weight="semibold">Quick Access</Typography>
+            <p className="text-sm text-gray-700 mt-1">
+              Save frequently used addresses for faster checkout during spare parts
+              delivery, service bookings, and towing requests.
+            </p>
+          </div>
+        </div>
+      </CustomCard>
 
-      {isAddOpen && (
-        <AddAddressForm />
-      )}
+      {/* DELETE CONFIRMATION DIALOG */}
+      <Dialog isOpen={!!deleteId} onClose={() => setDeleteId(null)}>
+        <DialogBody className="max-h-[35vh] w-xl p-4">
+          <DialogHeader title="Delete Address" onClose={() => setDeleteId(null)} />
+          <DeleteDialogBody
+            title="Delete Address?"
+            message="Are you sure you want to remove this address from your account? This action cannot be undone."
+            onCancel={() => setDeleteId(null)}
+            onConfirm={handleDeleteConfirm}
+          />
+        </DialogBody>
+      </Dialog>
+
     </div>
   );
 }
