@@ -1,15 +1,19 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ArrowLeft, Download, ShieldCheck } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import Divider from "@/components/ui/Divider";
 
 /* ------------------------------------------
    MAIN POLICY DETAILS PAGE
 ------------------------------------------- */
-export default function PolicyDetailsPage({ id }: { id: string }) {
+interface PolicyDetailsPageProps {
+  id: string;
+}
+
+export default function PolicyDetailsPage({ id }: PolicyDetailsPageProps) {
   const router = useRouter();
 
   // Dummy backend data
@@ -25,6 +29,23 @@ export default function PolicyDetailsPage({ id }: { id: string }) {
     validTill: "July 30, 2025",
     breakdown: { base: 210, addons: 25, tax: 14, total: 249 },
   });
+
+  // Store the policy ID in localStorage when the component mounts or id changes
+  useEffect(() => {
+    if (id) {
+      localStorage.setItem("policyId", id);
+    }
+  }, [id]);
+
+  // Helper function to navigate to different policy-related pages
+  const navigateTo = (path: string) => {
+    const policyId = localStorage.getItem("policyId") || id
+    if (!policyId) {
+      console.error('Policy ID is missing');
+      return;
+    }
+    router.push(`/customer/profile/my-orders/insurance/${path}/${policyId}`);
+  };
 
   // Dialog states
   const [openRenew, setOpenRenew] = useState(false);
@@ -66,12 +87,8 @@ export default function PolicyDetailsPage({ id }: { id: string }) {
 
             {/* FILE CLAIM */}
             <button
-              onClick={() =>
-                router.push(
-                  `/customer/profile/my-orders/insurance/file-claim/${id}`
-                )
-              }
-              className="border  border-border p-3 rounded-xl flex flex-col items-center hover:bg-gray-50"
+              onClick={() => navigateTo('file-claim')}
+              className="border border-border p-3 rounded-xl flex flex-col items-center hover:bg-gray-50"
             >
               🧾
               <span className="text-sm mt-1">File Claim</span>
@@ -79,12 +96,8 @@ export default function PolicyDetailsPage({ id }: { id: string }) {
 
             {/* ADD NOMINEE */}
             <button
-              onClick={() =>
-                router.push(
-                  `/customer/profile/my-orders/insurance/add-nominee/${id}`
-                )
-              }
-              className="border  border-border p-3 rounded-xl flex flex-col items-center hover:bg-gray-50"
+              onClick={() => navigateTo('add-nominee')}
+              className="border border-border p-3 rounded-xl flex flex-col items-center hover:bg-gray-50"
             >
               👤+
               <span className="text-sm mt-1">Add Nominee</span>
@@ -92,11 +105,7 @@ export default function PolicyDetailsPage({ id }: { id: string }) {
 
             {/* MODIFY POLICY */}
             <button
-              onClick={() =>
-                router.push(
-                  `/customer/profile/my-orders/insurance/modify-policy/${id}`
-                )
-              }
+              onClick={() => navigateTo('modify-policy')}
               className="border border-border p-3 rounded-xl flex flex-col items-center hover:bg-gray-50"
             >
               ✏️
