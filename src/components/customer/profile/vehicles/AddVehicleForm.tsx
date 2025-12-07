@@ -149,7 +149,7 @@ export default function AddVehicleForm({
         <CustomCard className="p-2">
           <Typography weight="semibold">Vehicle Type *</Typography>
 
-          <div className="flex gap-3 mt-0">
+          <div className="flex gap-3 mt-2">
             {["car", "bike", "truck"].map((t) => (
               <button
                 type="button"
@@ -168,8 +168,8 @@ export default function AddVehicleForm({
         </CustomCard>
 
         {/* ---------------- Vehicle Details (unchanged) ---------------- */}
-        <CustomCard className="p-3 space-y-2">
-          <Typography weight="semibold">Add Vehicle Details</Typography>
+        <CustomCard className="p-3 space-y-3">
+          <Typography weight="semibold" className="">Add Vehicle Details</Typography>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <Controller
