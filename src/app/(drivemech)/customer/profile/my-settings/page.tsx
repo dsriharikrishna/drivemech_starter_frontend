@@ -1,198 +1,121 @@
 "use client";
 
-import { useState } from "react";
+import { useForm, FormProvider } from "react-hook-form";
+
+import Typography from "@/components/ui/Typography";
+import Button from "@/components/ui/Button";
+import CustomCard from "@/components/ui/CustomCard";
+
+import SettingRow from "@/components/customer/profile/settings/SettingRow";
+import SettingActionRow from "@/components/customer/profile/settings/SettingActionRow";
+import SettingsSection from "@/components/customer/profile/settings/SettingsSection";
+
+type FormValues = {
+  push: boolean;
+  sms: boolean;
+  email: boolean;
+  biometric: boolean;
+  twoFactor: boolean;
+};
 
 export default function SettingsTab() {
-  // Notification Toggles
-  const [pushEnabled, setPushEnabled] = useState(true);
-  const [smsEnabled, setSmsEnabled] = useState(true);
-  const [emailEnabled, setEmailEnabled] = useState(true);
+  const methods = useForm<FormValues>({
+    defaultValues: {
+      push: true,
+      sms: true,
+      email: true,
+      biometric: true,
+      twoFactor: true,
+    },
+  });
 
-  // Account Security Toggles
-  const [biometric, setBiometric] = useState(true);
-  const [twoFactor, setTwoFactor] = useState(true);
+  const { watch, setValue } = methods;
+
+  const notificationItems = [
+    { icon: "🔔", title: "Push Notifications", subtitle: "Receive app notifications", key: "push" as const },
+    { icon: "📱", title: "SMS Notifications", subtitle: "Receive text messages", key: "sms" as const },
+    { icon: "✉️", title: "Email Notifications", subtitle: "Receive email updates", key: "email" as const },
+  ];
+
+  const securityItems = [
+    { icon: "🧿", title: "Face ID / Biometric", subtitle: "Use biometric authentication", key: "biometric" as const },
+    { icon: "🛡️", title: "Two-Factor Authentication", subtitle: "Add an extra layer of security", key: "twoFactor" as const },
+  ];
 
   return (
-    <div className="bg-white p-6 rounded-xl shadow space-y-10">
+    <FormProvider {...methods}>
+      <div className="w-full mx-auto bg-white rounded-xl flex flex-col gap-6 p-2">
 
-      {/* HEADER */}
-      <div className="flex justify-between items-center">
-        <h2 className="text-xl font-semibold">Settings</h2>
-
-        <button className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg flex items-center gap-2">
-          ➕ Add Vehicle
-        </button>
-      </div>
-
-      {/* NOTIFICATION PREFERENCES */}
-      <section className="border rounded-xl bg-gray-50">
-        <p className="font-semibold p-4 border-b">Notification Preferences</p>
-
-        <div className="divide-y">
-
-          {/* Push Notifications */}
-          <SettingRow
-            icon="🔔"
-            title="Push Notifications"
-            subtitle="Receive app notifications"
-            enabled={pushEnabled}
-            onToggle={() => setPushEnabled(!pushEnabled)}
-          />
-
-          {/* SMS Notifications */}
-          <SettingRow
-            icon="📱"
-            title="SMS Notifications"
-            subtitle="Receive text messages"
-            enabled={smsEnabled}
-            onToggle={() => setSmsEnabled(!smsEnabled)}
-          />
-
-          {/* Email Notifications */}
-          <SettingRow
-            icon="✉️"
-            title="Email Notifications"
-            subtitle="Receive email updates"
-            enabled={emailEnabled}
-            onToggle={() => setEmailEnabled(!emailEnabled)}
-          />
-
+        {/* HEADER */}
+        <div className="flex justify-between items-center px-4 py-4 border-b border-border">
+          <Typography variant="h4" weight="semibold">Settings</Typography>
+          <Button variant="gradient" startIcon="➕">Add Vehicle</Button>
         </div>
-      </section>
 
-      {/* ACCOUNT SECURITY */}
-      <section className="border rounded-xl bg-gray-50">
-        <p className="font-semibold p-4 border-b">Account Security</p>
+        {/* NOTIFICATION SECTION */}
+        <SettingsSection title="Notification Preferences">
+          {notificationItems.map((item, i) => (
+            <SettingRow
+              key={item.key}
+              icon={item.icon}
+              title={item.title}
+              subtitle={item.subtitle}
+              value={watch(item.key)}
+              onChange={(v) => setValue(item.key, v)}
+              showDivider={i !== notificationItems.length - 1}
+            />
+          ))}
+        </SettingsSection>
 
-        <div className="divide-y">
-
-          {/* Change Password */}
-          <div className="flex items-center justify-between p-4">
-            <div className="flex items-center gap-3">
-              <span className="text-xl">🔐</span>
-              <div>
-                <p className="font-semibold">Change Password</p>
-                <p className="text-gray-600 text-sm">Update your account password</p>
-              </div>
-            </div>
-            <button className="text-orange-500 text-sm hover:underline flex items-center gap-1">
-              Update →
-            </button>
-          </div>
-
-          {/* Biometric */}
-          <SettingRow
-            icon="🧿"
-            title="Face ID / Biometric"
-            subtitle="Use biometric authentication"
-            enabled={biometric}
-            onToggle={() => setBiometric(!biometric)}
+        {/* ACCOUNT SECURITY */}
+        <SettingsSection title="Account Security">
+          <SettingActionRow
+            icon="🔐"
+            title="Change Password"
+            subtitle="Update your account password"
+            actionLabel="Update →"
           />
 
-          {/* Two-Factor Authentication */}
-          <SettingRow
-            icon="🛡️"
-            title="Two-Factor Authentication"
-            subtitle="Add an extra layer of security"
-            enabled={twoFactor}
-            onToggle={() => setTwoFactor(!twoFactor)}
+          {securityItems.map((item, i) => (
+            <SettingRow
+              key={item.key}
+              icon={item.icon}
+              title={item.title}
+              subtitle={item.subtitle}
+              value={watch(item.key)}
+              onChange={(v) => setValue(item.key, v)}
+              showDivider={i !== securityItems.length - 1}
+            />
+          ))}
+        </SettingsSection>
+
+        {/* PRIVACY */}
+        <SettingsSection title="Privacy">
+          <SettingActionRow icon="👁️" title="Privacy Settings" actionLabel="Manage →" />
+          <SettingActionRow
+            icon="🗑️"
+            title="Delete Account"
+            actionLabel="Delete →"
+            titleClass="text-red-500"
+            actionClass="text-red-500"
+            showDivider={false}
           />
+        </SettingsSection>
 
+        {/* SECURITY INFO */}
+        <CustomCard className="p-4 bg-blue-50 border border-blue-100">
+          <Typography weight="semibold">🔒 Your data is secure</Typography>
+          <Typography variant="small" color="muted" className="mt-1">
+            DriveMech uses industry-standard encryption to protect your personal information and payment details.
+          </Typography>
+        </CustomCard>
+
+        {/* SAVE BUTTON */}
+        <div className="flex justify-center mb-4">
+          <Button variant="gradient" className="px-10 py-3">Save Changes</Button>
         </div>
-      </section>
 
-      {/* PRIVACY */}
-      <section className="border rounded-xl bg-gray-50">
-        <p className="font-semibold p-4 border-b">Privacy</p>
-
-        <div className="divide-y">
-
-          {/* Privacy Settings */}
-          <div className="flex items-center justify-between p-4">
-            <div className="flex items-center gap-3">
-              <span className="text-xl">👁️</span>
-              <div>
-                <p className="font-semibold">Privacy Settings</p>
-              </div>
-            </div>
-            <button className="text-orange-500 text-sm hover:underline flex items-center gap-1">
-              Manage →
-            </button>
-          </div>
-
-          {/* Delete Account */}
-          <div className="flex items-center justify-between p-4">
-            <div className="flex items-center gap-3">
-              <span className="text-xl text-red-500">🗑️</span>
-              <div>
-                <p className="font-semibold text-red-500">Delete Account</p>
-              </div>
-            </div>
-            <button className="text-red-500 text-sm hover:underline flex items-center gap-1">
-              Delete →
-            </button>
-          </div>
-
-        </div>
-      </section>
-
-      {/* SECURITY INFO BOX */}
-      <div className="bg-blue-50 border border-blue-100 p-4 rounded-xl">
-        <p className="font-semibold">🔒 Your data is secure</p>
-        <p className="text-gray-600 text-sm mt-1">
-          DriveMech uses industry-standard encryption to protect your personal information and payment details.
-        </p>
       </div>
-
-      {/* SAVE BUTTON */}
-      <div className="flex justify-center">
-        <button className="bg-orange-500 hover:bg-orange-600 text-white px-10 py-3 rounded-lg text-lg">
-          Save Changes
-        </button>
-      </div>
-
-    </div>
-  );
-}
-
-/* REUSABLE ROW WITH PURE TAILWIND TOGGLE */
-function SettingRow({
-  icon,
-  title,
-  subtitle,
-  enabled,
-  onToggle,
-}: {
-  icon: string;
-  title: string;
-  subtitle?: string;
-  enabled: boolean;
-  onToggle: () => void;
-}) {
-  return (
-    <div className="flex items-center justify-between p-4">
-      <div className="flex items-center gap-4">
-        <span className="text-xl">{icon}</span>
-
-        <div>
-          <p className="font-semibold">{title}</p>
-          {subtitle && <p className="text-gray-600 text-sm">{subtitle}</p>}
-        </div>
-      </div>
-
-      {/* PURE TAILWIND TOGGLE SWITCH */}
-      <button
-        onClick={onToggle}
-        className={`relative inline-flex h-6 w-11 rounded-full transition ${
-          enabled ? "bg-orange-500" : "bg-gray-300"
-        }`}
-      >
-        <span
-          className={`absolute top-1 h-4 w-4 rounded-full bg-white transition ${
-            enabled ? "right-1" : "left-1"
-          }`}
-        />
-      </button>
-    </div>
+    </FormProvider>
   );
 }

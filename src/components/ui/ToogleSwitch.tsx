@@ -1,48 +1,143 @@
+// components/ToggleSwitch.tsx
+import { FC } from "react";
+import { Controller } from "react-hook-form";
 
-"use client";
+type ToggleSize = "sm" | "md" | "lg";
+type ToggleVariant = "primary" | "success" | "danger" | "warning" | "info";
 
-import { InputHTMLAttributes } from "react";
+export type ToggleSwitchProps = {
+  checked?: boolean;
+  onChange?: (value: boolean) => void;
 
-interface ToggleSwitchProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   description?: string;
-  checked?: boolean;
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;  
-}
 
-export default function ToggleSwitch({
+  size?: ToggleSize;
+  color?: string;        // tailwind class like "blue-600"
+  variant?: ToggleVariant; // predefined color system
+
+  className?: string;
+};
+
+const ToggleSwitch: FC<ToggleSwitchProps> = ({
+  checked = false,
+  onChange,
   label,
   description,
-  checked,
-  onChange,
-  ...props
-}: ToggleSwitchProps) {
-  return (
-    <label className="inline-flex items-center cursor-pointer w-full">
-      <input
-        type="checkbox"
-        className="sr-only peer"
-        checked={checked}
-        onChange={onChange}
-        {...props}
-      />
-      <div
-        className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none 
-        rounded-full peer dark:bg-gray-700 
-        peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full 
-        peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] 
-        after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 
-        after:transition-all dark:border-gray-600 peer-checked:bg-second-primary dark:peer-checked:bg-blue-600"
-      ></div>
+  size = "md",
+  color,
+  variant = "primary",
+  className = "",
+}) => {
+  // -------------------------
+  // SIZE MAP
+  // -------------------------
+  const sizeMap = {
+    sm: { track: "w-8 h-4", knob: "w-3 h-3", translate: "translate-x-4" },
+    md: { track: "w-10 h-5", knob: "w-4 h-4", translate: "translate-x-5" },
+    lg: { track: "w-12 h-6", knob: "w-5 h-5", translate: "translate-x-6" },
+  };
+  const s = sizeMap[size];
 
+  // -------------------------
+  // VARIANT COLORS (STATIC)
+  // -------------------------
+  const variantMap = {
+    primary: "bg-orange-600",
+    success: "bg-green-600",
+    danger: "bg-red-600",
+    warning: "bg-yellow-500",
+    info: "bg-teal-600",
+  };
+
+  const onColor = color ? `bg-${color}` : variantMap[variant];
+  const offColor = "bg-gray-300";
+
+  return (
+    <label className={`flex items-center justify-between cursor-pointer ${className}`}>
+      {/* Text content */}
       {(label || description) && (
-        <div className="flex flex-col ml-3">
-          {label && <span className="text-sm text-gray-heading">{label}</span>}
+        <div className="ml-3 select-none">
+          {label && (
+            <p className="text-sm font-medium text-heading">{label}</p>
+          )}
+
           {description && (
-            <span className="text-xs text-gray-500">{description}</span>
+            <p className="text-xs text-neutral-secondary mt-0.5">
+              {description}
+            </p>
           )}
         </div>
       )}
+      {/* Toggle */}
+      <div className="pt-[2px]">
+        <input
+          type="checkbox"
+          checked={checked}
+          onChange={(e) => onChange?.(e.target.checked)}
+          // className="sr-only peer"
+          className="absolute opacity-0 w-0 h-0 peer"
+
+        />
+
+        <div
+          className={`
+            relative rounded-full transition-colors duration-300
+            ${s.track}
+            ${checked ? onColor : offColor}
+          `}
+        >
+          <div
+            className={`
+              absolute bg-white rounded-full shadow transition-transform duration-300
+              top-[2px] left-[2px] ${s.knob}
+              ${checked ? s.translate : ""}
+            `}
+          />
+        </div>
+      </div>
+
+
     </label>
   );
-}
+};
+
+export type ControlledToggleSwitchProps = {
+  name: string;
+  label?: string;
+  description?: string;
+  size?: ToggleSize;
+  color?: string;
+  variant?: ToggleVariant;
+  className?: string;
+};
+
+export const ControlledToggleSwitch: FC<ControlledToggleSwitchProps> = ({
+  name,
+  label,
+  description,
+  size = "md",
+  color,
+  variant = "primary",
+  className = "",
+}) => {
+  return (
+    <Controller
+      name={name}
+      render={({ field }) => (
+        <ToggleSwitch
+          checked={field.value}
+          onChange={field.onChange}
+          label={label}
+          description={description}
+          size={size}
+          color={color}
+          variant={variant}
+          className={className}
+        />
+      )}
+    />
+  );
+};
+
+export default ToggleSwitch;
