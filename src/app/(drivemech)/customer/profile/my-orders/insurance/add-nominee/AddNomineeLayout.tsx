@@ -1,271 +1,300 @@
 "use client";
 
-import { useState } from "react";
-import {
-  ArrowLeft,
-  Calendar,
-  User,
-  Phone,
-  Mail,
-  Percent,
-} from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { ArrowLeft, Calendar, User, Mail } from "lucide-react";
+
+// UI Components (your library)
+import CustomCard from "@/components/ui/CustomCard";              // :contentReference[oaicite:8]{index=8}
+import Button from "@/components/ui/Button";                      // :contentReference[oaicite:9]{index=9}
+import Typography from "@/components/ui/Typography";              // :contentReference[oaicite:10]{index=10}
+import CommonTextInput from "@/components/forms/CommonTextInput"; // :contentReference[oaicite:11]{index=11}
+import CommonTextArea from "@/components/forms/CommonTextArea";   // :contentReference[oaicite:12]{index=12}
+import CheckboxInput from "@/components/forms/CheckboxInput";    // :contentReference[oaicite:13]{index=13}
+
+import ModalDropdown from "@/components/ui/DropDown";            // :contentReference[oaicite:14]{index=14}
+import PhoneInput from "@/components/forms/PhoneInput";          // :contentReference[oaicite:15]{index=15}
+
+import SharePercentageInput from "@/components/forms/SharePercentageInput";
+
 import NomineeSuccessModal from "@/components/customer/profile/orders/tabs/insurance/NomineeSuccessModal";
 
+import { useForm, FormProvider, Controller } from "react-hook-form";
+import Dialog from "@/components/modals/Dialog";
+import DialogBody from "@/components/modals/DialogBody";
+import DialogHeader from "@/components/modals/DialogHeader";
+
+const RELATION_OPTIONS = [
+  { id: "Father", name: "Father" },
+  { id: "Mother", name: "Mother" },
+  { id: "Spouse", name: "Spouse" },
+  { id: "Son", name: "Son" },
+  { id: "Daughter", name: "Daughter" },
+];
+
+const GUARDIAN_OPTIONS = [
+  { id: "Father", name: "Father" },
+  { id: "Mother", name: "Mother" },
+  { id: "Brother", name: "Brother" },
+  { id: "Sister", name: "Sister" },
+];
+
+type FormValues = {
+  nomineeName: string;
+  relationship: string;
+  dob: string;
+  phone: string;
+  email: string;
+  address: string;
+  share: number;
+  guardianName?: string;
+  guardianRelation?: string;
+  fir?: boolean;
+};
+
 export default function AddNomineeLayout({ policyId }: { policyId: string }) {
-  // Form states
-  const [name, setName] = useState("");
-  const [relationship, setRelationship] = useState("");
-  const [dob, setDob] = useState("");
-  const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
-  const [address, setAddress] = useState("");
-  const [share, setShare] = useState(100);
+  const router = useRouter();
 
-  // Guardian states
+  const methods = useForm<FormValues>({
+    defaultValues: {
+      nomineeName: "",
+      relationship: "",
+      dob: "",
+      phone: "",
+      email: "",
+      address: "",
+      share: 100,
+      guardianName: "",
+      guardianRelation: "",
+      fir: false,
+    },
+  });
+
+  const { register, watch, setValue, handleSubmit, control, formState: { errors } } = methods;
+
+  const dobValue = watch("dob");
+  const shareValue = watch("share");
+  const relationshipValue = watch("relationship");
   const [isMinor, setIsMinor] = useState(false);
-  const [guardianName, setGuardianName] = useState("");
-  const [guardianRelation, setGuardianRelation] = useState("");
 
-  // Modal state
   const [showSuccess, setShowSuccess] = useState(false);
+  const [submittedNominee, setSubmittedNominee] = useState<any>(null);
 
-  // Check minor age
-  const handleDOB = (e: any) => {
-    const dobValue = e.target.value;
-    setDob(dobValue);
-
+  useEffect(() => {
+    if (!dobValue) {
+      setIsMinor(false);
+      return;
+    }
     const dobObj = new Date(dobValue);
-    const age = new Date().getFullYear() - dobObj.getFullYear();
-
+    if (isNaN(dobObj.getTime())) {
+      setIsMinor(false);
+      return;
+    }
+    const today = new Date();
+    let age = today.getFullYear() - dobObj.getFullYear();
+    const m = today.getMonth() - dobObj.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < dobObj.getDate())) {
+      age--;
+    }
     setIsMinor(age < 18);
-  };
+  }, [dobValue]);
 
-  // Submit Nominee
-  const handleSubmit = () => {
-    if (!name || !relationship || !dob || !phone) {
-      alert("Please fill all required fields.");
+  const onSubmit = (data: FormValues) => {
+    // Basic required checks (RHF also shows errors when rules added)
+    if (!data.nomineeName || !data.relationship || !data.dob || !data.phone) {
+      return;
+    }
+    if (isMinor && (!data.guardianName || !data.guardianRelation)) {
       return;
     }
 
-    if (isMinor && (!guardianName || !guardianRelation)) {
-      alert("Guardian details are required for a minor.");
-      return;
-    }
-
+    setSubmittedNominee({
+      name: data.nomineeName,
+      relationship: data.relationship,
+      share: data.share,
+      isMinor,
+    });
     setShowSuccess(true);
   };
 
-  return (
-    <>
-      {/* SUCCESS MODAL */}
-      {showSuccess && (
-        <NomineeSuccessModal
-          isOpen={showSuccess}
-          onClose={() => setShowSuccess(false)}
-          nominee={{
-            name,
-            relationship,
-            share,
-            isMinor,
-          }}
-        />
-      )}
+  const handleCancel = () => router.back();
 
-      <div className="max-w-5xl mx-auto px-6 py-6">
-        {/* Header */}
-        <div className="flex items-center gap-3 mb-6">
-          <button className="p-2 hover:bg-gray-100 rounded-lg">
+  return (
+    <FormProvider {...methods}>
+
+      <div className="max-w-5xl mx-auto px-6 py-3 flex flex-col gap-4">
+        {/* header */}
+        <div className="flex items-center gap-3 border-b border-border pb-2">
+          <button onClick={() => router.back()} className="p-2 hover:bg-gray-100 rounded-lg">
             <ArrowLeft size={22} />
           </button>
+
           <div>
-            <h1 className="text-xl font-semibold">Add Nominee</h1>
-            <p className="text-gray-500 text-sm">
+            <Typography variant="h4" weight="semibold">
+              Add Nominee
+            </Typography>
+            <Typography variant="body" color="muted">
               Policy: {policyId || "GEICO-PL-2024-0015"}
-            </p>
+            </Typography>
           </div>
         </div>
 
-        {/* Main Card */}
-        <div className="bg-white rounded-2xl border p-6 space-y-6">
-          <h2 className="font-semibold">Nominee Details</h2>
+        <CustomCard className="space-y-6 border border-border">
+          <Typography variant="h5" weight="semibold">
+            Incident Details
+          </Typography>
 
           <div className="grid grid-cols-2 gap-5">
             {/* Nominee Name */}
-            <div className="space-y-1">
-              <label className="text-sm font-medium">Nominee Name *</label>
-              <div className="flex items-center gap-2 border rounded-xl px-3 h-12">
-                <User className="text-gray-400" size={18} />
-                <input
-                  className="w-full outline-none"
-                  placeholder="Enter full name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                />
-              </div>
+            <div>
+              <CommonTextInput
+                name="nomineeName"
+                label="Nominee Name"
+                placeholder="Enter full name"
+                leftIcon={<User size={18} />}
+              // but still surface errors
+              />
+              {errors.nomineeName && <p className="text-xs text-red-500 mt-1">{(errors.nomineeName as any)?.message}</p>}
             </div>
 
-            {/* Relationship */}
-            <div className="space-y-1">
-              <label className="text-sm font-medium">Relationship *</label>
-              <select
-                className="border rounded-xl px-3 h-12 outline-none"
-                value={relationship}
-                onChange={(e) => setRelationship(e.target.value)}
-              >
-                <option value="">Select relationship</option>
-                <option>Father</option>
-                <option>Mother</option>
-                <option>Spouse</option>
-                <option>Son</option>
-                <option>Daughter</option>
-              </select>
+            {/* Relationship - ModalDropdown (Controller) */}
+            <div className="mt-[-6px]">
+              <label className="inputLabel">Relationship <span className="text-red-500">*</span></label>
+              <Controller
+                control={control}
+                name="relationship"
+                rules={{ required: "Relationship required" }}
+                render={({ field }) => (
+                  <ModalDropdown
+                    items={RELATION_OPTIONS}
+                    selectedItem={field.value ? { id: field.value, name: field.value } : null}
+                    onSelect={(item) => field.onChange(item.id)}
+                    placeholder="Select relationship"
+                    buttonClassName="h-[40px]"
+                  />
+                )}
+              />
+              {errors.relationship && <p className="text-xs text-red-500 mt-1">{(errors.relationship as any)?.message}</p>}
             </div>
 
             {/* DOB */}
-            <div className="space-y-1">
-              <label className="text-sm font-medium">Date of Birth *</label>
-              <div className="flex items-center gap-2 border rounded-xl px-3 h-12">
+            <div>
+              <label className="inputLabel mb-1">Date of Birth <span className="text-red-500">*</span></label>
+              <div className="flex items-center gap-2 border rounded-xl px-3 h-[40px]">
                 <input
+                  {...register("dob", { required: "DOB required" })}
                   type="date"
-                  className="w-full outline-none"
-                  value={dob}
-                  onChange={handleDOB}
+                  className="w-full outline-none text-sm"
                 />
-                <Calendar className="text-gray-400" size={18} />
               </div>
+              {errors.dob && <p className="text-xs text-red-500 mt-1">{(errors.dob as any)?.message}</p>}
 
-              {isMinor && (
-                <p className="text-red-500 text-xs">
-                  Age: Minor – Guardian details required
-                </p>
-              )}
+              {isMinor && <p className="text-red-500 text-xs mt-1">Minor – Guardian details required</p>}
             </div>
 
-            {/* Share Percentage */}
-            <div className="space-y-1">
-              <label className="text-sm font-medium">Share Percentage *</label>
-              <div className="flex items-center gap-2 border rounded-xl p-3">
-                <Percent size={18} className="text-gray-400" />
-                <input
-                  type="number"
-                  className="w-20 outline-none"
-                  value={share}
-                  onChange={(e) => setShare(Number(e.target.value))}
-                />
-                <input
-                  type="range"
-                  min="0"
-                  max="100"
-                  value={share}
-                  onChange={(e) => setShare(Number(e.target.value))}
-                  className="w-full accent-orange-500"
-                />
-              </div>
+            {/* Share Percentage (custom reusable component) */}
+            <div>
+              <SharePercentageInput name="share" label="Share Percentage" />
             </div>
 
-            {/* Phone */}
-            <div className="space-y-1">
-              <label className="text-sm font-medium">Phone Number *</label>
-              <div className="flex items-center gap-2 border rounded-xl px-3 h-12">
-                <span>+91</span>
-                <Phone className="text-gray-400" size={18} />
-                <input
-                  className="w-full outline-none"
-                  placeholder="XXX XX XX XX"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                />
-              </div>
+            {/* Phone - uses PhoneInput which integrates with useFormContext */}
+            <div>
+              <PhoneInput
+                name="phone"
+                label="Phone Number"
+                required
+                countryOptions={[{ code: "IN", label: "India", iso: "IN" }]}
+              />
+              {errors.phone && <p className="text-xs text-red-500 mt-1">{(errors.phone as any)?.message}</p>}
             </div>
 
             {/* Email */}
-            <div className="space-y-1">
-              <label className="text-sm font-medium">Email *</label>
-              <div className="flex items-center gap-2 border rounded-xl px-3 h-12">
-                <Mail className="text-gray-400" size={18} />
-                <input
-                  className="w-full outline-none"
-                  placeholder="nominee@example.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
+            <div>
+              <CommonTextInput
+                name="email"
+                label="Email"
+                placeholder="nominee@example.com"
+                leftIcon={<Mail size={18} />}
+              />
+              {errors.email && <p className="text-xs text-red-500 mt-1">{(errors.email as any)?.message}</p>}
             </div>
 
-            {/* Address */}
-            <div className="col-span-2 space-y-1">
-              <label className="text-sm font-medium">Address</label>
-              <textarea
-                className="w-full border rounded-xl p-3 h-28 outline-none"
-                placeholder="Enter complete address"
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-              />
+            {/* Address - full width */}
+            <div className="col-span-2">
+              <CommonTextArea name="address" label="Address" placeholder="Enter complete address" rows={4} />
             </div>
           </div>
 
-          {/* Guardian Section */}
+          {/* Guardian section (only when minor) */}
           {isMinor && (
             <div className="bg-orange-50 border border-orange-300 rounded-xl p-4 space-y-4">
-              <p className="font-semibold text-orange-700">
+              <Typography variant="body" weight="semibold" color="warning">
                 ⚠️ Guardian Required
-              </p>
+              </Typography>
 
               <div className="grid grid-cols-2 gap-5">
-                {/* Guardian Name */}
-                <div className="space-y-1">
-                  <label className="text-sm font-medium">
-                    Guardian Name *
-                  </label>
-                  <input
-                    className="w-full border rounded-xl p-3 outline-none"
-                    placeholder="Guardian full name"
-                    value={guardianName}
-                    onChange={(e) => setGuardianName(e.target.value)}
-                  />
+                <div>
+                  <CommonTextInput name="guardianName" label="Guardian Name" placeholder="Enter guardian name" />
+                  {errors.guardianName && <p className="text-xs text-red-500 mt-1">{(errors.guardianName as any)?.message}</p>}
                 </div>
 
-                {/* Guardian Relationship */}
-                <div className="space-y-1">
-                  <label className="text-sm font-medium">
-                    Guardian’s Relationship *
-                  </label>
-                  <select
-                    className="border rounded-xl px-3 h-12 outline-none"
-                    value={guardianRelation}
-                    onChange={(e) => setGuardianRelation(e.target.value)}
-                  >
-                    <option value="">Select relationship</option>
-                    <option>Father</option>
-                    <option>Mother</option>
-                    <option>Brother</option>
-                    <option>Sister</option>
-                  </select>
+                <div>
+                  <label className="inputLabel mb-1">Guardian Relationship <span className="text-red-500">*</span></label>
+                  <Controller
+                    control={control}
+                    name="guardianRelation"
+                    rules={{ required: isMinor ? "Guardian relation required" : false }}
+                    render={({ field }) => (
+                      <ModalDropdown
+                        items={GUARDIAN_OPTIONS}
+                        selectedItem={field.value ? { id: field.value, name: field.value } : null}
+                        onSelect={(item) => field.onChange(item.id)}
+                        placeholder="Select guardian relationship"
+                        buttonClassName="h-[40px]"
+                      />
+                    )}
+                  />
+                  {errors.guardianRelation && <p className="text-xs text-red-500 mt-1">{(errors.guardianRelation as any)?.message}</p>}
                 </div>
               </div>
             </div>
           )}
 
           {/* Note */}
-          <div className="bg-blue-50 border border-blue-200 text-sm p-4 rounded-xl">
-            <strong>Note:</strong> Total share percentage must equal 100%.
+          <div className="bg-blue-50 border border-blue-200 p-4 rounded-xl text-sm">
+            <strong>Note:</strong> Total share percentage for all nominees must equal 100%. You can add multiple nominees and split the coverage amount accordingly.
           </div>
 
           {/* Buttons */}
-          <div className="flex justify-between pt-4">
-            <button className="px-6 py-3 border rounded-xl w-1/3">
+          <div className="flex justify-between gap-4 pt-4">
+            <Button variant="outline" fullWidth onClick={handleCancel}>
               Cancel
-            </button>
+            </Button>
 
-            <button
-              className="px-6 py-3 rounded-xl w-1/3 bg-orange-500 text-white font-medium"
-              onClick={handleSubmit}
-            >
+            <Button variant="gradient" fullWidth onClick={handleSubmit(onSubmit)}>
               Add Nominee
-            </button>
+            </Button>
           </div>
-        </div>
+        </CustomCard>
+
+
+        {/* success modal */}
+        <Dialog isOpen={showSuccess} onClose={() => setShowSuccess(false)}>
+          <DialogBody className="p-4">
+            <DialogHeader
+              title={"Return Submitted"}
+              onClose={() => { }}
+            />
+
+            <NomineeSuccessModal
+              isOpen={showSuccess}
+              onClose={() => setShowSuccess(false)}
+              nominee={submittedNominee}
+            />
+
+          </DialogBody>
+        </Dialog>
       </div>
-    </>
+    </FormProvider>
   );
 }

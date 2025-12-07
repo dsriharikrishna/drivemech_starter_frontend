@@ -5,7 +5,7 @@ interface CustomCardProps {
 
 export default function CustomCard({ children, className = "" }: CustomCardProps) {
   return (
-    <div className={`bg-white border-border rounded-xl shadow-sm p-5 ${className}`}>
+    <div className={`bg-white border-border rounded-xl p-5 ${className}`}>
       {children}
     </div>
   );

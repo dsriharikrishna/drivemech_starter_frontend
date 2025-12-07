@@ -14,7 +14,7 @@ export function ClaimSubmitted({
   onDone?: () => void;
 }) {
   return (
-    <div className="max-w-4xl mx-auto p-6">
+    <div className="sm:w-2xl md-w-3xl mx-auto">
       <div className="rounded-2xl overflow-hidden bg-gradient-to-b from-green-400 to-green-300 text-white text-center py-12">
         <div className="mx-auto w-20 h-20 rounded-full bg-white/20 flex items-center justify-center mb-4">
           <CheckCircle className="text-white" size={36} />
@@ -35,6 +35,7 @@ export function ClaimSubmitted({
             <button
               onClick={() => {
                 if (navigator.clipboard) navigator.clipboard.writeText(claimId);
+                (window as any).addToast("success", "message copied successfully")
               }}
               className="px-4 py-2 bg-orange-50 text-orange-600 border rounded-md hover:bg-orange-100"
             >
@@ -89,7 +90,6 @@ export function ClaimSubmitted({
 
         <button
           onClick={() => {
-            // open claim tracking (placeholder)
             window.alert("Open claim tracking (placeholder)");
           }}
           className="w-full py-3 rounded-xl border"
