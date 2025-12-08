@@ -35,7 +35,7 @@ export function PartnerFleetSection() {
             <CustomCard key={idx} className="p-0 border rounded-xl">
               <img
                 src={item.img}
-                className="w-full h-[160px] rounded-t-xl object-cover"
+                className="w-full h-[160px] rounded-t-xl object-cover bg-hero"
                 alt=""
               />
 
