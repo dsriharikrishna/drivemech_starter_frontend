@@ -52,11 +52,11 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed w-full top-0 z-50 transition-shadow duration-300 ${scrolled ? "bg-white shadow-md" : "bg-white"
+      className={`fixed w-full top-0 z-50 transition-shadow duration-300 ${scrolled ? "bg-white" : "bg-white"
         }`}
     >
       <nav
-        className="mx-auto flex w-full max-w-7xl items-center justify-between px-3 py-3 sm:px-5 lg:px-8"
+        className="mx-auto flex w-full max-w-7xl items-center justify-between px-3 py-3 sm:px-5 lg:px-6"
         aria-label="Global"
       >
         {/* --- Left: Logo and Tagline --- */}

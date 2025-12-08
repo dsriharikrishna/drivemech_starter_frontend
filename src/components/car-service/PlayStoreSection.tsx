@@ -3,14 +3,14 @@ import Image from "next/image";
 
 export default function PlayStoreSection() {
   return (
-    <section className="py-16 bg-white">
+    <section className="py-10 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center justify-between gap-6">
         {/* Left Side - App Mockups */}
         <div className="flex-shrink-0 w-full lg:w-1/2 flex justify-center items-center min-h-[250px]">
           <Image
             src="/images/DriveMech-Mockup1.png" 
             alt="App Mockup"
-            width={330}
+            width={480}
             height={340}
             priority
             className="object-contain h-full w-auto"
