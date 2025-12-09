@@ -8,20 +8,19 @@ import PlayStoreSection from "@/components/car-service/PlayStoreSection";
 
 const TowingHomePage = () => {
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex flex-col w-full gap-4">
 
       {/* Full-width hero */}
       <TowingHeroSection />
-
-      {/* SECTION WRAPPERS */}
-      <div className="max-w-7xl mx-auto w-full px-4">
-        <ServicesSection />
-      </div>
 
       <div className="max-w-7xl mx-auto w-full px-4">
         <AboutSection />
       </div>
 
+      {/* SECTION WRAPPERS */}
+      <div className="max-w-7xl mx-auto w-full px-4">
+        <ServicesSection />
+      </div>
 
       <div className="max-w-7xl mx-auto w-full px-4">
         <TrackingSection />

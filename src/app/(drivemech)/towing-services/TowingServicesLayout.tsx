@@ -40,7 +40,7 @@ export default function TowingServicesLayout() {
 
         {/* ✅ TOWING MENU BAR */}
         <div className="bg-white mt-15">
-          <TowingHeader onMenuChange={setPage} />
+          <TowingHeader onMenuChange={setPage} activePage={page} />
         </div>
       </div>
 

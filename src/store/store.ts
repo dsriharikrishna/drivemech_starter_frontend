@@ -16,6 +16,7 @@ import authReducer, { logout } from "./slicers/authSlicer";
 import serviceReducer from './slicers/serviceSlicer';
 import carReducer from './slicers/carSlicer';
 import locationReducer from './slicers/locationSlicer';
+import towingServiceReducer from './slicers/towing-services/towingServiceSlicer';
 
 const authPersistConfig = {
   key: "auth",
@@ -55,7 +56,7 @@ export const store = configureStore({
     service: serviceReducer,
     car: persistedCarReducer,
     location: locationReducer,
-
+    towingService: towingServiceReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

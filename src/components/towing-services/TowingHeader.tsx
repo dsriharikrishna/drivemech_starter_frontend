@@ -3,8 +3,14 @@
 import { useState } from "react";
 import { CaretDown, Phone } from "phosphor-react";
 
-export default function TowingHeader({ onMenuChange }: any) {
+export default function TowingHeader({ onMenuChange, activePage }: { onMenuChange: (page: string) => void; activePage: string }) {
   const [open, setOpen] = useState(false);
+
+  const getButtonClass = (page: string) => {
+    return activePage === page
+      ? "text-orange-500 font-medium"
+      : "text-gray-600 hover:text-orange-500";
+  };
 
   return (
     <header className="w-full bg-white border-b border-border">
@@ -55,31 +61,31 @@ export default function TowingHeader({ onMenuChange }: any) {
 
         {/* CENTER — Menu */}
         <nav className="hidden md:flex items-center gap-8 text-sm">
-          <button onClick={() => onMenuChange("home")} className="text-orange-500 font-medium">
+          <button onClick={() => onMenuChange("home")} className={getButtonClass("home")}>
             Home
           </button>
 
-          <button onClick={() => onMenuChange("services")} className="text-gray-600 hover:text-orange-500">
+          <button onClick={() => onMenuChange("services")} className={getButtonClass("services")}>
             Services
           </button>
 
-          <button onClick={() => onMenuChange("track")} className="text-gray-600 hover:text-orange-500">
+          <button onClick={() => onMenuChange("track")} className={getButtonClass("track")}>
             Track Services
           </button>
 
-          <button onClick={() => onMenuChange("bookings")} className="text-gray-600 hover:text-orange-500">
+          <button onClick={() => onMenuChange("bookings")} className={getButtonClass("bookings")}>
             My Bookings
           </button>
 
-          <button onClick={() => onMenuChange("app")} className="text-gray-600 hover:text-orange-500">
+          <button onClick={() => onMenuChange("app")} className={getButtonClass("app")}>
             Mobile App
           </button>
 
-          <button onClick={() => onMenuChange("partners")} className="text-gray-600 hover:text-orange-500">
+          <button onClick={() => onMenuChange("partners")} className={getButtonClass("partners")}>
             Partners
           </button>
 
-          <button onClick={() => onMenuChange("contact")} className="text-gray-600 hover:text-orange-500">
+          <button onClick={() => onMenuChange("contact")} className={getButtonClass("contact")}>
             Contact Us
           </button>
         </nav>

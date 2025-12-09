@@ -17,6 +17,7 @@ interface ModalDropdownProps {
   disabled?: boolean;
   className?: string;
   buttonClassName?: string;
+  error?: string;
 }
 
 export default function ModalDropdown({
@@ -27,6 +28,7 @@ export default function ModalDropdown({
   disabled = false,
   className = "",
   buttonClassName = "",
+  error,
 }: ModalDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -54,23 +56,26 @@ export default function ModalDropdown({
         type="button"
         onClick={() => !disabled && setIsOpen(!isOpen)}
         disabled={disabled}
-        className={`flex items-center justify-between w-full px-4 h-[40px] text-sm text-left bg-white border border-gray-300  rounded-xl ${buttonClassName} ${
-          disabled ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500'
-        }`}
+        className={`flex items-center justify-between w-full px-4 h-[40px] text-sm text-left bg-white border rounded-xl ${buttonClassName} ${error ? 'border-red-500' : 'border-gray-300'
+          } ${disabled ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500'
+          }`}
       >
         <span
-          className={`text-[14px] truncate ${
-            !selectedItem ? "text-gray-500" : "text-gray-900"
-          }`}
+          className={`text-[14px] truncate ${!selectedItem ? "text-gray-500" : "text-gray-900"
+            }`}
         >
           {selectedItem ? selectedItem.name : placeholder}
         </span>
         <ChevronDown
-          className={`w-4 h-4 text-gray-900 transition-transform duration-200 ${
-            isOpen ? "rotate-180" : ""
-          } ${disabled ? "opacity-50" : ""}`}
+          className={`w-4 h-4 text-gray-900 transition-transform duration-200 ${isOpen ? "rotate-180" : ""
+            } ${disabled ? "opacity-50" : ""}`}
         />
       </button>
+
+      {/* Error Message */}
+      {error && (
+        <p className="mt-1 text-xs text-red-500">{error}</p>
+      )}
 
       {/* Dropdown Menu */}
       {isOpen && (
