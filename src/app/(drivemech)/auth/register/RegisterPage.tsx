@@ -4,12 +4,15 @@ import React, { useCallback, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useForm, FormProvider } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useAppDispatch, useAppSelector } from "@/hooks/storeHooks";
 import {
   selectAuthLoading,
   selectAuthError,
   registerUser,
+  setOtpSent,
+  setVerificationMethod,
 } from "@/store/slicers/authSlicer";
 
 import CommonTextInput from "@/components/forms/CommonTextInput";
@@ -17,6 +20,7 @@ import PhoneInput from "@/components/forms/PhoneInput";
 import Button from "@/components/ui/Button";
 
 import { isEmailInput, isPhoneInput } from "@/utils";
+import { registerOtpSchema } from "@/schemas/auth/register.schema";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -26,15 +30,18 @@ export default function RegisterPage() {
   const error = useAppSelector(selectAuthError);
 
   const methods = useForm({
+    resolver: zodResolver(registerOtpSchema),
     defaultValues: {
       firstName: "",
       lastName: "",
       email: "",
       phone: "",
     },
+    mode: "onBlur",
+    reValidateMode: "onBlur",
   });
 
-  const { handleSubmit, watch } = methods;
+  const { handleSubmit, watch ,formState: { errors ,isSubmitting} } = methods;
 
   const formvalues = watch();
 
@@ -63,7 +70,10 @@ export default function RegisterPage() {
   async function onSubmit(data: any) {
     const result = await dispatch(registerUser(data));
     if ((result as any).type?.endsWith("/fulfilled")) {
-      router.push("/auth/login");
+      // Set OTP sent state and verification method
+      dispatch(setOtpSent(true));
+      dispatch(setVerificationMethod(data.email ? "email" : "phone"));
+      router.push("/auth/verify");
     }
   }
 
@@ -152,6 +162,7 @@ export default function RegisterPage() {
 
           <Button
             type="button"
+            disabled={isSubmitting}
             onClick={() => router.replace("/auth/login")}
             className="w-full bg-gray-900 hover:bg-black text-white py-3 rounded-xl font-semibold"
           >

@@ -20,9 +20,11 @@ export default function ForgotMpinRightSide() {
       phone: "",
       email: "",
     },
+    mode: "onBlur",
+    reValidateMode: "onBlur",
   });
 
-  const { handleSubmit, watch, setValue } = methods;
+  const { handleSubmit, watch, setValue, formState: { errors, isSubmitting } } = methods;
   const identifier = watch("identifier");
   const formvalues = watch();
 
@@ -63,8 +65,8 @@ export default function ForgotMpinRightSide() {
       mode === "initial"
         ? identifier
         : mode === "phone"
-        ? formvalues.phone
-        : formvalues.email;
+          ? formvalues.phone
+          : formvalues.email;
 
     if (!value) return false;
 
@@ -78,10 +80,10 @@ export default function ForgotMpinRightSide() {
   async function onSubmit(data: any) {
     // TODO: Implement API call to send verification code
     console.log("Forgot MPIN:", data);
-    
+
     // Get the email or phone from the form
     const email = mode === "email" ? data.email : mode === "phone" ? data.phone : data.identifier;
-    
+
     // After successful submission, redirect to verification page
     router.push(`/auth/forgot-mpin/verify?email=${encodeURIComponent(email)}`);
   }
@@ -163,6 +165,7 @@ export default function ForgotMpinRightSide() {
           {/* BACK BUTTON — white border, left arrow */}
           <button
             type="button"
+            disabled={isSubmitting}
             onClick={() => router.push("/auth/login")}
             className="w-full py-3 border border-gray-200 rounded-lg flex items-center justify-center gap-2 text-gray-700 text-sm hover:bg-gray-50"
           >

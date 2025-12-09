@@ -8,7 +8,14 @@ import Button from "@/components/ui/Button";
 
 export default function MpinVerifyPage() {
   const router = useRouter();
-  const { handleSubmit } = useForm();
+  const { handleSubmit } = useForm({
+    mode: "onChange",
+    reValidateMode: "onChange",
+    
+    defaultValues: {
+      mpin: "",
+    },
+  });
 
   // 4-digit MPIN per your design
   const DIGITS = 4;
@@ -217,6 +224,7 @@ export default function MpinVerifyPage() {
           <Button
             type="button"
             variant="outline"
+            disabled={isSubmitting}
             onClick={() => router.push("/auth/login")}
             className="flex-1 py-2 rounded-md text-black border border-gray-200 hover:bg-gray-50"
           >

@@ -4,13 +4,17 @@ import React, { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useForm, FormProvider } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { motion, AnimatePresence } from "framer-motion";
 
 import { useAppDispatch, useAppSelector } from "@/hooks/storeHooks";
 import {
   loginUser,
+  setOtpSent,
+  setVerificationMethod,
   selectAuthLoading,
   selectAuthError,
+  selectOtpSent,
 } from "@/store/slicers/authSlicer";
 
 import CommonTextInput from "@/components/forms/CommonTextInput";
@@ -18,6 +22,7 @@ import PhoneInput from "@/components/forms/PhoneInput";
 import Button from "@/components/ui/Button";
 
 import { isPhoneInput, isEmailInput } from "@/utils";
+import { loginSchema } from "@/schemas/auth/login.schema";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -25,13 +30,17 @@ export default function LoginPage() {
 
   const loading = useAppSelector(selectAuthLoading);
   const error = useAppSelector(selectAuthError);
+  const otpSent = useAppSelector(selectOtpSent);
 
   const methods = useForm({
+    resolver: zodResolver(loginSchema),
     defaultValues: {
       identifier: "",
       email: "",
       phone: "",
     },
+    mode: "onBlur",
+    reValidateMode: "onBlur",
   });
 
   const { handleSubmit, watch, setValue, getValues } = methods;
@@ -106,19 +115,29 @@ export default function LoginPage() {
 
 
   async function onSubmit(data: any) {
-    // Optionally normalize payload here: pick phone or email as identifier
+    // Normalize payload: pick phone or email as identifier
     const payload = { ...data };
-    // If identifier existed but phone/email are empty, attempt to set them
+
+    // Determine verification method
+    let method: "email" | "phone" | null = null;
+
     if (!payload.phone && isPhoneInput(payload.identifier || "")) {
       payload.phone = (payload.identifier || "").replace(/\D/g, "");
+      method = "phone";
     }
     if (!payload.email && isEmailInput(payload.identifier || "")) {
       payload.email = payload.identifier;
+      method = "email";
     }
 
     const result = await dispatch(loginUser(payload));
     if ((result as any).type?.endsWith("/fulfilled")) {
-      router.push("/customer/verify");
+      // Set OTP sent state and verification method
+      dispatch(setOtpSent(true));
+      if (method) {
+        dispatch(setVerificationMethod(method));
+      }
+      router.push("/auth/verify");
     }
   }
 

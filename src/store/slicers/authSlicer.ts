@@ -3,7 +3,26 @@ import { RootState } from "@/store/store";
 import { API_CONFIG } from "@/services/apiConfig";
 import apiService from "@/services/apiService";
 import { tokenService } from "@/services/tokenService";
-import { AuthResponseData, AuthState, LoginPayload, RefreshTokenResponse, RegisterPayload, VerifyPayload } from "@/types/authTypes";
+import {
+  AuthResponseData,
+  AuthState,
+  LoginPayload,
+  RefreshTokenResponse,
+  RegisterPayload,
+  VerifyPayload,
+  OtpVerifyPayload,
+  ResendOtpPayload,
+  OtpVerifyResponse,
+  CreateMpinPayload,
+  VerifyMpinPayload,
+  ForgotMpinPayload,
+  ResetMpinPayload,
+  MpinResponse,
+  ForgotPasswordPayload,
+  ResetPasswordPayload,
+  ValidateResetTokenPayload,
+  GenericSuccessResponse,
+} from "@/types/auth/authTypes";
 
 /* ----------------------------------
    INITIAL STATE
@@ -15,6 +34,10 @@ const initialState: AuthState = {
   loading: "idle",
   error: null,
   lastFetched: null,
+  otpSent: false,
+  otpVerified: false,
+  mpinCreated: false,
+  verificationMethod: null,
 };
 
 /* ----------------------------------
@@ -99,6 +122,151 @@ export const refreshToken = createAsyncThunk<
   }
 });
 
+/* VERIFY OTP */
+export const verifyOtp = createAsyncThunk<
+  OtpVerifyResponse,
+  OtpVerifyPayload,
+  { rejectValue: string }
+>("auth/verifyOtp", async (payload, { rejectWithValue }) => {
+  try {
+    const res = await apiService.post(API_CONFIG.ENDPOINTS.VERIFY_OTP, payload);
+    const data = res.data.data || res.data;
+
+    // If tokens are provided, store them
+    if (data.accessToken) {
+      tokenService.setAccessToken(data.accessToken);
+    }
+    if (data.refreshToken) {
+      tokenService.setRefreshToken(data.refreshToken);
+    }
+
+    return data;
+  } catch (err: any) {
+    return rejectWithValue(err?.response?.data?.message || "OTP verification failed");
+  }
+});
+
+/* RESEND OTP */
+export const resendOtp = createAsyncThunk<
+  GenericSuccessResponse,
+  ResendOtpPayload,
+  { rejectValue: string }
+>("auth/resendOtp", async (payload, { rejectWithValue }) => {
+  try {
+    const res = await apiService.post(API_CONFIG.ENDPOINTS.RESEND_OTP, payload);
+    return res.data.data || res.data;
+  } catch (err: any) {
+    return rejectWithValue(err?.response?.data?.message || "Failed to resend OTP");
+  }
+});
+
+/* CREATE MPIN */
+export const createMpin = createAsyncThunk<
+  GenericSuccessResponse,
+  CreateMpinPayload,
+  { rejectValue: string }
+>("auth/createMpin", async (payload, { rejectWithValue }) => {
+  try {
+    const res = await apiService.post(API_CONFIG.ENDPOINTS.CREATE_MPIN, payload);
+    return res.data.data || res.data;
+  } catch (err: any) {
+    return rejectWithValue(err?.response?.data?.message || "Failed to create MPIN");
+  }
+});
+
+/* VERIFY MPIN */
+export const verifyMpin = createAsyncThunk<
+  MpinResponse,
+  VerifyMpinPayload,
+  { rejectValue: string }
+>("auth/verifyMpin", async (payload, { rejectWithValue }) => {
+  try {
+    const res = await apiService.post(API_CONFIG.ENDPOINTS.VERIFY_MPIN, payload);
+    const data = res.data.data || res.data;
+
+    if (data.accessToken) {
+      tokenService.setAccessToken(data.accessToken);
+    }
+    if (data.refreshToken) {
+      tokenService.setRefreshToken(data.refreshToken);
+    }
+
+    return data;
+  } catch (err: any) {
+    return rejectWithValue(err?.response?.data?.message || "MPIN verification failed");
+  }
+});
+
+/* FORGOT PASSWORD */
+export const forgotPassword = createAsyncThunk<
+  GenericSuccessResponse,
+  ForgotPasswordPayload,
+  { rejectValue: string }
+>("auth/forgotPassword", async (payload, { rejectWithValue }) => {
+  try {
+    const res = await apiService.post(API_CONFIG.ENDPOINTS.FORGOT_PASSWORD, payload);
+    return res.data.data || res.data;
+  } catch (err: any) {
+    return rejectWithValue(err?.response?.data?.message || "Failed to send reset email");
+  }
+});
+
+/* VALIDATE RESET TOKEN */
+export const validateResetToken = createAsyncThunk<
+  GenericSuccessResponse,
+  ValidateResetTokenPayload,
+  { rejectValue: string }
+>("auth/validateResetToken", async (payload, { rejectWithValue }) => {
+  try {
+    const res = await apiService.post(API_CONFIG.ENDPOINTS.RESET_TOKEN_VALIDATION, payload);
+    return res.data.data || res.data;
+  } catch (err: any) {
+    return rejectWithValue(err?.response?.data?.message || "Invalid or expired reset token");
+  }
+});
+
+/* RESET PASSWORD */
+export const resetPassword = createAsyncThunk<
+  GenericSuccessResponse,
+  ResetPasswordPayload,
+  { rejectValue: string }
+>("auth/resetPassword", async (payload, { rejectWithValue }) => {
+  try {
+    const res = await apiService.post(API_CONFIG.ENDPOINTS.RESET_PASSWORD, payload);
+    return res.data.data || res.data;
+  } catch (err: any) {
+    return rejectWithValue(err?.response?.data?.message || "Failed to reset password");
+  }
+});
+
+/* FORGOT MPIN */
+export const forgotMpin = createAsyncThunk<
+  GenericSuccessResponse,
+  ForgotMpinPayload,
+  { rejectValue: string }
+>("auth/forgotMpin", async (payload, { rejectWithValue }) => {
+  try {
+    const res = await apiService.post(API_CONFIG.ENDPOINTS.FORGOT_MPIN, payload);
+    return res.data.data || res.data;
+  } catch (err: any) {
+    return rejectWithValue(err?.response?.data?.message || "Failed to send MPIN reset code");
+  }
+});
+
+/* RESET MPIN */
+export const resetMpin = createAsyncThunk<
+  GenericSuccessResponse,
+  ResetMpinPayload,
+  { rejectValue: string }
+>("auth/resetMpin", async (payload, { rejectWithValue }) => {
+  try {
+    const res = await apiService.post(API_CONFIG.ENDPOINTS.RESET_MPIN, payload);
+    return res.data.data || res.data;
+  } catch (err: any) {
+    return rejectWithValue(err?.response?.data?.message || "Failed to reset MPIN");
+  }
+});
+
 /* ----------------------------------
    SLICE
 ---------------------------------- */
@@ -115,10 +283,30 @@ const authSlice = createSlice({
       state.user = null;
       state.error = null;
       state.loading = "idle";
+      state.otpSent = false;
+      state.otpVerified = false;
+      state.mpinCreated = false;
+      state.verificationMethod = null;
     },
 
     clearError: (state) => {
       state.error = null;
+    },
+
+    setOtpSent: (state, action) => {
+      state.otpSent = action.payload;
+    },
+
+    setOtpVerified: (state, action) => {
+      state.otpVerified = action.payload;
+    },
+
+    setMpinCreated: (state, action) => {
+      state.mpinCreated = action.payload;
+    },
+
+    setVerificationMethod: (state, action) => {
+      state.verificationMethod = action.payload;
     },
   },
 
@@ -179,6 +367,119 @@ const authSlice = createSlice({
         state.refreshToken = null;
         state.user = null;
         state.error = action.payload || "Session expired";
+      })
+
+      /* VERIFY OTP */
+      .addCase(verifyOtp.pending, pending)
+      .addCase(verifyOtp.fulfilled, (state, { payload }) => {
+        state.loading = "succeeded";
+        state.otpVerified = true;
+        if (payload.accessToken) {
+          state.accessToken = payload.accessToken;
+        }
+        if (payload.refreshToken) {
+          state.refreshToken = payload.refreshToken;
+        }
+        if (payload.user) {
+          state.user = payload.user;
+        }
+      })
+      .addCase(verifyOtp.rejected, (state, action) => {
+        state.loading = "failed";
+        state.error = action.payload || "OTP verification failed";
+      })
+
+      /* RESEND OTP */
+      .addCase(resendOtp.pending, pending)
+      .addCase(resendOtp.fulfilled, (state) => {
+        state.loading = "succeeded";
+        state.otpSent = true;
+      })
+      .addCase(resendOtp.rejected, (state, action) => {
+        state.loading = "failed";
+        state.error = action.payload || "Failed to resend OTP";
+      })
+
+      /* CREATE MPIN */
+      .addCase(createMpin.pending, pending)
+      .addCase(createMpin.fulfilled, (state) => {
+        state.loading = "succeeded";
+        state.mpinCreated = true;
+      })
+      .addCase(createMpin.rejected, (state, action) => {
+        state.loading = "failed";
+        state.error = action.payload || "Failed to create MPIN";
+      })
+
+      /* VERIFY MPIN */
+      .addCase(verifyMpin.pending, pending)
+      .addCase(verifyMpin.fulfilled, (state, { payload }) => {
+        state.loading = "succeeded";
+        if (payload.accessToken) {
+          state.accessToken = payload.accessToken;
+        }
+        if (payload.refreshToken) {
+          state.refreshToken = payload.refreshToken;
+        }
+        if (payload.user) {
+          state.user = payload.user;
+        }
+      })
+      .addCase(verifyMpin.rejected, (state, action) => {
+        state.loading = "failed";
+        state.error = action.payload || "MPIN verification failed";
+      })
+
+      /* FORGOT PASSWORD */
+      .addCase(forgotPassword.pending, pending)
+      .addCase(forgotPassword.fulfilled, (state) => {
+        state.loading = "succeeded";
+      })
+      .addCase(forgotPassword.rejected, (state, action) => {
+        state.loading = "failed";
+        state.error = action.payload || "Failed to send reset email";
+      })
+
+      /* VALIDATE RESET TOKEN */
+      .addCase(validateResetToken.pending, pending)
+      .addCase(validateResetToken.fulfilled, (state) => {
+        state.loading = "succeeded";
+      })
+      .addCase(validateResetToken.rejected, (state, action) => {
+        state.loading = "failed";
+        state.error = action.payload || "Invalid or expired reset token";
+      })
+
+      /* RESET PASSWORD */
+      .addCase(resetPassword.pending, pending)
+      .addCase(resetPassword.fulfilled, (state) => {
+        state.loading = "succeeded";
+      })
+      .addCase(resetPassword.rejected, (state, action) => {
+        state.loading = "failed";
+        state.error = action.payload || "Failed to reset password";
+      })
+
+      /* FORGOT MPIN */
+      .addCase(forgotMpin.pending, pending)
+      .addCase(forgotMpin.fulfilled, (state) => {
+        state.loading = "succeeded";
+        state.otpSent = true;
+      })
+      .addCase(forgotMpin.rejected, (state, action) => {
+        state.loading = "failed";
+        state.error = action.payload || "Failed to send MPIN reset code";
+      })
+
+      /* RESET MPIN */
+      .addCase(resetMpin.pending, pending)
+      .addCase(resetMpin.fulfilled, (state) => {
+        state.loading = "succeeded";
+        state.mpinCreated = true;
+      })
+      .addCase(resetMpin.rejected, (state, action) => {
+        state.loading = "failed";
+        state.error = action.payload || "Failed to reset MPIN";
       });
   },
 });
@@ -190,9 +491,23 @@ export const selectAuth = (state: RootState) => state.auth;
 export const selectCurrentUser = (state: RootState) => state.auth.user;
 export const selectIsAuthenticated = (state: RootState) =>
   !!state.auth.accessToken;
+export const selectAuthLoading = (state: RootState) => state.auth.loading;
+export const selectAuthError = (state: RootState) => state.auth.error;
+export const selectOtpSent = (state: RootState) => state.auth.otpSent;
+export const selectOtpVerified = (state: RootState) => state.auth.otpVerified;
+export const selectMpinCreated = (state: RootState) => state.auth.mpinCreated;
+export const selectVerificationMethod = (state: RootState) => state.auth.verificationMethod;
 
 /* ----------------------------------
    EXPORTS
 ---------------------------------- */
-export const { logout, clearError } = authSlice.actions;
+export const {
+  logout,
+  clearError,
+  setOtpSent,
+  setOtpVerified,
+  setMpinCreated,
+  setVerificationMethod,
+} = authSlice.actions;
+
 export default authSlice.reducer;

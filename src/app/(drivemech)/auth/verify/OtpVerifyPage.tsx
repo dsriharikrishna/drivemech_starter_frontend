@@ -4,20 +4,45 @@ import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useForm, FormProvider } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import Button from "@/components/ui/Button";
+
+import { useAppDispatch, useAppSelector } from "@/hooks/storeHooks";
+import {
+  verifyOtp,
+  resendOtp,
+  setOtpVerified,
+  selectAuthLoading,
+  selectAuthError,
+  selectVerificationMethod,
+  selectOtpSent,
+} from "@/store/slicers/authSlicer";
+import { otpVerifySchema } from "@/schemas/auth/verify.schema";
 
 export default function OtpVerifyPage() {
   const router = useRouter();
+  const dispatch = useAppDispatch();
+
+  const loading = useAppSelector(selectAuthLoading);
+  const error = useAppSelector(selectAuthError);
+  const verificationMethod = useAppSelector(selectVerificationMethod);
+  const otpSent = useAppSelector(selectOtpSent);
+
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   const methods = useForm({
+    resolver: zodResolver(otpVerifySchema),
     defaultValues: {
-      otp: "",
+      email: "",
+      phone: "",
+      code: "",
     },
+    mode: "onBlur",
+    reValidateMode: "onBlur",
   });
 
-  const { handleSubmit } = methods;
+  const { handleSubmit, formState: { errors, isSubmitting } } = methods;
 
   // Focus first input on mount
   useEffect(() => {
@@ -25,10 +50,10 @@ export default function OtpVerifyPage() {
   }, []);
 
   const handleChange = (index: number, value: string) => {
-    if (value.length > 1) return; 
+    if (value.length > 1) return;
 
     const newOtp = [...otp];
-    newOtp[index] = value.replace(/\D/g, ""); 
+    newOtp[index] = value.replace(/\D/g, "");
     setOtp(newOtp);
 
     // Auto-focus next input
@@ -63,10 +88,35 @@ export default function OtpVerifyPage() {
 
   async function onSubmit() {
     const otpCode = otp.join("");
-    // TODO: Implement OTP verification API call
-    console.log("OTP Code:", otpCode);
-    // After successful verification, redirect to confirmation page
-    router.push("/auth/confirm");
+
+    // Build payload based on verification method
+    const payload: any = { code: otpCode };
+    if (verificationMethod === "email") {
+      payload.email = methods.getValues("email");
+    } else if (verificationMethod === "phone") {
+      payload.phone = methods.getValues("phone");
+    }
+
+    const result = await dispatch(verifyOtp(payload));
+    if ((result as any).type?.endsWith("/fulfilled")) {
+      dispatch(setOtpVerified(true));
+      // Navigate to MPIN creation or dashboard
+      router.push("/auth/mpin/create");
+    }
+  }
+
+  async function handleResendOtp() {
+    const payload: any = {};
+    if (verificationMethod === "email") {
+      payload.email = methods.getValues("email");
+    } else if (verificationMethod === "phone") {
+      payload.phone = methods.getValues("phone");
+    }
+
+    await dispatch(resendOtp(payload));
+    // Reset OTP inputs
+    setOtp(["", "", "", "", "", ""]);
+    inputRefs.current[0]?.focus();
   }
 
   return (
@@ -118,10 +168,8 @@ export default function OtpVerifyPage() {
               <button
                 type="button"
                 className="text-orange-500 font-semibold hover:text-orange-600"
-                onClick={() => {
-                  // TODO: Implement resend OTP
-                  console.log("Resend OTP");
-                }}
+                onClick={handleResendOtp}
+                disabled={loading === "pending"}
               >
                 Resend
               </button>
@@ -133,7 +181,7 @@ export default function OtpVerifyPage() {
             type="submit"
             variant={isOtpComplete ? "primary" : "outline"}
             className="py-3 rounded-xl font-semibold"
-            disabled={!isOtpComplete}
+            disabled={!isOtpComplete || isSubmitting}
           >
             Verify OTP
           </Button>
