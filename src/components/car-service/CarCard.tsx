@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { VehicleInfo } from "@/store/slicers/carSlicer";
+import { VehicleInfo } from "@/store/slices/cart/cartSlice";
 
 interface CarCardProps {
   vehicle: VehicleInfo;

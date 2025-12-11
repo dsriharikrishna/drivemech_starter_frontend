@@ -78,8 +78,7 @@ export const WorkShopLayout = () => {
       const selected = { name, id };
       setSelectedWorkShop(selected);
 
-      console.log("✅ ACTIVE WORKSHOP:", selected);
-
+      
       router.push("/customer/select-service");
     },
     [router]

@@ -36,8 +36,7 @@ export default function HeroSection({
     });
 
     const onSubmit = (data: FormData) => {
-        console.log("Form submitted:", data);
-        // Handle form submission here
+                // Handle form submission here
     };
 
     return (

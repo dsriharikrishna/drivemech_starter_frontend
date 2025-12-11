@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import { AppDispatch } from "@/store/store";
 import api from "@/services/apiService";
-import { logout, refreshToken } from "@/store/slicers/authSlicer";
+import { logout, refreshToken } from "@/store/slices/auth/authSlice";
 
 export const useApiInterceptor = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -38,8 +38,7 @@ export const useApiInterceptor = () => {
                 "Authorization"
               ] = `Bearer ${response.accessToken}`;
 
-              console.log("✅ Token refreshed successfully");
-              // Retry original request
+                            // Retry original request
               return api(originalRequest);
             }
           } catch (refreshError) {
@@ -53,12 +52,10 @@ export const useApiInterceptor = () => {
       }
     );
 
-    console.log("✅ API interceptor initialized");
-
+    
     // Cleanup on unmount
     return () => {
       api.interceptors.response.eject(interceptor);
-      console.log("🧹 API interceptor removed");
-    };
+          };
   }, [dispatch, router]);
 };

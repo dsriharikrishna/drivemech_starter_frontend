@@ -12,11 +12,18 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
-import authReducer, { logout } from "./slicers/authSlicer";
-import serviceReducer from './slicers/serviceSlicer';
-import carReducer from './slicers/carSlicer';
-import locationReducer from './slicers/locationSlicer';
-import towingServiceReducer from './slicers/towing-services/towingServiceSlicer';
+import authReducer, { logout } from "./slices/auth/authSlice";
+import serviceReducer from './slices/services/serviceSlice';
+import carReducer from './slices/cart/cartSlice';
+import locationReducer from './slices/location/locationSlice';
+import workshopReducer from './slices/workshop/workshopSlice';
+import bookingReducer from './slices/booking/bookingSlice';
+import orderReducer from './slices/order/orderSlice';
+import paymentReducer from './slices/payment/paymentSlice';
+import userProfileReducer from './slices/user/userProfileSlice';
+import notificationReducer from './slices/notification/notificationSlice';
+import uiReducer from './slices/ui/uiSlice';
+import towingServiceReducer from './slices/towing-services/towingServiceSlice';
 
 const authPersistConfig = {
   key: "auth",
@@ -30,8 +37,29 @@ const carPersistConfig = {
   whitelist: ["currentVehicle", "savedVehicles"],
 };
 
+const paymentPersistConfig = {
+  key: "payment",
+  storage,
+  whitelist: ["savedCards", "savedUPI", "defaultPaymentMethod", "walletBalance"],
+};
+
+const userProfilePersistConfig = {
+  key: "userProfile",
+  storage,
+  whitelist: ["profile", "addresses", "defaultAddress", "preferences"],
+};
+
+const uiPersistConfig = {
+  key: "ui",
+  storage,
+  whitelist: ["theme", "sidebarOpen"],
+};
+
 const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
 const persistedCarReducer = persistReducer(carPersistConfig, carReducer);
+const persistedPaymentReducer = persistReducer(paymentPersistConfig, paymentReducer);
+const persistedUserProfileReducer = persistReducer(userProfilePersistConfig, userProfileReducer);
+const persistedUIReducer = persistReducer(uiPersistConfig, uiReducer);
 
 // ---------------- Error handling middleware ----------------
 const rtkErrorLogger: Middleware = (store) => (next) => (action) => {
@@ -56,6 +84,13 @@ export const store = configureStore({
     service: serviceReducer,
     car: persistedCarReducer,
     location: locationReducer,
+    workshop: workshopReducer,
+    booking: bookingReducer,
+    order: orderReducer,
+    payment: persistedPaymentReducer,
+    userProfile: persistedUserProfileReducer,
+    notification: notificationReducer,
+    ui: persistedUIReducer,
     towingService: towingServiceReducer,
   },
   middleware: (getDefaultMiddleware) =>

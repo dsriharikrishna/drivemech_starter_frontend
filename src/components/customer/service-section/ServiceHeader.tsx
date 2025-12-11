@@ -4,7 +4,7 @@ import { ArrowLeft, Search } from 'lucide-react';
 import CommonTextInput from '@/components/forms/CommonTextInput';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store/store';
-import { setSearchQuery } from '@/store/slicers/serviceSlicer';
+import { setSearchQuery } from '@/store/slices/services/serviceSlice';
 
 export default function ServiceHeader() {
   const dispatch = useDispatch();

@@ -1,6 +1,6 @@
 'use client';
 
-import AddVehicleLayout from "../AddVehicleLayout";
+import AddVehicleLayout from "./AddVehicleLayout";
 
 export default function AddVehiclePage() {
     return (

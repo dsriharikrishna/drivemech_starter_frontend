@@ -13,7 +13,7 @@ import {
   registerUser,
   setOtpSent,
   setVerificationMethod,
-} from "@/store/slicers/authSlicer";
+} from "@/store/slices/auth/authSlice";
 
 import CommonTextInput from "@/components/forms/CommonTextInput";
 import PhoneInput from "@/components/forms/PhoneInput";
@@ -41,7 +41,7 @@ export default function RegisterPage() {
     reValidateMode: "onBlur",
   });
 
-  const { handleSubmit, watch ,formState: { errors ,isSubmitting} } = methods;
+  const { handleSubmit, watch, formState: { errors, isSubmitting } } = methods;
 
   const formvalues = watch();
 

@@ -14,15 +14,31 @@ import {
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 
+// ✅ Import Redux
+import { useAppDispatch } from "@/store/store";
+import { logout } from "@/store/slices/auth/authSlice";
+import { resetUserProfileState } from "@/store/slices/user/userProfileSlice";
+
 export default function ProfileSidebar() {
   const pathname = usePathname();
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
   const [isLogOutModalOpen, setIsLogOutModalOpen] = React.useState(false);
 
+  // ✅ Handle logout with Redux
   const handleLogout = () => {
-    console.log("User logged out");
+    // Dispatch logout action
+    dispatch(logout());
+
+    // Clear user profile state
+    dispatch(resetUserProfileState());
+
+    // Close modal
     setIsLogOutModalOpen(false);
+
+    // Redirect to login
+    router.push("/auth/login");
   };
 
   const menu = [
@@ -47,6 +63,11 @@ export default function ProfileSidebar() {
         {menu.map((item) => {
           const Icon = item.icon;
 
+          // ✅ Check if current route is active (including nested routes)
+          const isActive = item.path === "/customer/profile"
+            ? pathname === "/customer/profile" // Exact match for Profile to avoid conflicts
+            : pathname.startsWith(item.path); // Nested route support for others
+
           return (
             <li
               key={item.label}
@@ -55,7 +76,7 @@ export default function ProfileSidebar() {
                 flex items-center gap-3 
                 px-3 py-2.5 
                 rounded-lg cursor-pointer text-sm font-medium transition
-                ${pathname === item.path
+                ${isActive
                   ? "bg-orange-500 text-white shadow-sm"
                   : "hover:bg-gray-100 text-gray-700"
                 }

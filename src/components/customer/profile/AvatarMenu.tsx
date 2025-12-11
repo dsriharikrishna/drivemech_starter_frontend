@@ -16,8 +16,7 @@ export default function AvatarMenu({ onLogout }: AvatarMenuProps) {
     if (onLogout) {
       onLogout();
     } else {
-      console.log("logout");
-    }
+          }
     setUserDropdownOpen(false);
   };
 

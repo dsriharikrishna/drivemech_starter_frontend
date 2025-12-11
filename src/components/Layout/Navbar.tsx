@@ -29,11 +29,10 @@ export default function Navbar() {
   }, [scrolled]);
 
   const handleNavigation = useCallback((path: string) => {
-    console.log(path)
-    if (path === "customer") {
-      router.push("auth/login");
+        if (path === "customer") {
+      router.replace("/auth/login");
     } else {
-      router.push("/workshop/auth/login")
+      router.replace("/workshop/auth/login")
     }
   }, [router])
 
@@ -44,10 +43,9 @@ export default function Navbar() {
 
   const confirmLogout = useCallback(() => {
     // Handle logout logic here
-    console.log("User logged out");
-    setShowLogoutDialog(false);
+        setShowLogoutDialog(false);
     setIsLoggedIn(false);
-    router.push("/auth/login");
+    router.replace("/auth/login");
   }, [router]);
 
   return (
@@ -99,25 +97,25 @@ export default function Navbar() {
 
           {/* Buttons */}
           {/* {!isLoggedIn ? ( */}
-            <AvatarMenu onLogout={handleLogout} />
+          <AvatarMenu onLogout={handleLogout} />
 
-{/* ?            <> */}
-              <Button
-                onClick={() => { handleNavigation("workshop") }}
-                variant="primary"
-                className="border border-[#FF5C00] text-[#FF5C00] hover:bg-[#FF5C00] hover:text-white transition-all duration-200 px-5 py-2 rounded-md text-sm font-medium whitespace-nowrap"
-              >
-                Login as Workshop
-              </Button>
+          {/* ?            <> */}
+          <Button
+            onClick={() => { handleNavigation("workshop") }}
+            variant="primary"
+            className="border border-[#FF5C00] text-[#FF5C00] hover:bg-[#FF5C00] hover:text-white transition-all duration-200 px-5 py-2 rounded-md text-sm font-medium whitespace-nowrap"
+          >
+            Login as Workshop
+          </Button>
 
-              <Button
-                onClick={() => { handleNavigation("customer") }}
-                variant="primary"
-                className="bg-[#FF5C00] hover:bg-[#E55200] text-white transition-all duration-200 px-5 py-2 rounded-md text-sm font-medium whitespace-nowrap"
-              >
-                Login as Customer
-              </Button>
-            {/* </> */}
+          <Button
+            onClick={() => { handleNavigation("customer") }}
+            variant="primary"
+            className="bg-[#FF5C00] hover:bg-[#E55200] text-white transition-all duration-200 px-5 py-2 rounded-md text-sm font-medium whitespace-nowrap"
+          >
+            Login as Customer
+          </Button>
+          {/* </> */}
           {/* )} */}
         </div>
 

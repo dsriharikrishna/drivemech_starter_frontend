@@ -58,8 +58,7 @@ export default function AddAddressForm({
 
   function submit(values: AddAddressValues) {
     onSave?.(values);
-    console.log(values)
-  }
+      }
 
   const typeButtons = [
     { id: "home", label: "Home", icon: <House size={18} /> },

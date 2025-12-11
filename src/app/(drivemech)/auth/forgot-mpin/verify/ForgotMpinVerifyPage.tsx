@@ -102,8 +102,7 @@ export default function ForgotMpinVerifyPage() {
 
   const onSubmit = async (data: { email?: string; phone?: string; code: string }) => {
     // TODO: Implement OTP verification API call
-    console.log("Verifying OTP:", data);
-
+    
     // Simulate API call
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
@@ -113,8 +112,7 @@ export default function ForgotMpinVerifyPage() {
 
   const handleResend = () => {
     // TODO: Implement resend OTP API call
-    console.log("Resending OTP to:", email);
-    setOtp(Array(6).fill(""));
+        setOtp(Array(6).fill(""));
     inputRefs.current[0]?.focus();
   };
 

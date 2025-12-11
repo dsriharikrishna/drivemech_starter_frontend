@@ -125,10 +125,8 @@ export default function AddVehicleForm({
     const final = { ...data, regDocs: regFiles, insDocs: insFiles };
 
     if (mode === "edit") {
-      console.log("Updating vehicle:", vehicleId, final);
-    } else {
-      console.log("Adding new vehicle:", final);
-    }
+          } else {
+          }
 
     onClose?.();
   };

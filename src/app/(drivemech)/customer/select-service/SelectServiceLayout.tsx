@@ -1,6 +1,7 @@
 "use client";
 
 import { FormProvider, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowLeft } from "lucide-react";
 
 import ModeOfService from "@/components/customer/select-service/ModeOfService";
@@ -21,27 +22,23 @@ import DetailRow from "@/components/customer/select-service/DetailRow";
 import Button from "@/components/ui/Button";
 import { useRouter } from "next/navigation";
 import ModuleHeader from "@/components/common/ModuleHeader";
-
-type SelectServiceForm = {
-    mode: "walkin" | "pickup";
-    date: string;
-    time: string;
-    fullName: string;
-    phone: string;
-    email: string;
-    addOns: string[];
-    notes: string;
-    guest: boolean;
-    location: {
-        address: string;
-        lat: number;
-        lng: number;
-    }
-};
+import { selectServiceSchema, type SelectServiceFormData } from "@/schemas/customer/selectService.schema";
+import { useAppDispatch, useAppSelector } from "@/store/store";
+import { ADDON_SERVICES } from "@/constants/service.constants";
+import { setBookingFormData } from "@/store/slices/booking/bookingSlice";
 
 
 export default function SelectServiceLayout() {
-    const form = useForm<SelectServiceForm>({
+    const router = useRouter();
+    const dispatch = useAppDispatch();
+
+    // ✅ Get selected services and vehicle from Redux
+    const selectedServiceIds = useAppSelector(state => state.service.selectedServices);
+    const currentVehicle = useAppSelector(state => state.car.currentVehicle);
+
+    // ✅ React Hook Form with Zod validation
+    const form = useForm<SelectServiceFormData>({
+        resolver: zodResolver(selectServiceSchema),
         defaultValues: {
             mode: "walkin",
             date: "",
@@ -52,64 +49,57 @@ export default function SelectServiceLayout() {
             addOns: [],
             notes: "",
             guest: false,
-            location: {
-                address: "",
-                lat: 0,
-                lng: 0,
-            }
         },
+        mode: "all",
+        reValidateMode: "onChange",
     });
 
-    const router = useRouter();
+    const { handleSubmit, formState: { errors, isSubmitting } } = form;
 
-    // Default add-ons
-    const addOns: AddOnService[] = [
-        { id: "ac", name: "Air Conditioning", price: 25, icon: "/icons/ac.svg" },
-        { id: "roadworthy", name: "Roadworthy Inspection", price: 25, icon: "/icons/road.svg" },
-        { id: "glass", name: "Auto Glass", price: 25, icon: "/icons/glass.svg" },
-        { id: "spark", name: "Spark Plug", price: 25, icon: "/icons/spark.svg" },
-        { id: "battery", name: "Battery", price: 25, icon: "/icons/battery.svg" },
-        { id: "suspension", name: "Suspension and Steering", price: 25, icon: "/icons/suspension.svg" },
-    ];
+    // ✅ Use add-ons from constants
+    const addOns: AddOnService[] = ADDON_SERVICES.map(addon => ({
+        id: addon.id,
+        name: addon.name,
+        price: addon.price,
+        icon: addon.icon,
+    }));
 
-    // Default selected services (can be loaded from context or localStorage)
-    const selectedServices: Service[] = [];
+    // ✅ Form submission with Redux integration
+    const submit = async (data: SelectServiceFormData) => {
+        try {
+            // Calculate total price
+            const selectedAddOns = addOns.filter(addon => data.addOns?.includes(addon.id));
+            const addOnsTotal = selectedAddOns.reduce((sum, addon) => sum + addon.price, 0);
 
-    const submit = (data: any) => {
-        console.log("Booking Data:", data);
+            const bookingData = {
+                mode: data.mode,
+                date: data.date,
+                time: data.time,
+                personalInfo: {
+                    fullName: data.fullName,
+                    phone: data.phone,
+                    email: data.email,
+                },
+                addOns: data.addOns || [],
+                notes: data.notes || "",
+                guest: data.guest,
+                location: data.location,
+                selectedServices: selectedServiceIds,
+                vehicle: currentVehicle,
+                addOnsTotal,
+                totalAmount: addOnsTotal,
+                timestamp: new Date().toISOString(),
+            };
 
-        // Calculate total price
-        const selectedAddOns = addOns.filter(addon => data.addOns.includes(addon.id));
-        const addOnsTotal = selectedAddOns.reduce((sum, addon) => sum + addon.price, 0);
+            // ✅ Store booking data in Redux
+            dispatch(setBookingFormData(bookingData));
 
-        const bookingData = {
-            ...data,
-            selectedServices,
-            addOnsTotal,
-            totalAmount: addOnsTotal,
-            timestamp: new Date().toISOString(),
-        };
-
-        // Save to localStorage
-        localStorage.setItem('selectServiceData', JSON.stringify(bookingData));
-
-        // Navigate to next page or call API
-        console.log("Proceeding with booking:", bookingData);
-
-        router.push("/customer/payment-process")
-    };
-
-    // Watch form values for real-time validation
-    const watchedValues = form.watch();
-
-    // Form validation
-    const isFormValid = () => {
-        return watchedValues.mode &&
-            watchedValues.date &&
-            watchedValues.time &&
-            watchedValues.fullName &&
-            watchedValues.phone &&
-            watchedValues.email;
+            // Navigate to payment
+            router.push("/customer/payment-process");
+        } catch (error) {
+            console.error("Error submitting booking:", error);
+            (window as any).addToast?.("Failed to submit booking. Please try again.", "error");
+        }
     };
 
     const handleBack = () => {
@@ -131,17 +121,17 @@ export default function SelectServiceLayout() {
                                 />
 
                                 {/* Selected Services Summary */}
-                                {selectedServices.length > 0 && (
+                                {selectedServiceIds.length > 0 && (
                                     <div className="bg-white rounded-2xl shadow-lg px-6 py-2">
                                         <h3 className="text-lg font-semibold text-gray-900 mb-4">Selected Services</h3>
                                         <div className="space-y-2">
-                                            {selectedServices.map((service) => (
-                                                <div key={service.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                            {selectedServiceIds.map((serviceId) => (
+                                                <div key={serviceId} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                                                     <div className="flex items-center gap-3">
-                                                        <span className="text-2xl">{service.icon}</span>
-                                                        <span className="font-medium text-gray-900">{service.name}</span>
+                                                        <span className="text-2xl">🔧</span>
+                                                        <span className="font-medium text-gray-900">{serviceId}</span>
                                                     </div>
-                                                    <span className="text-orange-500 font-semibold">${service.price || 0}</span>
+                                                    <span className="text-orange-500 font-semibold">$25</span>
                                                 </div>
                                             ))}
                                         </div>
@@ -178,7 +168,7 @@ export default function SelectServiceLayout() {
                                     <div className="flex flex-col justify-center items-center ">
                                         <Button
                                             type="submit"
-                                            disabled={!isFormValid()}
+                                            disabled={isSubmitting || !form.formState.isValid}
                                             variant="primary"
                                             className="rounded-lg"
                                         >

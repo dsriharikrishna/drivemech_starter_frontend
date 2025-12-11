@@ -5,7 +5,7 @@ import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store/store";
-import { setFormData } from "@/store/slicers/towing-services/towingServiceSlicer";
+import { setFormData } from "@/store/slices/towing-services/towingServiceSlice";
 
 import Typography from "@/components/ui/Typography";
 
@@ -31,8 +31,7 @@ export default function TowingHeroSection() {
   });
 
   const onSubmit = (data: TowingHeroFormData) => {
-    console.log("FORM SUBMITTED:", data);
-    // Store form data in Redux (this also sets showAvailableTrucks to true)
+        // Store form data in Redux (this also sets showAvailableTrucks to true)
     dispatch(setFormData(data));
   };
 

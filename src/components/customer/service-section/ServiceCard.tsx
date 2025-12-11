@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { ChevronRight } from 'lucide-react';
 import { Service } from '../../../data/services';
 import { RootState } from '@/store/store';
-import { toggleService } from '@/store/slicers/serviceSlicer';
+import { toggleService } from '@/store/slices/services/serviceSlice';
 
 interface Props {
   service: Service;

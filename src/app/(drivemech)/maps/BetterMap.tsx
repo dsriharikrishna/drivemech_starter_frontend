@@ -75,8 +75,7 @@ const url = `https://overpass.kumi.systems/api/interpreter?data=[out:json];(node
           }
 
           const data = await res.json();
-          console.log("Overpass API Response:", data);
-
+          
           if (!data.elements || data.elements.length === 0) {
             setError("No petrol stations found nearby.");
             return;

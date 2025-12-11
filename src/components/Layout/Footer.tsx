@@ -1,20 +1,17 @@
 "use client";
 
 import Link from 'next/link';
-import { useSelector } from 'react-redux';
-import { selectIndianStates, getCitiesByState } from '@/store/slicers/locationSlicer';
 
 export default function Footer() {
-  const states = useSelector(selectIndianStates);
-  
-  // Get popular states (first 6)
-  const popularStates = states.slice(0, 6);
-  
-  // Get popular cities from major states
-  const getPopularCity = (state: string): string => {
-    const cities = getCitiesByState(state);
-    return cities[0] || ''; // Get first city or empty string
-  };
+  // Static popular locations for footer (no need to fetch dynamically)
+  const popularLocations = [
+    { state: "Maharashtra", city: "Mumbai" },
+    { state: "Karnataka", city: "Bengaluru" },
+    { state: "Delhi", city: "New Delhi" },
+    { state: "Tamil Nadu", city: "Chennai" },
+    { state: "Telangana", city: "Hyderabad" },
+    { state: "Gujarat", city: "Ahmedabad" },
+  ];
 
   return (
     <footer className="bg-gray-900 text-white pt-12 pb-8">
@@ -24,8 +21,8 @@ export default function Footer() {
           <div className="lg:col-span-2">
             <h3 className="text-lg font-semibold mb-4">ABOUT US</h3>
             <p className="text-gray-400 mb-4 leading-relaxed">
-              Your trusted partner for all vehicle service needs across India. We provide quality automotive services 
-              with certified mechanics and genuine parts. Experience convenience and reliability with our 
+              Your trusted partner for all vehicle service needs across India. We provide quality automotive services
+              with certified mechanics and genuine parts. Experience convenience and reliability with our
               comprehensive vehicle care solutions in all major cities.
             </p>
             <div className="flex space-x-4">
@@ -102,19 +99,16 @@ export default function Footer() {
           <div>
             <h3 className="text-lg font-semibold mb-4">POPULAR LOCATIONS IN INDIA</h3>
             <ul className="space-y-2 text-gray-400">
-              {popularStates.map((state) => {
-                const popularCity = getPopularCity(state);
-                return (
-                  <li key={state}>
-                    <Link 
-                      href={`/location/${state.toLowerCase().replace(/\s+/g, '-')}`}
-                      className="hover:text-white transition-colors"
-                    >
-                      Garage near me in {popularCity}, {state}
-                    </Link>
-                  </li>
-                );
-              })}
+              {popularLocations.map((location) => (
+                <li key={location.state}>
+                  <Link
+                    href={`/location/${location.state.toLowerCase().replace(/\s+/g, '-')}`}
+                    className="hover:text-white transition-colors"
+                  >
+                    Garage near me in {location.city}, {location.state}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
         </div>

@@ -35,26 +35,22 @@ export default function OrderDetails({ id }: { id: string }) {
     const [isComplaintSend, setIsComplaintSend] = React.useState(false);
 
     const downloadInvoice = () => {
-        console.log("Download invoice for order:", id);
-        setIsDownloadInvoice(true);
+                setIsDownloadInvoice(true);
         // TODO: Implement invoice generation
     };
 
     const writeReview = () => {
-        console.log("Write review for order:", id);
-        setIsWriteReview(true);
+                setIsWriteReview(true);
         // TODO: Open modal or navigation
     };
 
     const sendComplaint = () => {
-        console.log("Send complaint for:", id);
-        setIsSendComplaint(true);
+                setIsSendComplaint(true);
         // TODO: Open complaint form
     };
 
     const reorderService = () => {
-        console.log("Reorder service for:", id);
-        setIsReorderService(true);
+                setIsReorderService(true);
         // TODO: Navigate to service booking
     };
 

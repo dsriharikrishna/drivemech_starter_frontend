@@ -32,7 +32,7 @@ const initialState: CarState = {
   savedVehicles: [defaultVehicle],
 };
 
-const carSlicer = createSlice({
+const carSlice = createSlice({
   name: 'car',
   initialState,
   reducers: {
@@ -86,6 +86,6 @@ export const {
   addSavedVehicle,
   removeSavedVehicle,
   clearCurrentVehicle,
-} = carSlicer.actions;
+} = carSlice.actions;
 
-export default carSlicer.reducer;
+export default carSlice.reducer;

@@ -1,6 +1,6 @@
 "use client";
 import CarCard from "./CarCard";
-import { VehicleInfo } from "@/store/slicers/carSlicer";
+import { VehicleInfo } from "@/store/slices/cart/cartSlice";
 
 const demoVehicle: VehicleInfo = {
   registration: 'ABC 1234 D',
@@ -15,8 +15,7 @@ const demoVehicle: VehicleInfo = {
 
 export function CarCardDemo() {
   const handleChange = () => {
-    console.log('Change vehicle clicked');
-    // Add your change vehicle logic here
+        // Add your change vehicle logic here
   };
 
   return (

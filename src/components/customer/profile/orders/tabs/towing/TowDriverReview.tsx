@@ -42,12 +42,7 @@ export default function TowDriverReview({
   };
 
   const submitReview = () => {
-    console.log("Towing Review Submitted:", {
-      rating,
-      selectedTags,
-      comment,
-    });
-
+    
     onClose();       // close rating modal
     onSubmitted();   // open ThankYou modal
   };

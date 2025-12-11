@@ -52,7 +52,7 @@ export default function BookingSuccessLayout() {
               type="service-date"
               date="July 30, 2025"
               time="2:00 PM – 3:00 PM"
-              onReschedule={() => console.log("Reschedule")}
+              onReschedule={() => {}}
             />
 
             <BookingDetailsCard

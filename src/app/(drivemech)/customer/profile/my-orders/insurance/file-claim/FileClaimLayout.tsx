@@ -123,8 +123,7 @@ export default function FileClaimLayout({ policyId }: { policyId: string }) {
     setShowDialog(true);
     setSubmitting(false);
 
-    console.log(data)
-  };
+      };
 
   return (
     <FormProvider {...methods}>

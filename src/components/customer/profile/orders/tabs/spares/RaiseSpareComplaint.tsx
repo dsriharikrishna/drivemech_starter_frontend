@@ -72,8 +72,7 @@ export default function RaiseSpareComplaint({
   };
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
-    console.log("Spare part complaint:", data);
-    setSubmitted(true);
+        setSubmitted(true);
   };
 
   if (submitted) return <ComplaintSubmitted onDone={onClose} />;

@@ -3,28 +3,27 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm, FormProvider } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import Button from "@/components/ui/Button";
 import CommonTextInput from "@/components/forms/CommonTextInput";
 import ModalDropdown from "@/components/ui/DropDown";
 import { makes, models } from "../../../../data/vehicle";
 import FloatingLabelInput from "@/components/forms/FloatingLabelInput";
 import Image from "next/image";
+import { addVehicleSchema, type AddVehicleFormData } from "@/schemas/customer/addVehicle.schema";
+import { useAppDispatch } from "@/store/store";
+import { setCurrentVehicle, addSavedVehicle } from "@/store/slices/cart/cartSlice";
 
 type DropdownItem = { id: string; name: string; makeId?: string };
 
-type FormData = {
-    registrationNumber: string;
-    make: string;
-    model: string;
-    cubicCapacity: string;
-    manufacturingYear: string;
-};
-
 export default function AddVehicleLayout() {
     const router = useRouter();
+    const dispatch = useAppDispatch();
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const methods = useForm<FormData>({
+    // ✅ React Hook Form with Zod validation
+    const methods = useForm<AddVehicleFormData>({
+        resolver: zodResolver(addVehicleSchema),
         defaultValues: {
             registrationNumber: "",
             make: "",
@@ -32,34 +31,59 @@ export default function AddVehicleLayout() {
             cubicCapacity: "",
             manufacturingYear: "",
         },
+        mode: "all",
+        reValidateMode: "onChange",
     });
 
-    const { handleSubmit, setValue } = methods;
+    const { handleSubmit, setValue, formState: { errors } } = methods;
 
     const [selectedMake, setSelectedMake] = useState<DropdownItem | null>(null);
     const [selectedModel, setSelectedModel] = useState<DropdownItem | null>(null);
 
     const handleMakeSelect = (item: DropdownItem) => {
         setSelectedMake(item);
-        setValue("make", item.id);
+        setValue("make", item.id, { shouldValidate: true });
         setSelectedModel(null);
-        setValue("model", "");
+        setValue("model", "", { shouldValidate: true });
     };
 
     const handleModelSelect = (item: DropdownItem) => {
         setSelectedModel(item);
-        setValue("model", item.id);
+        setValue("model", item.id, { shouldValidate: true });
     };
 
-    const onSubmit = (data: FormData) => {
+    // ✅ Form submission with Redux integration
+    const onSubmit = (data: AddVehicleFormData) => {
         setIsSubmitting(true);
 
-        console.log(data);
+        try {
+            // Create vehicle object for Redux
+            const vehicleData = {
+                registration: data.registrationNumber,
+                make: selectedMake?.name || data.make,
+                model: selectedModel?.name || data.model,
+                year: parseInt(data.manufacturingYear),
+                fuelType: 'Petrol', // TODO: Add to form
+                transmission: 'Automatic', // TODO: Add to form
+                engine: `${data.cubicCapacity}cc`,
+                drive: 'FWD', // TODO: Add to form
+            };
 
-        setTimeout(() => {
-          (window as any).addToast("Vehicle added successfully!", "success");
-          router.push("/customer/services");
-        }, 1000);
+            // ✅ Dispatch to Redux cart slice
+            dispatch(setCurrentVehicle(vehicleData));
+            dispatch(addSavedVehicle(vehicleData));
+
+            // Show success message
+            (window as any).addToast?.("Vehicle added successfully!", "success");
+
+            // Navigate to services
+            router.push("/customer/services");
+        } catch (error) {
+            console.error("Error adding vehicle:", error);
+            (window as any).addToast?.("Failed to add vehicle. Please try again.", "error");
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (

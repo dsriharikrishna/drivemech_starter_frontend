@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store/store";
-import { resetBooking } from "@/store/slicers/towing-services/towingServiceSlicer";
+import { resetBooking } from "@/store/slices/towing-services/towingServiceSlice";
 import CustomCard from "@/components/ui/CustomCard";
 import Button from "@/components/ui/Button";
 import {

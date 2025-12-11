@@ -3,7 +3,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store/store";
-import { setSelectedDriver, setShowAvailableTrucks } from "@/store/slicers/towing-services/towingServiceSlicer";
+import { setSelectedDriver, setShowAvailableTrucks } from "@/store/slices/towing-services/towingServiceSlice";
 import { useRouter } from "next/navigation";
 import { Star, X } from "lucide-react";
 

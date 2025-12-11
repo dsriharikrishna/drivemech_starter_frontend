@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Service } from '../../../data/services';
 import { ShoppingCart } from 'lucide-react';
 import { RootState } from '@/store/store';
-import { toggleService } from '@/store/slicers/serviceSlicer';
-import { setCurrentVehicle } from '@/store/slicers/carSlicer';
+import { toggleService } from '@/store/slices/services/serviceSlice';
+import { setCurrentVehicle } from '@/store/slices/cart/cartSlice';
 import CarCard from '@/components/car-service/CarCard';
 import { useRouter } from 'next/navigation';
 import Button from '@/components/ui/Button';
@@ -34,8 +34,7 @@ export default function CartSidebar({ services }: { services: Service[] }) {
   const handleChangeVehicle = () => {
     // In a real app, this would open a vehicle selection modal
     // For now, we'll just show a placeholder action
-    console.log('Change vehicle clicked');
-  };
+      };
 
   return (
     <aside className="w-full lg:w-[330px] space-y-4">

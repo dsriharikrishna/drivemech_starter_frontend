@@ -2,11 +2,17 @@
 
 import { useFormContext } from "react-hook-form";
 import { Search, MapPin } from "lucide-react";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "@/store/store";
 import Button from "@/components/ui/Button";
 import CommonTextInput from "@/components/forms/CommonTextInput";
-import { selectIndianStates, getCitiesByState } from "@/store/slicers/locationSlicer";
-import { useState } from "react";
+import {
+  getStates,
+  getCitiesByState,
+  selectStates,
+  selectCitiesByState,
+  selectStatesLoading
+} from "@/store/slices/location/locationSlice";
 
 interface LocationSearchSectionProps {
   onSearch: (data: any) => void;
@@ -14,20 +20,43 @@ interface LocationSearchSectionProps {
 
 export default function LocationSearchSection({ onSearch }: LocationSearchSectionProps) {
   const form = useFormContext();
-  const states = selectIndianStates();
+  const dispatch = useAppDispatch();
+  const states = useAppSelector(selectStates);
+  const statesLoading = useAppSelector(selectStatesLoading);
   const [selectedState, setSelectedState] = useState("");
-  
+
+  // Fetch states on mount
+  useEffect(() => {
+    if (states.length === 0) {
+      dispatch(getStates());
+    }
+  }, [dispatch, states.length]);
+
+  // Fetch cities when state is selected
+  useEffect(() => {
+    if (selectedState) {
+      const stateObj = states.find(s => s.name === selectedState);
+      if (stateObj) {
+        dispatch(getCitiesByState(stateObj.id));
+      }
+    }
+  }, [selectedState, dispatch, states]);
+
+  const availableCities = useAppSelector((state) => {
+    const stateObj = states.find(s => s.name === selectedState);
+    return stateObj ? selectCitiesByState(stateObj.id)(state) : [];
+  });
+
+
   const handleSearch = (data: any) => {
     onSearch(data);
   };
 
-  const handleStateChange = (state: string) => {
-    setSelectedState(state);
+  const handleStateChange = (stateName: string) => {
+    setSelectedState(stateName);
     // Clear city when state changes
     form.setValue("city", "");
   };
-
-  const availableCities = selectedState ? getCitiesByState(selectedState) : [];
 
   return (
     <section className="flex flex-col items-center text-center px-4 py-4">
@@ -48,16 +77,17 @@ export default function LocationSearchSection({ onSearch }: LocationSearchSectio
             <CommonTextInput
               name="state"
               label=""
-              placeholder="Select your state"
+              placeholder={statesLoading === "pending" ? "Loading states..." : "Select your state"}
               leftIcon={<MapPin size={20} className="text-gray-400" />}
               className="mb-0"
               rules={{ required: "State is required" }}
               list="states"
               onChange={(e) => handleStateChange(e.target.value)}
+              disabled={statesLoading === "pending"}
             />
             <datalist id="states">
               {states.map((state) => (
-                <option key={state} value={state} />
+                <option key={state.id} value={state.name} />
               ))}
             </datalist>
           </div>
@@ -77,7 +107,7 @@ export default function LocationSearchSection({ onSearch }: LocationSearchSectio
             {selectedState && (
               <datalist id="cities">
                 {availableCities.map((city) => (
-                  <option key={city} value={city} />
+                  <option key={city.id} value={city.name} />
                 ))}
               </datalist>
             )}

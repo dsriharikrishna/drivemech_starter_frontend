@@ -14,7 +14,7 @@ import {
   setMpinCreated,
   selectAuthLoading,
   selectAuthError,
-} from "@/store/slicers/authSlicer";
+} from "@/store/slices/auth/authSlice";
 import { createMpinSchema } from "@/schemas/auth/mpin.schema";
 
 export default function CreateMpinPage(): React.ReactNode {

@@ -18,8 +18,7 @@ export default function LocationNavbar() {
   ];
 
   const handleNavClick = (item: string) => {
-    console.log(`Navigating to: ${item}`);
-    setMobileMenuOpen(false);
+        setMobileMenuOpen(false);
     // Add navigation logic here
   };
 
@@ -84,8 +83,7 @@ export default function LocationNavbar() {
           <div className="p-4 border-t border-gray-100">
             <button
               onClick={() => {
-                console.log("Emergency call clicked");
-                setMobileMenuOpen(false);
+                                setMobileMenuOpen(false);
               }}
               className="flex items-center justify-center gap-2 w-full bg-orange-500 text-white px-5 py-3 rounded-xl text-sm font-medium hover:bg-orange-600 transition"
             >

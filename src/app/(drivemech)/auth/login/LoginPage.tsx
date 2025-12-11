@@ -15,7 +15,7 @@ import {
   selectAuthLoading,
   selectAuthError,
   selectOtpSent,
-} from "@/store/slicers/authSlicer";
+} from "@/store/slices/auth/authSlice";
 
 import CommonTextInput from "@/components/forms/CommonTextInput";
 import PhoneInput from "@/components/forms/PhoneInput";

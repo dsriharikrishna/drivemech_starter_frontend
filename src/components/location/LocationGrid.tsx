@@ -1,20 +1,29 @@
 "use client";
 
 import Image from "next/image";
-import { useSelector } from "react-redux";
-import { selectIndianStates, selectGarages, selectSearchLoading } from "@/store/slicers/locationSlicer";
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "@/store/store";
+import { getStates, selectStates, selectGarages, selectSearchLoading } from "@/store/slices/location/locationSlice";
 
 export default function LocationGrid() {
-    const states = selectIndianStates();
-    const garages = useSelector(selectGarages);
-    const loading = useSelector(selectSearchLoading);
+    const dispatch = useAppDispatch();
+    const states = useAppSelector(selectStates);
+    const garages = useAppSelector(selectGarages);
+    const loading = useAppSelector(selectSearchLoading);
+
+    // Fetch states on mount
+    useEffect(() => {
+        if (states.length === 0) {
+            dispatch(getStates());
+        }
+    }, [dispatch, states.length]);
 
     // Get top states with most garages or use first 8 states
     const displayStates = states.slice(0, 8);
 
     // Calculate garage count per state (mock data for now)
-    const getGarageCount = (state: string) => {
-        const stateGarages = garages.filter(garage => garage.state === state);
+    const getGarageCount = (stateName: string) => {
+        const stateGarages = garages.filter((garage: any) => garage.state === stateName);
         if (stateGarages.length > 0) {
             return stateGarages.length;
         }
@@ -29,7 +38,7 @@ export default function LocationGrid() {
             "West Bengal": 52,
             "Telangana": 45
         };
-        return mockCounts[state] || Math.floor(Math.random() * 50) + 20;
+        return mockCounts[stateName] || Math.floor(Math.random() * 50) + 20;
     };
 
     return (
@@ -45,13 +54,12 @@ export default function LocationGrid() {
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-10">
                     {displayStates.map((state) => {
-                        const garageCount = getGarageCount(state);
+                        const garageCount = getGarageCount(state.name);
                         return (
                             <div
-                                key={state}
+                                key={state.id}
                                 className="bg-white p-5 rounded-2xl shadow-sm border border-border flex items-center gap-4 hover:shadow-md transition-shadow cursor-pointer"
                                 onClick={() => {
-                                    console.log(`Search garages in ${state}`);
                                     // TODO: Dispatch search action for this state
                                 }}
                             >
@@ -59,10 +67,10 @@ export default function LocationGrid() {
                                     src="/icons/building.svg"
                                     width={38}
                                     height={38}
-                                    alt={state.slice(0, 1)}
+                                    alt={state.name.slice(0, 1)}
                                 />
                                 <div>
-                                    <h3 className="font-semibold text-gray-800">{state}</h3>
+                                    <h3 className="font-semibold text-gray-800">{state.name}</h3>
                                     <p className="text-gray-500 text-sm">{garageCount}+ Verified Garages</p>
                                 </div>
                             </div>

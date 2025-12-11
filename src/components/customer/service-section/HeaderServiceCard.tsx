@@ -2,7 +2,7 @@
 
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store/store';
-import { toggleService } from '@/store/slicers/serviceSlicer';
+import { toggleService } from '@/store/slices/services/serviceSlice';
 
 interface Props {
   id: string;

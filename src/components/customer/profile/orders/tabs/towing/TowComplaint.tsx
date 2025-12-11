@@ -28,8 +28,7 @@ export default function TowComplaint({
   const [files, setFiles] = useState<File[]>([]);
 
   const submitComplaint = () => {
-    console.log("Tow Complaint Submitted:", { reason, description, files });
-
+    
     onClose();        // close complaint form
     onSubmitted();    // open success dialog
   };

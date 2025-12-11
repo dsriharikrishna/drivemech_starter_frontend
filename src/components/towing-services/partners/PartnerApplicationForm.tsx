@@ -26,8 +26,7 @@ export function PartnerApplicationForm({ isSubmitted, setIsSubmitted, data, setD
 
   const onSubmit = async (data: RegisterFormData) => {
     try {
-      console.log("Form submitted:", data);
-      // TODO: Implement API call to submit partner application
+            // TODO: Implement API call to submit partner application
       // Example: await submitPartnerApplication(data);
 
       // Simulate API call

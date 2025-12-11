@@ -79,8 +79,7 @@ export default function ForgotMpinRightSide() {
 
   async function onSubmit(data: any) {
     // TODO: Implement API call to send verification code
-    console.log("Forgot MPIN:", data);
-
+    
     // Get the email or phone from the form
     const email = mode === "email" ? data.email : mode === "phone" ? data.phone : data.identifier;
 

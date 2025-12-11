@@ -16,7 +16,7 @@ import {
   selectAuthError,
   selectVerificationMethod,
   selectOtpSent,
-} from "@/store/slicers/authSlicer";
+} from "@/store/slices/auth/authSlice";
 import { otpVerifySchema } from "@/schemas/auth/verify.schema";
 
 export default function OtpVerifyPage() {
