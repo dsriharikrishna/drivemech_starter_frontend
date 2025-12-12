@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { AddOnService } from '@/types/select-service';
 import { Service } from '@/data/services';
+import { useAppDispatch, useAppSelector } from '@/store/store';
+import { setBookingFormData } from '@/store/slices/booking/bookingSlice';
 
 interface SelectServiceData {
   mode: string;
@@ -21,21 +23,25 @@ interface UseSelectServiceDataProps {
   onSave?: (data: SelectServiceData) => void;
 }
 
-export function useSelectServiceData({ 
-  initialData = {}, 
+export function useSelectServiceData({
+  initialData = {},
   availableAddOns = [],
-  onSave 
+  onSave
 }: UseSelectServiceDataProps) {
+  // ✅ Get data from Redux instead of localStorage
+  const dispatch = useAppDispatch();
+  const bookingFormData = useAppSelector(state => state.booking.bookingFormData);
+
   const [data, setData] = useState<SelectServiceData>({
-    mode: initialData.mode || 'walkin',
-    date: initialData.date || '',
-    time: initialData.time || '',
-    fullName: initialData.fullName || '',
-    phone: initialData.phone || '',
-    email: initialData.email || '',
-    addOns: initialData.addOns || [],
-    notes: initialData.notes || '',
-    guest: initialData.guest || false,
+    mode: initialData.mode || bookingFormData?.mode || 'walkin',
+    date: initialData.date || bookingFormData?.date || '',
+    time: initialData.time || bookingFormData?.time || '',
+    fullName: initialData.fullName || bookingFormData?.personalInfo?.fullName || '',
+    phone: initialData.phone || bookingFormData?.personalInfo?.phone || '',
+    email: initialData.email || bookingFormData?.personalInfo?.email || '',
+    addOns: initialData.addOns || bookingFormData?.addOns || [],
+    notes: initialData.notes || bookingFormData?.notes || '',
+    guest: initialData.guest || bookingFormData?.guest || false,
     selectedServices: initialData.selectedServices || [],
   });
 
@@ -101,7 +107,7 @@ export function useSelectServiceData({
   const validateForm = () => {
     const requiredFields = ['mode', 'date', 'time', 'fullName', 'phone', 'email'];
     const missingFields = requiredFields.filter(field => !data[field as keyof SelectServiceData]);
-    
+
     if (missingFields.length > 0) {
       setError(`Please fill in all required fields: ${missingFields.join(', ')}`);
       return false;
@@ -146,8 +152,27 @@ export function useSelectServiceData({
         await onSave(saveData);
       }
 
-      // Save to localStorage for persistence
-      localStorage.setItem('selectServiceData', JSON.stringify(saveData));
+      // ✅ Save to Redux with proper structure
+      const reduxData = {
+        mode: data.mode,
+        date: data.date,
+        time: data.time,
+        personalInfo: {
+          fullName: data.fullName,
+          phone: data.phone,
+          email: data.email,
+        },
+        addOns: data.addOns,
+        notes: data.notes,
+        guest: data.guest,
+        selectedServices: [], // Will be populated from actual Service objects
+        vehicle: null, // Will be set separately
+        addOnsTotal: totals.addOnsTotal,
+        totalAmount: totals.totalAmount,
+        timestamp: new Date().toISOString(),
+      };
+
+      dispatch(setBookingFormData(reduxData));
 
       return true;
     } catch (err) {
@@ -158,30 +183,29 @@ export function useSelectServiceData({
     }
   };
 
-  // Load data from localStorage on mount
+  // ✅ Auto-save to Redux when data changes (removed localStorage)
   useEffect(() => {
-    try {
-      const savedData = localStorage.getItem('selectServiceData');
-      if (savedData) {
-        const parsed = JSON.parse(savedData);
-        setData(prev => ({
-          ...prev,
-          ...parsed
-        }));
-      }
-    } catch (err) {
-      console.warn('Failed to load saved data:', err);
-    }
-  }, []);
+    const reduxData = {
+      mode: data.mode,
+      date: data.date,
+      time: data.time,
+      personalInfo: {
+        fullName: data.fullName,
+        phone: data.phone,
+        email: data.email,
+      },
+      addOns: data.addOns,
+      notes: data.notes,
+      guest: data.guest,
+      selectedServices: [],
+      vehicle: null,
+      addOnsTotal: 0,
+      totalAmount: 0,
+      timestamp: new Date().toISOString(),
+    };
 
-  // Auto-save to localStorage when data changes
-  useEffect(() => {
-    try {
-      localStorage.setItem('selectServiceData', JSON.stringify(data));
-    } catch (err) {
-      console.warn('Failed to auto-save data:', err);
-    }
-  }, [data]);
+    dispatch(setBookingFormData(reduxData));
+  }, [data, dispatch]);
 
   return {
     data,

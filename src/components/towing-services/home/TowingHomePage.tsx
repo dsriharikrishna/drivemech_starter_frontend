@@ -4,7 +4,7 @@ import ServicesSection from "./ServicesSection";
 import TrackingSection from "./TrackingSection";
 import WhyChooseUsSection from "./WhyChooseUsSection";
 import AboutSection from "./AboutSection";
-import PlayStoreSection from "@/components/car-service/PlayStoreSection";
+import PlayStoreSection from "@/components/landing-page/PlayStoreSection";
 
 const TowingHomePage = () => {
   return (

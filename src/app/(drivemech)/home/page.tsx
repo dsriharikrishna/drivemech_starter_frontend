@@ -1,31 +1,29 @@
 'use client';
 
 import React, { useState } from 'react';
-import dynamic from 'next/dynamic';
-import ServiceBelowHero from '@/components/car-service/ServiceBelowHero';
-import BannerSection from '@/components/car-service/BannerSection';
-import ContentSection1 from '@/components/car-service/ContentSection1';
-import DriveMechSection from '@/components/car-service/DriveMechSection';
-import SparePartsSection from '@/components/car-service/SparePartsSection';
-import HowItWorks from '@/components/car-service/HowItWorks';
-import KeyFeaturesSection from '@/components/car-service/KeyFeaturesSection';
-import PlayStoreSection from '@/components/car-service/PlayStoreSection';
-
-// Dynamically import components with no SSR to avoid hydration issues
-const HeroSection = dynamic(() => import('@/components/car-service/HeroSection'), { ssr: false });
-const ServicesSection = dynamic(() => import('@/components/car-service/ServicesSection'), { ssr: false });
-const CustomerGarageSection = dynamic(() => import('@/components/car-service/CustomerGarageSection'), { ssr: false });
-const GarageFeaturesSection = dynamic(() => import('@/components/car-service/GarageFeaturesSection'), { ssr: false });
-const InsurancePartnersSection = dynamic(() => import('@/components/car-service/InsurancePartnersSection'), { ssr: false });
+import HeroSection from '@/components/landing-page/HeroSection';
+import ServiceBelowHero from '@/components/landing-page/ServiceBelowHero';
+import ServicesSection from '@/components/landing-page/ServicesSection';
+import CustomerGarageSection from '@/components/landing-page/CustomerGarageSection';
+import BannerSection from '@/components/landing-page/BannerSection';
+import ContentSection1 from '@/components/landing-page/ContentSection1';
+import GarageFeaturesSection from '@/components/landing-page/GarageFeaturesSection';
+import InsurancePartnersSection from '@/components/landing-page/InsurancePartnersSection';
+import DriveMechSection from '@/components/landing-page/DriveMechSection';
+import SparePartsSection from '@/components/landing-page/SparePartsSection';
+import HowItWorks from '@/components/landing-page/HowItWorks';
+import KeyFeaturesSection from '@/components/landing-page/KeyFeaturesSection';
+import PlayStoreSection from '@/components/landing-page/PlayStoreSection';
+import FindEverySpace from '@/components/landing-page/FindEverySpace';
+import DeadBattery from '@/components/landing-page/DeadBattery';
 
 export default function HomePage() {
   const [selectedMake, setSelectedMake] = useState('');
   const [selectedModel, setSelectedModel] = useState('');
 
   return (
-    
     <div className="flex flex-col">
-       <HeroSection
+      <HeroSection
         selectedMake={selectedMake}
         setSelectedMake={setSelectedMake}
         selectedModel={selectedModel}
@@ -34,24 +32,24 @@ export default function HomePage() {
       <ServiceBelowHero />
       <ServicesSection />
       <CustomerGarageSection />
-          <div className="relative">
-      <ContentSection1 />
+      <FindEverySpace />
+      <div className="relative">
+        <ContentSection1 />
       </div>
       <GarageFeaturesSection />
       <div className="relative">
         <BannerSection image="/images/CarRepair.png" />
       </div>
       <InsurancePartnersSection />
+      <SparePartsSection />
       <HowItWorks />
       <KeyFeaturesSection />
+      <DeadBattery />
       <DriveMechSection />
-      <div className="relative">
-        <BannerSection image="/images/BikeMech.png" />
-      </div>
-      <SparePartsSection />
       <div className="relative">
         <PlayStoreSection />
       </div>
     </div>
   );
 }
+

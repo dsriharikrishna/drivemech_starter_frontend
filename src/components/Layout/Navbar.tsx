@@ -29,7 +29,7 @@ export default function Navbar() {
   }, [scrolled]);
 
   const handleNavigation = useCallback((path: string) => {
-        if (path === "customer") {
+    if (path === "customer") {
       router.replace("/auth/login");
     } else {
       router.replace("/workshop/auth/login")
@@ -43,7 +43,7 @@ export default function Navbar() {
 
   const confirmLogout = useCallback(() => {
     // Handle logout logic here
-        setShowLogoutDialog(false);
+    setShowLogoutDialog(false);
     setIsLoggedIn(false);
     router.replace("/auth/login");
   }, [router]);
@@ -136,15 +136,15 @@ export default function Navbar() {
         isOpen={mobileMenuOpen}
         onClose={() => setMobileMenuOpen(false)}
         title="Menu"
-        className="w-80"
+        className="w-60"
       >
         <div className="flex flex-col h-full">
           {/* Location & Language */}
-          <div className="p-2 border-b border-gray-200 bg-white">
-            <div className="flex items-center justify-evenly">
-
+          <div className="p-4 border-b border-gray-200 bg-white">
+            {/* Top Row: Location and Language */}
+            <div className="flex items-center justify-between gap-3 mb-3">
               {/* Location */}
-              <div className="flex items-center justify-evenly text-sm text-gray-700">
+              <div className="flex items-center text-sm text-gray-700">
                 <Image
                   src="/images/MapPin.png"
                   alt="Map Icon"
@@ -170,12 +170,12 @@ export default function Navbar() {
                 />
                 English
               </button>
-              {/* Avatar */}
-              <div className="flex justify-center pt-2 pb-1">
-                <AvatarMenu onLogout={handleLogout} />
-              </div>
             </div>
 
+            {/* Avatar - Centered */}
+            <div className="flex justify-end pt-2 border-t border-gray-100">
+              <AvatarMenu onLogout={handleLogout} />
+            </div>
           </div>
 
 
@@ -206,7 +206,7 @@ export default function Navbar() {
               }}
               className="w-full text-left flex items-center px-4 py-3 text-gray-800 hover:bg-gray-50 rounded-md font-medium"
             >
-              Find Garages
+              For Garages
             </button>
             <button
               onClick={() => {
@@ -215,7 +215,52 @@ export default function Navbar() {
               }}
               className="w-full text-left flex items-center px-4 py-3 text-gray-800 hover:bg-gray-50 rounded-md font-medium"
             >
-              Insurance Partners
+              Insurance
+            </button>
+            <button
+              onClick={() => {
+                document.getElementById('spare-parts')?.scrollIntoView({ behavior: 'smooth' });
+                setMobileMenuOpen(false);
+              }}
+              className="w-full text-left flex items-center px-4 py-3 text-gray-800 hover:bg-gray-50 rounded-md font-medium"
+            >
+              Spare Parts
+            </button>
+            <button
+              onClick={() => {
+                document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' });
+                setMobileMenuOpen(false);
+              }}
+              className="w-full text-left flex items-center px-4 py-3 text-gray-800 hover:bg-gray-50 rounded-md font-medium"
+            >
+              How It Works
+            </button>
+            <button
+              onClick={() => {
+                document.getElementById('key-features')?.scrollIntoView({ behavior: 'smooth' });
+                setMobileMenuOpen(false);
+              }}
+              className="w-full text-left flex items-center px-4 py-3 text-gray-800 hover:bg-gray-50 rounded-md font-medium"
+            >
+              Key Features
+            </button>
+            <button
+              onClick={() => {
+                document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
+                setMobileMenuOpen(false);
+              }}
+              className="w-full text-left flex items-center px-4 py-3 text-gray-800 hover:bg-gray-50 rounded-md font-medium"
+            >
+              About Us
+            </button>
+            <button
+              onClick={() => {
+                document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                setMobileMenuOpen(false);
+              }}
+              className="w-full text-left flex items-center px-4 py-3 text-gray-800 hover:bg-gray-50 rounded-md font-medium"
+            >
+              Contact
             </button>
           </nav>
 

@@ -5,6 +5,7 @@ import { ArrowLeft, Download, ShieldCheck } from "lucide-react";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import Divider from "@/components/ui/Divider";
+import cookieService from "@/services/cookieService";
 
 /* ------------------------------------------
    MAIN POLICY DETAILS PAGE
@@ -30,16 +31,11 @@ export default function PolicyDetailsPage({ id }: PolicyDetailsPageProps) {
     breakdown: { base: 210, addons: 25, tax: 14, total: 249 },
   });
 
-  // Store the policy ID in localStorage when the component mounts or id changes
-  useEffect(() => {
-    if (id) {
-      localStorage.setItem("policyId", id);
-    }
-  }, [id]);
-
   // Helper function to navigate to different policy-related pages
   const navigateTo = (path: string) => {
-    const policyId = localStorage.getItem("policyId") || id
+    // ✅ Try to get policy ID from props, then from cookies as fallback
+    const policyId = id || cookieService.get("policyId");
+
     if (!policyId) {
       console.error('Policy ID is missing');
       return;

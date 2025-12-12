@@ -6,7 +6,7 @@ import { ShoppingCart } from 'lucide-react';
 import { RootState } from '@/store/store';
 import { toggleService } from '@/store/slices/services/serviceSlice';
 import { setCurrentVehicle } from '@/store/slices/cart/cartSlice';
-import CarCard from '@/components/car-service/CarCard';
+import CarCard from '@/components/landing-page/CarCard';
 import { useRouter } from 'next/navigation';
 import Button from '@/components/ui/Button';
 
@@ -25,7 +25,7 @@ export default function CartSidebar({ services }: { services: Service[] }) {
   const getNestedServiceNames = (serviceId: string) => {
     const service = services.find(s => s.id === serviceId);
     if (!service?.nestedServices) return [];
-    
+
     return service.nestedServices
       .filter(ns => selectedNestedServices.includes(ns.id))
       .map(ns => ns.name);
@@ -34,14 +34,14 @@ export default function CartSidebar({ services }: { services: Service[] }) {
   const handleChangeVehicle = () => {
     // In a real app, this would open a vehicle selection modal
     // For now, we'll just show a placeholder action
-      };
+  };
 
   return (
     <aside className="w-full lg:w-[330px] space-y-4">
 
       {/* Vehicle Card */}
-      <CarCard 
-        vehicle={currentVehicle} 
+      <CarCard
+        vehicle={currentVehicle}
         onChange={handleChangeVehicle}
       />
 
@@ -131,7 +131,7 @@ export default function CartSidebar({ services }: { services: Service[] }) {
                     </div>
                     <span className="text-sm font-medium text-gray-900">{service.name}</span>
                   </div>
-                  <button 
+                  <button
                     onClick={() => dispatch(toggleService(service.id))}
                     className="text-xs bg-orange-500 text-white px-3 py-1.5 rounded-lg hover:bg-orange-600 transition-colors font-medium"
                   >
@@ -152,7 +152,7 @@ export default function CartSidebar({ services }: { services: Service[] }) {
                     </div>
                     <span className="text-sm font-medium text-gray-900">{service.name}</span>
                   </div>
-                  <button 
+                  <button
                     onClick={() => dispatch(toggleService(service.id))}
                     className="text-xs bg-orange-500 text-white px-3 py-1.5 rounded-lg hover:bg-orange-600 transition-colors font-medium"
                   >
@@ -167,7 +167,7 @@ export default function CartSidebar({ services }: { services: Service[] }) {
       {/* Next Button */}
       {selectedList.length > 0 && (
         <div className="bg-white rounded-2xl border border-gray-200 p-5">
-          <Button onClick={()=>router.push("/customer/workshop")} className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200">
+          <Button onClick={() => router.push("/customer/workshop")} className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200">
             Next
           </Button>
         </div>
