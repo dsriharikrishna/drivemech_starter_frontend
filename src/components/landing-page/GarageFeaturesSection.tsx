@@ -32,9 +32,9 @@ export default function GarageFeaturesSection() {
           <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
             Key Features for <span className="text-orange-500">Garages</span>
           </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          {/* <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Powerful tools designed to help your garage business thrive and grow
-          </p>
+          </p> */}
         </div>
 
         {/* Features Grid */}
@@ -42,16 +42,16 @@ export default function GarageFeaturesSection() {
           {features.map((feature, index) => (
             <div
               key={index}
-              className="bg-white rounded-xl px-4 py-6 shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col items-center"
+              className="bg-white rounded-xl px-4 py-6 shadow-md hover:shadow-lg transition-all duration-300 flex flex-col items-center justify-center transform hover:scale-105 border border-transparent hover:border-primary-500"
             >
               <div className="mb-2 relative">
                 <img
-                  src={typeof feature.icon === "string" ? feature.icon : feature.icon}
+                  src={feature.icon}
                   alt={feature.title}
                   className="w-full h-32 object-contain"
                 />
               </div>
-              <div className="flex flex-col gap-0.5 justify-start items-start ">
+              <div className="flex flex-col gap-0.5 justify-start items-start">
                 <h3 className="text-xl font-bold text-gray-900">{feature.title}</h3>
                 <p className="text-gray-600 leading-relaxed">{feature.description}</p>
               </div>
