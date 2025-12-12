@@ -177,7 +177,7 @@ export default function CreateMpinPage(): React.ReactNode {
         <div className="text-center mb-4">
           <div className="mx-auto w-36 h-10 relative">
             <Image
-              src="/mnt/data/493d80ec-7c06-43de-900c-3de2dff8c652.png"
+              src="/images/DriveMechLogo.png"
               alt="DriveMech Logo"
               fill
               className="object-contain"

@@ -127,7 +127,7 @@ export default function ForgotMpinVerifyPage() {
         <div className="text-center mb-6">
           <div className="mx-auto w-36 h-10 relative mb-2">
             <Image
-              src="/mnt/data/493d80ec-7c06-43de-900c-3de2dff8c652.png"
+              src="/images/DriveMechLogo.png"
               alt="DriveMech Logo"
               fill
               className="object-contain"

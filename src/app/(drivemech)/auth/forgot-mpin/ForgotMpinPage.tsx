@@ -93,7 +93,7 @@ export default function ForgotMpinRightSide() {
       {/* LOGO */}
       <div className="text-center mb-6">
         <Image
-          src="/mnt/data/d33031d0-0569-47f6-bc92-b5fb657dd444.png"
+          src="/images/DriveMechLogo.png"
           alt="DriveMech Logo"
           width={150}
           height={40}

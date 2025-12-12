@@ -125,7 +125,7 @@ export default function OtpVerifyPage() {
       <div className="text-center mb-6">
         <div className="flex justify-center mb-2">
           <Image
-            src="/mnt/data/d33031d0-0569-47f6-bc92-b5fb657dd444.png"
+            src="/images/DriveMechLogo.png"
             alt="DriveMech Logo"
             width={140}
             height={40}

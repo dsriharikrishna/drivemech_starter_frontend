@@ -15,7 +15,7 @@ export default function SuccessPage() {
       {/* Logo */}
       <div className="flex justify-center mb-6">
         <Image
-          src="/mnt/data/b0d650d5-7377-4999-96ed-c164cd4b7b76.png"
+          src="/images/DriveMechLogo.png"
           alt="DriveMech Logo"
           width={190}
           height={55}

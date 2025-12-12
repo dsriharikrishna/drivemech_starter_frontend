@@ -136,7 +136,7 @@ export default function MpinVerifyPage() {
         {/* using your uploaded screenshot as requested */}
         <div className="mx-auto w-36 h-10 relative">
           <Image
-            src="/mnt/data/493d80ec-7c06-43de-900c-3de2dff8c652.png"
+            src="/images/DriveMechLogo.png"
             alt="DriveMech Logo"
             fill
             className="object-contain"
