@@ -1,6 +1,7 @@
 'use client';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import { ChevronRight } from 'lucide-react';
 import { Service } from '../../../data/services';
 import { RootState } from '@/store/store';
@@ -15,10 +16,10 @@ interface Props {
 export default function ServiceCard({ service, onToggle, isSelected: propIsSelected }: Props) {
   const dispatch = useDispatch();
   const router = useRouter();
-  
+
   // Use prop isSelected if provided, otherwise get from Redux
-  const isSelected = propIsSelected !== undefined 
-    ? propIsSelected 
+  const isSelected = propIsSelected !== undefined
+    ? propIsSelected
     : useSelector((state: RootState) => state.service.selectedServices.includes(service.id));
 
   const handleClick = () => {
@@ -34,14 +35,13 @@ export default function ServiceCard({ service, onToggle, isSelected: propIsSelec
   return (
     <div
       onClick={handleClick}
-      className={`flex items-center bg-white justify-between p-3 rounded-xl border-2 cursor-pointer transition-all ${
-        isSelected
+      className={`flex items-center bg-white justify-between p-3 rounded-xl border-2 cursor-pointer transition-all ${isSelected
           ? 'border-orange-500 bg-orange-50'
           : 'border-gray-200 hover:border-orange-300 hover:bg-orange-50/50'
-      }`}
+        }`}
     >
       <div className="flex items-center gap-3">
-        <div className="text-2xl">{service.icon}</div>
+        <Image src={service.icon} alt={service.name} width={24} height={24} />
         <span className="font-medium text-gray-900">{service.name}</span>
       </div>
 

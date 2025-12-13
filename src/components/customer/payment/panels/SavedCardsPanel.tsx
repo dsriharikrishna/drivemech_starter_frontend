@@ -61,7 +61,7 @@ export default function SavedCardsPanel({ cards, selected, setSelected , handleN
                   <HelpCircle className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                 </div>
 
-                <button onClick={handleNext} className="bg-gradient-to-r from-[#FF7B34] to-[#FF8F3C] text-white py-3 px-10 rounded-xl font-semibold shadow hover:opacity-90 transition">
+                <button onClick={handleNext} className="bg-gradient-to-r from-[#FF7B34] to-[#FF8F3C] text-white py-2 px-3 rounded-xl font-semibold shadow hover:opacity-90 transition">
                   Pay $579
                 </button>
               </div>

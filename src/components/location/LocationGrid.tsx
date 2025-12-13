@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/store";
-import { getStates, selectStates, selectGarages, selectSearchLoading } from "@/store/slices/location/locationSlice";
+import { getStates, selectStates, selectGarages, selectSearchLoading, searchGarages } from "@/store/slices/location/locationSlice";
 
 export default function LocationGrid() {
     const dispatch = useAppDispatch();
@@ -41,6 +41,27 @@ export default function LocationGrid() {
         return mockCounts[stateName] || Math.floor(Math.random() * 50) + 20;
     };
 
+    // Get state icon/flag
+    const getStateIcon = (stateName: string) => {
+        const stateIcons: { [key: string]: string } = {
+            "Maharashtra": "🏛️",
+            "Karnataka": "🏛️",
+            "Delhi": "🏛️",
+            "Tamil Nadu": "🏛️",
+            "Uttar Pradesh": "🏛️",
+            "Gujarat": "🏛️",
+            "West Bengal": "🏛️",
+            "Telangana": "🏛️",
+            "Rajasthan": "🏛️",
+            "Kerala": "🏛️",
+            "Punjab": "🏛️",
+            "Haryana": "🏛️",
+            "Madhya Pradesh": "🏛️",
+            "Andhra Pradesh": "🏛️"
+        };
+        return stateIcons[stateName] || "🏛️";
+    };
+
     return (
         <section className="max-w-7xl mx-auto mb-4">
             <h2 className="text-center text-xl font-semibold text-[#0D1A3D]">
@@ -60,15 +81,12 @@ export default function LocationGrid() {
                                 key={state.id}
                                 className="bg-white p-5 rounded-2xl shadow-sm border border-border flex items-center gap-4 hover:shadow-md transition-shadow cursor-pointer"
                                 onClick={() => {
-                                    // TODO: Dispatch search action for this state
+                                    dispatch(searchGarages({ state: state.name }));
                                 }}
                             >
-                                <Image
-                                    src="/icons/building.svg"
-                                    width={38}
-                                    height={38}
-                                    alt={state.name.slice(0, 1)}
-                                />
+                                <div className="w-12 h-12 flex items-center justify-center bg-orange-50 rounded-lg text-2xl">
+                                    {getStateIcon(state.name)}
+                                </div>
                                 <div>
                                     <h3 className="font-semibold text-gray-800">{state.name}</h3>
                                     <p className="text-gray-500 text-sm">{garageCount}+ Verified Garages</p>

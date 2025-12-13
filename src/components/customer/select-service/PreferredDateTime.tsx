@@ -1,71 +1,125 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import { UseFormReturn, Controller } from "react-hook-form";
+import { useEffect, useState } from "react";
+import { UseFormReturn } from "react-hook-form";
 import { MapPin, Locate } from "lucide-react";
 import CommonTextInput from "@/components/forms/CommonTextInput";
+import { SelectServiceFormData } from "@/schemas/customer/selectService.schema";
 
 interface Props {
-  form: UseFormReturn<any>;
+  form: UseFormReturn<SelectServiceFormData>;
   mode?: "pickup" | "walkin";
 }
 
-function timeToMinutes(t: string) {
-  const [hh = "0", mm = "0"] = (t || "").split(":");
-  return parseInt(hh, 10) * 60 + parseInt(mm, 10);
-}
-
-export default function PickupAndDateTime({ form, mode = "pickup" }: Props) {
+export default function PreferredDateTime({ form, mode = "pickup" }: Props) {
   const selectedDate: string = form.watch("date");
+  const selectedMode = form.watch("mode");
 
   const today = new Date().toISOString().split("T")[0];
 
-  // 🔥 Store locked minimum time (fixed once when user selects today)
-  const [todayMinTime, setTodayMinTime] = useState<string | undefined>(undefined);
+  // Get current time for minimum time validation
+  const [currentTime, setCurrentTime] = useState<string>("");
 
-  // 🔥 When date changes → lock the time if today is selected
   useEffect(() => {
+    // Update current time when component mounts or date changes to today
     if (selectedDate === today) {
-      const locked = new Date().toTimeString().slice(0, 5); // "HH:mm"
-      setTodayMinTime(locked);
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, "0");
+      const minutes = String(now.getMinutes()).padStart(2, "0");
+      setCurrentTime(`${hours}:${minutes}`);
     } else {
-      setTodayMinTime(undefined);
+      setCurrentTime("");
     }
+  }, [selectedDate, today]);
 
-    // revalidate fields when date changes
-    form.trigger("time");
-    form.trigger("date");
-  }, [selectedDate, today, form]);
+  // Handle "Locate Me" button click
+  const handleLocateMe = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+
+          // Set lat/lng in form
+          form.setValue("location.lat", latitude);
+          form.setValue("location.lng", longitude);
+
+          // Optionally, you can reverse geocode to get address
+          // For now, just show coordinates in the address field
+          form.setValue("location.address", `${latitude.toFixed(6)}, ${longitude.toFixed(6)}`);
+
+          // Show success message
+          (window as any).addToast?.("Location detected successfully", "success");
+        },
+        (error) => {
+          console.error("Geolocation error:", error);
+          (window as any).addToast?.("Unable to detect location. Please enter manually.", "error");
+        }
+      );
+    } else {
+      (window as any).addToast?.("Geolocation is not supported by your browser", "error");
+    }
+  };
 
   return (
     <div
       className={
-        mode === "pickup"
+        selectedMode === "pickup"
           ? "grid grid-cols-1 md:grid-cols-2 gap-3"
           : "grid grid-cols-1 gap-3"
       }
     >
       {/* ===================== PICKUP ADDRESS ===================== */}
-      {mode === "pickup" && (
+      {selectedMode === "pickup" && (
         <div className="p-4 border border-gray-200 rounded-xl bg-white">
           <p className="font-medium mb-3">Pickup Address *</p>
 
-          <div className="flex items-center gap-3 border border-gray-200 rounded-lg px-3 py-2 bg-white">
-            <MapPin className="w-4 h-4 text-gray-400" />
+          <div>
+            <div className="flex items-center gap-3 border border-gray-200 rounded-lg px-3 py-2 bg-white">
+              <MapPin className="w-4 h-4 text-gray-400" />
 
+              <input
+                {...form.register("location.address")}
+                placeholder="Enter your pickup address"
+                className="w-full outline-none text-sm"
+              />
+
+              <button
+                type="button"
+                onClick={handleLocateMe}
+                className="text-xs px-3 py-1 bg-blue-50 text-blue-600 rounded-md flex items-center gap-1 hover:bg-blue-100 transition-colors"
+              >
+                <Locate className="w-3 h-3" />
+                Locate Me
+              </button>
+            </div>
+
+            {form.formState.errors.location?.address && (
+              <p className="text-red-500 text-xs mt-1">
+                {(form.formState.errors.location.address as any)?.message || 'Address is required'}
+              </p>
+            )}
+
+            {form.formState.errors.location && !form.formState.errors.location.address && (
+              <p className="text-red-500 text-xs mt-1">
+                {(form.formState.errors.location as any)?.message || 'Pickup address is required'}
+              </p>
+            )}
+
+            {/* Hidden fields for lat/lng coordinates with default values */}
             <input
-              {...form.register("location", { required: "Location is required" })}
-              placeholder="Location"
-              className="w-full outline-none text-sm"
+              type="hidden"
+              {...form.register("location.lat", {
+                valueAsNumber: true,
+                value: 0
+              })}
             />
-
-            <button
-              type="button"
-              className="text-xs px-3 py-1 bg-blue-50 text-blue-600 rounded-md flex items-center gap-1"
-            >
-              <Locate className="w-3 h-3" />
-              Locate Me
-            </button>
+            <input
+              type="hidden"
+              {...form.register("location.lng", {
+                valueAsNumber: true,
+                value: 0
+              })}
+            />
           </div>
         </div>
       )}
@@ -77,62 +131,23 @@ export default function PickupAndDateTime({ form, mode = "pickup" }: Props) {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
           {/* ---------------------- DATE FIELD ---------------------- */}
-          <Controller
-            control={form.control}
+          <CommonTextInput
             name="date"
-            rules={{
-              required: "Date is required",
-              validate: (val: string) => {
-                if (!val) return "Date is required";
-                if (val < today) return `Please select ${today} or later`;
-                return true;
-              },
-            }}
-            render={({ field }) => (
-              <CommonTextInput
-                {...field}
-                name="date"
-                type="date"
-                label="Date"
-                form={form}
-                placeholder="Select Date"
-                min={today}
-              />
-            )}
+            type="date"
+            label="Date"
+            form={form}
+            placeholder="Select Date"
+            min={today}
           />
 
           {/* ---------------------- TIME FIELD ---------------------- */}
-          <Controller
-            control={form.control}
+          <CommonTextInput
             name="time"
-            rules={{
-              required: "Time is required",
-              validate: (val: string) => {
-                if (!val) return "Time is required";
-
-                const selected = form.getValues("date");
-                if (!selected) return "Please choose a date first";
-
-                if (selected === today && todayMinTime) {
-                  if (timeToMinutes(val) < timeToMinutes(todayMinTime)) {
-                    return `Please choose a time at or after ${todayMinTime}`;
-                  }
-                }
-
-                return true;
-              },
-            }}
-            render={({ field }) => (
-              <CommonTextInput
-                {...field}
-                name="time"
-                type="time"
-                label="Time"
-                form={form}
-                placeholder="Select Time"
-                min={selectedDate === today ? todayMinTime : undefined}
-              />
-            )}
+            type="time"
+            label="Time"
+            form={form}
+            placeholder="Select Time"
+            min={selectedDate === today ? currentTime : undefined}
           />
 
         </div>

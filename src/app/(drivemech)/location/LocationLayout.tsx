@@ -6,6 +6,8 @@ import LocationGrid from "@/components/location/LocationGrid";
 import LocationSearchSection from "@/components/location/LocationSearchSection";
 import { useAppDispatch } from "@/store/store";
 import { searchGarages } from "@/store/slices/location/locationSlice";
+import SparePartsSection from "@/components/landing-page/SparePartsSection";
+import ServicesNearBy from "@/components/location/ServicesNearBy";
 
 interface LocationFormData {
   state: string;
@@ -36,6 +38,7 @@ export default function LocationLayout() {
         <LocationSearchSection onSearch={handleSearch} />
       </FormProvider>
       <LocationGrid />
+      <ServicesNearBy />
     </div>
   );
 }

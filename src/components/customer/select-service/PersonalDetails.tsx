@@ -1,9 +1,10 @@
 import { UseFormReturn } from "react-hook-form";
 import { User, Phone, Mail } from "lucide-react";
 import CommonTextInput from "@/components/forms/CommonTextInput";
+import { SelectServiceFormData } from "@/schemas/customer/selectService.schema";
 
 interface Props {
-  form: UseFormReturn<any>;
+  form: UseFormReturn<SelectServiceFormData>;
 }
 
 export default function PersonalDetails({ form }: Props) {

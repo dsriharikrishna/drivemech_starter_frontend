@@ -1,9 +1,10 @@
 import { UseFormReturn } from "react-hook-form";
 import { AddOnService } from "@/types/select-service";
 import { Plus } from "lucide-react";
+import { SelectServiceFormData } from "@/schemas/customer/selectService.schema";
 
 interface Props {
-  form: UseFormReturn<any>;
+  form: UseFormReturn<SelectServiceFormData>;
   addOns?: AddOnService[];
   onAddOnToggle?: (addOnId: string, isSelected: boolean) => void;
   maxSelections?: number;
@@ -11,9 +12,9 @@ interface Props {
   layout?: 'grid' | 'list';
 }
 
-export default function AddOns({ 
-  form, 
-  addOns = [], 
+export default function AddOns({
+  form,
+  addOns = [],
   onAddOnToggle,
   maxSelections,
   showPrices = true,
@@ -32,7 +33,7 @@ export default function AddOns({
     const newSelection = exists
       ? selected.filter((x: string) => x !== id)
       : [...selected, id];
-    
+
     form.setValue("addOns", newSelection);
 
     // Call custom handler if provided
@@ -53,11 +54,11 @@ export default function AddOns({
         onClick={() => handleToggleAddOn(service.id)}
         disabled={isDisabled}
         className={`flex items-center justify-between p-3 rounded-lg border transition-all
-          ${isSelected 
-            ? "border-orange-400 bg-orange-50" 
+          ${isSelected
+            ? "border-orange-400 bg-orange-50"
             : isDisabled
-            ? "border-gray-200 bg-gray-50 cursor-not-allowed opacity-50"
-            : "border-gray-300 bg-white hover:border-orange-300 hover:bg-orange-50/50"
+              ? "border-gray-200 bg-gray-50 cursor-not-allowed opacity-50"
+              : "border-gray-300 bg-white hover:border-orange-300 hover:bg-orange-50/50"
           }`}
         aria-disabled={isDisabled}
       >

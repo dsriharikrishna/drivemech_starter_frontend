@@ -36,6 +36,7 @@ import {
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { processPayment } from "@/store/slices/payment/paymentSlice";
 import { clearBookingFormData } from "@/store/slices/booking/bookingSlice";
+import { Bike } from "lucide-react";
 
 export default function PaymentProcessLayout() {
   const [method, setMethod] = useState<PaymentMethod>("saved");
@@ -109,8 +110,10 @@ export default function PaymentProcessLayout() {
         ...formData,
       };
 
+      console.log(paymentPayload);
+
       // ✅ Dispatch payment action
-      const result = await dispatch(processPayment(paymentPayload as any)).unwrap();
+      // const result = await dispatch(processPayment(paymentPayload as any)).unwrap();
 
       // ✅ Clear booking form data after successful payment
       dispatch(clearBookingFormData());
@@ -203,7 +206,7 @@ export default function PaymentProcessLayout() {
                   </div>
 
                   <div className="flex justify-center">
-                    <Image src="/images/car-blue.png" width={130} height={80} alt="" />
+                    <Image src="/images/workshop/car.png" width={130} height={80} alt="" />
                   </div>
 
                   <p className="text-sm text-center font-medium mt-2">Toyota Hilux</p>
@@ -218,7 +221,7 @@ export default function PaymentProcessLayout() {
                 <InfoBlock>
                   <div className="flex items-center gap-2">
                     <Image
-                      src="/images/workshop.jpg"
+                      src="/images/workshop/AtoZ.png"
                       width={60}
                       height={60}
                       className="rounded-lg"
@@ -237,7 +240,7 @@ export default function PaymentProcessLayout() {
                       </div>
 
                       <div className="flex items-center gap-4 text-xs text-gray-400 mt-2">
-                        🚴‍♂️ 2Kms <span>⏱ 5 Mins Drive</span>
+                        <Bike /> 2Kms <span>⏱ 5 Mins Drive</span>
                       </div>
                     </div>
                   </div>

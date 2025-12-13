@@ -19,8 +19,8 @@ export default function BookingSuccessLayout() {
   }, [router])
 
   return (
-    <div className="w-full flex flex-col items-center bg-white justify-center px-4 py-8">
-      <div className="w-full max-w-7xl flex flex-col items-center py-10 px-4 md:px-8 rounded-xl shadow-md border border-border bg-white">
+    <div className="w-full flex flex-col items-center bg-white justify-center px-8 py-6">
+      <div className="w-full max-w-7xl flex flex-col items-center py-8 px-4 md:px-6 rounded-xl shadow-md border border-border bg-white">
 
         {/* SUCCESS ICON + TEXT */}
         <CheckCircleIcon className="w-20 h-20 text-green-500" />
@@ -39,7 +39,7 @@ export default function BookingSuccessLayout() {
         </p>
 
         {/* CENTERED CARD */}
-        <div className="mt-10 w-full max-w-5xl bg-white border border-gray-200 rounded-2xl p-6 md:p-8">
+        <div className="mt-10 w-full max-w-5xl bg-white border border-gray-200 rounded-2xl p-4 md:p-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
 
             <BookingDetailsCard

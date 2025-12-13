@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { CalendarIcon } from "lucide-react";
+import { Phone } from "phosphor-react";
 
 type CardType = "vehicle" | "service-date" | "workshop";
 
@@ -34,7 +35,7 @@ export default function BookingDetailsCard(props: BookingDetailsCardProps) {
       transition-all duration-200 
       hover:shadow-md
     ">
-      
+
       {/* ===================== VEHICLE ===================== */}
       {props.type === "vehicle" && (
         <>
@@ -42,7 +43,7 @@ export default function BookingDetailsCard(props: BookingDetailsCardProps) {
 
           <div className="flex items-center gap-4">
             <Image
-              src={props.vehicleImage ?? "/car.png"}
+              src={props.vehicleImage ?? "/images/workshop/car.png"}
               alt="vehicle"
               width={48}
               height={48}
@@ -93,7 +94,7 @@ export default function BookingDetailsCard(props: BookingDetailsCardProps) {
 
           <div className="flex items-center gap-4">
             <Image
-              src={props.workshopImage ?? "/workshop.png"}
+              src={props.workshopImage ?? "/images/workshop/AtoZ.png"}
               alt="workshop"
               width={48}
               height={48}
@@ -113,25 +114,18 @@ export default function BookingDetailsCard(props: BookingDetailsCardProps) {
             {/* Action Buttons */}
             <div className="ml-auto flex items-center gap-2">
               <button
-                onClick={props.onCall}
-                className="
-                  p-2 rounded-full bg-blue-100 text-blue-600 
-                  hover:bg-blue-200 transition
-                  text-sm
-                "
+                onClick={props.onLocation}
+                className="p-2 rounded-lg bg-green-100 text-green-600 hover:bg-green-200 transition text-sm"
               >
-                📞
+                <img src="/images/workshop/direction-fill.png" alt="" />
               </button>
               <button
-                onClick={props.onLocation}
-                className="
-                  p-2 rounded-full bg-green-100 text-green-600
-                  hover:bg-green-200 transition
-                  text-sm
-                "
+                onClick={props.onCall}
+                className="p-2 rounded-lg bg-green-100 text-green-600 hover:bg-green-200 transition text-sm"
               >
-                📍
+                <Phone className="w-5 h-5 text-primary fill-primary" />
               </button>
+
             </div>
           </div>
         </>

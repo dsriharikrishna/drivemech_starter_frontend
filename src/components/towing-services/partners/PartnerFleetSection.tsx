@@ -4,17 +4,17 @@ export function PartnerFleetSection() {
   const fleet = [
     {
       title: "Flatbed Tow Trucks",
-      img: "/fleet/flatbed.jpg",
+      img: "/images/towing-services/partners/PartnersFleet.png",
       points: ["Secured transportation", "Low-angle loading", "Ideal for luxury cars"],
     },
     {
       title: "Heavy Duty Towing",
-      img: "/fleet/heavy.jpg",
+      img: "/images/towing-services/partners/PartnersFleet.png",
       points: ["For commercial trucks", "Oversized vehicles", "Specialized equipment"],
     },
     {
       title: "Motorcycle Towing",
-      img: "/fleet/moto.jpg",
+      img: "/images/towing-services/partners/PartnersFleet.png",
       points: ["Specialized equipment", "Strap-lock system", "All vehicle types"],
     },
   ];
@@ -35,7 +35,7 @@ export function PartnerFleetSection() {
             <CustomCard key={idx} className="p-0 border rounded-xl">
               <img
                 src={item.img}
-                className="w-full h-[160px] rounded-t-xl object-cover bg-hero"
+                className="w-full h-[160px] rounded-t-xl object-cover"
                 alt=""
               />
 

@@ -20,42 +20,42 @@ export const ADDON_SERVICES = [
         id: 'ac',
         name: 'Air Conditioning',
         price: 25,
-        icon: '/icons/ac.svg',
+        icon: '❄️',
         description: 'AC inspection and service'
     },
     {
         id: 'roadworthy',
         name: 'Roadworthy Inspection',
         price: 25,
-        icon: '/icons/road.svg',
+        icon: '🛣️',
         description: 'Complete vehicle inspection'
     },
     {
         id: 'glass',
         name: 'Auto Glass',
         price: 25,
-        icon: '/icons/glass.svg',
+        icon: '🪟',
         description: 'Windshield and glass service'
     },
     {
         id: 'spark',
         name: 'Spark Plug',
         price: 25,
-        icon: '/icons/spark.svg',
+        icon: '⚡',
         description: 'Spark plug replacement'
     },
     {
         id: 'battery',
         name: 'Battery',
         price: 25,
-        icon: '/icons/battery.svg',
+        icon: '🔋',
         description: 'Battery check and replacement'
     },
     {
         id: 'suspension',
         name: 'Suspension and Steering',
         price: 25,
-        icon: '/icons/suspension.svg',
+        icon: '🔧',
         description: 'Suspension system check'
     },
 ] as const;

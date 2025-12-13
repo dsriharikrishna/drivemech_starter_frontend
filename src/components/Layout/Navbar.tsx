@@ -50,8 +50,7 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed w-full top-0 z-50 transition-shadow duration-300 ${scrolled ? "bg-white" : "bg-white"
-        }`}
+      className={`fixed w-full top-0 z-50 transition-shadow duration-300 bg-white`}
     >
       <nav
         className="mx-auto flex w-full max-w-7xl items-center justify-between px-3 py-3 sm:px-5 lg:px-6"
@@ -64,12 +63,15 @@ export default function Navbar() {
               src="/images/DriveMechLogo.png"
               alt="DriveMech Logo"
               width={160}
-              height={45}
+              height={90}
               priority
             />
           </Link>
           {/* --- Center: Location --- */}
-          <div className="hidden md:flex items-center text-sm text-gray-700">
+          <button
+            onClick={() => router.push('/customer/location')}
+            className="hidden md:flex items-center text-sm text-gray-700 hover:text-primary transition-colors"
+          >
             <Image
               src="/images/MapPin.png"
               alt="Map Icon"
@@ -78,7 +80,7 @@ export default function Navbar() {
               className="mr-2"
             />
             <span className="text-[15px] font-medium text-[#333]">Hyderabad</span>
-          </div>
+          </button>
         </div>
 
         {/* --- Right: Language + Buttons --- */}
@@ -144,7 +146,13 @@ export default function Navbar() {
             {/* Top Row: Location and Language */}
             <div className="flex items-center justify-between gap-3 mb-3">
               {/* Location */}
-              <div className="flex items-center text-sm text-gray-700">
+              <button
+                onClick={() => {
+                  router.push('/customer/location');
+                  setMobileMenuOpen(false);
+                }}
+                className="flex items-center text-sm text-gray-700 hover:text-primary transition-colors"
+              >
                 <Image
                   src="/images/MapPin.png"
                   alt="Map Icon"
@@ -153,7 +161,7 @@ export default function Navbar() {
                   className="mr-2 opacity-80"
                 />
                 <span className="font-medium">Hyderabad</span>
-              </div>
+              </button>
 
               {/* Language Button */}
               <button

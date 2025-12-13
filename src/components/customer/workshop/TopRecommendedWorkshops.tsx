@@ -3,7 +3,7 @@ import RecommendedWorkshopCard from "./RecommendedWorkshopCard";
 export default function TopRecommendedWorkshops() {
   const workshops = [
     {
-      logo: "/garage-logo.png",
+      logo: "/images/workshop/AtoZ.png",
       name: "A to Z Services",
       rating: 4.5,
       reviews: 120,
@@ -13,7 +13,7 @@ export default function TopRecommendedWorkshops() {
       buttonText: "Book Now — 20% Off",
     },
     {
-      logo: "/garage-logo.png",
+      logo: "/images/workshop/CarExperts.png",
       name: "Car Fix Experts",
       rating: 4.5,
       reviews: 120,

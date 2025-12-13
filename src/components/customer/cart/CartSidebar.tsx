@@ -9,6 +9,7 @@ import { setCurrentVehicle } from '@/store/slices/cart/cartSlice';
 import CarCard from '@/components/landing-page/CarCard';
 import { useRouter } from 'next/navigation';
 import Button from '@/components/ui/Button';
+import Image from 'next/image';
 
 export default function CartSidebar({ services }: { services: Service[] }) {
   const dispatch = useDispatch();
@@ -72,7 +73,7 @@ export default function CartSidebar({ services }: { services: Service[] }) {
                   <div className="flex items-center justify-between bg-gray-50 p-3 rounded-xl border border-gray-200 hover:border-orange-200 transition-colors">
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center border border-gray-200">
-                        <div className="text-xl">{s.icon}</div>
+                        <Image src={s.icon} alt={s.name} width={24} height={24} />
                       </div>
                       <div>
                         <span className="font-medium text-sm text-gray-900">{s.name}</span>
@@ -127,7 +128,7 @@ export default function CartSidebar({ services }: { services: Service[] }) {
                 <div key={service.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-xl border border-gray-200 hover:border-orange-200 transition-colors">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center border border-gray-200">
-                      <div className="text-lg">{service.icon}</div>
+                      <Image src={service.icon} alt={service.name} width={24} height={24} />
                     </div>
                     <span className="text-sm font-medium text-gray-900">{service.name}</span>
                   </div>
@@ -148,7 +149,7 @@ export default function CartSidebar({ services }: { services: Service[] }) {
                 <div key={service.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-xl border border-gray-200 hover:border-orange-200 transition-colors">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center border border-gray-200">
-                      <div className="text-lg">{service.icon}</div>
+                      <Image src={service.icon} alt={service.name} width={24} height={24} />
                     </div>
                     <span className="text-sm font-medium text-gray-900">{service.name}</span>
                   </div>

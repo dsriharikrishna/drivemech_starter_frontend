@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { MoreVertical } from "lucide-react";
+import { User } from "phosphor-react";
 
 interface Props {
   name: string;
@@ -11,14 +12,14 @@ interface Props {
 export default function ReviewItem({ name, time, review, rating }: Props) {
   return (
     <div className="py-4 border-b last:border-b-0 border-gray-200">
-      
+
       {/* Top Row */}
       <div className="flex items-center justify-between">
-        
+
         {/* Left block (avatar + name + stars + time) */}
         <div className="flex items-center gap-3">
           <Image
-            src="/images/user.png"
+            src="/images/default-avatar.png"
             alt={name}
             width={48}
             height={48}

@@ -1,6 +1,6 @@
 "use client";
 
-import { FormProvider, useForm } from "react-hook-form";
+import { FormProvider, useForm, SubmitHandler, UseFormReturn } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowLeft } from "lucide-react";
 
@@ -40,7 +40,7 @@ export default function SelectServiceLayout() {
     const form = useForm<SelectServiceFormData>({
         resolver: zodResolver(selectServiceSchema),
         defaultValues: {
-            mode: "walkin",
+            mode: "pickup",
             date: "",
             time: "",
             fullName: "",
@@ -50,11 +50,11 @@ export default function SelectServiceLayout() {
             notes: "",
             guest: false,
         },
-        mode: "all",
+        mode: "onTouched",
         reValidateMode: "onChange",
     });
 
-    const { handleSubmit, formState: { errors, isSubmitting } } = form;
+    const { formState: { errors, isSubmitting } } = form;
 
     // ✅ Use add-ons from constants
     const addOns: AddOnService[] = ADDON_SERVICES.map(addon => ({
@@ -91,6 +91,7 @@ export default function SelectServiceLayout() {
                 timestamp: new Date().toISOString(),
             };
 
+            console.log("Booking Data:", bookingData);
             // ✅ Store booking data in Redux
             dispatch(setBookingFormData(bookingData));
 
@@ -168,7 +169,7 @@ export default function SelectServiceLayout() {
                                     <div className="flex flex-col justify-center items-center ">
                                         <Button
                                             type="submit"
-                                            disabled={isSubmitting || !form.formState.isValid}
+                                            disabled={isSubmitting}
                                             variant="primary"
                                             className="rounded-lg"
                                         >
@@ -195,7 +196,7 @@ export default function SelectServiceLayout() {
                                     </div>
 
                                     <div className="flex justify-center">
-                                        <Image src="/images/car-blue.png" width={130} height={80} alt="" />
+                                        <Image src="/images/workshop/Car.png" width={130} height={80} alt="" />
                                     </div>
 
                                     <p className="text-sm text-center font-medium mt-2">Toyota Hilux</p>
@@ -210,7 +211,7 @@ export default function SelectServiceLayout() {
                                 <InfoBlock>
                                     <div className="flex items-center gap-2">
                                         <Image
-                                            src="/images/workshop.jpg"
+                                            src="/images/workshop/AtoZ.png"
                                             width={60}
                                             height={60}
                                             className="rounded-lg"

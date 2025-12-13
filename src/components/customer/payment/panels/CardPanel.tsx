@@ -57,7 +57,7 @@ export default function CardPanel({ handleNext }: CardPanelProps) {
         <span>Save card for further use</span>
       </div>
 
-      <button onClick={handleNext} className="w-full bg-orange-500 text-white py-3 rounded-xl font-semibold text-base shadow-sm hover:bg-orange-600 transition-colors">
+      <button onClick={handleNext} className="w-full bg-orange-500 text-white py-2 rounded-xl font-semibold text-base shadow-sm hover:bg-orange-600 transition-colors">
         Proceed to Pay $579
       </button>
     </div>
