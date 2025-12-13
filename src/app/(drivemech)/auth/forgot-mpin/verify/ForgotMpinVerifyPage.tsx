@@ -101,13 +101,14 @@ export default function ForgotMpinVerifyPage() {
   const isOtpComplete = otp.every((digit) => digit !== "");
 
   const onSubmit = async (data: { email?: string; phone?: string; code: string }) => {
+    console.log(data);
     // TODO: Implement OTP verification API call
     
     // Simulate API call
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
     // After successful verification, redirect to reset MPIN
-    router.push("/auth/mpin/reset");
+    // router.push("/auth/mpin/reset");
   };
 
   const handleResend = () => {
@@ -184,7 +185,7 @@ export default function ForgotMpinVerifyPage() {
         {/* Verify Code Button */}
         <Button
           type="submit"
-          disabled={!isOtpComplete || isSubmitting}
+          // disabled={!isOtpComplete || isSubmitting}
           className={`w-full py-3 rounded-lg font-semibold mb-3 ${isOtpComplete
               ? "bg-gray-900 hover:bg-black text-white"
               : "bg-gray-200 text-gray-400 cursor-not-allowed"
