@@ -24,6 +24,7 @@ import userProfileReducer from './slices/user/userProfileSlice';
 import notificationReducer from './slices/notification/notificationSlice';
 import uiReducer from './slices/ui/uiSlice';
 import towingServiceReducer from './slices/towing-services/towingServiceSlice';
+import helperReducer from './slices/helpers/helperSlice';
 
 const authPersistConfig = {
   key: "auth",
@@ -92,6 +93,7 @@ export const store = configureStore({
     notification: notificationReducer,
     ui: persistedUIReducer,
     towingService: towingServiceReducer,
+    helper: helperReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

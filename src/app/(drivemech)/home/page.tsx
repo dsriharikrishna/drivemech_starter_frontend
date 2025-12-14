@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import HeroSection from '@/components/landing-page/HeroSection';
 import ServiceBelowHero from '@/components/landing-page/ServiceBelowHero';
 import ServicesSection from '@/components/landing-page/ServicesSection';
@@ -18,17 +18,9 @@ import FindEverySpace from '@/components/landing-page/FindEverySpace';
 import DeadBattery from '@/components/landing-page/DeadBattery';
 
 export default function HomePage() {
-  const [selectedMake, setSelectedMake] = useState('');
-  const [selectedModel, setSelectedModel] = useState('');
-
   return (
     <div className="flex flex-col">
-      <HeroSection
-        selectedMake={selectedMake}
-        setSelectedMake={setSelectedMake}
-        selectedModel={selectedModel}
-        setSelectedModel={setSelectedModel}
-      />
+      <HeroSection />
       <ServiceBelowHero />
       <ServicesSection />
       <CustomerGarageSection />

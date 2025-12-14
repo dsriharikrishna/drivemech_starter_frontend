@@ -21,6 +21,7 @@ import DialogHeader from "@/components/modals/DialogHeader";
 import TowInvoice from "./TowInvoice";
 import TowDriverReview from "./TowDriverReview";
 import TowComplaint from "./TowComplaint";
+import DriverDetailsCard from "./DriverDetailsCard";
 
 // Success screens
 
@@ -129,37 +130,17 @@ export default function TowingOrderDetails({ id }: { id: string }) {
 
       {/* RIGHT SIDEBAR */}
       <RightLayout>
-        <div className="flex flex-col gap-4 p-4">
+        <div className="flex flex-col gap-4">
 
           {/* DRIVER DETAILS */}
-          <div className="border border-gray-200 rounded-xl p-5 bg-white">
-            <p className="text-sm font-semibold text-gray-800 mb-3">Driver Details</p>
-
-            <div className="flex items-center gap-3">
-              <Image
-                src="/images/driver.jpg"
-                width={55}
-                height={55}
-                alt="driver"
-                className="rounded-full object-cover"
-              />
-
-              <div className="flex-1">
-                <p className="font-bold">John Smith</p>
-                <p className="text-sm text-gray-600">⭐ 4.8 • 342 trips</p>
-                <p className="text-xs text-gray-500">Flatbed Towing</p>
-              </div>
-
-              <div className="flex gap-2">
-                <button className="px-3 py-1 bg-blue-100 text-blue-600 rounded-lg text-sm">
-                  Chat
-                </button>
-                <button className="px-3 py-1 bg-orange-100 text-orange-600 rounded-lg text-sm">
-                  Call
-                </button>
-              </div>
-            </div>
-          </div>
+          <DriverDetailsCard
+            name="John Smith"
+            rating={4.8}
+            trips={342}
+            vehicleType="Flatbed Towing"
+            onChat={() => console.log("Chat with driver")}
+            onCall={() => console.log("Call driver")}
+          />
 
           {/* PAYMENT SUMMARY */}
           <div className="border border-gray-200 rounded-xl p-5 bg-white">
@@ -252,7 +233,7 @@ export default function TowingOrderDetails({ id }: { id: string }) {
         <DialogBody className="p-4">
           <DialogHeader title="Thank You!" onClose={() => setIsReviewSubmitted(false)} />
           <ThankYouReview
-            rating={4} 
+            rating={4}
             serviceName="Towing Service"
             onDone={() => setIsReviewSubmitted(false)}
             onClose={() => setIsReviewSubmitted(false)}

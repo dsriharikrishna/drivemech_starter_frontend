@@ -1,150 +1,144 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import Image from "next/image";
+import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
-import PhoneInput from "../forms/PhoneInput";
 import { makes, models, states } from "../../data/vehicle";
-
-type VehicleSearchProps = {
-    selectedMake: string;
-    setSelectedMake: (make: string) => void;
-    selectedModel: string;
-    setSelectedModel: (model: string) => void;
-};
-
-export default function VehicleSearch({
-    selectedMake,
+import { useAppDispatch, useAppSelector } from "@/store/store";
+import {
     setSelectedMake,
-    selectedModel,
     setSelectedModel,
-}: VehicleSearchProps) {
+    setSelectedState,
+    setSelectedRego,
+    setSelectedPostcode,
+    selectSelectedMake,
+    selectSelectedModel,
+    selectSelectedState,
+    selectSelectedRego,
+    selectSelectedPostcode
+} from "@/store/slices/helpers/helperSlice";
+import StateRegoInput from "./StateRegoInput";
+import SearchableDropdown from "./SearchableDropdown";
+import PostcodeInput from "./PostcodeInput";
 
-    const { register, watch, setValue, formState: { errors } } = useFormContext();
+export default function VehicleSearch() {
+    const dispatch = useAppDispatch();
 
-    const [state, setState] = useState("AP");
-    const postcodeValue = watch("postcode");
-    const makeValue = watch("make");
-    const modelValue = watch("model");
+    // Get all values from Redux
+    const selectedMake = useAppSelector(selectSelectedMake);
+    const selectedModel = useAppSelector(selectSelectedModel);
+    const selectedState = useAppSelector(selectSelectedState);
+    const selectedRego = useAppSelector(selectSelectedRego);
+    const selectedPostcode = useAppSelector(selectSelectedPostcode);
+
+    const { register, setValue, watch, formState: { errors } } = useFormContext();
+
+    // Watch form values
+    const watchedState = watch("state");
+    const watchedRego = watch("rego");
+    const watchedMake = watch("make");
+    const watchedModel = watch("model");
+    const watchedPostcode = watch("postcode");
+
+    // Sync Redux state with form values on mount
+    useEffect(() => {
+        setValue("state", selectedState);
+        setValue("rego", selectedRego);
+        setValue("make", selectedMake);
+        setValue("model", selectedModel);
+        setValue("postcode", selectedPostcode);
+    }, []);
+
+    // Sync form values back to Redux when they change
+    useEffect(() => {
+        if (watchedState !== undefined && watchedState !== selectedState) {
+            dispatch(setSelectedState(watchedState));
+        }
+    }, [watchedState, dispatch]);
 
     useEffect(() => {
-        if (makeValue) {
-            setSelectedMake(makeValue);
+        if (watchedRego !== undefined && watchedRego !== selectedRego) {
+            dispatch(setSelectedRego(watchedRego));
         }
-    }, [makeValue]);
+    }, [watchedRego, dispatch]);
 
     useEffect(() => {
-        if (modelValue) {
-            setSelectedModel(modelValue);
+        if (watchedMake !== undefined && watchedMake !== selectedMake) {
+            dispatch(setSelectedMake(watchedMake));
         }
-    }, [modelValue]);
+    }, [watchedMake, dispatch]);
 
-    const handleStateChange = (value: string) => {
-        setState(value);
-        setValue("state", value);
-    };
+    useEffect(() => {
+        if (watchedModel !== undefined && watchedModel !== selectedModel) {
+            dispatch(setSelectedModel(watchedModel));
+        }
+    }, [watchedModel, dispatch]);
+
+    useEffect(() => {
+        if (watchedPostcode !== undefined && watchedPostcode !== selectedPostcode) {
+            dispatch(setSelectedPostcode(watchedPostcode));
+        }
+    }, [watchedPostcode, dispatch]);
 
     return (
-        <div className="relative w-full mx-auto max-w-7xl px-4 py-6 sm:px-5 lg:px-6 bg-white rounded-[20px] shadow-[0_4px_20px_rgba(0,0,0,0.06)] flex flex-col gap-4">
-
+        <div className="relative w-full mx-auto max-w-7xl bg-white rounded-2xl shadow-lg p-4 sm:p-6">
             {/* FLEX CONTAINER FOR INPUT FIELDS */}
-            <div className="grid grid-cols-1 md:grid-cols-5 gap-4 w-full items-end">
-
-                {/* STATE REGO */}
-                <div className="flex flex-col gap-2">
-                    <label className="block text-[14px] font-semibold text-gray-800">State Rego</label>
-                    <div className="flex gap-2 w-full">
-                        <PhoneInput
-                            name="state"
-                            label=""
-                            countryOptions={states.map(state => ({
-                                code: state.id,
-                                label: state.name,
-                                iso: `IN-${state.id}`
-                            }))}
-                            value={state}
-                            onChange={handleStateChange}
+            <div className="flex flex-col gap-3 w-full">
+                {/* First Row: State+Rego and Make on mobile, all inputs on desktop */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+                    {/* STATE + REGO COMBINED */}
+                    <div className="w-full lg:col-span-1">
+                        <StateRegoInput
+                            stateValue={watchedState || ""}
+                            regoValue={watchedRego || ""}
+                            onStateChange={(value) => setValue("state", value)}
+                            onRegoChange={(value) => setValue("rego", value)}
+                            states={states}
+                            register={register}
                         />
                     </div>
-                    {errors.rego && (
-                        <p className="text-red-500 text-xs mt-1">{errors.rego.message as string}</p>
-                    )}
-                </div>
 
-                {/* MAKE */}
-                <div className="flex flex-col gap-2">
-                    <label className="block text-[14px] font-semibold text-gray-800">Make</label>
-                    <select
-                        className="h-[40px] rounded-lg border-2 border-gray-200 text-gray-700 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-0 focus:border-orange-500 transition-all duration-200 w-full hover:border-gray-300"
-                        {...register("make", {
-                            required: "Make is required",
-                        })}
-                        value={selectedMake}
-                    >
-                        <option value="">Toyota, BMW</option>
-                        {makes.map((make) => (
-                            <option key={make.id} value={make.id} className="text-gray-700 border-0 focus:ring-0">
-                                {make.name}
-                            </option>
-                        ))}
-                    </select>
-                    {errors.make && (
-                        <p className="text-red-500 text-xs mt-1">{errors.make.message as string}</p>
-                    )}
-                </div>
+                    {/* MAKE */}
+                    <div className="w-full lg:col-span-1">
+                        <SearchableDropdown
+                            label="Make"
+                            placeholder="e.g., Toyota, BMW"
+                            value={watchedMake || ""}
+                            onChange={(value) => setValue("make", value)}
+                            options={makes}
+                            register={register}
+                            fieldName="make"
+                            required={true}
+                        />
+                    </div>
 
-                {/* MODEL */}
-                <div className="flex flex-col gap-2">
-                    <label className="block text-[14px] font-semibold text-gray-800">Model</label>
-                    <select
-                        className="h-[40px] rounded-lg border-2 border-gray-200 text-gray-700 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-0 focus:border-orange-500 transition-all duration-200 w-full hover:border-gray-300"
-                        {...register("model", {
-                            required: "Model is required",
-                        })}
-                        value={selectedModel}
-                    >
-                        <option value="">Select Model</option>
-                        {models.map((model) => (
-                            <option key={model.id} value={model.id}>
-                                {model.name}
-                            </option>
-                        ))}
-                    </select>
-                    {errors.model && (
-                        <p className="text-red-500 text-xs mt-1">{errors.model.message as string}</p>
-                    )}
-                </div>
+                    {/* MODEL */}
+                    <div className="w-full lg:col-span-1">
+                        <SearchableDropdown
+                            label="Model"
+                            placeholder="Select Model"
+                            value={watchedModel || ""}
+                            onChange={(value) => setValue("model", value)}
+                            options={models}
+                            register={register}
+                            fieldName="model"
+                            required={true}
+                        />
+                    </div>
 
-                {/* POSTCODE & BUTTON CONTAINER */}
-                <div className="flex flex-col gap-2 md:col-span-2">
-                    <label className="block text-[14px] font-semibold text-gray-800">Postcode or Suburb</label>
-                    <div className="flex gap-2 w-full">
-                        <div className="flex-1 relative">
-                            <input
-                                type="text"
-                                placeholder="Enter postcode or suburb"
-                                className="h-[40px] rounded-lg border-2 border-gray-200 text-gray-700 bg-white px-10 py-2 text-sm focus:outline-none focus:ring-0 focus:border-orange-500 transition-all duration-200 w-full hover:border-gray-300"
-                                {...register("postcode", {
-                                    required: "Postcode or suburb is required",
-                                    pattern: {
-                                        value: /^[0-9a-zA-Z\s]+$/,
-                                        message: "Please enter a valid postcode or suburb"
-                                    }
-                                })}
-                            />
-                            <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
-                                <Image
-                                    src="/images/MapPin.png"
-                                    alt="Map Pin"
-                                    width={18}
-                                    height={18}
-                                />
-                            </div>
-                        </div>
+                    {/* POSTCODE */}
+                    <div className="w-full lg:col-span-1">
+                        <PostcodeInput
+                            value={watchedPostcode || ""}
+                            onChange={(value) => setValue("postcode", value)}
+                            register={register}
+                        />
+                    </div>
 
+                    {/* SUBMIT BUTTON */}
+                    <div className="w-full lg:col-span-1 flex items-end">
                         <button
                             type="submit"
-                            className="bg-green-500 hover:bg-green-600 text-white text-[15px] font-medium rounded-[10px] px-4 h-[40px] flex items-center justify-center transition whitespace-nowrap min-w-[140px] flex-shrink-0"
+                            className="w-full bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg px-6 h-10 flex items-center justify-center transition-colors whitespace-nowrap shadow-sm"
                         >
                             Find My Vehicle
                         </button>
@@ -152,12 +146,29 @@ export default function VehicleSearch({
                 </div>
             </div>
 
-            <div className="flex justify-start items-center gap-2 text-gray-500 mt-2">
-                <span className="bg-blue-100 text-blue-600 text-[10px] font-semibold px-1.5 py-0.5 rounded">
-                    xyz 000
-                </span>
-                <p className="text-[13px]">Enter your registration number to quickly identify your car</p>
+            {/* Helper Text */}
+            <div className="flex items-center gap-2 mt-3">
+                <img
+                    src="/images/license-plate-icon.png"
+                    alt="License Plate"
+                    className="w-12 h-auto"
+                />
+                <p className="text-xs text-gray-600 leading-relaxed">Enter your registration number to quickly identify your car</p>
             </div>
+
+            {/* Validation Errors */}
+            {Object.keys(errors).length > 0 && (
+                <div className="mt-3 p-3 bg-red-50 border border-red-200 rounded-lg">
+                    <p className="text-sm font-semibold text-red-800 mb-2">Please fix the following errors:</p>
+                    <ul className="list-disc list-inside space-y-1">
+                        {errors.state && <li className="text-sm text-red-600">{errors.state.message as string}</li>}
+                        {errors.rego && <li className="text-sm text-red-600">{errors.rego.message as string}</li>}
+                        {errors.make && <li className="text-sm text-red-600">{errors.make.message as string}</li>}
+                        {errors.model && <li className="text-sm text-red-600">{errors.model.message as string}</li>}
+                        {errors.postcode && <li className="text-sm text-red-600">{errors.postcode.message as string}</li>}
+                    </ul>
+                </div>
+            )}
         </div>
     );
 }

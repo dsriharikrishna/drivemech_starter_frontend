@@ -1,41 +1,38 @@
 "use client";
 import { FormProvider, useForm } from "react-hook-form";
-import { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
 import VehicleSearch from "./VehicleSearch";
+import { useAppSelector } from "@/store/store";
+import {
+    selectSelectedMake,
+    selectSelectedModel,
+    selectSelectedState,
+    selectSelectedRego,
+    selectSelectedPostcode
+} from "@/store/slices/helpers/helperSlice";
+import { vehicleSearchSchema, VehicleSearchFormData } from "@/schemas/vehicleSearchSchema";
 
-interface FormData {
-    state: string;
-    rego: string;
-    make: string;
-    model: string;
-    postcode: string;
-}
+export default function HeroSection() {
+    const selectedMake = useAppSelector(selectSelectedMake);
+    const selectedModel = useAppSelector(selectSelectedModel);
+    const selectedState = useAppSelector(selectSelectedState);
+    const selectedRego = useAppSelector(selectSelectedRego);
+    const selectedPostcode = useAppSelector(selectSelectedPostcode);
 
-interface HeroSectionProps {
-    selectedMake: string;
-    setSelectedMake: (make: string) => void;
-    selectedModel: string;
-    setSelectedModel: (model: string) => void;
-}
-
-export default function HeroSection({
-    selectedMake,
-    setSelectedMake,
-    selectedModel,
-    setSelectedModel,
-}: HeroSectionProps) {
-    const methods = useForm<FormData>({
+    const methods = useForm<VehicleSearchFormData>({
+        resolver: zodResolver(vehicleSearchSchema),
         defaultValues: {
-            state: "AP",
-            rego: "MP 99 BU 0007",
+            state: selectedState,
+            rego: selectedRego,
             make: selectedMake,
             model: selectedModel,
-            postcode: "",
+            postcode: selectedPostcode,
         },
         mode: "onChange",
     });
 
-    const onSubmit = (data: FormData) => {
+    const onSubmit = (data: VehicleSearchFormData) => {
+        console.log("Form submitted:", data);
         // Handle form submission here
     };
 
@@ -62,12 +59,7 @@ export default function HeroSection({
 
                         {/* Vehicle Search Box */}
                         <div className="w-full">
-                            <VehicleSearch
-                                selectedMake={selectedMake}
-                                setSelectedMake={setSelectedMake}
-                                selectedModel={selectedModel}
-                                setSelectedModel={setSelectedModel}
-                            />
+                            <VehicleSearch />
                         </div>
                     </div>
                 </section>
