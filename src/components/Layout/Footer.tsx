@@ -92,12 +92,12 @@ export default function Footer() {
             {/* Logo and Tagline */}
             <div>
               <div className="flex items-center gap-2 mb-3">
-                <Image
-                  src="/images/logo.png"
+                <img
+                  src="/images/DriveMechLogo.png"
                   alt="DriveMech Logo"
                   width={120}
-                  height={40}
-                  className="h-10 w-auto"
+                  height={60}
+                  className="w-auto bg-white rounded-md"
                 />
               </div>
               <p className="text-gray-400 text-sm leading-relaxed">
