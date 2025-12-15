@@ -50,50 +50,50 @@ export default function MechanicCard({
 }: Props) {
   return (
     <div
-      className={`bg-white border shadow-sm rounded-2xl p-6 transition-all 
+      className={`bg-white border shadow-sm rounded-2xl p-5 transition-all 
         ${isActive ? "border-orange-500 ring-2 ring-orange-200" : "border-gray-200"}
       `}
     >
       {/* ===================== MAIN FLEX LAYOUT ===================== */}
-      <div className="flex flex-col lg:flex-row gap-6">
+      <div className="flex flex-col lg:flex-row gap-5">
 
         {/* ===================== LEFT SECTION (~35%) ===================== */}
-        <div className="flex-[0.35] flex flex-col gap-4">
+        <div className="flex-[0.35] flex flex-col gap-3">
           {/* Logo and Header Info */}
-          <div className="flex items-start gap-4">
-            <div className="bg-white border border-gray-200 rounded-xl p-3 shrink-0">
+          <div className="flex items-start gap-3">
+            <div className="bg-white border border-gray-200 rounded-xl shrink-0">
               <Image
                 src={"/images/workshop/WorkshopGarage.png"}
                 alt={name}
-                width={100}
-                height={100}
-                className="object-contain"
+                width={120}
+                height={120}
+                className="object-contain rounded-xl"
               />
             </div>
 
             <div className="flex-1">
-              <h2 className="text-2xl font-bold text-gray-900 mb-1">{name}</h2>
+              <h2 className="text-lg font-bold text-gray-900 mb-1">{name}</h2>
 
-              <div className="flex items-center gap-1.5">
-                <span className="text-lg font-semibold">{ratings}</span>
-                <Star size={14} className="fill-star text-star" />
-                <span className="text-sm text-gray-400">({reviews} Reviews)</span>
+              <div className="flex items-center gap-1">
+                <span className="text-base font-semibold">{ratings}</span>
+                <Star size={16} className="fill-yellow-400 text-yellow-400" />
+                <span className="text-xs text-gray-500">({reviews} Reviews)</span>
               </div>
 
-              <div className="flex items-start gap-1.5 mt-2 text-xs text-gray-500">
-                <MapPin size={14} className="mt-0.5 shrink-0" />
+              <div className="flex items-start gap-1 mt-1.5 text-xs text-gray-500">
+                <MapPin size={12} className="mt-0.5 shrink-0" />
                 <span>Phase 2, NSL Colony, Hyderabad, Telangana 502032</span>
               </div>
 
-              <div className="flex items-center gap-2 mt-2">
-                <span className="text-sm text-gray-600">{distance}</span>
-                <button className="flex items-center gap-1 text-blue-600 text-xs font-medium border border-blue-600 px-2.5 py-1 rounded-md hover:bg-blue-50 transition">
-                  <Navigation size={12} />
+              <div className="flex items-center gap-2 mt-1.5">
+                <span className="text-xs text-gray-600">{distance}</span>
+                <button className="flex items-center gap-1 text-blue-600 text-xs font-medium border border-blue-500 px-2 py-0.5 rounded-md hover:bg-blue-50 transition">
+                  <Navigation size={10} />
                   Get Directions
                 </button>
               </div>
 
-              <div className="mt-1.5">
+              <div className="mt-1">
                 <span className="text-green-600 font-medium text-xs">{status}</span>
               </div>
             </div>
@@ -101,20 +101,20 @@ export default function MechanicCard({
 
           {/* What we do */}
           <div>
-            <h3 className="font-bold text-base text-gray-900 mb-3">What we do</h3>
-            <div className="grid grid-cols-2 gap-3">
+            <h3 className="font-semibold text-sm text-gray-900 mb-2">What we do</h3>
+            <div className="grid grid-cols-2 gap-2">
               {tags.map((tag) => {
                 const iconPath = serviceIcons[tag] || "/images/workshop/PeriodicService.png";
                 return (
                   <div
                     key={tag}
-                    className="flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-lg px-2.5 py-2"
+                    className="flex items-center gap-1.5 bg-gray-50 border border-gray-200 rounded-lg px-2 py-1.5"
                   >
                     <Image
                       src={iconPath}
                       alt={tag}
-                      width={20}
-                      height={20}
+                      width={16}
+                      height={16}
                       className="object-contain"
                     />
                     <span className="text-xs text-gray-700">{tag}</span>
@@ -126,21 +126,21 @@ export default function MechanicCard({
         </div>
 
         {/* ===================== RIGHT SECTION (~65%) ===================== */}
-        <div className="flex-[0.65] grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="flex-[0.65] grid grid-cols-1 md:grid-cols-2 gap-3">
 
           {/* Services Requiring Inspection */}
-          <div className="bg-inspection border border-inspection rounded-xl p-4 flex flex-col">
-            <h3 className="font-bold text-sm text-inspection">
+          <div className="bg-orange-50 border border-orange-200 rounded-xl p-3 flex flex-col">
+            <h3 className="font-semibold text-sm text-orange-700">
               Services Requiring Inspection
             </h3>
 
-            <p className="text-[11px] text-gray-600 mt-1 mb-3">
+            <p className="text-xs text-gray-600 mt-1 mb-2">
               Pricing for these services is available at the workshop.
             </p>
 
-            <ul className="text-[13px] space-y-1.5 flex-1">
+            <ul className="text-xs space-y-1 flex-1">
               {highlights.map((h, i) => (
-                <li key={i} className="flex gap-2 text-gray-700">
+                <li key={i} className="flex gap-1.5 text-gray-700">
                   <span>{i + 1}.</span>
                   <span>{h}</span>
                 </li>
@@ -148,45 +148,45 @@ export default function MechanicCard({
             </ul>
 
             {highlights.length > 3 && (
-              <button className="text-blue-600 text-sm font-medium mt-2 text-left">
+              <button className="text-blue-600 text-xs font-medium mt-1.5 text-left">
                 + 3 more services
               </button>
             )}
 
-            <div className="flex justify-end mt-4">
-              <button className="bg-white border border-orange-500 text-orange-600 px-4 py-2 rounded-lg text-sm font-medium hover:bg-orange-50 transition">
+            <div className="flex justify-end mt-3">
+              <button className="bg-white border border-orange-500 text-orange-600 px-3 py-1.5 rounded-lg text-xs font-medium hover:bg-orange-50 transition">
                 Quote on Inspection
               </button>
             </div>
           </div>
 
           {/* Fixed Price Services */}
-          <div className="bg-fixed-price border border-fixed-price rounded-xl p-4 flex flex-col">
-            <h3 className="font-bold text-sm text-teal-900">Fixed Price Services</h3>
+          <div className="bg-teal-50 border border-teal-200 rounded-xl p-3 flex flex-col">
+            <h3 className="font-semibold text-sm text-teal-800">Fixed Price Services</h3>
 
-            <p className="text-[11px] text-gray-600 mt-1 mb-3">
+            <p className="text-xs text-gray-600 mt-1 mb-2">
               These services have fixed prices
             </p>
 
-            <div className="text-[13px] space-y-1.5 flex-1">
+            <div className="text-xs space-y-1 flex-1">
               {services.map((s, i) => (
                 <div key={i} className="flex justify-between text-gray-700">
                   <span>
                     {i + 1}. {s.title}
                   </span>
-                  <span className="font-bold">{s.price}</span>
+                  <span className="font-semibold">{s.price}</span>
                 </div>
               ))}
             </div>
 
             {services.length > 3 && (
-              <button className="text-blue-600 text-sm font-medium mt-2 text-left">
+              <button className="text-blue-600 text-xs font-medium mt-1.5 text-left">
                 + 3 more services
               </button>
             )}
 
-            <div className="flex justify-end mt-4">
-              <button className="bg-teal-600 text-white px-6 py-2 rounded-lg text-sm font-medium hover:bg-teal-700 transition">
+            <div className="flex justify-end mt-3">
+              <button className="bg-teal-600 text-white px-4 py-1.5 rounded-lg text-xs font-semibold hover:bg-teal-700 transition">
                 $ 4999/-
               </button>
             </div>
@@ -195,11 +195,11 @@ export default function MechanicCard({
       </div>
 
       {/* ===================== BOOK NOW BUTTON ===================== */}
-      <div className="mt-6">
+      <div className="mt-4">
         <Button
           onClick={() => onBookNow(name, id)}
           variant="primary"
-          className="w-full rounded-xl py-3.5 text-base font-bold"
+          className="w-full rounded-xl py-3 text-sm font-semibold"
         >
           Book Now
         </Button>
