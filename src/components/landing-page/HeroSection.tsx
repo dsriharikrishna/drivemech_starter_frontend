@@ -49,7 +49,7 @@ export default function HeroSection() {
                     <div className="relative flex flex-col justify-center items-center h-full text-center w-full max-w-7xl mx-auto px-4">
                         <h1 className="font-manrope font-extrabold text-3xl md:text-[44px] leading-tight md:leading-[44px] text-center mb-4">
                             Your Vehicle's{" "}
-                            <span className="text-orange-500">Personal Mechanic</span>, <br />
+                            <span className="text-orange-500">Personal Mechanic,</span> <br />
                             Anytime, Anywhere
                         </h1>
 
