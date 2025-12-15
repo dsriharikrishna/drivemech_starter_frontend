@@ -58,7 +58,7 @@ export default function AddAddressForm({
 
   function submit(values: AddAddressValues) {
     onSave?.(values);
-      }
+  }
 
   const typeButtons = [
     { id: "home", label: "Home", icon: <House size={18} /> },
@@ -85,8 +85,8 @@ export default function AddAddressForm({
         </div>
 
         {/* ADDRESS TYPE */}
-        <CustomCard className="p-4">
-          <Typography weight="semibold">Address Type *</Typography>
+        <CustomCard className="p-4 border border-gray-200">
+          <Typography weight="semibold" className="text-sm">Address Type *</Typography>
 
           <div className="flex items-center gap-3 mt-3">
             <Controller
@@ -102,13 +102,13 @@ export default function AddAddressForm({
                         field.onChange(t.id as AddAddressValues["type"]);
                         setValue("label", t.label);
                       }}
-                      className={`px-4 py-2 rounded-2xl border flex items-center gap-3 text-sm transition ${field.value === t.id
-                        ? "bg-orange-500 text-white border-orange-500"
+                      className={`px-4 py-3 rounded-xl border flex flex-col items-center gap-2 text-sm transition ${field.value === t.id
+                        ? "bg-primary-500 text-white border-primary-500"
                         : "border-gray-300 hover:bg-gray-50"
                         }`}
                     >
                       {t.icon}
-                      {t.label}
+                      <span className="text-xs font-medium">{t.label}</span>
                     </button>
                   ))}
                 </>
@@ -118,10 +118,10 @@ export default function AddAddressForm({
         </CustomCard>
 
         {/* CONTACT INFORMATION */}
-        <CustomCard className="p-4">
-          <Typography weight="semibold">Contact Information</Typography>
+        <CustomCard className="p-4 border border-gray-200">
+          <Typography weight="semibold" className="text-base">Contact Information</Typography>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
             <Controller
               name="fullName"
               control={control}
@@ -141,15 +141,15 @@ export default function AddAddressForm({
         </CustomCard>
 
         {/* ADDRESS DETAILS */}
-        <CustomCard className="p-4">
-          <Typography weight="semibold">Address Details</Typography>
+        <CustomCard className="p-4 border border-gray-200">
+          <Typography weight="semibold" className="text-base">Address Details</Typography>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
             <Controller
               name="address1"
               control={control}
               render={({ field }) => (
-                <CommonTextInput {...field} label="Address Line 1*" placeholder="123 Main St" />
+                <CommonTextInput {...field} label="Address Line 1*" placeholder="123 Main Street" />
               )}
             />
 
@@ -157,7 +157,7 @@ export default function AddAddressForm({
               name="address2"
               control={control}
               render={({ field }) => (
-                <CommonTextInput {...field} label="Address Line 2" placeholder="Apartment, Suite" />
+                <CommonTextInput {...field} label="Address Line 2 (Optional)" placeholder="Apartment 4B" />
               )}
             />
 
@@ -165,7 +165,7 @@ export default function AddAddressForm({
               name="landmark"
               control={control}
               render={({ field }) => (
-                <CommonTextInput {...field} label="Landmark" placeholder="Near Central Park" />
+                <CommonTextInput {...field} label="Landmark (Optional)" placeholder="Near Central Park" />
               )}
             />
 
@@ -180,7 +180,7 @@ export default function AddAddressForm({
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
             <div className="mt-[-6px]">
-              <label className="text-sm font-semibold">State</label>
+              <label className="text-sm font-semibold">State*</label>
               <Controller
                 name="state"
                 control={control}
@@ -189,12 +189,12 @@ export default function AddAddressForm({
                     items={states}
                     selectedItem={states.find(item => item.name === field.value) || null}
                     onSelect={(item) => field.onChange(item.name)}
-                    placeholder="Select State*"
+                    placeholder="Select State"
                   />
                 )}
               />
             </div>
-            
+
             <Controller
               name="postcode"
               control={control}
@@ -205,13 +205,44 @@ export default function AddAddressForm({
           </div>
         </CustomCard>
 
+        {/* QUICK LOCATION OPTIONS */}
+        <div className="p-4 bg-blue-50 border border-blue-200 rounded-xl">
+          <div className="flex items-center gap-2 mb-3">
+            <MapPin size={16} weight="fill" className="text-red-500" />
+            <Typography weight="semibold" className="text-sm">Quick Location Options</Typography>
+          </div>
+
+          <div className="space-y-2">
+            <button
+              type="button"
+              className="w-full flex items-center gap-2 px-4 py-2.5 bg-white border border-gray-300 rounded-lg text-sm text-gray-700 hover:bg-gray-50 transition"
+            >
+              <svg className="w-4 h-4 text-orange-500" viewBox="0 0 24 24" fill="currentColor">
+                <circle cx="12" cy="12" r="3" />
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" opacity="0.3" />
+              </svg>
+              Use Current Location
+            </button>
+
+            <button
+              type="button"
+              className="w-full flex items-center gap-2 px-4 py-2.5 bg-white border border-gray-300 rounded-lg text-sm text-gray-700 hover:bg-gray-50 transition"
+            >
+              <svg className="w-4 h-4 text-orange-500" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+              </svg>
+              Select from Map
+            </button>
+          </div>
+        </div>
+
         {/* DEFAULT SWITCH */}
-        <CustomCard className="p-4 bg-orange-50">
+        <div className="p-4 bg-orange-50 border border-orange-200 rounded-xl">
           <div className="flex items-center justify-between">
             <div>
-              <p className="font-semibold">Set as Default Address</p>
-              <Typography variant="small" color="muted">
-                This address will be your primary delivery location
+              <p className="font-semibold text-sm">Set as Default Address</p>
+              <Typography variant="small" color="muted" className="text-xs mt-0.5">
+                This address will be auto-selected for deliveries
               </Typography>
             </div>
 
@@ -223,15 +254,11 @@ export default function AddAddressForm({
               )}
             />
           </div>
-        </CustomCard>
+        </div>
 
         {/* ACTION BUTTONS */}
-        <div className="flex justify-end gap-3">
-          <Button variant="outline" onClick={() => onCancel?.()}>
-            Cancel
-          </Button>
-
-          <Button type="submit" variant="gradient">
+        <div className="flex justify-center pt-2">
+          <Button type="submit" variant="gradient" className="px-8">
             {mode === "edit" ? "Update Address" : "Save Address"}
           </Button>
         </div>

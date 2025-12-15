@@ -90,7 +90,7 @@ export default function ProfileSidebar() {
       </ul>
 
       {/* Divider */}
-      <div className="border-t my-4" />
+      <div className="border-t-2 border-gray-200 my-4" />
 
       {/* Logout button */}
       <button

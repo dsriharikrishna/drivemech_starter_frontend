@@ -94,7 +94,7 @@ export const WorkShopLayout = () => {
           />
           <TopRecommendedWorkshops />
 
-          <div className="space-y-5 flex flex-col gap-2">
+          <div className="space-y-4 flex flex-col">
             {workshops.map((workshop) => (
               <MechanicCard
                 key={workshop.id}
