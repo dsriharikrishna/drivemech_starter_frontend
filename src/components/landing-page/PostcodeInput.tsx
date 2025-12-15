@@ -16,7 +16,7 @@ export default function PostcodeInput({ value, onChange, register }: PostcodeInp
 
     return (
         <div className="flex-1 flex flex-col gap-1.5">
-            <label htmlFor="postcode" className="block text-sm font-semibold text-gray-900">
+            <label htmlFor="postcode" className="block text-sm font-semibold text-gray-900 text-left">
                 Postcode or Suburb
             </label>
 
@@ -33,9 +33,7 @@ export default function PostcodeInput({ value, onChange, register }: PostcodeInp
                 />
 
                 <div className="absolute right-2.5 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="#FF6B35" />
-                    </svg>
+                    <img src="/svgs/location-icon.svg" alt="Location" className="w-4 h-4" />
                 </div>
             </div>
 

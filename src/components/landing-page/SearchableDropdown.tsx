@@ -59,7 +59,7 @@ export default function SearchableDropdown({
 
     return (
         <div className="flex-1 flex flex-col gap-1.5" ref={dropdownRef}>
-            <label className="block text-sm font-semibold text-gray-900">{label}</label>
+            <label className="block text-sm font-semibold text-gray-900 text-left">{label}</label>
 
             {/* Hidden input for form registration */}
             <input

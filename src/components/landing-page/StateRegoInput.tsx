@@ -30,7 +30,7 @@ export default function StateRegoInput({
 
     return (
         <div className="flex flex-col gap-1.5">
-            <label className="block text-sm font-semibold text-gray-900">
+            <label className="block text-sm font-semibold text-gray-900 text-left">
                 State & Rego
             </label>
 

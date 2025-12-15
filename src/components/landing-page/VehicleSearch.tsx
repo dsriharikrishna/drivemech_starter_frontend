@@ -138,7 +138,7 @@ export default function VehicleSearch() {
                     <div className="w-full lg:col-span-1 flex items-end">
                         <button
                             type="submit"
-                            className="w-full bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg px-6 h-10 flex items-center justify-center transition-colors whitespace-nowrap shadow-sm"
+                            className="w-full bg-primary-500 cursor-pointer hover:bg-primary-600 text-white text-sm font-semibold rounded-lg px-6 h-10 flex items-center justify-center transition-colors whitespace-nowrap shadow-sm"
                         >
                             Find My Vehicle
                         </button>
