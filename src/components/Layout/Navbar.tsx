@@ -59,12 +59,10 @@ export default function Navbar() {
         {/* --- Left: Logo and Tagline --- */}
         <div className="flex items-center space-x-3">
           <Link href="/" className="flex items-center">
-            <Image
+            <img
               src="/images/DriveMechLogo.png"
               alt="DriveMech Logo"
-              width={160}
-              height={90}
-              priority
+              className="w-[160px] h-[45px]"
             />
           </Link>
           {/* --- Center: Location --- */}

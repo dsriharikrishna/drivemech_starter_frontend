@@ -346,8 +346,6 @@ export default function FileClaimLayout({ policyId }: { policyId: string }) {
                 />
               </div>
             </DialogBody>
-
-
           </Dialog>
         </div>
       </div>

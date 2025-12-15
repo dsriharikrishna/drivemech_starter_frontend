@@ -4,9 +4,6 @@ import {
   ArrowLeft,
   MapPin,
   Navigation,
-  FileDown,
-  MessageSquare,
-  Star,
   CheckCircle,
 } from "lucide-react";
 
@@ -170,29 +167,31 @@ export default function TowingOrderDetails({ id }: { id: string }) {
           </div>
 
           {/* ACTION BUTTONS */}
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-3 gap-2">
             <button
               onClick={() => setIsInvoice(true)}
-              className="border border-gray-200 rounded-xl py-3 flex flex-col items-center hover:bg-gray-50"
+              className="border border-gray-200 rounded-xl py-2 flex flex-col gap-0.5 items-center hover:bg-gray-50"
             >
-              <FileDown size={20} />
-              <span className="text-sm">Invoice</span>
+              <img src="/svgs/download-icon.svg" alt="invoice" />
+              <span className="text-xs">Invoice</span>
             </button>
 
             <button
               onClick={() => setIsReview(true)}
-              className="border border-gray-200 rounded-xl py-3 flex flex-col items-center hover:bg-gray-50"
+              className="border border-gray-200 rounded-xl py-2 flex flex-col gap-0.5 items-center hover:bg-gray-50"
             >
-              <Star size={20} />
-              <span className="text-sm">Rate Driver</span>
+             <img src="/svgs/like-icon.svg" alt="rate-driver" />
+              <span className="text-xs">Rate Driver</span>
             </button>
 
             <button
               onClick={() => setIsComplaint(true)}
-              className="border border-gray-200 rounded-xl py-3 flex flex-col items-center hover:bg-gray-50"
+              className="border border-gray-200 rounded-xl py-2 flex flex-col gap-0.5 items-center hover:bg-gray-50"
             >
-              <MessageSquare size={20} />
-              <span className="text-sm">Complaint</span>
+              <svg className="w-[20px] h-[20px]" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              <span className="text-xs">Complaint</span>
             </button>
           </div>
 

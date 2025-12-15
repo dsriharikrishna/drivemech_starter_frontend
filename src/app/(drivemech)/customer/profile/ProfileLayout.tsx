@@ -11,7 +11,7 @@ import CommonTextArea from "@/components/forms/CommonTextArea";
 import PhoneInput from "@/components/forms/PhoneInput";
 import Button from "@/components/ui/Button";
 import ModalDropdown from "@/components/ui/DropDown";
-import { Download } from "phosphor-react";
+import { Download, User } from "phosphor-react";
 
 // ✅ Import Zod schemas and helpers
 import {
@@ -181,13 +181,16 @@ export default function ProfileLayout() {
                                         className="w-20 h-20 rounded-full object-cover"
                                     />
                                 ) : (
-                                    <div className="w-20 h-20 bg-orange-500 text-white rounded-full flex items-center justify-center text-2xl font-bold">
-                                        {getInitials()}
+                                    <div className="w-20 h-20 bg-primary-500 rounded-full flex items-center justify-center">
+                                        <User size={40} weight="fill" className="text-white" />
                                     </div>
                                 )}
 
-                                <label htmlFor="avatar-upload" className="absolute bottom-1 right-1 bg-white rounded-full p-1 shadow cursor-pointer hover:bg-gray-50">
-                                    <Image src="/icons/camera.svg" alt="camera" width={18} height={18} />
+                                <label htmlFor="avatar-upload" className="absolute bottom-0 right-0 bg-primary-500 rounded-full p-1.5 shadow cursor-pointer hover:bg-primary-600">
+                                    <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M23 19C23 19.5304 22.7893 20.0391 22.4142 20.4142C22.0391 20.7893 21.5304 21 21 21H3C2.46957 21 1.96086 20.7893 1.58579 20.4142C1.21071 20.0391 1 19.5304 1 19V8C1 7.46957 1.21071 6.96086 1.58579 6.58579C1.96086 6.21071 2.46957 6 3 6H7L9 3H15L17 6H21C21.5304 6 22.0391 6.21071 22.4142 6.58579C22.7893 6.96086 23 7.46957 23 8V19Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                        <path d="M12 17C14.2091 17 16 15.2091 16 13C16 10.7909 14.2091 9 12 9C9.79086 9 8 10.7909 8 13C8 15.2091 9.79086 17 12 17Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                    </svg>
                                 </label>
                                 <input
                                     id="avatar-upload"
@@ -199,15 +202,20 @@ export default function ProfileLayout() {
                             </div>
 
                             <div className="text-sm text-gray-500">
-                                <p>Upload your photo</p>
-                                <p className="text-xs mt-1">JPG, PNG, or GIF. Max size 5MB</p>
+                                <p className="font-medium text-gray-700">Upload your photo</p>
+                                <p className="text-xs mt-1 text-gray-500">JPG, PNG or GIF. Max size 5MB</p>
+
+                                <label htmlFor="avatar-upload" className="mt-3 inline-flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 transition">
+                                    <Download size={18} className="text-gray-600" />
+                                    <span className="text-sm font-medium text-gray-700">Choose File</span>
+                                </label>
 
                                 {avatarFile && (
                                     <Button
                                         type="button"
                                         variant="primary"
                                         size="sm"
-                                        className="mt-2"
+                                        className="mt-2 ml-2"
                                         onClick={handleAvatarUpload}
                                         disabled={profileLoading === "pending"}
                                     >
@@ -294,44 +302,6 @@ export default function ProfileLayout() {
                                         required={true}
                                     />
                                 )}
-                            />
-                        </div>
-
-                        {/* Address Information */}
-                        <h2 className="text-lg font-semibold mt-10">Address Information</h2>
-
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
-                            <CommonTextInput
-                                name="address"
-                                label="Street Address"
-                                placeholder="123 Park Avenue"
-                            />
-
-                            <CommonTextInput
-                                name="city"
-                                label="City"
-                                placeholder="Mumbai"
-                            />
-
-                            <CommonTextInput
-                                name="state"
-                                label="State"
-                                placeholder="Maharashtra"
-                            />
-
-                            <CommonTextInput
-                                name="pincode"
-                                label="Pincode"
-                                placeholder="400001"
-                            />
-                        </div>
-
-                        <div className="mt-6">
-                            <CommonTextArea
-                                name="addressNotes"
-                                label="Address Notes (Optional)"
-                                placeholder="Landmark, delivery instructions, etc."
-                                rows={3}
                             />
                         </div>
 

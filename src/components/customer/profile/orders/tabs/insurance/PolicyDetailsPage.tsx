@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { ArrowLeft, Download, ShieldCheck } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import Divider from "@/components/ui/Divider";
@@ -84,28 +84,28 @@ export default function PolicyDetailsPage({ id }: PolicyDetailsPageProps) {
             {/* FILE CLAIM */}
             <button
               onClick={() => navigateTo('file-claim')}
-              className="border border-border p-3 rounded-xl flex flex-col items-center hover:bg-gray-50"
+              className="border border-border p-1 rounded-xl flex flex-col items-center hover:bg-gray-50"
             >
-              🧾
-              <span className="text-sm mt-1">File Claim</span>
+              <img src="/svgs/shield-icon.svg" alt="File Claim" className="w-[18px] h-[18px]" />
+              <span className="text-xs mt-1">File Claim</span>
             </button>
 
             {/* ADD NOMINEE */}
             <button
               onClick={() => navigateTo('add-nominee')}
-              className="border border-border p-3 rounded-xl flex flex-col items-center hover:bg-gray-50"
+              className="border border-border p-1 rounded-xl flex flex-col items-center hover:bg-gray-50"
             >
-              👤+
-              <span className="text-sm mt-1">Add Nominee</span>
+              <img src="/svgs/user-icon.svg" alt="Add Nominee" className="w-[18px] h-[18px]" />
+              <span className="text-xs mt-1">Add Nominee</span>
             </button>
 
             {/* MODIFY POLICY */}
             <button
               onClick={() => navigateTo('modify-policy')}
-              className="border border-border p-3 rounded-xl flex flex-col items-center hover:bg-gray-50"
+              className="border border-border p-1 rounded-xl flex flex-col items-center hover:bg-gray-50"
             >
-              ✏️
-              <span className="text-sm mt-1">Modify Policy</span>
+              <img src="/svgs/edit-icon.svg" alt="Modify" className="w-[18px] h-[18px]" />
+              <span className="text-xs mt-1">Modify Policy</span>
             </button>
           </div>
 
@@ -114,13 +114,21 @@ export default function PolicyDetailsPage({ id }: PolicyDetailsPageProps) {
             className="flex items-center justify-center gap-2 w-full bg-orange-500 text-white py-3 rounded-xl mt-5"
             onClick={() => setOpenRenew(true)}
           >
-            <Download size={18} />
+            <svg className="w-[18px] h-[18px] fill-white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 16L7 11L8.4 9.55L11 12.15V4H13V12.15L15.6 9.55L17 11L12 16ZM6 20C5.45 20 4.979 19.804 4.587 19.412C4.195 19.02 3.99933 18.5493 4 18V15H6V18H18V15H20V18C20 18.55 19.804 19.021 19.412 19.413C19.02 19.805 18.5493 20.0007 18 20H6Z" />
+            </svg>
             Renew Policy / Download PDF
           </button>
 
-          <div className="grid grid-cols-2 gap-3 mt-3">
-            <button className="border border-border p-3 rounded-xl hover:bg-gray-50">Reminder</button>
-            <button className="border border-border p-3 rounded-xl hover:bg-gray-50">Claims</button>
+          <div className="grid grid-cols-2 gap-2 mt-2">
+            <button className="border border-border p-1 rounded-xl hover:bg-gray-50 flex items-center justify-center gap-2">
+              <img src="/svgs/notify-icon.svg" alt="Notify" className="w-[18px] h-[18px]" />
+              Reminder
+            </button>
+            <button className="border border-border p-1 rounded-xl hover:bg-gray-50 flex items-center justify-center gap-2">
+              <img src="/svgs/claim-icon.svg" alt="Claim" className="w-[18px] h-[18px]" />
+              Claims
+            </button>
           </div>
 
           <button className="w-full bg-green-100 text-green-700 mt-4 p-3 rounded-xl text-sm font-semibold">
@@ -145,7 +153,7 @@ function PolicyInfoCard({ policy }: any) {
   return (
     <div className="border border-border rounded-xl p-5 bg-white space-y-4">
       <div className="flex items-center gap-3">
-        <Image src="/icons/shield.png" width={40} height={40} alt="insurer" />
+        <Image src="/svgs/shield-icon.svg" width={32} height={32} alt="insurer" />
 
         <div>
           <h2 className="font-semibold">{policy.insurer}</h2>
@@ -204,7 +212,7 @@ function CoverageBox() {
       <ul className="space-y-2">
         {coverages.map((c) => (
           <li key={c} className="flex items-center gap-2 text-gray-700">
-            <ShieldCheck className="text-green-600" size={18} />
+            <img src="/svgs/check-icon.svg" alt="Coverage" className="w-[18px] h-[18px]" />
             {c}
           </li>
         ))}
@@ -233,7 +241,7 @@ function StatusCard({ policy }: any) {
   return (
     <div className="rounded-xl border border-border p-5 bg-white">
       <div className="flex items-center gap-3 p-3 rounded-xl bg-green-50">
-        <ShieldCheck className="text-green-600" />
+        <img src="/svgs/check-icon.svg" alt="Shield" className="w-6 h-6" />
 
         <div>
           <p className="font-semibold text-green-700">Policy Active</p>
@@ -300,6 +308,7 @@ function RenewPolicyModal({ policy, onClose }: any) {
           className="w-full bg-orange-500 text-white py-3 rounded-xl"
           onClick={onClose}
         >
+          <img src="/svgs/download-icon.svg" alt="Download" className="w-[18px] h-[18px]" />
           Download Policy PDF
         </button>
       </div>
