@@ -34,19 +34,19 @@ export default function MySettingsLayout() {
 
     const notificationItems = [
         {
-            icon: "/svgs/notify-icon.svg",
+            icon: "/svgs/settings/notify-icon.svg",
             title: "Push Notifications",
             subtitle: "Receive app notifications",
             key: "push" as const
         },
         {
-            icon: "/svgs/mobile-icon.svg",
+            icon: "/svgs/settings/mobile-icon.svg",
             title: "SMS Notifications",
             subtitle: "Receive text messages",
             key: "sms" as const
         },
         {
-            icon: "/svgs/mail-icon.svg",
+            icon: "/svgs/settings/notify-icon.svg",
             title: "Email Notifications",
             subtitle: "Receive email updates",
             key: "email" as const
@@ -55,13 +55,13 @@ export default function MySettingsLayout() {
 
     const securityItems = [
         {
-            icon: "/svgs/user-icon.svg",
+            icon: "/svgs/settings/mobile-icon.svg",
             title: "Face ID / Biometric",
             subtitle: "Use biometric authentication",
             key: "biometric" as const
         },
         {
-            icon: "/svgs/shield-icon.svg",
+            icon: "/svgs/settings/shield-icon.svg",
             title: "Two-Factor Authentication",
             subtitle: "Add an extra layer of security",
             key: "twoFactor" as const
@@ -99,7 +99,7 @@ export default function MySettingsLayout() {
                 {/* ACCOUNT SECURITY */}
                 <SettingsSection title="Account Security">
                     <SettingActionRow
-                        icon="/svgs/edit-Icon.svg"
+                        icon="/svgs/settings/edit-Icon.svg"
                         title="Change Password"
                         subtitle="Update your account password"
                         actionLabel="Update"
@@ -121,7 +121,7 @@ export default function MySettingsLayout() {
                 {/* PRIVACY */}
                 <SettingsSection title="Privacy">
                     <SettingActionRow
-                        icon="/svgs/eye-icon.svg"
+                        icon="/svgs/settings/eye-icon.svg"
                         title="Privacy Settings"
                         actionLabel="Manage"
                     />

@@ -4,6 +4,7 @@ export interface City {
     name: string;
     icon: string;
     verifiedGarages: number;
+    states?: string[]; // Optional array of states/regions
 }
 
 export interface Country {
@@ -22,50 +23,58 @@ export const COUNTRIES: Country[] = [
             {
                 id: 'delhi-ncr',
                 name: 'Delhi NCR',
-                icon: '🏛️',
+                icon: '/svgs/cities/delhi.svg',
                 verifiedGarages: 50,
+                states: ['Delhi', 'Noida', 'Gurgaon', 'Ghaziabad', 'Faridabad'],
             },
             {
                 id: 'hyderabad',
                 name: 'Hyderabad',
-                icon: '🏛️',
+                icon: '/svgs/cities/hyderabad.svg',
                 verifiedGarages: 50,
+                states: ['Telangana', 'Secunderabad', 'Cyberabad'],
             },
             {
                 id: 'bangalore',
                 name: 'Bangalore',
-                icon: '🏛️',
+                icon: '/svgs/cities/bangalore.svg',
                 verifiedGarages: 50,
+                states: ['Karnataka', 'Whitefield', 'Electronic City', 'Koramangala'],
             },
             {
                 id: 'chennai',
                 name: 'Chennai',
-                icon: '🏛️',
+                icon: '/svgs/cities/chennai.svg',
                 verifiedGarages: 50,
+                states: ['Tamil Nadu', 'Anna Nagar', 'T Nagar', 'Velachery'],
             },
             {
                 id: 'ahmedabad',
                 name: 'Ahmedabad',
-                icon: '🏛️',
+                icon: '/svgs/cities/ahmedabad.svg',
                 verifiedGarages: 50,
+                states: ['Gujarat', 'Gandhinagar', 'Sabarmati'],
             },
             {
                 id: 'mumbai',
                 name: 'Mumbai',
-                icon: '🏛️',
+                icon: '/svgs/cities/mumbai.svg',
                 verifiedGarages: 50,
+                states: ['Maharashtra', 'Navi Mumbai', 'Thane', 'Pune'],
             },
             {
                 id: 'kochi',
                 name: 'Kochi',
-                icon: '🏛️',
+                icon: '/svgs/cities/kochi.svg',
                 verifiedGarages: 50,
+                states: ['Kerala', 'Ernakulam', 'Fort Kochi'],
             },
             {
                 id: 'kolkata',
                 name: 'Kolkata',
-                icon: '🏛️',
+                icon: '/svgs/cities/kolkata.svg',
                 verifiedGarages: 50,
+                states: ['West Bengal', 'Howrah', 'Salt Lake City'],
             },
         ],
     },

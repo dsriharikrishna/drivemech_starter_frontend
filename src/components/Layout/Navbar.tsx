@@ -30,9 +30,9 @@ export default function Navbar() {
 
   const handleNavigation = useCallback((path: string) => {
     if (path === "customer") {
-      router.replace("/auth/login");
+      router.replace("/auth/customer/login");
     } else {
-      router.replace("/workshop/auth/login")
+      router.replace("/auth/vendor/login")
     }
   }, [router])
 
@@ -45,7 +45,7 @@ export default function Navbar() {
     // Handle logout logic here
     setShowLogoutDialog(false);
     setIsLoggedIn(false);
-    router.replace("/auth/login");
+    router.replace("/auth/customer/login");
   }, [router]);
 
   return (
@@ -67,7 +67,7 @@ export default function Navbar() {
           </Link>
           {/* --- Center: Location --- */}
           <button
-            onClick={() => router.push('/customer/location')}
+            onClick={() => router.push('/location')}
             className="hidden md:flex items-center text-sm text-gray-700 hover:text-primary transition-colors"
           >
             <Image
@@ -146,7 +146,7 @@ export default function Navbar() {
               {/* Location */}
               <button
                 onClick={() => {
-                  router.push('/customer/location');
+                  router.push('/location');
                   setMobileMenuOpen(false);
                 }}
                 className="flex items-center text-sm text-gray-700 hover:text-primary transition-colors"

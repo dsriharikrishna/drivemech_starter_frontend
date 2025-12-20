@@ -158,9 +158,19 @@ export default function Footer() {
 
         {/* Bottom Copyright */}
         <div className="border-t border-gray-700 pt-6">
-          <div className="flex flex-col md:flex-row justify-between items-center text-gray-400 text-sm">
+          <div className="flex flex-col md:flex-row justify-between items-center text-gray-400 text-sm gap-4">
             <p>&copy; 2025 DriveMech. All rights reserved.</p>
             <p className="mt-2 md:mt-0">Made with <span className="text-red-500">❤️</span> for vehicle owners and garages</p>
+            <div className="flex items-center gap-2 mt-2 md:mt-0">
+              <Image
+                src="/svgs/india-flag.svg"
+                alt="India"
+                width={20}
+                height={20}
+                className="w-5 h-5"
+              />
+              <span>India</span>
+            </div>
           </div>
         </div>
       </div>

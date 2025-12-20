@@ -154,7 +154,7 @@ export function useSelectServiceData({
 
       // ✅ Save to Redux with proper structure
       const reduxData = {
-        mode: data.mode,
+        mode: data.mode as 'walkin' | 'pickup',
         date: data.date,
         time: data.time,
         personalInfo: {
@@ -186,7 +186,7 @@ export function useSelectServiceData({
   // ✅ Auto-save to Redux when data changes (removed localStorage)
   useEffect(() => {
     const reduxData = {
-      mode: data.mode,
+      mode: data.mode as 'walkin' | 'pickup',
       date: data.date,
       time: data.time,
       personalInfo: {

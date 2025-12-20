@@ -141,8 +141,8 @@ export default function OrderDetails({ id }: { id: string }) {
                             </div>
 
                             <div className="flex gap-2">
-                                <button className="p-2 bg-blue-50 rounded-full">📞</button>
-                                <button className="p-2 bg-green-50 rounded-full">💬</button>
+                                <button className="p-2 bg-blue-50 rounded-full"><img src="/svgs/direction-fill.svg" alt="phone" /></button>
+                                <button className="p-2 bg-green-50 rounded-full"><img src="/svgs/call-icon.svg" alt="chat" /></button>
                             </div>
                         </div>
                     </div>
@@ -194,7 +194,7 @@ export default function OrderDetails({ id }: { id: string }) {
                     {/* ACTION BUTTONS */}
                     <div className="grid grid-cols-3 gap-2">
                         <button onClick={downloadInvoice} className="border border-gray-200 rounded-xl py-2 text-sm flex flex-col items-center gap-2 hover:bg-gray-50">
-                           <img src="/svgs/download-icon.svg" alt="invoice" className="w-5 h-5" />
+                            <img src="/svgs/download-icon.svg" alt="invoice" className="w-5 h-5" />
                             <span className="text-xs">Invoice</span>
                         </button>
 
@@ -215,7 +215,7 @@ export default function OrderDetails({ id }: { id: string }) {
                     </button>
 
                     <button onClick={reorderService} className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 rounded-xl">
-                        Reorder 
+                        Reorder
                     </button>
                 </div>
 
@@ -223,7 +223,12 @@ export default function OrderDetails({ id }: { id: string }) {
 
             {isDownLoadInvoice && (
                 <Dialog isOpen={isDownLoadInvoice} onClose={() => setIsDownloadInvoice(false)}>
-                    <DialogBody>
+                    <DialogBody className="p-4">
+                        <DialogHeader
+                            title="Invoice"
+                            onClose={() => setIsDownloadInvoice(false)}
+
+                        />
                         <DownLoadInvoice />
                     </DialogBody>
                 </Dialog>
@@ -270,7 +275,7 @@ export default function OrderDetails({ id }: { id: string }) {
                     <DialogBody className="p-6">
                         <DialogHeader
                             title={"Raise a Complaint"}
-                            onClose={() => setIsReviewed(false)}
+                            onClose={() => setIsSendComplaint(false)}
 
                         />
                         <RaiseComplaint setIsSendComplaint={setIsSendComplaint} setIsComplaintSend={setIsComplaintSend} />
@@ -282,7 +287,7 @@ export default function OrderDetails({ id }: { id: string }) {
                 <Dialog isOpen={isComplaintSend} onClose={() => setIsComplaintSend(false)}>
                     <DialogBody className="p-4">
                         <DialogHeader
-                            title={"Comlina issued"}
+                            title={"Complaint sent"}
                             onClose={() => setIsComplaintSend(false)}
 
                         />

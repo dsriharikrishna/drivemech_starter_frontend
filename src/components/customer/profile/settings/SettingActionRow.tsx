@@ -29,7 +29,7 @@ export default function SettingActionRow({
         <div className="flex items-start gap-4">
           {isImagePath ? (
             <div className="w-6 h-6 flex items-center justify-center">
-              <Image src={icon} alt={title} width={24} height={24} className="object-contain" />
+              <Image src={icon} alt={title} width={20} height={20} className="object-contain" />
             </div>
           ) : (
             <span className="text-xl">{icon}</span>

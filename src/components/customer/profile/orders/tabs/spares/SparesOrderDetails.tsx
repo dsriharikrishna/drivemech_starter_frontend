@@ -197,32 +197,24 @@ export default function SparesOrderDetails({ id }: { id: string }) {
                             onClick={() => setIsInvoice(true)}
                             className="flex flex-col items-center border border-gray-200 rounded-xl py-3 hover:bg-gray-50"
                         >
-                            <svg className="w-[20px] h-[20px]" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M9.83008 12.2869V2.45703" stroke="currentColor" strokeWidth="1.63832" strokeLinecap="round" strokeLinejoin="round" />
-                                <path d="M17.2024 12.2891V15.5657C17.2024 16.0002 17.0298 16.4169 16.7225 16.7242C16.4153 17.0314 15.9986 17.204 15.5641 17.204H4.09584C3.66133 17.204 3.24462 17.0314 2.93737 16.7242C2.63013 16.4169 2.45752 16.0002 2.45752 15.5657V12.2891" stroke="currentColor" strokeWidth="1.63832" strokeLinecap="round" strokeLinejoin="round" />
-                                <path d="M5.73389 8.19141L9.82968 12.2872L13.9255 8.19141" stroke="currentColor" strokeWidth="1.63832" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                            <span className="text-sm">Invoice</span>
+                            <img src="/svgs/download-icon.svg" alt="invoice" />
+                            <span className="text-xs">Invoice</span>
                         </button>
 
                         <button
                             onClick={() => setIsReview(true)}
                             className="flex flex-col items-center border border-gray-200 rounded-xl py-3 hover:bg-gray-50"
                         >
-                            <svg className="w-[20px] h-[20px]" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="#FFA500" stroke="#FFA500" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                            <span className="text-sm">Write Review</span>
+                            <img src="/svgs/like-icon.svg" alt="review" />
+                            <span className="text-xs">Write Review</span>
                         </button>
 
                         <button
                             onClick={() => setIsComplaint(true)}
                             className="flex flex-col items-center border border-gray-200 rounded-xl py-3 hover:bg-gray-50"
                         >
-                            <svg className="w-[20px] h-[20px]" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                            <span className="text-sm">Complaint</span>
+                            <img src="/svgs/chat-icon.svg" alt="complaint" />
+                            <span className="text-xs">Complaint</span>
                         </button>
                     </div>
 

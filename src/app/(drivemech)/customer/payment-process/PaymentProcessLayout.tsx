@@ -3,11 +3,11 @@
 import { useCallback, useState, useEffect, useMemo } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import PaymentMethodList from "@/components/customer/payment/PaymentMethodList";
-import SavedCardsPanel from "@/components/customer/payment/panels/SavedCardsPanel";
-import UpiPanel from "@/components/customer/payment/panels/UpiPanel";
-import OnlineBankingPanel from "@/components/customer/payment/panels/OnlineBankingPanel";
-import CardPanel from "@/components/customer/payment/panels/CardPanel";
+import PaymentMethodList from "@/components/payment/PaymentMethodList";
+import SavedCardsPanel from "@/components/payment/panels/SavedCardsPanel";
+import UpiPanel from "@/components/payment/panels/UpiPanel";
+import OnlineBankingPanel from "@/components/payment/panels/OnlineBankingPanel";
+import CardPanel from "@/components/payment/panels/CardPanel";
 
 import { PaymentMethod, SavedCard, BankOption } from "@/types/payment";
 import { useRouter } from "next/navigation";
@@ -48,8 +48,6 @@ export default function PaymentProcessLayout() {
 
   // ✅ Get booking data from Redux
   const bookingFormData = useAppSelector(state => state.booking.bookingFormData);
-  const currentVehicle = useAppSelector(state => state.car.currentVehicle);
-  const paymentLoading = useAppSelector(state => state.payment.loading);
 
   // ✅ Dynamic schema based on payment method
   const currentSchema = useMemo(() => {

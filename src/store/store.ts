@@ -25,6 +25,8 @@ import notificationReducer from './slices/notification/notificationSlice';
 import uiReducer from './slices/ui/uiSlice';
 import towingServiceReducer from './slices/towing-services/towingServiceSlice';
 import helperReducer from './slices/helpers/helperSlice';
+import sparePartsCheckoutReducer from './slices/spare-parts/sparePartsCheckoutSlice';
+import pricingReducer from './slices/pricing/pricingSlice';
 
 const authPersistConfig = {
   key: "auth",
@@ -56,11 +58,18 @@ const uiPersistConfig = {
   whitelist: ["theme", "sidebarOpen"],
 };
 
+const sparePartsCheckoutPersistConfig = {
+  key: "sparePartsCheckout",
+  storage,
+  whitelist: ["cartItems", "addressData"],
+};
+
 const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
 const persistedCarReducer = persistReducer(carPersistConfig, carReducer);
 const persistedPaymentReducer = persistReducer(paymentPersistConfig, paymentReducer);
 const persistedUserProfileReducer = persistReducer(userProfilePersistConfig, userProfileReducer);
 const persistedUIReducer = persistReducer(uiPersistConfig, uiReducer);
+const persistedSparePartsCheckoutReducer = persistReducer(sparePartsCheckoutPersistConfig, sparePartsCheckoutReducer);
 
 // ---------------- Error handling middleware ----------------
 const rtkErrorLogger: Middleware = (store) => (next) => (action) => {
@@ -94,6 +103,8 @@ export const store = configureStore({
     ui: persistedUIReducer,
     towingService: towingServiceReducer,
     helper: helperReducer,
+    sparePartsCheckout: persistedSparePartsCheckoutReducer,
+    pricing: pricingReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

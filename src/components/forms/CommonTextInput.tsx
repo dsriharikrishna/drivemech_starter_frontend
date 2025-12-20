@@ -137,8 +137,8 @@ export default function CommonTextInput({
   return (
     <div className={`flex flex-col ${className}`}>
       {label && (
-        <label htmlFor={name} className="inputLabel mb-1">
-          {label} {required && <span className="text-red-500 ml-[-2]">*</span>}
+        <label htmlFor={name} className="block text-sm font-semibold text-gray-700 mb-2">
+          {label} {required && <span className="text-red-500">*</span>}
         </label>
       )}
 

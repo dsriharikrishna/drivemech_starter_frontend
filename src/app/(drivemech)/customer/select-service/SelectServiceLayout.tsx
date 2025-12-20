@@ -140,7 +140,7 @@ export default function SelectServiceLayout() {
                                 )}
 
                                 {/* Main Card Container */}
-                                <div className="bg-white rounded-2xl shadow-lg p-4 space-y-8">
+                                <div className="bg-white rounded-2xl shadow-lg p-6 space-y-6">
 
                                     <ModeOfService form={form} />
 
@@ -152,13 +152,13 @@ export default function SelectServiceLayout() {
 
                                     {/* Additional Notes Section */}
                                     <div>
-                                        <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                                        <h3 className="font-medium text-gray-900 mb-2">
                                             Additional Note for the Mechanic
                                         </h3>
                                         <AppTiptap
                                             form={form}
                                             name="notes"
-                                            placeholder="e.g., Please check the unusual noise from the engine."
+                                            placeholder="e.g., Please check the unusual noise from the engine"
                                         />
                                     </div>
                                 </div>

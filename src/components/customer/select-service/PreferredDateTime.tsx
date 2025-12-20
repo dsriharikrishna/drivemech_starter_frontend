@@ -64,8 +64,8 @@ export default function PreferredDateTime({ form, mode = "pickup" }: Props) {
     <div
       className={
         selectedMode === "pickup"
-          ? "grid grid-cols-1 md:grid-cols-2 gap-3"
-          : "grid grid-cols-1 gap-3"
+          ? "grid grid-cols-1 md:grid-cols-2 gap-6"
+          : "grid grid-cols-1 gap-6"
       }
     >
       {/* ===================== PICKUP ADDRESS ===================== */}
@@ -79,7 +79,7 @@ export default function PreferredDateTime({ form, mode = "pickup" }: Props) {
 
               <input
                 {...form.register("location.address")}
-                placeholder="Enter your pickup address"
+                placeholder="Location"
                 className="w-full outline-none text-sm"
               />
 

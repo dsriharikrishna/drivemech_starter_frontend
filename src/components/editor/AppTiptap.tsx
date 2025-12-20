@@ -59,14 +59,8 @@ export default function AppTiptap({
   return (
     <div className="p-4 border border-gray-200 rounded-xl bg-white">
 
-      {/* Header */}
-      <div className="flex justify-between items-center">
-        <p className="font-medium">Additional Note for the Mechanic</p>
-        <span className="text-gray-500 text-sm">▲</span>
-      </div>
-
       {/* Editor Box */}
-      <div className="mt-3 border border-gray-200 rounded-lg p-3">
+      {/* <div className="mt-3 border border-gray-200 rounded-lg p-3"> */}
 
         <EditorContent editor={editor} />
 
@@ -130,7 +124,7 @@ export default function AppTiptap({
             />
           </div>
         </div>
-      </div>
+      {/* </div> */}
     </div>
   );
 }

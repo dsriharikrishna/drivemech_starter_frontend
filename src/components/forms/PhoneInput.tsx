@@ -19,8 +19,8 @@ interface PhoneInputProps {
   countryOptions: CountryOption[];
   required?: boolean;
   className?: string;
-  value?: any;  
-  onChange?: (value: any) => void;  
+  value?: any;
+  onChange?: (value: any) => void;
 
   // NEW props
   p?: string;   // padding
@@ -76,7 +76,7 @@ export default function PhoneInput({
     <div className="flex flex-col w-full relative" ref={dropdownRef}>
       {/* LABEL */}
       {label && (
-        <label className="inputLabel mb-1">
+        <label className="block text-sm font-semibold text-gray-700 mb-2">
           {label} {required && <span className="text-red-500">*</span>}
         </label>
       )}

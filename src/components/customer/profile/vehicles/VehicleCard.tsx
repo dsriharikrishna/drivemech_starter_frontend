@@ -28,7 +28,7 @@ export default function VehicleCard({
 }: Props) {
   return (
     <div
-      className={`relative rounded-2xl bg-white p-2 border transition-all
+      className={`relative rounded-2xl bg-white p-3 border transition-all
       ${vehicle.isDefault
           ? "border-orange-400"
           : "border-gray-200 hover:shadow-sm"

@@ -50,24 +50,22 @@ export default function MechanicCard({
 }: Props) {
   return (
     <div
-      className={`bg-white border shadow-sm rounded-2xl p-5 transition-all 
+      className={`bg-white border shadow-sm rounded-2xl p-4 transition-all 
         ${isActive ? "border-orange-500 ring-2 ring-orange-200" : "border-gray-200"}
       `}
     >
       {/* ===================== MAIN FLEX LAYOUT ===================== */}
-      <div className="flex flex-col lg:flex-row gap-5">
+      <div className="flex flex-col lg:flex-row gap-3">
 
         {/* ===================== LEFT SECTION (~35%) ===================== */}
-        <div className="flex-[0.35] flex flex-col gap-3">
+        <div className="flex-[0.45] flex flex-col gap-2">
           {/* Logo and Header Info */}
           <div className="flex items-start gap-3">
             <div className="bg-white border border-gray-200 rounded-xl shrink-0">
-              <Image
+              <img
                 src={"/images/workshop/WorkshopGarage.png"}
-                alt={name}
-                width={120}
-                height={120}
-                className="object-contain rounded-xl"
+                alt={name.slice(0, 1)}
+                className="object-contain rounded-xl w-28 h-32"
               />
             </div>
 
