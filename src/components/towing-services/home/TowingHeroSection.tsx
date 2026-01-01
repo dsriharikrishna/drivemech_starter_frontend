@@ -5,7 +5,7 @@ import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store/store";
-import { setFormData } from "@/store/slicers/towing-services/towingServiceSlicer";
+import { setFormData } from "@/store/slices/towing-services/towingServiceSlice";
 
 import Typography from "@/components/ui/Typography";
 
@@ -31,8 +31,7 @@ export default function TowingHeroSection() {
   });
 
   const onSubmit = (data: TowingHeroFormData) => {
-    console.log("FORM SUBMITTED:", data);
-    // Store form data in Redux (this also sets showAvailableTrucks to true)
+        // Store form data in Redux (this also sets showAvailableTrucks to true)
     dispatch(setFormData(data));
   };
 
@@ -48,16 +47,16 @@ export default function TowingHeroSection() {
             {/* LEFT: Hero image + overlay + text */}
             <div className="relative rounded-r-xl overflow-hidden h-[520px]">
               <img
-                src="/tow-hero.jpg"
+                src="/images/towing-services/home/towing-hero.png"
                 alt="Towing hero"
-                className="w-full h-full object-cover bg-hero"
+                className="w-full h-full object-cover"
               />
 
               {/* dark overlay */}
               <div className="absolute inset-0 bg-black/45" />
 
               {/* hero content: left-aligned and vertically centered */}
-              <div className="absolute inset-0 flex flex-col justify-center px-12 lg:px-16 text-white">
+              {/* <div className="absolute inset-0 flex flex-col justify-center px-12 lg:px-16 text-white">
                 <div className="inline-block bg-white text-black text-xs px-3 py-1 rounded-full w-fit mb-4 font-medium shadow-sm">
                   Available 24/7 Nationwide
                 </div>
@@ -71,7 +70,6 @@ export default function TowingHeroSection() {
                   Average response time under 20 minutes.
                 </Typography>
 
-                {/* stats - match screenshot spacing */}
                 <div className="flex gap-10 mt-6 bg-black/30 p-4 rounded-xl w-fit items-center">
                   <div>
                     <p className="text-orange-400 text-xl font-bold">15+</p>
@@ -86,7 +84,7 @@ export default function TowingHeroSection() {
                     <p className="text-xs text-gray-300">Cities Covered</p>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
 
             {/* RIGHT: narrow, vertically centered form */}

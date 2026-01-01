@@ -64,7 +64,7 @@ export default function TowInvoice({
 
         <div className="flex items-center gap-3">
           <Image
-            src="/images/driver.jpg"
+            src="/images/default-avatar.png"
             width={55}
             height={55}
             alt="driver"

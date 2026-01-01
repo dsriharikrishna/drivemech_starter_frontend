@@ -29,11 +29,10 @@ export default function Navbar() {
   }, [scrolled]);
 
   const handleNavigation = useCallback((path: string) => {
-    console.log(path)
     if (path === "customer") {
-      router.push("auth/login");
+      router.replace("/auth/customer/login");
     } else {
-      router.push("/workshop/auth/login")
+      router.replace("/auth/vendor/login")
     }
   }, [router])
 
@@ -44,16 +43,14 @@ export default function Navbar() {
 
   const confirmLogout = useCallback(() => {
     // Handle logout logic here
-    console.log("User logged out");
     setShowLogoutDialog(false);
     setIsLoggedIn(false);
-    router.push("/auth/login");
+    router.replace("/auth/customer/login");
   }, [router]);
 
   return (
     <header
-      className={`fixed w-full top-0 z-50 transition-shadow duration-300 ${scrolled ? "bg-white" : "bg-white"
-        }`}
+      className={`fixed w-full top-0 z-50 transition-shadow duration-300 bg-white`}
     >
       <nav
         className="mx-auto flex w-full max-w-7xl items-center justify-between px-3 py-3 sm:px-5 lg:px-6"
@@ -62,16 +59,17 @@ export default function Navbar() {
         {/* --- Left: Logo and Tagline --- */}
         <div className="flex items-center space-x-3">
           <Link href="/" className="flex items-center">
-            <Image
+            <img
               src="/images/DriveMechLogo.png"
               alt="DriveMech Logo"
-              width={160}
-              height={45}
-              priority
+              className="w-[160px] h-[45px]"
             />
           </Link>
           {/* --- Center: Location --- */}
-          <div className="hidden md:flex items-center text-sm text-gray-700">
+          <button
+            onClick={() => router.push('/location')}
+            className="hidden md:flex items-center text-sm text-gray-700 hover:text-primary transition-colors"
+          >
             <Image
               src="/images/MapPin.png"
               alt="Map Icon"
@@ -80,7 +78,7 @@ export default function Navbar() {
               className="mr-2"
             />
             <span className="text-[15px] font-medium text-[#333]">Hyderabad</span>
-          </div>
+          </button>
         </div>
 
         {/* --- Right: Language + Buttons --- */}
@@ -99,25 +97,25 @@ export default function Navbar() {
 
           {/* Buttons */}
           {/* {!isLoggedIn ? ( */}
-            <AvatarMenu onLogout={handleLogout} />
+          <AvatarMenu onLogout={handleLogout} />
 
-{/* ?            <> */}
-              <Button
-                onClick={() => { handleNavigation("workshop") }}
-                variant="primary"
-                className="border border-[#FF5C00] text-[#FF5C00] hover:bg-[#FF5C00] hover:text-white transition-all duration-200 px-5 py-2 rounded-md text-sm font-medium whitespace-nowrap"
-              >
-                Login as Workshop
-              </Button>
+          {/* ?            <> */}
+          <Button
+            onClick={() => { handleNavigation("workshop") }}
+            variant="primary"
+            className="border border-[#FF5C00] text-[#FF5C00] hover:bg-[#FF5C00] hover:text-white transition-all duration-200 px-5 py-2 rounded-md text-sm font-medium whitespace-nowrap"
+          >
+            Login as Workshop
+          </Button>
 
-              <Button
-                onClick={() => { handleNavigation("customer") }}
-                variant="primary"
-                className="bg-[#FF5C00] hover:bg-[#E55200] text-white transition-all duration-200 px-5 py-2 rounded-md text-sm font-medium whitespace-nowrap"
-              >
-                Login as Customer
-              </Button>
-            {/* </> */}
+          <Button
+            onClick={() => { handleNavigation("customer") }}
+            variant="primary"
+            className="bg-[#FF5C00] hover:bg-[#E55200] text-white transition-all duration-200 px-5 py-2 rounded-md text-sm font-medium whitespace-nowrap"
+          >
+            Login as Customer
+          </Button>
+          {/* </> */}
           {/* )} */}
         </div>
 
@@ -138,15 +136,21 @@ export default function Navbar() {
         isOpen={mobileMenuOpen}
         onClose={() => setMobileMenuOpen(false)}
         title="Menu"
-        className="w-80"
+        className="w-60"
       >
         <div className="flex flex-col h-full">
           {/* Location & Language */}
-          <div className="p-2 border-b border-gray-200 bg-white">
-            <div className="flex items-center justify-evenly">
-
+          <div className="p-4 border-b border-gray-200 bg-white">
+            {/* Top Row: Location and Language */}
+            <div className="flex items-center justify-between gap-3 mb-3">
               {/* Location */}
-              <div className="flex items-center justify-evenly text-sm text-gray-700">
+              <button
+                onClick={() => {
+                  router.push('/location');
+                  setMobileMenuOpen(false);
+                }}
+                className="flex items-center text-sm text-gray-700 hover:text-primary transition-colors"
+              >
                 <Image
                   src="/images/MapPin.png"
                   alt="Map Icon"
@@ -155,7 +159,7 @@ export default function Navbar() {
                   className="mr-2 opacity-80"
                 />
                 <span className="font-medium">Hyderabad</span>
-              </div>
+              </button>
 
               {/* Language Button */}
               <button
@@ -172,12 +176,12 @@ export default function Navbar() {
                 />
                 English
               </button>
-              {/* Avatar */}
-              <div className="flex justify-center pt-2 pb-1">
-                <AvatarMenu onLogout={handleLogout} />
-              </div>
             </div>
 
+            {/* Avatar - Centered */}
+            <div className="flex justify-end pt-2 border-t border-gray-100">
+              <AvatarMenu onLogout={handleLogout} />
+            </div>
           </div>
 
 
@@ -208,7 +212,7 @@ export default function Navbar() {
               }}
               className="w-full text-left flex items-center px-4 py-3 text-gray-800 hover:bg-gray-50 rounded-md font-medium"
             >
-              Find Garages
+              For Garages
             </button>
             <button
               onClick={() => {
@@ -217,7 +221,52 @@ export default function Navbar() {
               }}
               className="w-full text-left flex items-center px-4 py-3 text-gray-800 hover:bg-gray-50 rounded-md font-medium"
             >
-              Insurance Partners
+              Insurance
+            </button>
+            <button
+              onClick={() => {
+                document.getElementById('spare-parts')?.scrollIntoView({ behavior: 'smooth' });
+                setMobileMenuOpen(false);
+              }}
+              className="w-full text-left flex items-center px-4 py-3 text-gray-800 hover:bg-gray-50 rounded-md font-medium"
+            >
+              Spare Parts
+            </button>
+            <button
+              onClick={() => {
+                document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' });
+                setMobileMenuOpen(false);
+              }}
+              className="w-full text-left flex items-center px-4 py-3 text-gray-800 hover:bg-gray-50 rounded-md font-medium"
+            >
+              How It Works
+            </button>
+            <button
+              onClick={() => {
+                document.getElementById('key-features')?.scrollIntoView({ behavior: 'smooth' });
+                setMobileMenuOpen(false);
+              }}
+              className="w-full text-left flex items-center px-4 py-3 text-gray-800 hover:bg-gray-50 rounded-md font-medium"
+            >
+              Key Features
+            </button>
+            <button
+              onClick={() => {
+                document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
+                setMobileMenuOpen(false);
+              }}
+              className="w-full text-left flex items-center px-4 py-3 text-gray-800 hover:bg-gray-50 rounded-md font-medium"
+            >
+              About Us
+            </button>
+            <button
+              onClick={() => {
+                document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                setMobileMenuOpen(false);
+              }}
+              className="w-full text-left flex items-center px-4 py-3 text-gray-800 hover:bg-gray-50 rounded-md font-medium"
+            >
+              Contact
             </button>
           </nav>
 

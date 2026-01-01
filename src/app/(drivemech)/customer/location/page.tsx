@@ -1,9 +1,5 @@
-import LocationLayout from './LocationLayout'
+import LocationLayout from "./LocationLayout";
 
-const page = () => {
-    return (
-        <LocationLayout />
-    )
+export default function LocationPage() {
+    return <LocationLayout />;
 }
-
-export default page

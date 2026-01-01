@@ -3,9 +3,6 @@
 import {
     ArrowLeft,
     CheckCircle,
-    FileDown,
-    MessageSquare,
-    Star,
     Package,
 } from "lucide-react";
 
@@ -31,6 +28,7 @@ export default function SparesOrderDetails({ id }: { id: string }) {
     const [isInvoice, setIsInvoice] = React.useState(false);
     const [isReview, setIsReview] = React.useState(false);
     const [isComplaint, setIsComplaint] = React.useState(false);
+    const [isReorderService, setIsReorderService] = React.useState(false);
 
     // review flow
     const [isReviewed, setIsReviewed] = React.useState(false);
@@ -45,21 +43,21 @@ export default function SparesOrderDetails({ id }: { id: string }) {
             brand: "Bosch",
             qty: 2,
             price: 118,
-            img: "/images/spares/brakepad.png",
+            img: "/images/orders/BreakPads.png",
         },
         {
             name: "Bosch Air Filter",
             brand: "Bosch",
             qty: 1,
             price: 28,
-            img: "/images/spares/airfilter.png",
+            img: "/images/orders/BoschFilter.png",
         },
         {
             name: "Wiper Blades Set",
             brand: "Bosch",
             qty: 1,
             price: 22,
-            img: "/images/spares/wiper.png",
+            img: "/images/orders/Wipers.png",
         },
     ];
 
@@ -70,6 +68,7 @@ export default function SparesOrderDetails({ id }: { id: string }) {
         { label: "Out for Delivery", date: "28 July, 8:00 AM" },
         { label: "Delivered", date: "28 July, 2:30 PM" },
     ];
+
 
     return (
         <div className="p-6 space-y-6">
@@ -142,7 +141,7 @@ export default function SparesOrderDetails({ id }: { id: string }) {
                 </div>
 
                 {/* RIGHT SIDE */}
-                <div className="space-y-6">
+                <div className="space-y-5">
 
                     {/* SHIPPING ADDRESS */}
                     <div className="border border-gray-200 rounded-xl p-4">
@@ -158,8 +157,13 @@ export default function SparesOrderDetails({ id }: { id: string }) {
                     {/* COURIER INFO */}
                     <div className="border border-gray-200 rounded-xl p-4 space-y-2">
                         <h2 className="font-semibold">Courier Details</h2>
-                        <p className="font-medium text-gray-800">FastShip Express</p>
-                        <p className="text-sm text-blue-500">Tracking: FS12345678901</p>
+                        <div className="flex items-center gap-3">
+                            <img src="/svgs/fast-ship-icon.svg" alt="fastship" />
+                            <div>
+                                <p className="font-medium text-gray-800">FastShip Express</p>
+                                <p className="text-sm text-blue-500">Tracking: FS12345678901</p>
+                            </div>
+                        </div>
                         <p className="text-green-600 bg-green-100 px-3 py-2 rounded-lg text-sm">
                             ✔ Delivered on 28 July 2025
                         </p>
@@ -180,7 +184,7 @@ export default function SparesOrderDetails({ id }: { id: string }) {
                         </div>
 
                         <Divider />
-                        
+
                         <div className="flex justify-between font-semibold text-orange-500 text-lg">
                             <span>Total Paid</span>
                             <span>$168.00</span>
@@ -188,29 +192,29 @@ export default function SparesOrderDetails({ id }: { id: string }) {
                     </div>
 
                     {/* ACTION BUTTONS */}
-                    <div className="grid grid-cols-3 gap-3">
+                    <div className="grid grid-cols-3 gap-2">
                         <button
                             onClick={() => setIsInvoice(true)}
                             className="flex flex-col items-center border border-gray-200 rounded-xl py-3 hover:bg-gray-50"
                         >
-                            <FileDown size={20} />
-                            <span className="text-sm">Invoice</span>
+                            <img src="/svgs/download-icon.svg" alt="invoice" />
+                            <span className="text-xs">Invoice</span>
                         </button>
 
                         <button
                             onClick={() => setIsReview(true)}
                             className="flex flex-col items-center border border-gray-200 rounded-xl py-3 hover:bg-gray-50"
                         >
-                            <Star size={20} />
-                            <span className="text-sm">Write Review</span>
+                            <img src="/svgs/like-icon.svg" alt="review" />
+                            <span className="text-xs">Write Review</span>
                         </button>
 
                         <button
                             onClick={() => setIsComplaint(true)}
                             className="flex flex-col items-center border border-gray-200 rounded-xl py-3 hover:bg-gray-50"
                         >
-                            <MessageSquare size={20} />
-                            <span className="text-sm">Complaint</span>
+                            <img src="/svgs/chat-icon.svg" alt="complaint" />
+                            <span className="text-xs">Complaint</span>
                         </button>
                     </div>
 
@@ -221,15 +225,19 @@ export default function SparesOrderDetails({ id }: { id: string }) {
                                 `/customer/profile/my-orders/spares/return-request/${id}`
                             )
                         }
-                        className="w-full border border-gray-200 rounded-xl py-3 text-gray-700 hover:bg-gray-100"
+                        className="w-full border border-gray-200 rounded-xl py-2 text-gray-700 hover:bg-gray-100"
                     >
                         Return Request
+                    </button>
+                    <button
+                        onClick={() => setIsReorderService(true)}
+                        className="w-full bg-primary-500 text-white border border-gray-200 rounded-xl py-2"
+                    >
+                        Reorder
                     </button>
                 </div>
 
             </div>
-
-            {/*     MODALS START HERE         */}
 
             {/* INVOICE MODAL */}
             <Dialog isOpen={isInvoice} onClose={() => setIsInvoice(false)}>

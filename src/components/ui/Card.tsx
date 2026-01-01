@@ -10,13 +10,13 @@ interface ServiceCardProps {
   className?: string;
 }
 
-export function Card({ 
-  title, 
-  description, 
-  button, 
-  image, 
+export function Card({
+  title,
+  description,
+  button,
+  image,
   size = "md",
-  className = "" 
+  className = ""
 }: ServiceCardProps) {
   const sizeConfig = {
     sm: {
@@ -48,7 +48,7 @@ export function Card({
   const config = sizeConfig[size];
 
   return (
-    <div className={`flex flex-col sm:flex-row items-center bg-white shadow-sm hover:shadow-md transition-shadow ${config.container} ${config.gap} ${className}`}>
+    <div className={`flex flex-col items-center bg-white shadow-sm hover:shadow-xl transition-all duration-300 ease-in-out hover:scale-105 hover:-translate-y-1 ${config.container} ${config.gap} ${className}`}>
       {/* Image Container */}
       <div className={`flex-shrink-0 flex flex-col justify-center items-center ${config.image} mb-3 sm:mb-0 sm:mr-4`}>
         <Image
@@ -65,12 +65,12 @@ export function Card({
         <h3 className={`text-gray-800 mb-2 ${config.title}`}>
           {title}
         </h3>
-        
+
         <p className={`text-gray-600 leading-relaxed mb-3 md:mb-4 flex-grow ${config.description}`}>
           {description}
         </p>
 
-        <button className={`w-full sm:w-auto bg-green-500 hover:bg-green-600 text-white font-semibold rounded-md inline-flex items-center justify-center gap-1 transition-colors duration-200 ${config.button}`}>
+        <button className={`w-full cursor-pointer sm:w-auto bg-primary-500 hover:bg-primary-600 text-white font-semibold rounded-md inline-flex items-center justify-center gap-1 transition-colors duration-200 ${config.button}`}>
           {button}
           <span>→</span>
         </button>

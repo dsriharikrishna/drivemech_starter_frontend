@@ -4,9 +4,6 @@ import {
   ArrowLeft,
   MapPin,
   Navigation,
-  FileDown,
-  MessageSquare,
-  Star,
   CheckCircle,
 } from "lucide-react";
 
@@ -21,6 +18,7 @@ import DialogHeader from "@/components/modals/DialogHeader";
 import TowInvoice from "./TowInvoice";
 import TowDriverReview from "./TowDriverReview";
 import TowComplaint from "./TowComplaint";
+import DriverDetailsCard from "./DriverDetailsCard";
 
 // Success screens
 
@@ -129,37 +127,17 @@ export default function TowingOrderDetails({ id }: { id: string }) {
 
       {/* RIGHT SIDEBAR */}
       <RightLayout>
-        <div className="flex flex-col gap-4 p-4">
+        <div className="flex flex-col gap-4">
 
           {/* DRIVER DETAILS */}
-          <div className="border border-gray-200 rounded-xl p-5 bg-white">
-            <p className="text-sm font-semibold text-gray-800 mb-3">Driver Details</p>
-
-            <div className="flex items-center gap-3">
-              <Image
-                src="/images/driver.jpg"
-                width={55}
-                height={55}
-                alt="driver"
-                className="rounded-full object-cover"
-              />
-
-              <div className="flex-1">
-                <p className="font-bold">John Smith</p>
-                <p className="text-sm text-gray-600">⭐ 4.8 • 342 trips</p>
-                <p className="text-xs text-gray-500">Flatbed Towing</p>
-              </div>
-
-              <div className="flex gap-2">
-                <button className="px-3 py-1 bg-blue-100 text-blue-600 rounded-lg text-sm">
-                  Chat
-                </button>
-                <button className="px-3 py-1 bg-orange-100 text-orange-600 rounded-lg text-sm">
-                  Call
-                </button>
-              </div>
-            </div>
-          </div>
+          <DriverDetailsCard
+            name="John Smith"
+            rating={4.8}
+            trips={342}
+            vehicleType="Flatbed Towing"
+            onChat={() => console.log("Chat with driver")}
+            onCall={() => console.log("Call driver")}
+          />
 
           {/* PAYMENT SUMMARY */}
           <div className="border border-gray-200 rounded-xl p-5 bg-white">
@@ -189,29 +167,31 @@ export default function TowingOrderDetails({ id }: { id: string }) {
           </div>
 
           {/* ACTION BUTTONS */}
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-3 gap-2">
             <button
               onClick={() => setIsInvoice(true)}
-              className="border border-gray-200 rounded-xl py-3 flex flex-col items-center hover:bg-gray-50"
+              className="border border-gray-200 rounded-xl py-2 flex flex-col gap-0.5 items-center hover:bg-gray-50"
             >
-              <FileDown size={20} />
-              <span className="text-sm">Invoice</span>
+              <img src="/svgs/download-icon.svg" alt="invoice" />
+              <span className="text-xs">Invoice</span>
             </button>
 
             <button
               onClick={() => setIsReview(true)}
-              className="border border-gray-200 rounded-xl py-3 flex flex-col items-center hover:bg-gray-50"
+              className="border border-gray-200 rounded-xl py-2 flex flex-col gap-0.5 items-center hover:bg-gray-50"
             >
-              <Star size={20} />
-              <span className="text-sm">Rate Driver</span>
+             <img src="/svgs/like-icon.svg" alt="rate-driver" />
+              <span className="text-xs">Rate Driver</span>
             </button>
 
             <button
               onClick={() => setIsComplaint(true)}
-              className="border border-gray-200 rounded-xl py-3 flex flex-col items-center hover:bg-gray-50"
+              className="border border-gray-200 rounded-xl py-2 flex flex-col gap-0.5 items-center hover:bg-gray-50"
             >
-              <MessageSquare size={20} />
-              <span className="text-sm">Complaint</span>
+              <svg className="w-[20px] h-[20px]" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              <span className="text-xs">Complaint</span>
             </button>
           </div>
 
@@ -252,7 +232,7 @@ export default function TowingOrderDetails({ id }: { id: string }) {
         <DialogBody className="p-4">
           <DialogHeader title="Thank You!" onClose={() => setIsReviewSubmitted(false)} />
           <ThankYouReview
-            rating={4} 
+            rating={4}
             serviceName="Towing Service"
             onDone={() => setIsReviewSubmitted(false)}
             onClose={() => setIsReviewSubmitted(false)}

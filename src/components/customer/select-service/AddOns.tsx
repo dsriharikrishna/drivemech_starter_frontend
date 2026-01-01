@@ -1,9 +1,10 @@
 import { UseFormReturn } from "react-hook-form";
 import { AddOnService } from "@/types/select-service";
-import { Plus } from "lucide-react";
+import { Plus, Check } from "lucide-react";
+import { SelectServiceFormData } from "@/schemas/customer/selectService.schema";
 
 interface Props {
-  form: UseFormReturn<any>;
+  form: UseFormReturn<SelectServiceFormData>;
   addOns?: AddOnService[];
   onAddOnToggle?: (addOnId: string, isSelected: boolean) => void;
   maxSelections?: number;
@@ -11,9 +12,9 @@ interface Props {
   layout?: 'grid' | 'list';
 }
 
-export default function AddOns({ 
-  form, 
-  addOns = [], 
+export default function AddOns({
+  form,
+  addOns = [],
   onAddOnToggle,
   maxSelections,
   showPrices = true,
@@ -32,7 +33,7 @@ export default function AddOns({
     const newSelection = exists
       ? selected.filter((x: string) => x !== id)
       : [...selected, id];
-    
+
     form.setValue("addOns", newSelection);
 
     // Call custom handler if provided
@@ -52,26 +53,45 @@ export default function AddOns({
         key={service.id}
         onClick={() => handleToggleAddOn(service.id)}
         disabled={isDisabled}
-        className={`flex items-center justify-between p-3 rounded-lg border transition-all
-          ${isSelected 
-            ? "border-orange-400 bg-orange-50" 
+        type="button"
+        className={`flex items-center justify-between p-3 rounded-lg border transition-all bg-white
+          ${isSelected
+            ? "border-orange-500 text-orange-500"
             : isDisabled
-            ? "border-gray-200 bg-gray-50 cursor-not-allowed opacity-50"
-            : "border-gray-300 bg-white hover:border-orange-300 hover:bg-orange-50/50"
+              ? "border-gray-200 bg-gray-50 cursor-not-allowed opacity-50 text-gray-400"
+              : "border-orange-300 text-gray-900 hover:border-orange-400 hover:bg-orange-50/50"
           }`}
         aria-disabled={isDisabled}
       >
         <div className="flex items-center gap-2">
           {service.icon && (
-            <img src={service.icon} className="w-5 h-5" alt={service.name} />
+            <img
+              src={service.icon}
+              className="w-5 h-5"
+              style={{
+                filter: isSelected
+                  ? 'invert(55%) sepia(89%) saturate(2476%) hue-rotate(0deg) brightness(102%) contrast(101%)'
+                  : 'none'
+              }}
+              alt={service.name}
+            />
           )}
           <span className="text-sm font-medium">{service.name}</span>
         </div>
 
         {showPrices && (
           <div className="flex items-center gap-1">
-            <Plus className="w-4 h-4 text-orange-500" />
-            <span className="text-sm font-medium">${service.price}</span>
+            {isSelected ? (
+              <>
+                <Check className="w-4 h-4" />
+                <span className="text-sm font-medium">${service.price}</span>
+              </>
+            ) : (
+              <>
+                <Plus className="w-4 h-4 text-orange-500" />
+                <span className="text-sm font-medium">${service.price}</span>
+              </>
+            )}
           </div>
         )}
       </button>
@@ -88,6 +108,8 @@ export default function AddOns({
           </span>
         )}
       </div>
+
+      <p className="text-sm text-gray-500 mb-4">Enhance your service with these additional options.</p>
 
       {layout === 'grid' ? (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">

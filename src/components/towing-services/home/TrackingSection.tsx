@@ -32,7 +32,7 @@ export default function TrackingSection() {
           {/* LEFT IMAGE */}
           <div className="w-full lg:flex-1">
             <img
-              src="/tracking.jpg"
+              src="/images/towing-services/home/TrackServiceRealTime.png"
               alt="Tracking"
               className="w-full h-[260px] rounded-xl object-cover"
             />

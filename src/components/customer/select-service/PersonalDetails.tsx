@@ -1,9 +1,10 @@
 import { UseFormReturn } from "react-hook-form";
 import { User, Phone, Mail } from "lucide-react";
 import CommonTextInput from "@/components/forms/CommonTextInput";
+import { SelectServiceFormData } from "@/schemas/customer/selectService.schema";
 
 interface Props {
-  form: UseFormReturn<any>;
+  form: UseFormReturn<SelectServiceFormData>;
 }
 
 export default function PersonalDetails({ form }: Props) {
@@ -24,7 +25,7 @@ export default function PersonalDetails({ form }: Props) {
           name="phone"
           label="Phone"
           form={form}
-          placeholder="+33 X XXXX XXXX"
+          placeholder="+33 | X XX XX XX XX"
           icon={<Phone className="w-4 h-4 text-gray-400" />}
         />
 

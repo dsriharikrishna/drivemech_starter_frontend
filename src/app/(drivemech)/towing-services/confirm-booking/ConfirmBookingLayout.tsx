@@ -7,7 +7,7 @@ import { RootState } from "@/store/store";
 import {
     setPaymentMethod as setPaymentMethodAction,
     setBookingId,
-} from "@/store/slicers/towing-services/towingServiceSlicer";
+} from "@/store/slices/towing-services/towingServiceSlice";
 import CustomCard from "@/components/ui/CustomCard";
 import Button from "@/components/ui/Button";
 import {

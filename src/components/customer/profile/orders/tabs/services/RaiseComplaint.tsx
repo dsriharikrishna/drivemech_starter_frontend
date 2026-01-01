@@ -79,8 +79,7 @@ export default function RaiseComplaint({
   // SUBMIT HANDLER
   // ---------------------------
   const onSubmit: SubmitHandler<FormData> = (data) => {
-    console.log("Complaint Data:", data);
-
+    
     // Trigger success modal in parent
     setIsComplaintSend(true);
     setIsSendComplaint(false)

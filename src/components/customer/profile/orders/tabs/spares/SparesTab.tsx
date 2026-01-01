@@ -13,7 +13,7 @@ const orders = [
     statusDot: "bg-yellow-500",
     message: "Your items will be delivered by 1 December 2025",
     amount: 168.0,
-    images: ["/images/p1.png", "/images/p2.png"],
+    images: ["/images/workshop/spares.png"],
   },
   {
     id: "SPR-002",
@@ -24,7 +24,7 @@ const orders = [
     statusDot: "bg-red-500",
     message: "Your item has been cancelled as per your request",
     amount: 168.0,
-    images: ["/images/p1.png", "/images/p2.png", "/images/p3.png"],
+    images: ["/images/workshop/spares.png"],
   },
   {
     id: "SPR-003",
@@ -36,7 +36,7 @@ const orders = [
     statusDot: "bg-green-500",
     message: "Your items has been delivered",
     amount: 168.0,
-    images: ["/images/p1.png", "/images/p2.png"],
+    images: ["/images/workshop/spares.png"],
   },
 ];
 

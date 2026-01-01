@@ -19,7 +19,7 @@ export default function ServiceHeaderCard() {
       </div>
 
       <Image
-        src="/images/car-service.jpg"
+        src="/images/workshop/CarService.png"
         alt="service"
         width={500}
         height={200}

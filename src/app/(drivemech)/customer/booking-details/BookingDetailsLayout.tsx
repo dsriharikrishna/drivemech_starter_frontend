@@ -48,13 +48,13 @@ export default function BookingDetailsPage() {
     vehicle: {
       name: "Toyota Hilux",
       number: "AP 09 BU 0007",
-      image: "/car.png"
+      image: "/images/workshop/car.png"
     },
     workshop: {
       name: "A to Z Services",
       rating: 4.5,
       reviews: 120,
-      image: "/workshop.png"
+      image: "/images/workshop/AtoZ.png"
     },
     services: [
       { title: "Battery Replacement", price: 10 },

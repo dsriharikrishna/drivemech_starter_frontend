@@ -10,8 +10,7 @@ export default function ContactPage() {
   const methods = useForm();
 
   const onSubmit = (data: any) => {
-    console.log("Form Submitted:", data);
-  };
+      };
 
   return (
     <section className="w-full py-14">

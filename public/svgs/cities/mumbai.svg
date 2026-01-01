@@ -1,0 +1,10 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Gateway of India -->
+  <rect x="6" y="38" width="36" height="6" fill="#D4A574" stroke="#B8935E" stroke-width="0.5"/>
+  <rect x="10" y="26" width="28" height="12" fill="#E6C9A8" stroke="#B8935E" stroke-width="0.5"/>
+  <path d="M8 26 L24 14 L40 26 Z" fill="#D4A574" stroke="#B8935E" stroke-width="0.5"/>
+  <rect x="18" y="30" width="12" height="14" fill="#8B7355"/>
+  <circle cx="24" cy="20" r="3" fill="#FFD700"/>
+  <rect x="12" y="26" width="4" height="18" fill="#A68A6A"/>
+  <rect x="32" y="26" width="4" height="18" fill="#A68A6A"/>
+</svg>

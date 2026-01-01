@@ -1,7 +1,8 @@
 import { UseFormReturn } from "react-hook-form";
+import { SelectServiceFormData } from "@/schemas/customer/selectService.schema";
 
 interface Props {
-  form: UseFormReturn<any>;
+  form: UseFormReturn<SelectServiceFormData>;
 }
 
 export default function GuestToggle({ form }: Props) {

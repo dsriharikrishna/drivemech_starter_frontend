@@ -27,18 +27,18 @@ const highlights = [
 ];
 
 const tags = [
-  "Car Wash",
+  "Periodic Service",
   "AC Service",
-  "Puncture",
+  "Exterior Wash",
+  "Interior Cleaning",
   "Battery",
-  "Tyre",
-  "Suspension",
+  "Radiator",
 ];
 
 const workshops = [
   {
     id: "workshop_123",
-    logo: "/garage-logo.png",
+    logo: "/images/workshop/AtoZ.png",
     name: "A to Z Services",
     status: "Open • Closes 9:30 PM",
     distance: "3.4 km",
@@ -47,7 +47,7 @@ const workshops = [
   },
   {
     id: "workshop_456",
-    logo: "/garage-logo.png",
+    logo: "/images/workshop/AtoZ.png",
     name: "Speed Auto Care",
     status: "Open • Closes 10:00 PM",
     distance: "2.1 km",
@@ -56,7 +56,7 @@ const workshops = [
   },
   {
     id: "workshop_789",
-    logo: "/garage-logo.png",
+    logo: "/images/workshop/AtoZ.png",
     name: "Rapid Fix Garage",
     status: "Open • Closes 8:45 PM",
     distance: "4.0 km",
@@ -78,7 +78,6 @@ export const WorkShopLayout = () => {
       const selected = { name, id };
       setSelectedWorkShop(selected);
 
-      console.log("✅ ACTIVE WORKSHOP:", selected);
 
       router.push("/customer/select-service");
     },
@@ -95,7 +94,7 @@ export const WorkShopLayout = () => {
           />
           <TopRecommendedWorkshops />
 
-          <div className="space-y-5 flex flex-col gap-2">
+          <div className="space-y-3 flex flex-col">
             {workshops.map((workshop) => (
               <MechanicCard
                 key={workshop.id}

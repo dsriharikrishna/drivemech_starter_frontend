@@ -28,6 +28,7 @@ export default function OrderDetails({ id }: { id: string }) {
     const [isWriteReview, setIsWriteReview] = React.useState(false);
     const [isSendComplaint, setIsSendComplaint] = React.useState(false);
     const [isReorderService, setIsReorderService] = React.useState(false);
+    const [isReturnRequest, setIsReturnRequest] = React.useState(false);
 
     const [isReviewed, setIsReviewed] = React.useState(false);
     const [rating, setRating] = React.useState(0);
@@ -35,27 +36,28 @@ export default function OrderDetails({ id }: { id: string }) {
     const [isComplaintSend, setIsComplaintSend] = React.useState(false);
 
     const downloadInvoice = () => {
-        console.log("Download invoice for order:", id);
         setIsDownloadInvoice(true);
         // TODO: Implement invoice generation
     };
 
     const writeReview = () => {
-        console.log("Write review for order:", id);
         setIsWriteReview(true);
         // TODO: Open modal or navigation
     };
 
     const sendComplaint = () => {
-        console.log("Send complaint for:", id);
         setIsSendComplaint(true);
         // TODO: Open complaint form
     };
 
     const reorderService = () => {
-        console.log("Reorder service for:", id);
         setIsReorderService(true);
         // TODO: Navigate to service booking
+    };
+
+    const returnRequest = () => {
+        setIsReturnRequest(true);
+        // TODO: Navigate to return request
     };
 
 
@@ -92,7 +94,7 @@ export default function OrderDetails({ id }: { id: string }) {
                                 className="flex items-center gap-3 text-gray-700"
                             >
                                 <span className="w-5 h-5 rounded-full bg-green-100 text-green-600 flex items-center justify-center">
-                                    ✓
+                                    <img src="/svgs/check-icon.svg" alt="check" className="w-4 h-4" />
                                 </span>
                                 {task}
                             </li>
@@ -124,7 +126,7 @@ export default function OrderDetails({ id }: { id: string }) {
 
                         <div className="flex items-center gap-3">
                             <Image
-                                src="/images/car-demo.jpg"
+                                src="/images/Workshop/AtoZ.png"
                                 width={55}
                                 height={55}
                                 alt="garage"
@@ -139,8 +141,8 @@ export default function OrderDetails({ id }: { id: string }) {
                             </div>
 
                             <div className="flex gap-2">
-                                <button className="p-2 bg-blue-50 rounded-full">📞</button>
-                                <button className="p-2 bg-green-50 rounded-full">💬</button>
+                                <button className="p-2 bg-blue-50 rounded-full"><img src="/svgs/direction-fill.svg" alt="phone" /></button>
+                                <button className="p-2 bg-green-50 rounded-full"><img src="/svgs/call-icon.svg" alt="chat" /></button>
                             </div>
                         </div>
                     </div>
@@ -151,7 +153,7 @@ export default function OrderDetails({ id }: { id: string }) {
 
                         <div className="flex items-center gap-3">
                             <Image
-                                src="/images/car-blue.png"
+                                src="/images/workshop/car.png"
                                 width={62}
                                 height={62}
                                 alt="vehicle"
@@ -189,27 +191,31 @@ export default function OrderDetails({ id }: { id: string }) {
                         </div>
                     </div>
 
-                    {/* Action Buttons */}
-                    <div className="grid grid-cols-3 gap-3">
+                    {/* ACTION BUTTONS */}
+                    <div className="grid grid-cols-3 gap-2">
                         <button onClick={downloadInvoice} className="border border-gray-200 rounded-xl py-2 text-sm flex flex-col items-center gap-2 hover:bg-gray-50">
-                            <span className="text-xl">⬇️</span>
-                            Invoice
+                            <img src="/svgs/download-icon.svg" alt="invoice" className="w-5 h-5" />
+                            <span className="text-xs">Invoice</span>
                         </button>
 
                         <button onClick={writeReview} className="border border-gray-200  rounded-xl py-2 text-sm flex flex-col items-center gap-2 hover:bg-gray-50">
-                            <span className="text-xl">⭐</span>
-                            Write Review
+                            <img src="/svgs/like-icon.svg" alt="rate-driver" className="w-5 h-5" />
+                            <span className="text-xs">Write Review</span>
                         </button>
 
                         <button onClick={sendComplaint} className="border border-gray-200  rounded-xl py-2 text-sm flex flex-col items-center gap-2 hover:bg-gray-50">
-                            <span className="text-xl">💬</span>
-                            Complaint
+                            <img src="/svgs/chat-icon.svg" alt="complaint" className="w-5 h-5" />
+                            <span className="text-xs">Complaint</span>
                         </button>
                     </div>
 
                     {/* Reorder Button */}
-                    <button onClick={reorderService} className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-4 rounded-xl">
-                        Reorder Service
+                    <button onClick={returnRequest} className="w-full text-gray-600 border border-gray-200 font-semibold py-2 rounded-xl">
+                        Return Request
+                    </button>
+
+                    <button onClick={reorderService} className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 rounded-xl">
+                        Reorder
                     </button>
                 </div>
 
@@ -217,7 +223,12 @@ export default function OrderDetails({ id }: { id: string }) {
 
             {isDownLoadInvoice && (
                 <Dialog isOpen={isDownLoadInvoice} onClose={() => setIsDownloadInvoice(false)}>
-                    <DialogBody>
+                    <DialogBody className="p-4">
+                        <DialogHeader
+                            title="Invoice"
+                            onClose={() => setIsDownloadInvoice(false)}
+
+                        />
                         <DownLoadInvoice />
                     </DialogBody>
                 </Dialog>
@@ -264,7 +275,7 @@ export default function OrderDetails({ id }: { id: string }) {
                     <DialogBody className="p-6">
                         <DialogHeader
                             title={"Raise a Complaint"}
-                            onClose={() => setIsReviewed(false)}
+                            onClose={() => setIsSendComplaint(false)}
 
                         />
                         <RaiseComplaint setIsSendComplaint={setIsSendComplaint} setIsComplaintSend={setIsComplaintSend} />
@@ -276,7 +287,7 @@ export default function OrderDetails({ id }: { id: string }) {
                 <Dialog isOpen={isComplaintSend} onClose={() => setIsComplaintSend(false)}>
                     <DialogBody className="p-4">
                         <DialogHeader
-                            title={"Comlina issued"}
+                            title={"Complaint sent"}
                             onClose={() => setIsComplaintSend(false)}
 
                         />

@@ -4,11 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Service } from '../../../data/services';
 import { ShoppingCart } from 'lucide-react';
 import { RootState } from '@/store/store';
-import { toggleService } from '@/store/slicers/serviceSlicer';
-import { setCurrentVehicle } from '@/store/slicers/carSlicer';
-import CarCard from '@/components/car-service/CarCard';
+import { toggleService } from '@/store/slices/services/serviceSlice';
+import { setCurrentVehicle } from '@/store/slices/cart/cartSlice';
+import CarCard from '@/components/landing-page/CarCard';
 import { useRouter } from 'next/navigation';
 import Button from '@/components/ui/Button';
+import Image from 'next/image';
 
 export default function CartSidebar({ services }: { services: Service[] }) {
   const dispatch = useDispatch();
@@ -25,7 +26,7 @@ export default function CartSidebar({ services }: { services: Service[] }) {
   const getNestedServiceNames = (serviceId: string) => {
     const service = services.find(s => s.id === serviceId);
     if (!service?.nestedServices) return [];
-    
+
     return service.nestedServices
       .filter(ns => selectedNestedServices.includes(ns.id))
       .map(ns => ns.name);
@@ -34,15 +35,14 @@ export default function CartSidebar({ services }: { services: Service[] }) {
   const handleChangeVehicle = () => {
     // In a real app, this would open a vehicle selection modal
     // For now, we'll just show a placeholder action
-    console.log('Change vehicle clicked');
   };
 
   return (
     <aside className="w-full lg:w-[330px] space-y-4">
 
       {/* Vehicle Card */}
-      <CarCard 
-        vehicle={currentVehicle} 
+      <CarCard
+        vehicle={currentVehicle}
         onChange={handleChangeVehicle}
       />
 
@@ -73,7 +73,7 @@ export default function CartSidebar({ services }: { services: Service[] }) {
                   <div className="flex items-center justify-between bg-gray-50 p-3 rounded-xl border border-gray-200 hover:border-orange-200 transition-colors">
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center border border-gray-200">
-                        <div className="text-xl">{s.icon}</div>
+                        <Image src={s.icon} alt={s.name} width={24} height={24} />
                       </div>
                       <div>
                         <span className="font-medium text-sm text-gray-900">{s.name}</span>
@@ -128,11 +128,11 @@ export default function CartSidebar({ services }: { services: Service[] }) {
                 <div key={service.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-xl border border-gray-200 hover:border-orange-200 transition-colors">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center border border-gray-200">
-                      <div className="text-lg">{service.icon}</div>
+                      <Image src={service.icon} alt={service.name} width={24} height={24} />
                     </div>
                     <span className="text-sm font-medium text-gray-900">{service.name}</span>
                   </div>
-                  <button 
+                  <button
                     onClick={() => dispatch(toggleService(service.id))}
                     className="text-xs bg-orange-500 text-white px-3 py-1.5 rounded-lg hover:bg-orange-600 transition-colors font-medium"
                   >
@@ -149,11 +149,11 @@ export default function CartSidebar({ services }: { services: Service[] }) {
                 <div key={service.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-xl border border-gray-200 hover:border-orange-200 transition-colors">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center border border-gray-200">
-                      <div className="text-lg">{service.icon}</div>
+                      <Image src={service.icon} alt={service.name} width={24} height={24} />
                     </div>
                     <span className="text-sm font-medium text-gray-900">{service.name}</span>
                   </div>
-                  <button 
+                  <button
                     onClick={() => dispatch(toggleService(service.id))}
                     className="text-xs bg-orange-500 text-white px-3 py-1.5 rounded-lg hover:bg-orange-600 transition-colors font-medium"
                   >
@@ -168,7 +168,7 @@ export default function CartSidebar({ services }: { services: Service[] }) {
       {/* Next Button */}
       {selectedList.length > 0 && (
         <div className="bg-white rounded-2xl border border-gray-200 p-5">
-          <Button onClick={()=>router.push("/customer/workshop")} className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200">
+          <Button onClick={() => router.push("/customer/workshop")} className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200">
             Next
           </Button>
         </div>

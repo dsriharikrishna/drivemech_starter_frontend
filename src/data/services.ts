@@ -16,22 +16,22 @@ export interface NestedService {
   price?: number;
 }
 
-export const headerServices : Service[] = [
-   {
+export const headerServices: Service[] = [
+  {
     id: 'logbook-service',
     name: 'Logbook Service',
     isPopular: true,
-    icon: '📋'
+    icon: '/images/ourservices/Roadworthyinspection.png'
   },
   {
     id: 'basic-service',
     name: 'Basic Service',
-    icon: '🔧'
+    icon: '/images/ourservices/Battery.png'
   },
   {
     id: 'breakdown',
     name: 'Breakdown',
-    icon: '🛠️'
+    icon: '/images/ourservices/Battery.png'
   },
 ]
 
@@ -39,7 +39,7 @@ export const services: Service[] = [
   {
     id: 'air-conditioning',
     name: 'Air Conditioning',
-    icon: '❄️',
+    icon: '/images/ourservices/AirConditioning.png',
     hasNested: true,
     nestedServices: [
       { id: 'ac-regas', name: 'AC Regassing', description: 'Recharge your AC system', price: 120 },
@@ -50,7 +50,7 @@ export const services: Service[] = [
   {
     id: 'spark-plug',
     name: 'Spark Plug',
-    icon: '⚡',
+    icon: '/images/ourservices/SparkPlug.png',
     hasNested: true,
     nestedServices: [
       { id: 'spark-plug-replacement', name: 'Spark Plug Replacement', description: 'Replace all spark plugs', price: 180 },
@@ -60,7 +60,7 @@ export const services: Service[] = [
   {
     id: 'brakes',
     name: 'Brakes',
-    icon: '🛑',
+    icon: '/images/ourservices/Battery.png',
     hasNested: true,
     nestedServices: [
       { id: 'brake-pads', name: 'Brake Pad Replacement', description: 'Replace front brake pads', price: 220 },
@@ -71,7 +71,7 @@ export const services: Service[] = [
   {
     id: 'transmission',
     name: 'Transmission / Differential',
-    icon: '⚙️',
+    icon: '/images/ourservices/Transmission.png',
     hasNested: true,
     nestedServices: [
       { id: 'transmission-service', name: 'Transmission Service', description: 'Full transmission service', price: 350 },
@@ -81,17 +81,17 @@ export const services: Service[] = [
   {
     id: 'pre-purchase',
     name: 'Pre-Purchase Inspection',
-    icon: '🔍'
+    icon: '/images/ourservices/Roadworthyinspection.png'
   },
   {
     id: 'roadworthy-inspection',
     name: 'Roadworthy inspection',
-    icon: '✅'
+    icon: '/images/ourservices/Roadworthyinspection.png'
   },
   {
     id: 'battery',
     name: 'Battery',
-    icon: '🔋',
+    icon: '/images/ourservices/Battery.png',
     hasNested: true,
     nestedServices: [
       { id: 'battery-replacement', name: 'Battery Replacement', description: 'Replace car battery', price: 180 },
@@ -101,7 +101,7 @@ export const services: Service[] = [
   {
     id: 'timing-belt',
     name: 'Timing belt/chain',
-    icon: '⏱️',
+    icon: '/images/ourservices/Timingbelt.png',
     hasNested: true,
     nestedServices: [
       { id: 'timing-belt-replacement', name: 'Timing Belt Replacement', description: 'Replace timing belt', price: 550 },
@@ -111,12 +111,12 @@ export const services: Service[] = [
   {
     id: 'oil-leak',
     name: 'Oil leak inspection',
-    icon: '🛢️'
+    icon: '/images/ourservices/Oilleakinspection.png'
   },
   {
     id: 'window-tinting',
     name: 'Window tinting',
-    icon: '🪟',
+    icon: '/images/ourservices/AutoGlass.png',
     hasNested: true,
     nestedServices: [
       { id: 'full-tint', name: 'Full Car Tinting', description: 'Tint all windows', price: 350 },
@@ -126,7 +126,7 @@ export const services: Service[] = [
   {
     id: 'auto-glass',
     name: 'Auto Glass',
-    icon: '🚗',
+    icon: '/images/ourservices/AutoGlass.png',
     hasNested: true,
     nestedServices: [
       { id: 'windshield-replacement', name: 'Windshield Replacement', description: 'Replace windshield', price: 450 },
@@ -136,7 +136,7 @@ export const services: Service[] = [
   {
     id: 'suspension-steering',
     name: 'Suspension and Steering',
-    icon: '🔄',
+    icon: '/images/ourservices/SuspensionSteering.png',
     hasNested: true,
     nestedServices: [
       { id: 'shock-absorbers', name: 'Shock Absorber Replacement', description: 'Replace shock absorbers', price: 400 },
@@ -146,7 +146,7 @@ export const services: Service[] = [
   {
     id: 'clutch',
     name: 'Clutch',
-    icon: '🎚️',
+    icon: '/images/ourservices/Clutch.png',
     hasNested: true,
     nestedServices: [
       { id: 'clutch-replacement', name: 'Clutch Replacement', description: 'Full clutch replacement', price: 850 },
@@ -156,7 +156,7 @@ export const services: Service[] = [
   {
     id: 'wheels-tyres',
     name: 'Wheels & Tyres',
-    icon: '🛞',
+    icon: '/images/ourservices/Wheels.png',
     hasNested: true,
     nestedServices: [
       { id: 'tyre-rotation', name: 'Tyre Rotation', description: 'Rotate all tyres', price: 60 },
@@ -167,7 +167,7 @@ export const services: Service[] = [
   {
     id: 'radiator',
     name: 'Radiator',
-    icon: '🌡️',
+    icon: '/images/ourservices/Battery.png',
     hasNested: true,
     nestedServices: [
       { id: 'radiator-replacement', name: 'Radiator Replacement', description: 'Replace radiator', price: 450 },

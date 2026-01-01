@@ -53,8 +53,8 @@ export default function PartnerHeroSection() {
         {/* RIGHT IMAGE */}
         <div className="flex-1">
           <img
-            src="/partner-handshake.jpg"
-            className="w-full h-72 rounded-xl object-cover bg-hero"
+            src="/images/towing-services/partners/PartnersHero.png"
+            className="w-full h-72 rounded-xl object-cover"
             alt="Partnership"
           />
         </div>

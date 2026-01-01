@@ -125,9 +125,7 @@ export default function AddVehicleForm({
     const final = { ...data, regDocs: regFiles, insDocs: insFiles };
 
     if (mode === "edit") {
-      console.log("Updating vehicle:", vehicleId, final);
     } else {
-      console.log("Adding new vehicle:", final);
     }
 
     onClose?.();
@@ -146,32 +144,32 @@ export default function AddVehicleForm({
 
 
         {/* Vehicle Type */}
-        <CustomCard className="p-2">
-          <Typography weight="semibold">Vehicle Type *</Typography>
+        <CustomCard className="p-4">
+          <Typography weight="semibold" className="text-sm">Vehicle Type *</Typography>
 
-          <div className="flex gap-3 mt-2">
+          <div className="flex gap-3 mt-3">
             {["car", "bike", "truck"].map((t) => (
               <button
                 type="button"
                 key={t}
                 onClick={() => setValue("vehicleType", t as any)}
-                className={`px-4 py-2 rounded-xl border flex items-center gap-2 text-sm transition 
-                ${selectedType === t ? "bg-orange-500 text-white" : "border-gray-300 hover:bg-gray-100"}`}
+                className={`px-4 py-3 rounded-xl border flex flex-col items-center gap-2 text-sm transition 
+                ${selectedType === t ? "bg-primary-500 text-white border-primary-500" : "border-gray-300 hover:bg-gray-50"}`}
               >
-                {t === "car" && <Car size={20} />}
-                {t === "bike" && <Motorbike size={20} />}
-                {t === "truck" && <Truck size={20} />}
-                {t.toUpperCase()}
+                {t === "car" && <Car size={24} weight={selectedType === t ? "fill" : "regular"} />}
+                {t === "bike" && <Motorbike size={24} strokeWidth={selectedType === t ? 2.5 : 2} />}
+                {t === "truck" && <Truck size={24} weight={selectedType === t ? "fill" : "regular"} />}
+                <span className="text-xs font-medium capitalize">{t}</span>
               </button>
             ))}
           </div>
         </CustomCard>
 
-        {/* ---------------- Vehicle Details (unchanged) ---------------- */}
-        <CustomCard className="p-3 space-y-3">
-          <Typography weight="semibold" className="">Add Vehicle Details</Typography>
+        {/* ---------------- Vehicle Details ---------------- */}
+        <CustomCard className="p-4 space-y-4">
+          <Typography weight="semibold" className="text-base">Add Vehicle Details</Typography>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Controller
               name="state"
               control={control}
@@ -186,7 +184,7 @@ export default function AddVehicleForm({
               control={control}
               rules={{ required: "Registration required" }}
               render={({ field }) => (
-                <CommonTextInput {...field} label="Vehicle Reg No. *" placeholder="ABC 1234 D" />
+                <CommonTextInput {...field} label="Vehicle Reg No. *" placeholder="e.g., ABC 1234-D" />
               )}
             />
 
@@ -201,13 +199,13 @@ export default function AddVehicleForm({
               name="model"
               control={control}
               rules={{ required: "Model required" }}
-              render={({ field }) => <CommonTextInput {...field} label="Model *" placeholder="Hilux, Camry..." />}
+              render={({ field }) => <CommonTextInput {...field} label="Model *" placeholder="e.g., Camry, Hilux" />}
             />
 
             <Controller
               name="cc"
               control={control}
-              render={({ field }) => <CommonTextInput {...field} label="Cubic Capacity" placeholder="1000cc" />}
+              render={({ field }) => <CommonTextInput {...field} label="Cubic Capacity" placeholder="e.g., 1000cc" />}
             />
 
             <Controller
@@ -250,10 +248,10 @@ export default function AddVehicleForm({
         </CustomCard>
 
         {/* Default toggle */}
-        <CustomCard className="p-3 bg-orange-50 flex items-center justify-between">
+        <CustomCard className="p-4 bg-orange-50 border-orange-200 flex items-center justify-between">
           <div>
-            <p className="font-semibold">Set as Default Vehicle</p>
-            <Typography variant="small" color="muted">
+            <p className="font-semibold text-sm">Set as Default Vehicle</p>
+            <Typography variant="small" color="muted" className="text-xs">
               This vehicle will be auto-selected for bookings
             </Typography>
           </div>
@@ -262,7 +260,6 @@ export default function AddVehicleForm({
             name="isDefault"
             control={control}
             render={({ field }) => (
-              // ToogleSwitch expects native event; forward event -> boolean
               <ToggleSwitch checked={field.value} onChange={(checked) => field.onChange(checked)} />
             )}
           />
@@ -367,9 +364,9 @@ export default function AddVehicleForm({
           </div>
         </CustomCard>
 
-        <div className="flex justify-end pt-4">
-          <Button type="submit" variant="gradient">
-            {mode === "edit" ? "Update Vehicle" : "Save Vehicle"}
+        <div className="flex justify-center pt-4">
+          <Button type="submit" variant="gradient" className="px-8">
+            {mode === "edit" ? "Update Vehicle" : "Save Vehicle Details"}
           </Button>
         </div>
       </form>

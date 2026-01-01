@@ -34,7 +34,7 @@ export default function PartnerSuccessPage({ data, onBack }: PartnerSuccessPageP
           <div className="flex flex-col gap-12">
             {/* ---------------- SUCCESS HEADER ---------------- */}
             <div className="flex flex-col items-center text-center gap-6 mb-20">
-              <img src="/success-icon.png" alt="Success" className="w-20 h-20" />
+              <img src="/images/towing-services/partners/RightCheck.png" alt="Success" className="w-20 h-20" />
 
               <h2 className="text-[26px] font-semibold text-gray-heading">
                 Application Submitted Successfully!

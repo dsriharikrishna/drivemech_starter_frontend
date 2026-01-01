@@ -1,4 +1,4 @@
-import PlayStoreSection from "@/components/car-service/PlayStoreSection";
+import PlayStoreSection from "@/components/landing-page/PlayStoreSection";
 import AppFeaturesSection from "./AppFeaturesSection";
 import TestimonialsSection from "./TestimonialsSection";
 

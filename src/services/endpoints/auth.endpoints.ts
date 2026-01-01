@@ -28,7 +28,6 @@ const AUTH_ENDPOINTS = {
   PROFILE_DETAILS: `${BASE_API}/profile`,
 
   // Legacy endpoint (deprecated)
-  /** @deprecated Use VERIFY_OTP instead */
   VERIFY_CODE: `${BASE_API}/verify-code`,
 };
 

@@ -1,3 +1,4 @@
+import { Bike, Star } from "lucide-react";
 import React from "react";
 
 interface RecommendedWorkshopCardProps {
@@ -25,7 +26,7 @@ export default function RecommendedWorkshopCard({
 }: RecommendedWorkshopCardProps) {
   return (
     <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-4 w-[250px]">
-      
+
       {/* TOP SECTION */}
       <div className="flex items-center gap-3">
         {/* Logo */}
@@ -40,7 +41,7 @@ export default function RecommendedWorkshopCard({
           {/* Rating */}
           <div className="flex items-center gap-1 text-sm">
             <span className="font-semibold">{rating}</span>
-            <img src="/icons/star.svg" className="w-4 h-4" />
+            <Star size={12}color="#EFB100" fill="#EFB100" />            
             <span className="text-gray-500">({reviews})</span>
           </div>
         </div>
@@ -48,14 +49,14 @@ export default function RecommendedWorkshopCard({
 
       {/* DISTANCE */}
       <div className="flex items-center gap-2 text-xs text-gray-600 mt-2">
-        <img src="/icons/bike.svg" className="w-4" />
+        <Bike size={16} />
         <span>{distance}</span>
 
         <span className="text-gray-400">•</span>
 
         <span className="flex items-center gap-1 text-blue-600">
           {driveTime}
-          <img src="/icons/direction.svg" className="w-3 h-3" />
+          <img src="/images/workshop/direction-fill.png" alt="Drive Time" className="object-contain" />
         </span>
       </div>
 

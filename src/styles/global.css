@@ -156,6 +156,41 @@
 }
 
 /* =========================
+   Workshop Card Utility Classes
+========================= */
+
+/* Star Rating Color */
+.text-star {
+  color: #EFB100;
+}
+
+.fill-star {
+  fill: #EFB100;
+}
+
+/* Inspection Section */
+.bg-inspection {
+  background-color: #FFF3EA;
+}
+
+.border-inspection {
+  border-color: #F5D6C5;
+}
+
+.text-inspection {
+  color: #8B4513;
+}
+
+/* Fixed Price Section */
+.bg-fixed-price {
+  background-color: #E8F9F1;
+}
+
+.border-fixed-price {
+  border-color: #CDEFE1;
+}
+
+/* =========================
    Base Styles
 ========================= */
 .bg-hero {
@@ -167,7 +202,7 @@
   font-family: Manrope, sans-serif;
   font-weight: 600;
   font-size: 14px;
-  line-height: 1; 
+  line-height: 1;
   letter-spacing: 0;
 }
 
@@ -176,6 +211,7 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans, Arial, Helvetica, sans-serif);
 }
+
 .container {
   max-width: 1280px;
   margin: 0 auto;

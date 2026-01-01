@@ -1,13 +1,13 @@
 "use client";
 
-import Button from "@/components/ui/Button";         
+import Button from "@/components/ui/Button";
 import { CheckCircle2 } from "lucide-react";
 
 const services = [
   {
     title: "Emergency Towing",
     desc: "24/7 fast response towing for accidents, breakdowns, and emergencies",
-    img: "/services/s1.jpg",
+    img: "/images/towing-services/services/EmergencyTowing.png",
     points: [
       "Accident recovery",
       "Breakdown towing",
@@ -18,7 +18,7 @@ const services = [
   {
     title: "Roadside Assistance",
     desc: "On-site repairs, tire changes, and mechanical support",
-    img: "/services/s2.jpg",
+    img: "/images/towing-services/services/RoadsideAssistance.png",
     points: [
       "Tire Changes",
       "Minor Repairs",
@@ -29,13 +29,13 @@ const services = [
   {
     title: "Emergency Fuel Delivery",
     desc: "Fast fuel delivery when you're stranded",
-    img: "/services/s3.jpg",
+    img: "/images/towing-services/services/EmergencyFuelDelivery.png",
     points: ["All fuel types", "Quick delivery", "Fair pricing", "Convenient payment"],
   },
   {
     title: "Jump Start Service",
     desc: "Quick battery jump starts",
-    img: "/services/s4.jpg",
+    img: "/images/towing-services/services/JumpStartService.png",
     points: [
       "Fast response",
       "Professional equipment",
@@ -46,13 +46,13 @@ const services = [
   {
     title: "Lockout Service",
     desc: "Locked out of your vehicle? We can help",
-    img: "/services/s5.jpg",
+    img: "/images/towing-services/services/LockoutService.png",
     points: ["Non-destructive entry", "All vehicle types", "Quick service", "Licensed technicians"],
   },
   {
     title: "Long Distance Towing",
     desc: "Secure transport across long distances",
-    img: "/services/s6.jpg",
+    img: "/images/towing-services/services/LongDistanceTowing.png",
     points: [
       "Interstate transport",
       "Flatbed options",

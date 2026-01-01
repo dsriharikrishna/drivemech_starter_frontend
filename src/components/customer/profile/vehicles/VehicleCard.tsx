@@ -28,12 +28,11 @@ export default function VehicleCard({
 }: Props) {
   return (
     <div
-      className={`relative rounded-2xl bg-white p-2 border transition-all
-      ${
-        vehicle.isDefault
-          ? "border-orange-400 shadow-[0_0_0_2px_rgba(255,122,26,0.25)]"
+      className={`relative rounded-2xl bg-white p-3 border transition-all
+      ${vehicle.isDefault
+          ? "border-orange-400"
           : "border-gray-200 hover:shadow-sm"
-      }`}
+        }`}
     >
 
       {/* Default Badge */}
@@ -63,27 +62,25 @@ export default function VehicleCard({
       </div>
 
       {/* Info Rows */}
-      <div className="grid grid-cols-2 gap-4 mt-6">
+      <div className="grid grid-cols-2 gap-4 mt-4">
         <div>
-          <p className="text-sm text-gray-500">Insurance</p>
-          <p className="font-semibold mt-1">{vehicle.insuranceDate}</p>
+          <p className="text-xs text-gray-500">Insurance</p>
+          <p className="text-sm font-medium mt-1">{vehicle.insuranceDate}</p>
         </div>
 
         <div>
-          <p className="text-sm text-gray-500">Last Service</p>
-          <p className="font-semibold mt-1">{vehicle.lastServiceDate}</p>
+          <p className="text-xs text-gray-500">Last Service</p>
+          <p className="text-sm font-medium mt-1">{vehicle.lastServiceDate}</p>
         </div>
       </div>
 
       {/* Footer Actions */}
-      <div className="flex items-center gap-3 mt-6">
-
+      <div className="flex items-center gap-2 mt-4">
         {/* Set Default (only if NOT default) */}
         {!vehicle.isDefault && (
           <button
             onClick={() => onSetDefault?.(vehicle.id)}
-            className="flex-1 rounded-lg border bg-gray-50 text-gray-700 py-2.5 text-sm 
-            hover:bg-gray-100 transition"
+            className="flex-1 rounded-lg border border-gray-300 bg-white text-gray-700 py-2 text-xs font-medium hover:bg-gray-50 transition"
           >
             Set as Default
           </button>
@@ -92,18 +89,18 @@ export default function VehicleCard({
         {/* Edit Button */}
         <button
           onClick={() => onEdit?.(vehicle.id)}
-          className="flex items-center gap-2 rounded-lg border px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 transition"
+          className="flex items-center justify-center gap-1 rounded-lg border border-gray-300 bg-white px-3 py-2 text-xs font-medium text-gray-700 hover:bg-gray-50 transition"
         >
-          <PencilSimple size={16} />
+          <PencilSimple size={14} />
           Edit
         </button>
 
         {/* Remove Button */}
         <button
           onClick={() => onRemove?.(vehicle.id)}
-          className="flex items-center gap-2 rounded-lg border border-red-300 bg-red-50 px-4 py-2.5 text-sm text-red-600 hover:bg-red-100 transition"
+          className="flex items-center justify-center gap-1 rounded-lg border border-red-300 bg-red-50 px-3 py-2 text-xs font-medium text-red-600 hover:bg-red-100 transition"
         >
-          <Trash size={16} />
+          <Trash size={14} />
           Remove
         </button>
       </div>

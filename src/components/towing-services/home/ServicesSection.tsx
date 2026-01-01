@@ -7,17 +7,17 @@ const services = [
   {
     title: "Emergency Towing",
     desc: "24/7 fast response towing for accidents, breakdowns, and emergencies.",
-    img: "/service1.jpg",
+    img: "/images/towing-services/home/EmergencyTowing.png",
   },
   {
     title: "Roadside Assistance",
     desc: "On-site repairs, tire changes, and mechanical support.",
-    img: "/service2.jpg",
+    img: "/images/towing-services/home/RoadsideAssistance.png",
   },
   {
     title: "Quick Service",
     desc: "Battery jump starts, fuel delivery, and tire changes.",
-    img: "/service3.jpg",
+    img: "/images/towing-services/home/QuickService.png",
   },
 ];
 

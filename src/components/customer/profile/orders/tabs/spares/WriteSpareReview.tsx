@@ -44,13 +44,7 @@ export default function WriteSpareReview({
   const handleSubmit = () => {
     if (rating === 0) return;
 
-    console.log("Submitting Spare Review →", {
-      orderId,
-      rating,
-      tags: selectedTags,
-      review,
-    });
-
+    
     setIsReviewed?.(true);
     setRatingFromChild?.(rating);
 

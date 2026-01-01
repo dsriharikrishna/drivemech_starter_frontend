@@ -10,7 +10,7 @@ const orders: ServiceOrder[] = [
     time: "2:00 PM",
     registration: "ABC1234 D",
     status: "Completed",
-    image: "/images/car-demo.jpg",
+    image: "/images/workshop/AtoZ.png",
     services: [
       { name: "Periodic Maintenance", price: 149 },
       { name: "AC Gas Refill", price: 85 },
@@ -24,7 +24,7 @@ const orders: ServiceOrder[] = [
     time: "2:00 PM",
     registration: "ABC1234 D",
     status: "In Progress",
-    image: "/images/car-demo.jpg",
+    image: "/images/workshop/AtoZ.png",
     services: [
       { name: "Periodic Maintenance", price: 149 },
       { name: "AC Gas Refill", price: 85 },
@@ -38,7 +38,7 @@ const orders: ServiceOrder[] = [
     time: "2:00 PM",
     registration: "ABC1234 D",
     status: "Cancelled",
-    image: "/images/car-demo.jpg",
+    image: "/images/workshop/AtoZ.png",
     services: [
       { name: "Periodic Maintenance", price: 149 },
       { name: "AC Gas Refill", price: 85 },

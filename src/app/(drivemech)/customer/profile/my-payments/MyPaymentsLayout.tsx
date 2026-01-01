@@ -6,9 +6,11 @@ import {
     Car,
     Truck,
     ShieldCheck,
-    Package,
     CreditCard,
+    Plus,
+    Calendar,
 } from "phosphor-react";
+import Image from "next/image";
 
 export default function MyPaymentsLayout() {
     const [activeFilter, setActiveFilter] = useState("all");
@@ -20,7 +22,7 @@ export default function MyPaymentsLayout() {
             id: 1,
             title: "Periodic Maintenance - A to Z Garage",
             reg: "ABC-1234",
-            icon: <Car size={28} weight="duotone" />,
+            icon: "/images/workshop/car.png",
             date: "30 July 2025, 4:35 PM",
             method: "Card",
             amount: 149.0,
@@ -30,7 +32,8 @@ export default function MyPaymentsLayout() {
         {
             id: 2,
             title: "Flatbed Tow Service",
-            icon: <Truck size={28} weight="duotone" />,
+            icon: null,
+            iconComponent: <Truck size={32} weight="duotone" className="text-gray-600" />,
             date: "28 July 2025, 2:45 PM",
             method: "Card",
             amount: 85.0,
@@ -40,7 +43,7 @@ export default function MyPaymentsLayout() {
         {
             id: 3,
             title: "Bosch Brake Pad Set (Qty: 2)",
-            icon: <Wrench size={28} weight="duotone" />,
+            icon: "/images/orders/BreakPads.png",
             date: "28 July 2025, 2:45 PM",
             method: "Card",
             amount: 118.0,
@@ -50,7 +53,8 @@ export default function MyPaymentsLayout() {
         {
             id: 4,
             title: "GEICO Comprehensive Plan",
-            icon: <ShieldCheck size={28} weight="duotone" />,
+            icon: null,
+            iconComponent: <ShieldCheck size={32} weight="duotone" className="text-gray-600" />,
             date: "01 Aug 2024, 3:15 PM",
             method: "Card",
             amount: 249.0,
@@ -60,7 +64,8 @@ export default function MyPaymentsLayout() {
         {
             id: 5,
             title: "Oil Change & Filter - QuickFix",
-            icon: <Wrench size={28} weight="duotone" />,
+            icon: null,
+            iconComponent: <Wrench size={32} weight="duotone" className="text-gray-600" />,
             date: "15 Aug 2025, 10:00 AM",
             method: "Card",
             amount: 249.0,
@@ -77,34 +82,35 @@ export default function MyPaymentsLayout() {
     const totalSpent = filteredPayments.reduce((sum, t) => sum + t.amount, 0);
 
     return (
-        <div className="bg-white p-6 rounded-xl  space-y-8">
+        <div className="bg-white p-4 rounded-xl space-y-5">
 
             {/* HEADER */}
-            <div className="flex justify-between items-center pb-4 border-b border-border">
+            <div className="flex justify-between items-center">
                 <h2 className="text-xl font-semibold">Payments</h2>
 
-                <button className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg flex items-center gap-2">
-                    ➕ Add Vehicle
+                <button className="bg-primary-500 hover:bg-primary-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 text-sm">
+                    <Plus size={18} weight="bold" />
+                    Add Vehicle
                 </button>
             </div>
 
             {/* TOTAL SPENT CARD */}
-            <div className="bg-orange-500 text-white p-6 rounded-2xl shadow border border-border space-y-1">
-                <p className="text-lg font-medium">Total Spent</p>
-                <p className="text-3xl font-bold">${totalSpent.toFixed(2)}</p>
-                <p className="text-sm opacity-90">Transactions: {filteredPayments.length}</p>
+            <div className="bg-primary-500 text-white p-5 rounded-2xl space-y-1">
+                <p className="text-sm font-medium">Total Spent</p>
+                <p className="text-4xl font-bold">${totalSpent.toFixed(2)}</p>
+                <p className="text-xs opacity-90">Transactions: {filteredPayments.length}</p>
             </div>
 
             {/* FILTER TABS */}
-            <div className="flex gap-3 overflow-x-auto pb-2">
+            <div className="flex gap-2 overflow-x-auto pb-2">
                 {filters.map((filter) => (
                     <button
                         key={filter}
                         onClick={() => setActiveFilter(filter)}
-                        className={`px-4 py-2 text-sm rounded-lg border transition whitespace-nowrap
+                        className={`px-4 py-2 text-xs font-medium rounded-lg transition whitespace-nowrap
               ${activeFilter === filter
-                                ? "bg-orange-500 text-white border-orange-500"
-                                : "border-border text-gray-600 hover:bg-gray-100"
+                                ? "bg-primary-500 text-white"
+                                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
                             }
             `}
                     >
@@ -114,44 +120,72 @@ export default function MyPaymentsLayout() {
             </div>
 
             {/* TRANSACTIONS LIST */}
-            <div className="space-y-4">
+            <div className="space-y-3">
                 {filteredPayments.map((t) => (
                     <div
                         key={t.id}
-                        className="border border-border rounded-xl p-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white"
+                        className="border border-gray-200 rounded-xl p-4 bg-white hover:shadow-sm transition"
                     >
-                        {/* LEFT SECTION */}
-                        <div className="flex items-start gap-4">
-                            <div className="text-orange-500">{t.icon}</div>
-
-                            <div>
-                                <p className="font-semibold">{t.title}</p>
-                                {t.reg && <p className="text-xs text-gray-500">{t.reg}</p>}
-
-                                <div className="grid grid-cols-2 gap-6 mt-3 text-sm">
-                                    <div>
-                                        <p className="text-gray-500">Date of Payment</p>
-                                        <p className="font-medium">{t.date}</p>
-                                    </div>
-
-
+                        {/* TOP SECTION - Title and Status */}
+                        <div className="flex items-start justify-between mb-3">
+                            <div className="flex items-center gap-3">
+                                {/* Icon */}
+                                <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center overflow-hidden">
+                                    {t.icon ? (
+                                        <Image
+                                            src={t.icon}
+                                            alt={t.title}
+                                            width={40}
+                                            height={40}
+                                            className="object-cover"
+                                        />
+                                    ) : (
+                                        t.iconComponent
+                                    )}
                                 </div>
+
+                                {/* Title and Reg */}
+                                <div>
+                                    <p className="font-semibold text-sm">{t.title}</p>
+                                    {t.reg && (
+                                        <p className="text-xs text-gray-500 flex items-center gap-1 mt-0.5">
+                                            <span className="w-2 h-2 rounded-full bg-gray-400"></span>
+                                            {t.reg}
+                                        </p>
+                                    )}
+                                </div>
+                            </div>
+
+                            {/* Status Badge */}
+                            <span className="text-green-600 text-xs font-medium bg-green-100 px-3 py-1 rounded-full">
+                                {t.status}
+                            </span>
+                        </div>
+
+                        {/* BOTTOM SECTION - Date, Payment Method, Amount */}
+                        <div className="grid grid-cols-2 gap-4">
+                            {/* Date of Payment */}
+                            <div>
+                                <p className="text-xs text-gray-500">Date of Payment</p>
+                                <p className="text-sm font-medium flex items-center gap-1.5 mt-1">
+                                    <Calendar size={14} className="text-gray-400" />
+                                    {t.date}
+                                </p>
+                            </div>
+
+                            {/* Payment Method */}
+                            <div>
+                                <p className="text-xs text-gray-500">Payment Method</p>
+                                <p className="text-sm font-medium flex items-center gap-1.5 mt-1">
+                                    <CreditCard size={14} className="text-gray-400" />
+                                    {t.method}
+                                </p>
                             </div>
                         </div>
 
-                        <div>
-                            <p className="text-gray-500">Payment Method</p>
-                            <p className="font-medium flex items-center gap-2">
-                                <CreditCard size={16} /> {t.method}
-                            </p>
-                        </div>
-
-                        {/* RIGHT SECTION */}
-                        <div className="flex flex-col items-end">
-                            <span className="text-green-600 text-sm bg-green-100 border border-green-300 px-3 py-1 rounded-full mb-1">
-                                {t.status}
-                            </span>
-                            <span className="text-orange-500 font-semibold text-lg">
+                        {/* Amount - Positioned at bottom right */}
+                        <div className="flex justify-end mt-3">
+                            <span className="text-primary-500 font-bold text-xl">
                                 ${t.amount.toFixed(2)}
                             </span>
                         </div>

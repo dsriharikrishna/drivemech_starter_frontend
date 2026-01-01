@@ -1,12 +1,13 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useState, useEffect, useMemo } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import PaymentMethodList from "@/components/customer/payment/PaymentMethodList";
-import SavedCardsPanel from "@/components/customer/payment/panels/SavedCardsPanel";
-import UpiPanel from "@/components/customer/payment/panels/UpiPanel";
-import OnlineBankingPanel from "@/components/customer/payment/panels/OnlineBankingPanel";
-import CardPanel from "@/components/customer/payment/panels/CardPanel";
+import { zodResolver } from "@hookform/resolvers/zod";
+import PaymentMethodList from "@/components/payment/PaymentMethodList";
+import SavedCardsPanel from "@/components/payment/panels/SavedCardsPanel";
+import UpiPanel from "@/components/payment/panels/UpiPanel";
+import OnlineBankingPanel from "@/components/payment/panels/OnlineBankingPanel";
+import CardPanel from "@/components/payment/panels/CardPanel";
 
 import { PaymentMethod, SavedCard, BankOption } from "@/types/payment";
 import { useRouter } from "next/navigation";
@@ -20,38 +21,114 @@ import DetailRow from "@/components/customer/select-service/DetailRow";
 import Image from "next/image";
 import { Star } from "phosphor-react";
 
+// ✅ Import Zod schemas
+import {
+  getPaymentSchemaByMethod,
+  upiPaymentSchema,
+  cardPaymentSchema,
+  savedCardPaymentSchema,
+  onlineBankingSchema,
+  workshopPaymentSchema,
+  type PaymentData,
+} from "@/schemas/customer/payment.schema";
+
+// ✅ Import Redux
+import { useAppDispatch, useAppSelector } from "@/store/store";
+import { processPayment } from "@/store/slices/payment/paymentSlice";
+import { clearBookingFormData } from "@/store/slices/booking/bookingSlice";
+import { Bike } from "lucide-react";
+
 export default function PaymentProcessLayout() {
   const [method, setMethod] = useState<PaymentMethod>("saved");
   const [selectedCard, setSelectedCard] = useState("1");
-  const [upiId, setUpiId] = useState("");
   const [selectedBank, setSelectedBank] = useState("Hong Leong Bank");
 
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
-  const form = useForm({
+  // ✅ Get booking data from Redux
+  const bookingFormData = useAppSelector(state => state.booking.bookingFormData);
+
+  // ✅ Dynamic schema based on payment method
+  const currentSchema = useMemo(() => {
+    return getPaymentSchemaByMethod(method);
+  }, [method]);
+
+  // ✅ React Hook Form with dynamic Zod validation
+  const form = useForm<any>({
+    resolver: zodResolver(currentSchema),
     defaultValues: {
-      upiId: upiId,
+      upiId: "",
       cardNumber: "",
       expiry: "",
       cvv: "",
       nameOnCard: "",
-      savedCardCvv: ""
-    }
+      savedCardId: "1",
+      savedCardCvv: "",
+      bankName: "Hong Leong Bank",
+      confirmWorkshopPayment: false,
+    },
+    mode: "onChange",
   });
 
+  // ✅ Reset form when payment method changes
+  useEffect(() => {
+    form.reset();
+  }, [method, form]);
+
+  // ✅ Mock saved cards (TODO: fetch from Redux/API)
   const savedCards: SavedCard[] = [
     { id: "1", bankName: "Visa", masked: "****1234", expiry: "12/25" },
     { id: "2", bankName: "Visa", masked: "****9876", expiry: "12/25" },
   ];
 
+  // ✅ Mock banks (TODO: fetch from API)
   const banks: BankOption[] = [
     { name: "HSBC Bank Malaysia", logo: "/hsbc.png" },
     { name: "Hong Leong Bank", logo: "/hong.png" },
   ];
 
-  const handleNext = useCallback(() => {
-    router.push("/customer/booking-success");
-  }, [router]);
+  // ✅ Handle payment submission
+  const handleNext = useCallback(async () => {
+    const isValid = await form.trigger();
+
+    if (!isValid) {
+      (window as any).addToast?.("Please fill in all required fields", "error");
+      return;
+    }
+
+    try {
+      const formData = form.getValues();
+
+      // ✅ Prepare payment payload
+      const paymentPayload = {
+        method,
+        amount: bookingFormData?.totalAmount || 0,
+        bookingData: bookingFormData,
+        ...formData,
+      };
+
+      console.log(paymentPayload);
+
+      // ✅ Dispatch payment action
+      // const result = await dispatch(processPayment(paymentPayload as any)).unwrap();
+
+      // ✅ Clear booking form data after successful payment
+      dispatch(clearBookingFormData());
+
+      // ✅ Show success message
+      (window as any).addToast?.("Payment successful!", "success");
+
+      // ✅ Navigate to success page
+      router.push("/customer/booking-success");
+    } catch (error: any) {
+      console.error("Payment error:", error);
+      (window as any).addToast?.(
+        error?.message || "Payment failed. Please try again.",
+        "error"
+      );
+    }
+  }, [method, form, bookingFormData, dispatch, router]);
 
   return (
     <FormProvider {...form}>
@@ -86,7 +163,7 @@ export default function PaymentProcessLayout() {
                   )}
 
                   {method === "upi" && (
-                    <UpiPanel upiId={upiId} setUpiId={setUpiId} handleNext={handleNext} />
+                    <UpiPanel handleNext={handleNext} />
                   )}
 
                   {method === "card" && (
@@ -127,7 +204,7 @@ export default function PaymentProcessLayout() {
                   </div>
 
                   <div className="flex justify-center">
-                    <Image src="/images/car-blue.png" width={130} height={80} alt="" />
+                    <Image src="/images/workshop/car.png" width={130} height={80} alt="" />
                   </div>
 
                   <p className="text-sm text-center font-medium mt-2">Toyota Hilux</p>
@@ -142,7 +219,7 @@ export default function PaymentProcessLayout() {
                 <InfoBlock>
                   <div className="flex items-center gap-2">
                     <Image
-                      src="/images/workshop.jpg"
+                      src="/images/workshop/AtoZ.png"
                       width={60}
                       height={60}
                       className="rounded-lg"
@@ -161,7 +238,7 @@ export default function PaymentProcessLayout() {
                       </div>
 
                       <div className="flex items-center gap-4 text-xs text-gray-400 mt-2">
-                        🚴‍♂️ 2Kms <span>⏱ 5 Mins Drive</span>
+                        <Bike /> 2Kms <span>⏱ 5 Mins Drive</span>
                       </div>
                     </div>
                   </div>
