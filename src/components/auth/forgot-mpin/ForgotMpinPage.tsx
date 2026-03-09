@@ -13,8 +13,9 @@ import { ArrowLeft } from "phosphor-react";
 
 export default function ForgotMpinRightSide() {
   const router = useRouter();
-  const pathname = typeof window !== 'undefined' ? window.location.pathname : '';
-  const userType = pathname.includes('/vendor') ? 'vendor' : 'customer';
+  const pathname =
+    typeof window !== "undefined" ? window.location.pathname : "";
+  const userType = pathname.includes("/vendor") ? "vendor" : "customer";
   const authPrefix = `/auth/${userType}`;
 
   const methods = useForm({
@@ -27,11 +28,18 @@ export default function ForgotMpinRightSide() {
     reValidateMode: "onBlur",
   });
 
-  const { handleSubmit, watch, setValue, formState: { errors, isSubmitting } } = methods;
+  const {
+    handleSubmit,
+    watch,
+    setValue,
+    formState: { errors, isSubmitting },
+  } = methods;
   const identifier = watch("identifier");
   const formvalues = watch();
 
-  const [mode, setMode] = React.useState<"initial" | "phone" | "email">("initial");
+  const [mode, setMode] = React.useState<"initial" | "phone" | "email">(
+    "initial"
+  );
 
   const countryOptions = [
     { code: "+60", label: "Malaysia", iso: "MY" },
@@ -85,15 +93,21 @@ export default function ForgotMpinRightSide() {
     console.log(data);
 
     // Get the email or phone from the form
-    const email = mode === "email" ? data.email : mode === "phone" ? data.phone : data.identifier;
+    const email =
+      mode === "email"
+        ? data.email
+        : mode === "phone"
+          ? data.phone
+          : data.identifier;
 
     // After successful submission, redirect to verification page
-    router.push(`${authPrefix}/forgot-mpin/verify?email=${encodeURIComponent(email)}`);
+    router.push(
+      `${authPrefix}/forgot-mpin/verify?email=${encodeURIComponent(email)}`
+    );
   }
 
   return (
     <div className="w-full max-w-md bg-white rounded-2xl shadow-xl border border-gray-200 p-8">
-
       {/* LOGO */}
       <div className="text-center mb-6">
         <Image
@@ -113,7 +127,9 @@ export default function ForgotMpinRightSide() {
 
       {/* BLUE INFO BOX */}
       <div className="bg-blue-50 border border-blue-100 px-4 py-3 rounded-xl mt-5">
-        <h3 className="text-[14px] font-semibold text-gray-800">Reset your MPIN</h3>
+        <h3 className="text-[14px] font-semibold text-gray-800">
+          Reset your MPIN
+        </h3>
         <p className="text-xs text-gray-500 mt-1 leading-relaxed">
           We'll send a verification code to your email to confirm your identity.
         </p>
@@ -121,8 +137,10 @@ export default function ForgotMpinRightSide() {
 
       {/* FORM */}
       <FormProvider {...methods}>
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 mt-6">
-
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex flex-col gap-4 mt-6"
+        >
           {/* DYNAMIC INPUT */}
           <div className="min-h-[90px]">
             {mode === "initial" && (
@@ -178,7 +196,10 @@ export default function ForgotMpinRightSide() {
           {/* FOOTER */}
           <p className="text-[11px] text-gray-500 text-center mt-3 leading-relaxed">
             By continuing, you agree to our{" "}
-            <span className="text-blue-600 cursor-pointer">Terms of Service</span> and{" "}
+            <span className="text-blue-600 cursor-pointer">
+              Terms of Service
+            </span>{" "}
+            and{" "}
             <span className="text-blue-600 cursor-pointer">Privacy Policy</span>
           </p>
         </form>

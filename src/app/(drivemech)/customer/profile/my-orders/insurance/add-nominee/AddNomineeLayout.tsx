@@ -5,15 +5,15 @@ import { useRouter } from "next/navigation";
 import { ArrowLeft, Calendar, User, Mail } from "lucide-react";
 
 // UI Components (your library)
-import CustomCard from "@/components/ui/CustomCard";              // :contentReference[oaicite:8]{index=8}
-import Button from "@/components/ui/Button";                      // :contentReference[oaicite:9]{index=9}
-import Typography from "@/components/ui/Typography";              // :contentReference[oaicite:10]{index=10}
+import CustomCard from "@/components/ui/CustomCard"; // :contentReference[oaicite:8]{index=8}
+import Button from "@/components/ui/Button"; // :contentReference[oaicite:9]{index=9}
+import Typography from "@/components/ui/Typography"; // :contentReference[oaicite:10]{index=10}
 import CommonTextInput from "@/components/forms/CommonTextInput"; // :contentReference[oaicite:11]{index=11}
-import CommonTextArea from "@/components/forms/CommonTextArea";   // :contentReference[oaicite:12]{index=12}
-import CheckboxInput from "@/components/forms/CheckboxInput";    // :contentReference[oaicite:13]{index=13}
+import CommonTextArea from "@/components/forms/CommonTextArea"; // :contentReference[oaicite:12]{index=12}
+import CheckboxInput from "@/components/forms/CheckboxInput"; // :contentReference[oaicite:13]{index=13}
 
-import ModalDropdown from "@/components/ui/DropDown";            // :contentReference[oaicite:14]{index=14}
-import PhoneInput from "@/components/forms/PhoneInput";          // :contentReference[oaicite:15]{index=15}
+import ModalDropdown from "@/components/ui/DropDown"; // :contentReference[oaicite:14]{index=14}
+import PhoneInput from "@/components/forms/PhoneInput"; // :contentReference[oaicite:15]{index=15}
 
 import SharePercentageInput from "@/components/forms/SharePercentageInput";
 
@@ -70,7 +70,14 @@ export default function AddNomineeLayout({ policyId }: { policyId: string }) {
     },
   });
 
-  const { register, watch, setValue, handleSubmit, control, formState: { errors } } = methods;
+  const {
+    register,
+    watch,
+    setValue,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = methods;
 
   const dobValue = watch("dob");
   const shareValue = watch("share");
@@ -121,11 +128,13 @@ export default function AddNomineeLayout({ policyId }: { policyId: string }) {
 
   return (
     <FormProvider {...methods}>
-
       <div className="max-w-5xl mx-auto px-6 py-3 flex flex-col gap-4">
         {/* header */}
         <div className="flex items-center gap-3 border-b border-border pb-2">
-          <button onClick={() => router.back()} className="p-2 hover:bg-gray-100 rounded-lg">
+          <button
+            onClick={() => router.back()}
+            className="p-2 hover:bg-gray-100 rounded-lg"
+          >
             <ArrowLeft size={22} />
           </button>
 
@@ -152,14 +161,20 @@ export default function AddNomineeLayout({ policyId }: { policyId: string }) {
                 label="Nominee Name"
                 placeholder="Enter full name"
                 leftIcon={<User size={18} />}
-              // but still surface errors
+                // but still surface errors
               />
-              {errors.nomineeName && <p className="text-xs text-red-500 mt-1">{(errors.nomineeName as any)?.message}</p>}
+              {errors.nomineeName && (
+                <p className="text-xs text-red-500 mt-1">
+                  {(errors.nomineeName as any)?.message}
+                </p>
+              )}
             </div>
 
             {/* Relationship - ModalDropdown (Controller) */}
             <div className="mt-[-6px]">
-              <label className="inputLabel">Relationship <span className="text-red-500">*</span></label>
+              <label className="inputLabel">
+                Relationship <span className="text-red-500">*</span>
+              </label>
               <Controller
                 control={control}
                 name="relationship"
@@ -167,19 +182,29 @@ export default function AddNomineeLayout({ policyId }: { policyId: string }) {
                 render={({ field }) => (
                   <ModalDropdown
                     items={RELATION_OPTIONS}
-                    selectedItem={field.value ? { id: field.value, name: field.value } : null}
+                    selectedItem={
+                      field.value
+                        ? { id: field.value, name: field.value }
+                        : null
+                    }
                     onSelect={(item) => field.onChange(item.id)}
                     placeholder="Select relationship"
                     buttonClassName="h-[40px]"
                   />
                 )}
               />
-              {errors.relationship && <p className="text-xs text-red-500 mt-1">{(errors.relationship as any)?.message}</p>}
+              {errors.relationship && (
+                <p className="text-xs text-red-500 mt-1">
+                  {(errors.relationship as any)?.message}
+                </p>
+              )}
             </div>
 
             {/* DOB */}
             <div>
-              <label className="inputLabel mb-1">Date of Birth <span className="text-red-500">*</span></label>
+              <label className="inputLabel mb-1">
+                Date of Birth <span className="text-red-500">*</span>
+              </label>
               <div className="flex items-center gap-2 border rounded-xl px-3 h-[40px]">
                 <input
                   {...register("dob", { required: "DOB required" })}
@@ -187,9 +212,17 @@ export default function AddNomineeLayout({ policyId }: { policyId: string }) {
                   className="w-full outline-none text-sm"
                 />
               </div>
-              {errors.dob && <p className="text-xs text-red-500 mt-1">{(errors.dob as any)?.message}</p>}
+              {errors.dob && (
+                <p className="text-xs text-red-500 mt-1">
+                  {(errors.dob as any)?.message}
+                </p>
+              )}
 
-              {isMinor && <p className="text-red-500 text-xs mt-1">Minor – Guardian details required</p>}
+              {isMinor && (
+                <p className="text-red-500 text-xs mt-1">
+                  Minor – Guardian details required
+                </p>
+              )}
             </div>
 
             {/* Share Percentage (custom reusable component) */}
@@ -205,7 +238,11 @@ export default function AddNomineeLayout({ policyId }: { policyId: string }) {
                 required
                 countryOptions={[{ code: "IN", label: "India", iso: "IN" }]}
               />
-              {errors.phone && <p className="text-xs text-red-500 mt-1">{(errors.phone as any)?.message}</p>}
+              {errors.phone && (
+                <p className="text-xs text-red-500 mt-1">
+                  {(errors.phone as any)?.message}
+                </p>
+              )}
             </div>
 
             {/* Email */}
@@ -216,12 +253,21 @@ export default function AddNomineeLayout({ policyId }: { policyId: string }) {
                 placeholder="nominee@example.com"
                 leftIcon={<Mail size={18} />}
               />
-              {errors.email && <p className="text-xs text-red-500 mt-1">{(errors.email as any)?.message}</p>}
+              {errors.email && (
+                <p className="text-xs text-red-500 mt-1">
+                  {(errors.email as any)?.message}
+                </p>
+              )}
             </div>
 
             {/* Address - full width */}
             <div className="col-span-2">
-              <CommonTextArea name="address" label="Address" placeholder="Enter complete address" rows={4} />
+              <CommonTextArea
+                name="address"
+                label="Address"
+                placeholder="Enter complete address"
+                rows={4}
+              />
             </div>
           </div>
 
@@ -234,27 +280,48 @@ export default function AddNomineeLayout({ policyId }: { policyId: string }) {
 
               <div className="grid grid-cols-2 gap-5">
                 <div>
-                  <CommonTextInput name="guardianName" label="Guardian Name" placeholder="Enter guardian name" />
-                  {errors.guardianName && <p className="text-xs text-red-500 mt-1">{(errors.guardianName as any)?.message}</p>}
+                  <CommonTextInput
+                    name="guardianName"
+                    label="Guardian Name"
+                    placeholder="Enter guardian name"
+                  />
+                  {errors.guardianName && (
+                    <p className="text-xs text-red-500 mt-1">
+                      {(errors.guardianName as any)?.message}
+                    </p>
+                  )}
                 </div>
 
                 <div>
-                  <label className="inputLabel mb-1">Guardian Relationship <span className="text-red-500">*</span></label>
+                  <label className="inputLabel mb-1">
+                    Guardian Relationship{" "}
+                    <span className="text-red-500">*</span>
+                  </label>
                   <Controller
                     control={control}
                     name="guardianRelation"
-                    rules={{ required: isMinor ? "Guardian relation required" : false }}
+                    rules={{
+                      required: isMinor ? "Guardian relation required" : false,
+                    }}
                     render={({ field }) => (
                       <ModalDropdown
                         items={GUARDIAN_OPTIONS}
-                        selectedItem={field.value ? { id: field.value, name: field.value } : null}
+                        selectedItem={
+                          field.value
+                            ? { id: field.value, name: field.value }
+                            : null
+                        }
                         onSelect={(item) => field.onChange(item.id)}
                         placeholder="Select guardian relationship"
                         buttonClassName="h-[40px]"
                       />
                     )}
                   />
-                  {errors.guardianRelation && <p className="text-xs text-red-500 mt-1">{(errors.guardianRelation as any)?.message}</p>}
+                  {errors.guardianRelation && (
+                    <p className="text-xs text-red-500 mt-1">
+                      {(errors.guardianRelation as any)?.message}
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
@@ -262,7 +329,9 @@ export default function AddNomineeLayout({ policyId }: { policyId: string }) {
 
           {/* Note */}
           <div className="bg-blue-50 border border-blue-200 p-4 rounded-xl text-sm">
-            <strong>Note:</strong> Total share percentage for all nominees must equal 100%. You can add multiple nominees and split the coverage amount accordingly.
+            <strong>Note:</strong> Total share percentage for all nominees must
+            equal 100%. You can add multiple nominees and split the coverage
+            amount accordingly.
           </div>
 
           {/* Buttons */}
@@ -271,27 +340,26 @@ export default function AddNomineeLayout({ policyId }: { policyId: string }) {
               Cancel
             </Button>
 
-            <Button variant="gradient" fullWidth onClick={handleSubmit(onSubmit)}>
+            <Button
+              variant="gradient"
+              fullWidth
+              onClick={handleSubmit(onSubmit)}
+            >
               Add Nominee
             </Button>
           </div>
         </CustomCard>
 
-
         {/* success modal */}
         <Dialog isOpen={showSuccess} onClose={() => setShowSuccess(false)}>
           <DialogBody className="p-4">
-            <DialogHeader
-              title={"Return Submitted"}
-              onClose={() => { }}
-            />
+            <DialogHeader title={"Return Submitted"} onClose={() => {}} />
 
             <NomineeSuccessModal
               isOpen={showSuccess}
               onClose={() => setShowSuccess(false)}
               nominee={submittedNominee}
             />
-
           </DialogBody>
         </Dialog>
       </div>

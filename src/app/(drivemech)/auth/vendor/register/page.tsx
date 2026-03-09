@@ -1,9 +1,7 @@
-import VendorRegisterPage from '../../../../../components/auth/register/VendorRegisterPage'
+import VendorRegisterPage from "../../../../../components/auth/register/VendorRegisterPage";
 
 const page = () => {
-  return (
-    <VendorRegisterPage />
-  )
-}
+  return <VendorRegisterPage />;
+};
 
-export default page
+export default page;

@@ -13,7 +13,6 @@ export default function ReviewSummaryCard() {
   return (
     <CustomCard>
       <div className="rounded-2xl">
-        
         {/* Heading */}
         <h3 className="text-lg font-semibold mb-4">Customer Review</h3>
 
@@ -25,7 +24,10 @@ export default function ReviewSummaryCard() {
               4.5
             </span>
 
-            <Star className="w-8 h-8 text-yellow-500 fill-yellow-500" stroke="none" />
+            <Star
+              className="w-8 h-8 text-yellow-500 fill-yellow-500"
+              stroke="none"
+            />
           </div>
 
           {/* Review count */}
@@ -38,11 +40,13 @@ export default function ReviewSummaryCard() {
         <div className="space-y-3">
           {ratingData.map((item) => (
             <div key={item.stars} className="flex items-center gap-3">
-              
               {/* Stars + number */}
               <div className="flex items-center gap-1 w-8 text-sm text-gray-700">
                 <span>{item.stars}</span>
-                <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" stroke="none" />
+                <Star
+                  className="w-4 h-4 text-yellow-500 fill-yellow-500"
+                  stroke="none"
+                />
               </div>
 
               {/* Gradient bar */}

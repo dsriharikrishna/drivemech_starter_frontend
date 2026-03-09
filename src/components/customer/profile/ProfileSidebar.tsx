@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 
 import { usePathname, useRouter } from "next/navigation";
-import React from "react";
+import React, { useCallback, useMemo } from "react";
 
 // ✅ Import Redux
 import { useAppDispatch } from "@/store/store";
@@ -27,7 +27,7 @@ export default function ProfileSidebar() {
   const [isLogOutModalOpen, setIsLogOutModalOpen] = React.useState(false);
 
   // ✅ Handle logout with Redux
-  const handleLogout = () => {
+  const handleLogout = useCallback(() => {
     // Dispatch logout action
     dispatch(logout());
 
@@ -39,50 +39,81 @@ export default function ProfileSidebar() {
 
     // Redirect to login
     router.push("/auth/login");
-  };
+  }, [dispatch, router]);
 
-  const menu = [
-    { label: "Profile", icon: User, path: "/customer/profile" },
-    { label: "My Orders", icon: ShoppingBag, path: "/customer/profile/my-orders" },
-    { label: "My Vehicles", icon: Car, path: "/customer/profile/my-vehicles" },
-    { label: "Payments", icon: CreditCard, path: "/customer/profile/my-payments" },
-    { label: "My Addresses", icon: MapPin, path: "/customer/profile/my-address" },
-    { label: "Settings", icon: Settings, path: "/customer/profile/my-settings" },
-  ];
+  const menu = useMemo(
+    () => [
+      { label: "Profile", icon: User, path: "/customer/profile" },
+      {
+        label: "My Orders",
+        icon: ShoppingBag,
+        path: "/customer/profile/my-orders",
+      },
+      {
+        label: "My Vehicles",
+        icon: Car,
+        path: "/customer/profile/my-vehicles",
+      },
+      {
+        label: "Payments",
+        icon: CreditCard,
+        path: "/customer/profile/my-payments",
+      },
+      {
+        label: "My Addresses",
+        icon: MapPin,
+        path: "/customer/profile/my-address",
+      },
+      {
+        label: "Settings",
+        icon: Settings,
+        path: "/customer/profile/my-settings",
+      },
+    ],
+    []
+  );
+
+  const handleMenuClick = useCallback(
+    (path: string) => {
+      router.push(path);
+    },
+    [router]
+  );
 
   return (
-    <div className="w-full bg-white rounded-xl shadow p-4 overflow-y-auto max-h-[calc(100vh-4rem)]">
-
+    <div className="w-full bg-white rounded-xl shadow px-3 py-4 xs:pt-20  overflow-y-auto max-h-[calc(100vh-4rem)]">
       {/* --- Section Title (optional) ---
       <p className="text-xs font-semibold text-gray-400 uppercase mb-3 pl-2 tracking-wide">
         Menu
       </p> */}
 
       {/* --- Menu Items --- */}
-      <ul className="space-y-1.5">
+      <ul className="space-y-1">
         {menu.map((item) => {
           const Icon = item.icon;
 
           // ✅ Check if current route is active (including nested routes)
-          const isActive = item.path === "/customer/profile"
-            ? pathname === "/customer/profile" // Exact match for Profile to avoid conflicts
-            : pathname.startsWith(item.path); // Nested route support for others
+          const isActive =
+            item.path === "/customer/profile"
+              ? pathname === "/customer/profile" // Exact match for Profile to avoid conflicts
+              : pathname.startsWith(item.path); // Nested route support for others
 
           return (
             <li
               key={item.label}
-              onClick={() => router.push(item.path)}
+              onClick={() => handleMenuClick(item.path)}
               className={`
-                flex items-center gap-3 
-                px-3 py-2.5 
-                rounded-lg cursor-pointer text-sm font-medium transition
-                ${isActive
-                  ? "bg-orange-500 text-white shadow-sm"
-                  : "hover:bg-gray-100 text-gray-700"
+                flex items-center gap-2 
+                px-2.5 py-2 
+                rounded-lg cursor-pointer text-xs font-medium transition
+                ${
+                  isActive
+                    ? "bg-orange-500 text-white shadow-sm"
+                    : "hover:bg-gray-100 text-gray-700"
                 }
               `}
             >
-              <Icon size={18} />
+              <Icon size={16} />
               <span>{item.label}</span>
             </li>
           );
@@ -90,14 +121,14 @@ export default function ProfileSidebar() {
       </ul>
 
       {/* Divider */}
-      <div className="border-t-2 border-gray-200 my-4" />
+      <div className="border-t-2 border-gray-200 my-3" />
 
       {/* Logout button */}
       <button
         onClick={() => setIsLogOutModalOpen(true)}
         className="
-          w-full flex items-center justify-center gap-3 
-          px-3 py-2.5 text-sm
+          w-full flex items-center justify-center gap-2 
+          px-2.5 py-2 text-xs
           text-red-600 
           border border-red-300 
           rounded-lg 
@@ -105,7 +136,7 @@ export default function ProfileSidebar() {
           transition
         "
       >
-        <LogOut size={16} /> Logout
+        <LogOut size={14} /> Logout
       </button>
 
       {/* Logout Confirmation Modal */}
@@ -113,21 +144,21 @@ export default function ProfileSidebar() {
         isOpen={isLogOutModalOpen}
         onClose={() => setIsLogOutModalOpen(false)}
       >
-        <div className="bg-white rounded-xl w-80 shadow p-6">
-          <h2 className="text-lg font-semibold mb-4">Confirm Logout</h2>
-          <p className="mb-6">Are you sure you want to logout?</p>
+        <div className="bg-white rounded-xl w-80 shadow p-4">
+          <h2 className="text-base font-semibold mb-3">Confirm Logout</h2>
+          <p className="text-xs mb-4">Are you sure you want to logout?</p>
 
-          <div className="flex justify-end gap-3">
+          <div className="flex justify-end gap-2">
             <button
               onClick={() => setIsLogOutModalOpen(false)}
-              className="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300"
+              className="px-3 py-1.5 text-xs bg-gray-200 rounded-lg hover:bg-gray-300"
             >
               Cancel
             </button>
 
             <button
               onClick={handleLogout}
-              className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
+              className="px-3 py-1.5 text-xs bg-red-600 text-white rounded-lg hover:bg-red-700"
             >
               Logout
             </button>

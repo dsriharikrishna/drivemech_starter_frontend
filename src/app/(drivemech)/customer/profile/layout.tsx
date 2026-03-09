@@ -1,83 +1,57 @@
 "use client";
 
-import { useState } from "react";
 import ProfileSidebar from "@/components/customer/profile/ProfileSidebar";
+import ScrollableTabs, { TabItem } from "@/components/ui/ScrollableTabs";
 import { ReactNode } from "react";
-import { Menu, X } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { User, ShoppingBag, Car, CreditCard, MapPin, Settings } from "lucide-react";
+
+const TABS: TabItem[] = [
+  { id: "/customer/profile", label: "Profile", icon: <User size={18} /> },
+  { id: "/customer/profile/my-orders", label: "Orders", icon: <ShoppingBag size={18} /> },
+  { id: "/customer/profile/my-vehicles", label: "Vehicles", icon: <Car size={18} /> },
+  { id: "/customer/profile/my-payments", label: "Payments", icon: <CreditCard size={18} /> },
+  { id: "/customer/profile/my-address", label: "Addresses", icon: <MapPin size={18} /> },
+  { id: "/customer/profile/my-settings", label: "Settings", icon: <Settings size={18} /> },
+];
 
 export default function ProfileRootLayout({ children }: { children: ReactNode }) {
-  const [drawerOpen, setDrawerOpen] = useState(false);
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const activeTab =
+    TABS.find((t) =>
+      t.id === "/customer/profile"
+        ? pathname === "/customer/profile"
+        : pathname.startsWith(t.id)
+    )?.id ?? "/customer/profile";
 
   return (
-    <div className="min-h-screen bg-gray-50 flex justify-center">
+    <div className="w-full flex flex-col">
 
-      {/* Wrapper */}
-      <div className="flex w-full max-w-7xl gap-4 p-4 relative">
+      {/* ── MOBILE TAB BAR ── only visible below lg, sticks below the fixed navbar (top-16) */}
+      <div className="lg:hidden sticky top-16 z-20 bg-white border-b border-gray-100 shadow-sm -mx-3 px-2 py-1.5 overflow-hidden">
+        <ScrollableTabs
+          tabs={TABS}
+          activeTab={activeTab}
+          onTabChange={(id) => router.push(id)}
+          variant="compact"
+          showArrows={true}
+          arrowPosition="inside"
+          className="w-full"
+        />
+      </div>
 
-        {/* ---------- DESKTOP SIDEBAR ---------- */}
-        <aside
-          className="
-            hidden         
-            lg:block        
-            w-64 
-            sticky top-4 
-            h-[calc(100vh-2rem)]
-          "
-        >
+      {/* ── BODY ── */}
+      <div className="flex gap-4 mt-2 lg:mt-0 px-8 py-4">
+
+        {/* ── DESKTOP SIDEBAR ── */}
+        <aside className="hidden lg:block w-56 xl:w-64 shrink-0 sticky top-4 self-start h-[calc(100vh-6rem)]">
           <ProfileSidebar />
         </aside>
 
-        {/* ---------- MOBILE MENU BUTTON ---------- */}
-        <button
-          onClick={() => setDrawerOpen(true)}
-          className="
-            lg:hidden 
-            absolute left-4 top-4 
-            p-2 bg-white rounded-lg shadow z-30
-          "
-        >
-          <Menu size={22} />
-        </button>
-
-        {/* ---------- MOBILE DRAWER SIDEBAR ---------- */}
-        <div
-          className={`
-            fixed inset-0 z-40 lg:hidden
-            transition-all duration-300
-            ${drawerOpen ? "translate-x-0" : "-translate-x-full"}
-          `}
-        >
-          {/* Backdrop overlay */}
-          <div
-            className="absolute inset-0 bg-black/30"
-            onClick={() => setDrawerOpen(false)}
-          />
-
-          {/* Drawer panel */}
-          <div className="relative w-64 h-full bg-white shadow-xl p-4">
-            {/* Close button */}
-            <button
-              onClick={() => setDrawerOpen(false)}
-              className="absolute right-4 top-4 p-2 bg-gray-100 rounded-lg"
-            >
-              <X size={20} />
-            </button>
-
-            <ProfileSidebar />
-          </div>
-        </div>
-
-        {/* ---------- MAIN CONTENT ---------- */}
-        <main
-          className="
-            flex-1 
-            p-3 
-            bg-white 
-            rounded-xl 
-            shadow-sm 
-            w-full
-          "
-        >
+        {/* ── PAGE CONTENT ── */}
+        <main className="flex-1 min-w-0 bg-white rounded-xl shadow-sm p-3">
           {children}
         </main>
 

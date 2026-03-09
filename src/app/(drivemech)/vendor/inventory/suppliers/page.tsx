@@ -1,28 +1,86 @@
-import React from 'react'
+"use client";
 
-const SuppliersPage = () => {
-    return (
-        <div className="w-full h-full p-8">
-            <div className="max-w-7xl mx-auto">
-                <h1 className="text-3xl font-bold text-gray-900 mb-2">Suppliers</h1>
-                <p className="text-gray-600 mb-8">
-                    Manage supplier relationships and orders
-                </p>
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Search, FileSpreadsheet, FileText } from "lucide-react";
+import Button from "@/components/ui/Button";
+import ActionDropdown from "@/components/ui/ActionDropdown";
+import Table, { TableColumn } from "@/components/ui/Table";
+import { Supplier } from "@/schemas/vendor/supplier.schema";
+import { AddCircleIcon, ImportIcon } from "@/components/icons/ManagementModuleIcons";
+import { DownloadIcon } from "@/components/icons/TransactionIcons";
+import VendorFilterSection from "@/components/vendor/VendorFilterSection";
 
-                <div className="bg-white rounded-xl shadow-sm p-8 border border-gray-200">
-                    <div className="text-center py-12">
-                        <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <svg className="w-8 h-8 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                            </svg>
-                        </div>
-                        <h3 className="text-xl font-semibold text-gray-900 mb-2">Suppliers</h3>
-                        <p className="text-gray-500">This section is under development</p>
-                    </div>
-                </div>
-            </div>
+/* ── Mock Data ── */
+const mockSuppliers: Supplier[] = [
+  { id: "1", name: "Chopra, Rana and Bharadwaj", city: "Bhilwara", phone: "+91 70007 70007", website: "www.website.com" },
+  { id: "2", name: "Kapoor-Iyengar", city: "Firozabad", phone: "+91 70007 70007", website: "www.website.com" },
+  { id: "3", name: "Sample Corporation", city: "New Delhi", phone: "+91 70007 70007", website: "www.website.com" },
+  { id: "4", name: "Sundry Supplier", city: "Hyderabad", phone: "+91 70007 70007", website: "www.website.com" },
+  { id: "5", name: "Jagan", city: "Kadapa", phone: "+91 70007 70007", website: "www.website.com" },
+  { id: "6", name: "Anji Reddy", city: "Guntur", phone: "+91 70007 70007", website: "www.website.com" },
+  { id: "7", name: "Chopra, Rana and Bharadwaj", city: "Bhilwara", phone: "+91 70007 70007", website: "www.website.com" },
+  { id: "8", name: "Kapoor-Iyengar", city: "Firozabad", phone: "+91 70007 70007", website: "www.website.com" },
+  { id: "9", name: "Sample Corporation", city: "New Delhi", phone: "+91 70007 70007", website: "www.website.com" },
+  { id: "10", name: "Sundry Supplier", city: "Hyderabad", phone: "+91 70007 70007", website: "www.website.com" },
+  { id: "11", name: "Jagan", city: "Kadapa", phone: "+91 70007 70007", website: "www.website.com" },
+  { id: "12", name: "Anji Reddy", city: "Guntur", phone: "+91 70007 70007", website: "www.website.com" },
+];
+
+/* ── Page ── */
+const SuppliersListPage = () => {
+  const router = useRouter();
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const filtered = mockSuppliers.filter(
+    (s) =>
+      s.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      s.city.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      s.phone.includes(searchQuery)
+  );
+
+  const columns: TableColumn<Supplier>[] = [
+    { key: "name", header: "Supplier", width: "30%", sortable: true },
+    { key: "city", header: "City", width: "20%", sortable: true },
+    { key: "phone", header: "Phone Number", width: "25%" },
+    { key: "website", header: "Website", width: "25%" },
+  ];
+
+  return (
+    <div className="h-full w-full bg-white">
+      <div className="p-2 flex flex-col gap-4 border border-gray-200 rounded-xl">
+        <div className="flex flex-col gap-2 border border-gray-200 rounded-xl">
+
+          {/* Header */}
+          <VendorFilterSection
+            title="Suppliers"
+            searchPlaceholder="Search suppliers..."
+            onSearch={setSearchQuery}
+            onAdd={() => router.push("/vendor/inventory/suppliers/add-supplier")}
+            onExport={() => console.log("Export")}
+          />
+
+          {/* Table */}
+          <div className="border border-gray-200 rounded-b-xl overflow-hidden" style={{
+            height: "calc(100vh - 180px)"
+          }}>
+            <Table
+              columns={columns}
+              data={filtered}
+              keyExtractor={(s) => s.id}
+              pagination
+              pageSize={10}
+              hoverable
+              striped={false}
+              onRowClick={(supplier) => router.push(`/vendor/inventory/suppliers/${supplier.id}`)}
+              className="h-full"
+              style={{ height: "100%" }}
+            />
+          </div>
         </div>
-    )
-}
+      </div>
+    </div>
+  );
+};
 
-export default SuppliersPage
+export default SuppliersListPage;

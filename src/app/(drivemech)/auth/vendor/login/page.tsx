@@ -1,7 +1,7 @@
-import LoginPage from '../../../../../components/auth/login/LoginPage'
+import LoginPage from "../../../../../components/auth/login/LoginPage";
 
 const page = () => {
-    return <LoginPage />;
+  return <LoginPage />;
 };
 
 export default page;

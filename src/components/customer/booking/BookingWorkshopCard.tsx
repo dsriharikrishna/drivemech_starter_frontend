@@ -19,7 +19,13 @@ export default function BookingWorkshopCard({
       <p className="text-sm text-gray-500 mb-2">Workshop</p>
 
       <div className="flex items-center gap-3">
-        <Image src={img} alt="workshop" width={45} height={45} className="rounded-md" />
+        <Image
+          src={img}
+          alt="workshop"
+          width={45}
+          height={45}
+          className="rounded-md"
+        />
 
         <div>
           <p className="font-medium text-gray-800">{name}</p>

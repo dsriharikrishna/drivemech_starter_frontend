@@ -12,10 +12,8 @@ interface Props {
 export default function ReviewItem({ name, time, review, rating }: Props) {
   return (
     <div className="py-4 border-b last:border-b-0 border-gray-200">
-
       {/* Top Row */}
       <div className="flex items-center justify-between">
-
         {/* Left block (avatar + name + stars + time) */}
         <div className="flex items-center gap-3">
           <Image
@@ -49,9 +47,7 @@ export default function ReviewItem({ name, time, review, rating }: Props) {
       </div>
 
       {/* Review text */}
-      <p className="text-sm text-[#606B80] mt-4 leading-relaxed">
-        {review}
-      </p>
+      <p className="text-sm text-[#606B80] mt-4 leading-relaxed">{review}</p>
     </div>
   );
 }

@@ -78,14 +78,13 @@ export const WorkShopLayout = () => {
       const selected = { name, id };
       setSelectedWorkShop(selected);
 
-
       router.push("/customer/select-service");
     },
     [router]
   );
 
   return (
-    <div className="p-4 max-w-7xl mx-auto flex flex-col gap-4">
+    <div className="container mx-auto px-8 py-8 md:px-8 md:py-8 flex flex-col gap-2">
       <div className="flex flex-col lg:flex-row gap-4">
         <LeftLayout>
           <WorkShopHeader

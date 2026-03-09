@@ -78,7 +78,9 @@ export const registerUser = createAsyncThunk<
 
     return data;
   } catch (err: any) {
-    return rejectWithValue(err?.response?.data?.message || "Registration failed");
+    return rejectWithValue(
+      err?.response?.data?.message || "Registration failed"
+    );
   }
 });
 
@@ -89,10 +91,15 @@ export const verifyCode = createAsyncThunk<
   { rejectValue: string }
 >("auth/verify", async (payload, { rejectWithValue }) => {
   try {
-    const res = await apiService.post(API_CONFIG.ENDPOINTS.VERIFY_CODE, payload);
+    const res = await apiService.post(
+      API_CONFIG.ENDPOINTS.VERIFY_CODE,
+      payload
+    );
     return res.data.data || res.data;
   } catch (err: any) {
-    return rejectWithValue(err?.response?.data?.message || "Verification failed");
+    return rejectWithValue(
+      err?.response?.data?.message || "Verification failed"
+    );
   }
 });
 
@@ -118,7 +125,9 @@ export const refreshToken = createAsyncThunk<
 
     return data;
   } catch (err: any) {
-    return rejectWithValue(err?.response?.data?.message || "Token refresh failed");
+    return rejectWithValue(
+      err?.response?.data?.message || "Token refresh failed"
+    );
   }
 });
 
@@ -142,7 +151,9 @@ export const verifyOtp = createAsyncThunk<
 
     return data;
   } catch (err: any) {
-    return rejectWithValue(err?.response?.data?.message || "OTP verification failed");
+    return rejectWithValue(
+      err?.response?.data?.message || "OTP verification failed"
+    );
   }
 });
 
@@ -156,7 +167,9 @@ export const resendOtp = createAsyncThunk<
     const res = await apiService.post(API_CONFIG.ENDPOINTS.RESEND_OTP, payload);
     return res.data.data || res.data;
   } catch (err: any) {
-    return rejectWithValue(err?.response?.data?.message || "Failed to resend OTP");
+    return rejectWithValue(
+      err?.response?.data?.message || "Failed to resend OTP"
+    );
   }
 });
 
@@ -167,10 +180,15 @@ export const createMpin = createAsyncThunk<
   { rejectValue: string }
 >("auth/createMpin", async (payload, { rejectWithValue }) => {
   try {
-    const res = await apiService.post(API_CONFIG.ENDPOINTS.CREATE_MPIN, payload);
+    const res = await apiService.post(
+      API_CONFIG.ENDPOINTS.CREATE_MPIN,
+      payload
+    );
     return res.data.data || res.data;
   } catch (err: any) {
-    return rejectWithValue(err?.response?.data?.message || "Failed to create MPIN");
+    return rejectWithValue(
+      err?.response?.data?.message || "Failed to create MPIN"
+    );
   }
 });
 
@@ -181,7 +199,10 @@ export const verifyMpin = createAsyncThunk<
   { rejectValue: string }
 >("auth/verifyMpin", async (payload, { rejectWithValue }) => {
   try {
-    const res = await apiService.post(API_CONFIG.ENDPOINTS.VERIFY_MPIN, payload);
+    const res = await apiService.post(
+      API_CONFIG.ENDPOINTS.VERIFY_MPIN,
+      payload
+    );
     const data = res.data.data || res.data;
 
     if (data.accessToken) {
@@ -193,7 +214,9 @@ export const verifyMpin = createAsyncThunk<
 
     return data;
   } catch (err: any) {
-    return rejectWithValue(err?.response?.data?.message || "MPIN verification failed");
+    return rejectWithValue(
+      err?.response?.data?.message || "MPIN verification failed"
+    );
   }
 });
 
@@ -204,10 +227,15 @@ export const forgotPassword = createAsyncThunk<
   { rejectValue: string }
 >("auth/forgotPassword", async (payload, { rejectWithValue }) => {
   try {
-    const res = await apiService.post(API_CONFIG.ENDPOINTS.FORGOT_PASSWORD, payload);
+    const res = await apiService.post(
+      API_CONFIG.ENDPOINTS.FORGOT_PASSWORD,
+      payload
+    );
     return res.data.data || res.data;
   } catch (err: any) {
-    return rejectWithValue(err?.response?.data?.message || "Failed to send reset email");
+    return rejectWithValue(
+      err?.response?.data?.message || "Failed to send reset email"
+    );
   }
 });
 
@@ -218,10 +246,15 @@ export const validateResetToken = createAsyncThunk<
   { rejectValue: string }
 >("auth/validateResetToken", async (payload, { rejectWithValue }) => {
   try {
-    const res = await apiService.post(API_CONFIG.ENDPOINTS.RESET_TOKEN_VALIDATION, payload);
+    const res = await apiService.post(
+      API_CONFIG.ENDPOINTS.RESET_TOKEN_VALIDATION,
+      payload
+    );
     return res.data.data || res.data;
   } catch (err: any) {
-    return rejectWithValue(err?.response?.data?.message || "Invalid or expired reset token");
+    return rejectWithValue(
+      err?.response?.data?.message || "Invalid or expired reset token"
+    );
   }
 });
 
@@ -232,10 +265,15 @@ export const resetPassword = createAsyncThunk<
   { rejectValue: string }
 >("auth/resetPassword", async (payload, { rejectWithValue }) => {
   try {
-    const res = await apiService.post(API_CONFIG.ENDPOINTS.RESET_PASSWORD, payload);
+    const res = await apiService.post(
+      API_CONFIG.ENDPOINTS.RESET_PASSWORD,
+      payload
+    );
     return res.data.data || res.data;
   } catch (err: any) {
-    return rejectWithValue(err?.response?.data?.message || "Failed to reset password");
+    return rejectWithValue(
+      err?.response?.data?.message || "Failed to reset password"
+    );
   }
 });
 
@@ -246,10 +284,15 @@ export const forgotMpin = createAsyncThunk<
   { rejectValue: string }
 >("auth/forgotMpin", async (payload, { rejectWithValue }) => {
   try {
-    const res = await apiService.post(API_CONFIG.ENDPOINTS.FORGOT_MPIN, payload);
+    const res = await apiService.post(
+      API_CONFIG.ENDPOINTS.FORGOT_MPIN,
+      payload
+    );
     return res.data.data || res.data;
   } catch (err: any) {
-    return rejectWithValue(err?.response?.data?.message || "Failed to send MPIN reset code");
+    return rejectWithValue(
+      err?.response?.data?.message || "Failed to send MPIN reset code"
+    );
   }
 });
 
@@ -263,7 +306,9 @@ export const resetMpin = createAsyncThunk<
     const res = await apiService.post(API_CONFIG.ENDPOINTS.RESET_MPIN, payload);
     return res.data.data || res.data;
   } catch (err: any) {
-    return rejectWithValue(err?.response?.data?.message || "Failed to reset MPIN");
+    return rejectWithValue(
+      err?.response?.data?.message || "Failed to reset MPIN"
+    );
   }
 });
 
@@ -496,7 +541,8 @@ export const selectAuthError = (state: RootState) => state.auth.error;
 export const selectOtpSent = (state: RootState) => state.auth.otpSent;
 export const selectOtpVerified = (state: RootState) => state.auth.otpVerified;
 export const selectMpinCreated = (state: RootState) => state.auth.mpinCreated;
-export const selectVerificationMethod = (state: RootState) => state.auth.verificationMethod;
+export const selectVerificationMethod = (state: RootState) =>
+  state.auth.verificationMethod;
 
 /* ----------------------------------
    EXPORTS

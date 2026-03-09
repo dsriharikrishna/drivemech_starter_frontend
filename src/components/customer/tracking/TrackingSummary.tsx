@@ -7,7 +7,6 @@ interface Props {
 export default function TrackingSummary({ status, stage, estimate }: Props) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 border-b pb-4">
-
       <div>
         <p className="text-sm text-gray-500">Current Status</p>
         <p className="text-green-600 font-medium">{status}</p>

@@ -1,7 +1,7 @@
 "use client";
 
-import React from 'react';
-import Image from 'next/image';
+import React from "react";
+import Image from "next/image";
 
 export default function AuthLayout({
   children,
@@ -14,7 +14,7 @@ export default function AuthLayout({
       <div className="hidden lg:flex lg:w-[60%] rounded-r-xl h-[calc(100vh-4rem)] relative overflow-hidden bg-gradient-to-br from-gray-800 via-gray-900 to-black">
         {/* Background Illustration */}
         <Image
-          src="/images/workshop-illustration.png" 
+          src="/images/workshop-illustration.png"
           alt="Workshop Illustration"
           fill
           className="object-cover opacity-90 rounded-xl"
@@ -34,11 +34,8 @@ export default function AuthLayout({
 
       {/* RIGHT SIDE - 40% - White Form Area */}
       <div className="w-full lg:w-[40%] flex items-center justify-center px-6 py-12 bg-white">
-        <div className="w-full max-w-md">
-          {children}
-        </div>
+        <div className="w-full max-w-md">{children}</div>
       </div>
     </div>
   );
 }
-

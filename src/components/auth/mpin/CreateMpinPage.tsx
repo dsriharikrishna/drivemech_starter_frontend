@@ -20,8 +20,9 @@ import { createMpinSchema } from "@/schemas/auth/mpin.schema";
 export default function CreateMpinPage(): React.ReactNode {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const pathname = typeof window !== 'undefined' ? window.location.pathname : '';
-  const userType = pathname.includes('/vendor') ? 'vendor' : 'customer';
+  const pathname =
+    typeof window !== "undefined" ? window.location.pathname : "";
+  const userType = pathname.includes("/vendor") ? "vendor" : "customer";
   const authPrefix = `/auth/${userType}`;
 
   const loading = useAppSelector(selectAuthLoading);
@@ -39,10 +40,16 @@ export default function CreateMpinPage(): React.ReactNode {
     reValidateMode: "onBlur",
   });
 
-  const { handleSubmit, formState: { errors, isSubmitting }, setValue } = methods;
+  const {
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    setValue,
+  } = methods;
 
   const [newMpin, setNewMpin] = useState<string[]>(Array(DIGITS).fill(""));
-  const [confirmMpin, setConfirmMpin] = useState<string[]>(Array(DIGITS).fill(""));
+  const [confirmMpin, setConfirmMpin] = useState<string[]>(
+    Array(DIGITS).fill("")
+  );
   const [showMpin, setShowMpin] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -176,8 +183,10 @@ export default function CreateMpinPage(): React.ReactNode {
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-md bg-white rounded-2xl shadow-xl border border-gray-100 p-4">
-
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="w-full max-w-md bg-white rounded-2xl shadow-xl border border-gray-100 p-4"
+      >
         {/* Logo */}
         <div className="text-center mb-2">
           <div className="mx-auto w-36 h-10 relative">
@@ -188,21 +197,29 @@ export default function CreateMpinPage(): React.ReactNode {
               className="object-contain"
             />
           </div>
-          <p className="text-xs text-gray-500 mt-1">Drive Smart. Service Smarter.</p>
+          <p className="text-xs text-gray-500 mt-1">
+            Drive Smart. Service Smarter.
+          </p>
         </div>
 
         {/* Header */}
         <div className="text-center mb-2">
           <h2 className="text-2xl font-bold text-gray-900">Create New MPIN</h2>
-          <p className="text-sm text-gray-500 mt-1">Set up a secure 4-digit MPIN</p>
+          <p className="text-sm text-gray-500 mt-1">
+            Set up a secure 4-digit MPIN
+          </p>
         </div>
 
         {/* Identity Verified */}
         <div className="bg-green-50 border border-green-200 rounded-xl p-5 mb-2 shadow-sm">
           <div className="flex flex-col items-center">
             <CheckCircle className="w-12 h-12 text-green-600 mb-2" />
-            <p className="text-base font-semibold text-green-700">Identity Verified</p>
-            <p className="text-xs text-gray-600 mt-1">You can now create a new MPIN.</p>
+            <p className="text-base font-semibold text-green-700">
+              Identity Verified
+            </p>
+            <p className="text-xs text-gray-600 mt-1">
+              You can now create a new MPIN.
+            </p>
           </div>
         </div>
 
@@ -265,7 +282,10 @@ export default function CreateMpinPage(): React.ReactNode {
             onChange={(e) => setShowMpin(e.target.checked)}
             className="w-4 h-4 rounded border-gray-300 text-orange-500 focus:ring-orange-500"
           />
-          <label htmlFor="showMpin" className="text-sm text-gray-600 cursor-pointer">
+          <label
+            htmlFor="showMpin"
+            className="text-sm text-gray-600 cursor-pointer"
+          >
             Show MPIN
           </label>
         </div>
@@ -281,7 +301,9 @@ export default function CreateMpinPage(): React.ReactNode {
 
         {/* Security Tips */}
         <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4 mb-6 shadow-sm">
-          <h3 className="text-sm font-semibold text-gray-800 mb-2">Security Tips</h3>
+          <h3 className="text-sm font-semibold text-gray-800 mb-2">
+            Security Tips
+          </h3>
           <ul className="text-xs text-gray-700 space-y-1">
             <li>• Use a unique 4-digit combination.</li>
             <li>• Avoid common patterns like 1234 or 1111.</li>
@@ -292,11 +314,14 @@ export default function CreateMpinPage(): React.ReactNode {
         {/* Button */}
         <Button
           type="submit"
-          disabled={!isNewMpinComplete || !isConfirmMpinComplete || isSubmitting}
-          className={`w-full py-3 rounded-xl font-semibold transition-all ${isNewMpinComplete && isConfirmMpinComplete && mpinsMatch
-            ? "bg-orange-500 hover:bg-orange-600 text-white shadow-md"
-            : "bg-gray-200 text-gray-400 cursor-not-allowed"
-            }`}
+          disabled={
+            !isNewMpinComplete || !isConfirmMpinComplete || isSubmitting
+          }
+          className={`w-full py-3 rounded-xl font-semibold transition-all ${
+            isNewMpinComplete && isConfirmMpinComplete && mpinsMatch
+              ? "bg-orange-500 hover:bg-orange-600 text-white shadow-md"
+              : "bg-gray-200 text-gray-400 cursor-not-allowed"
+          }`}
         >
           {isSubmitting ? "Creating MPIN..." : "Create MPIN"}
         </Button>
@@ -304,9 +329,14 @@ export default function CreateMpinPage(): React.ReactNode {
         {/* Footer */}
         <p className="text-[11px] text-gray-500 text-center mt-6 leading-relaxed">
           By continuing, you agree to our{" "}
-          <span className="text-blue-600 cursor-pointer hover:underline">Terms of Service</span>{" "}
+          <span className="text-blue-600 cursor-pointer hover:underline">
+            Terms of Service
+          </span>{" "}
           and{" "}
-          <span className="text-blue-600 cursor-pointer hover:underline">Privacy Policy</span>.
+          <span className="text-blue-600 cursor-pointer hover:underline">
+            Privacy Policy
+          </span>
+          .
         </p>
       </form>
     </FormProvider>

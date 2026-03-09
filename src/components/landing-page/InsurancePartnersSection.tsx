@@ -1,45 +1,48 @@
 export default function InsurancePartnersSection() {
-
   const insurances = [
     {
       type: "Life Insurance",
-      description: "Our Life Insurance plans provide peace of mind, ensuring your loved ones are protected even when you're not around.",
+      description:
+        "Our Life Insurance plans provide peace of mind, ensuring your loved ones are protected even when you're not around.",
       imageUrl: "/images/Insurance/life-insurance.png",
       features: [
         "Quick & Hassle-Free Claim Process",
         "Flexible Premium Payment Options",
-        "Tax Benefits as per Applicable Laws"
-      ]
+        "Tax Benefits as per Applicable Laws",
+      ],
     },
     {
       type: "Health Insurance",
-      description: "Medical emergencies can happen without warning. Health insurance protects you and your family from unexpected medical expenses.",
+      description:
+        "Medical emergencies can happen without warning. Health insurance protects you and your family from unexpected medical expenses.",
       imageUrl: "/images/Insurance/health-insurance.png",
       features: [
         "Cashless Hospitalization",
         "Covers Pre & Post Hospitalization",
-        "24/7 Customer Support"
-      ]
+        "24/7 Customer Support",
+      ],
     },
     {
       type: "Vehicle Insurance",
-      description: "Accidents, breakdowns, and unexpected damages can happen anytime. With our comprehensive vehicle insurance plans, you get complete protection for your car or bike.",
+      description:
+        "Accidents, breakdowns, and unexpected damages can happen anytime. With our comprehensive vehicle insurance plans, you get complete protection for your car or bike.",
       imageUrl: "/images/Insurance/vehicle-insurance.png",
       features: [
         "Cashless claims",
         "24*7 roadside assistance",
-        "Zero depreciation"
-      ]
+        "Zero depreciation",
+      ],
     },
     {
       type: "Fleet Insurance",
-      description: "Protect your entire vehicle fleet under one comprehensive policy designed to keep your business running smoothly.",
+      description:
+        "Protect your entire vehicle fleet under one comprehensive policy designed to keep your business running smoothly.",
       imageUrl: "/images/Insurance/fleet-insurance.png",
       features: [
         "One Policy for All Vehicles",
         "Lower Premiums",
-        "Easy Claims Process"
-      ]
+        "Easy Claims Process",
+      ],
     },
   ];
 
@@ -52,7 +55,10 @@ export default function InsurancePartnersSection() {
             We Provide Best <span className="text-[#FF7A1A]">Insurances</span>
           </h1>
           <p className="text-base text-[#545965] max-w-3xl mx-auto leading-relaxed">
-            This is a small paragraph of placeholder text that can be used for web content. It serves as a temporary block of text to visualize the layout and design of a webpage before the actual content is available.
+            This is a small paragraph of placeholder text that can be used for
+            web content. It serves as a temporary block of text to visualize the
+            layout and design of a webpage before the actual content is
+            available.
           </p>
         </div>
 
@@ -97,7 +103,10 @@ export default function InsurancePartnersSection() {
                 {/* Features List */}
                 <ul className="space-y-2 mb-6">
                   {insurance.features.map((feature, idx) => (
-                    <li key={idx} className="flex items-start text-sm text-[#545965]">
+                    <li
+                      key={idx}
+                      className="flex items-start text-sm text-[#545965]"
+                    >
                       <span className="text-[#FF7A1A] mr-2 mt-1">•</span>
                       <span>{feature}</span>
                     </li>

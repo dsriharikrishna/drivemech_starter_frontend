@@ -1,28 +1,83 @@
-import React from 'react'
+"use client";
 
-const CustomersPage = () => {
-    return (
-        <div className="w-full h-full p-8">
-            <div className="max-w-7xl mx-auto">
-                <h1 className="text-3xl font-bold text-gray-900 mb-2">Customers</h1>
-                <p className="text-gray-600 mb-8">
-                    Manage customer information and relationships
-                </p>
+import React from "react";
+import { useRouter } from "next/navigation";
+import VendorFilterSection from "@/components/vendor/VendorFilterSection";
+import CustomersTable from "@/components/vendor/management/customers/CustomersTable";
+import { Customer } from "@/schemas/vendor/customer.schema";
 
-                <div className="bg-white rounded-xl shadow-sm p-8 border border-gray-200">
-                    <div className="text-center py-12">
-                        <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <svg className="w-8 h-8 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                            </svg>
-                        </div>
-                        <h3 className="text-xl font-semibold text-gray-900 mb-2">Customers</h3>
-                        <p className="text-gray-500">This section is under development</p>
-                    </div>
-                </div>
-            </div>
+
+/* ---------------- MOCK DATA ---------------- */
+
+const mockCustomers: Customer[] = Array.from({ length: 10 }, (_, i) => ({
+  id: `cust-${i + 1}`,
+  sNo: String(i + 1).padStart(2, "0"),
+  name: "John Doe",
+  mobileNumber: "+91 70007 12345",
+  location: "Hyderabad",
+  customerType: "cash",
+  email: "john.doe@example.com",
+  vipCustomer: i % 3 === 0,
+}));
+
+/* ---------------- PAGE ---------------- */
+
+const CustomerPage = () => {
+  const router = useRouter();
+  const handleRowClick = (customer: Customer) => {
+    router.push(`/vendor/management/customers/${customer.id}`);
+  };
+
+  return (
+    <div className="w-full bg-white">
+      <div className="p-2 flex flex-col gap-4">
+        {/* Filter Section */}
+        <VendorFilterSection
+          title="Customers"
+          searchPlaceholder="Search customers..."
+          onSearch={(v) => console.log("search:", v)}
+          statusItems={[
+            { id: "all", label: "All Types" },
+            { id: "cash", label: "Cash" },
+            { id: "credit", label: "Credit" },
+            { id: "vip", label: "VIP" },
+          ]}
+          statusLabel="Type"
+          timeItems={[
+            { id: "all", label: "All time" },
+            { id: "today", label: "Today" },
+            { id: "week", label: "This Week" },
+            { id: "month", label: "This Month" },
+            { id: "year", label: "This Year" },
+          ]}
+          onExport={() => console.log("Export customers")}
+        />
+
+        {/* Table — max-height keeps it within viewport; overflow-y-auto scrolls inside */}
+        <div
+          className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-auto flex-1"
+          style={{ maxHeight: "calc(100vh - 180px)" }}
+        >
+          <CustomersTable
+            customers={mockCustomers}
+            onView={handleRowClick}
+            onRowClick={handleRowClick}
+            onEdit={(c) => router.push(`/vendor/management/customers/${c.id}`)}
+            onAddVehicle={() => router.push("/vendor/management/customers/add-vehicle")}
+            onMessage={(c) => {
+              router.push(
+                `/vendor/management/customers/send-email?name=${encodeURIComponent(c.name)}&email=${encodeURIComponent(c.email || "")}`
+              );
+            }}
+            onInvoice={() => router.push("/vendor/management/customers/invoices")}
+            onPayment={() => router.push("/vendor/management/customers/payments")}
+            onQuote={(c) => router.push(`/vendor/management/customers/${c.id}/add-quote`)}
+            onBooking={(c) => router.push(`/vendor/operations/create-booking`)}
+          />
         </div>
-    )
-}
+      </div>
+    </div>
+  );
+};
 
-export default CustomersPage
+export default CustomerPage;

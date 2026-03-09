@@ -8,7 +8,6 @@ export default function TrackingTimeline({ steps }: { steps: TimelineStep[] }) {
 
   return (
     <div className="relative pl-3 py-4">
-
       {/* MAIN BACKBONE */}
       <div className="absolute left-[18px] top-0 w-[2px] bg-gray-300" />
 
@@ -22,7 +21,6 @@ export default function TrackingTimeline({ steps }: { steps: TimelineStep[] }) {
               key={step.id}
               className="relative flex items-start py-0 min-h-[48px]"
             >
-
               {/* CONNECTOR (ABOVE DOT) */}
               {index > 0 && (
                 <span
@@ -42,8 +40,8 @@ export default function TrackingTimeline({ steps }: { steps: TimelineStep[] }) {
                       index < completedIndex
                         ? "bg-green-500"
                         : index === completedIndex
-                        ? "bg-gray-300"
-                        : "bg-gray-300"
+                          ? "bg-gray-300"
+                          : "bg-gray-300"
                     }
                   `}
                 />
@@ -58,8 +56,8 @@ export default function TrackingTimeline({ steps }: { steps: TimelineStep[] }) {
                     isCompleted
                       ? "bg-green-500 border-green-500 text-white"
                       : isActive
-                      ? "bg-white border-green-500"
-                      : "bg-white border-gray-400"
+                        ? "bg-white border-green-500"
+                        : "bg-white border-gray-400"
                   }
                 `}
               >

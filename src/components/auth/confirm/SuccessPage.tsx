@@ -8,13 +8,13 @@ import Button from "@/components/ui/Button";
 
 export default function SuccessPage() {
   const router = useRouter();
-  const pathname = typeof window !== 'undefined' ? window.location.pathname : '';
-  const userType = pathname.includes('/vendor') ? 'vendor' : 'customer';
+  const pathname =
+    typeof window !== "undefined" ? window.location.pathname : "";
+  const userType = pathname.includes("/vendor") ? "vendor" : "customer";
   const authPrefix = `/auth/${userType}`;
 
   return (
     <div className="w-full max-w-md bg-white rounded-2xl shadow-xl border border-blue-100 p-6 flex flex-col gap-4">
-
       {/* Logo */}
       <div className="flex justify-center">
         <Image
@@ -45,7 +45,8 @@ export default function SuccessPage() {
           MPIN Reset Successful!
         </h3>
         <p className="text-sm text-green-700">
-          Your MPIN has been reset successfully. You can now use your new MPIN to login.
+          Your MPIN has been reset successfully. You can now use your new MPIN
+          to login.
         </p>
       </div>
 
@@ -60,7 +61,8 @@ export default function SuccessPage() {
           MPIN Reset Successful!
         </h3>
         <p className="text-sm text-blue-600">
-          Your MPIN has been reset successfully. You can now use your new MPIN to login.
+          Your MPIN has been reset successfully. You can now use your new MPIN
+          to login.
         </p>
       </div>
 
@@ -76,8 +78,9 @@ export default function SuccessPage() {
       {/* Footer */}
       <p className="text-[11px] text-gray-500 text-center leading-relaxed">
         By continuing, you agree to our{" "}
-        <span className="text-blue-600 cursor-pointer">Terms of Service</span> and{" "}
-        <span className="text-blue-600 cursor-pointer">Privacy Policy</span>.
+        <span className="text-blue-600 cursor-pointer">Terms of Service</span>{" "}
+        and <span className="text-blue-600 cursor-pointer">Privacy Policy</span>
+        .
       </p>
     </div>
   );

@@ -64,7 +64,7 @@ export default function BetterMap() {
           //-----------------------------------------
           // FETCH NEARBY PETROL STATIONS (OVERPASS API)
           //-----------------------------------------
-const url = `https://overpass.kumi.systems/api/interpreter?data=[out:json];(node["amenity"="fuel"](around:5000,${userCoords[1]},${userCoords[0]}););out;`;
+          const url = `https://overpass.kumi.systems/api/interpreter?data=[out:json];(node["amenity"="fuel"](around:5000,${userCoords[1]},${userCoords[0]}););out;`;
 
           const res = await fetch(url);
           if (!res.ok) {
@@ -75,7 +75,7 @@ const url = `https://overpass.kumi.systems/api/interpreter?data=[out:json];(node
           }
 
           const data = await res.json();
-          
+
           if (!data.elements || data.elements.length === 0) {
             setError("No petrol stations found nearby.");
             return;
@@ -88,47 +88,50 @@ const url = `https://overpass.kumi.systems/api/interpreter?data=[out:json];(node
               type: "Feature",
               geometry: {
                 type: "Point",
-                coordinates: [element.lon, element.lat]
+                coordinates: [element.lon, element.lat],
               },
-              properties: { 
+              properties: {
                 name: element.tags?.name || "Petrol Station",
-                amenity: element.tags?.amenity || "fuel"
-              }
+                amenity: element.tags?.amenity || "fuel",
+              },
             })),
           };
 
           //-----------------------------------
           // LOAD PUMP ICON
           //-----------------------------------
-          map.loadImage(
-            "https://cdn-icons-png.flaticon.com/512/2972/2972185.png"
-          ).then((response) => {
-            const img = response.data;
-            if (!img) return;
+          map
+            .loadImage(
+              "https://cdn-icons-png.flaticon.com/512/2972/2972185.png"
+            )
+            .then((response) => {
+              const img = response.data;
+              if (!img) return;
 
-            if (!map.hasImage("pump-icon")) {
-              map.addImage("pump-icon", img);
-            }
+              if (!map.hasImage("pump-icon")) {
+                map.addImage("pump-icon", img);
+              }
 
-            map.addSource("petrol-bunks", {
-              type: "geojson",
-              data: geojson,
+              map.addSource("petrol-bunks", {
+                type: "geojson",
+                data: geojson,
+              });
+
+              map.addLayer({
+                id: "petrol-layer",
+                type: "symbol",
+                source: "petrol-bunks",
+                layout: {
+                  "icon-image": "pump-icon",
+                  "icon-size": 0.08,
+                  "icon-anchor": "bottom",
+                  "icon-allow-overlap": true,
+                },
+              });
+            })
+            .catch((err) => {
+              console.error("Error loading image:", err);
             });
-
-            map.addLayer({
-              id: "petrol-layer",
-              type: "symbol",
-              source: "petrol-bunks",
-              layout: {
-                "icon-image": "pump-icon",
-                "icon-size": 0.08,
-                "icon-anchor": "bottom",
-                "icon-allow-overlap": true,
-              },
-            });
-          }).catch((err) => {
-            console.error("Error loading image:", err);
-          });
 
           //-----------------------------------
           // POPUP ON CLICK

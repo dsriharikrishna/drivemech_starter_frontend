@@ -30,12 +30,13 @@ interface BookingDetailsCardProps {
 
 export default function BookingDetailsCard(props: BookingDetailsCardProps) {
   return (
-    <div className="
+    <div
+      className="
       border border-gray-200 rounded-2xl p-5 bg-white w-full
       transition-all duration-200 
       hover:shadow-md
-    ">
-
+    "
+    >
       {/* ===================== VEHICLE ===================== */}
       {props.type === "vehicle" && (
         <>
@@ -51,8 +52,12 @@ export default function BookingDetailsCard(props: BookingDetailsCardProps) {
             />
 
             <div className="flex flex-col">
-              <p className="text-base font-semibold text-gray-900">{props.vehicleName}</p>
-              <p className="text-xs text-gray-500 tracking-wide">{props.vehicleNumber}</p>
+              <p className="text-base font-semibold text-gray-900">
+                {props.vehicleName}
+              </p>
+              <p className="text-xs text-gray-500 tracking-wide">
+                {props.vehicleNumber}
+              </p>
             </div>
           </div>
         </>
@@ -61,13 +66,17 @@ export default function BookingDetailsCard(props: BookingDetailsCardProps) {
       {/* ===================== SERVICE DATE ===================== */}
       {props.type === "service-date" && (
         <>
-          <h3 className="text-sm font-medium text-gray-500 mb-3">Service Date & Time</h3>
+          <h3 className="text-sm font-medium text-gray-500 mb-3">
+            Service Date & Time
+          </h3>
 
           <div className="flex items-start gap-4">
             <CalendarIcon className="w-10 h-10 text-gray-700" />
 
             <div className="flex flex-col">
-              <p className="text-base font-semibold text-gray-900">{props.date}</p>
+              <p className="text-base font-semibold text-gray-900">
+                {props.date}
+              </p>
               <p className="text-xs text-gray-600">{props.time}</p>
 
               {props.onReschedule && (
@@ -107,7 +116,9 @@ export default function BookingDetailsCard(props: BookingDetailsCardProps) {
               </p>
               <p className="text-xs text-gray-600 flex items-center gap-1">
                 ⭐ {props.rating}{" "}
-                <span className="text-[10px] text-gray-500">({props.reviewCount})</span>
+                <span className="text-[10px] text-gray-500">
+                  ({props.reviewCount})
+                </span>
               </p>
             </div>
 
@@ -125,7 +136,6 @@ export default function BookingDetailsCard(props: BookingDetailsCardProps) {
               >
                 <Phone className="w-5 h-5 text-primary fill-primary" />
               </button>
-
             </div>
           </div>
         </>

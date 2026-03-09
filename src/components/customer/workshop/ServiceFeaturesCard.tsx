@@ -1,4 +1,3 @@
-
 export default function ServiceFeaturesCard() {
   const features = [
     "Periodic Services",

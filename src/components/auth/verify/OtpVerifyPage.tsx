@@ -22,8 +22,9 @@ import { otpVerifySchema } from "@/schemas/auth/verify.schema";
 export default function OtpVerifyPage() {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const pathname = typeof window !== 'undefined' ? window.location.pathname : '';
-  const userType = pathname.includes('/vendor') ? 'vendor' : 'customer';
+  const pathname =
+    typeof window !== "undefined" ? window.location.pathname : "";
+  const userType = pathname.includes("/vendor") ? "vendor" : "customer";
   const authPrefix = `/auth/${userType}`;
 
   const loading = useAppSelector(selectAuthLoading);
@@ -45,7 +46,10 @@ export default function OtpVerifyPage() {
     reValidateMode: "onBlur",
   });
 
-  const { handleSubmit, formState: { errors, isSubmitting } } = methods;
+  const {
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = methods;
 
   // Focus first input on mount
   useEffect(() => {
@@ -65,7 +69,10 @@ export default function OtpVerifyPage() {
     }
   };
 
-  const handleKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (
+    index: number,
+    e: React.KeyboardEvent<HTMLInputElement>
+  ) => {
     if (e.key === "Backspace" && !otp[index] && index > 0) {
       inputRefs.current[index - 1]?.focus();
     }
@@ -73,7 +80,10 @@ export default function OtpVerifyPage() {
 
   const handlePaste = (e: React.ClipboardEvent) => {
     e.preventDefault();
-    const pastedData = e.clipboardData.getData("text").replace(/\D/g, "").slice(0, 6);
+    const pastedData = e.clipboardData
+      .getData("text")
+      .replace(/\D/g, "")
+      .slice(0, 6);
     const newOtp = [...otp];
     pastedData.split("").forEach((char, i) => {
       if (i < 6) newOtp[i] = char;

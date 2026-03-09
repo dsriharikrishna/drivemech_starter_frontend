@@ -28,59 +28,61 @@ export default function VehicleCard({
 }: Props) {
   return (
     <div
-      className={`relative rounded-2xl bg-white p-3 border transition-all
-      ${vehicle.isDefault
+      className={`relative rounded-2xl bg-white p-2.5 border transition-all
+      ${
+        vehicle.isDefault
           ? "border-orange-400"
           : "border-gray-200 hover:shadow-sm"
-        }`}
+      }`}
     >
-
       {/* Default Badge */}
       {vehicle.isDefault && (
-        <div className="absolute top-4 right-4 bg-orange-500 text-white text-xs font-medium px-3 py-1 rounded-full flex items-center gap-1">
-          <CheckCircle size={14} weight="fill" />
+        <div className="absolute top-3 right-3 bg-orange-500 text-white text-[11px] font-medium px-2 py-0.5 rounded-full flex items-center gap-0.5">
+          <CheckCircle size={12} weight="fill" />
           Default
         </div>
       )}
 
       {/* Header */}
-      <div className="flex items-center gap-4">
-        <div className="w-16 h-16 rounded-xl bg-gray-100 overflow-hidden shadow-sm">
+      <div className="flex items-center gap-3">
+        <div className="w-14 h-14 rounded-xl bg-gray-100 overflow-hidden shadow-sm">
           <Image
             src={vehicle.image}
             alt={vehicle.name}
-            width={64}
-            height={64}
+            width={56}
+            height={56}
             className="object-cover w-full h-full"
           />
         </div>
 
         <div className="flex flex-col">
-          <span className="text-base font-semibold">{vehicle.name}</span>
-          <span className="text-sm text-gray-500">{vehicle.regNo}</span>
+          <span className="text-sm font-semibold">{vehicle.name}</span>
+          <span className="text-xs text-gray-500">{vehicle.regNo}</span>
         </div>
       </div>
 
       {/* Info Rows */}
-      <div className="grid grid-cols-2 gap-4 mt-4">
+      <div className="grid grid-cols-2 gap-3 mt-3">
         <div>
-          <p className="text-xs text-gray-500">Insurance</p>
-          <p className="text-sm font-medium mt-1">{vehicle.insuranceDate}</p>
+          <p className="text-[11px] text-gray-500">Insurance</p>
+          <p className="text-xs font-medium mt-0.5">{vehicle.insuranceDate}</p>
         </div>
 
         <div>
-          <p className="text-xs text-gray-500">Last Service</p>
-          <p className="text-sm font-medium mt-1">{vehicle.lastServiceDate}</p>
+          <p className="text-[11px] text-gray-500">Last Service</p>
+          <p className="text-xs font-medium mt-0.5">
+            {vehicle.lastServiceDate}
+          </p>
         </div>
       </div>
 
       {/* Footer Actions */}
-      <div className="flex items-center gap-2 mt-4">
+      <div className="flex items-center gap-1.5 mt-3">
         {/* Set Default (only if NOT default) */}
         {!vehicle.isDefault && (
           <button
             onClick={() => onSetDefault?.(vehicle.id)}
-            className="flex-1 rounded-lg border border-gray-300 bg-white text-gray-700 py-2 text-xs font-medium hover:bg-gray-50 transition"
+            className="flex-1 rounded-lg border border-gray-300 bg-white text-gray-700 py-1.5 text-[11px] font-medium hover:bg-gray-50 transition"
           >
             Set as Default
           </button>
@@ -89,18 +91,18 @@ export default function VehicleCard({
         {/* Edit Button */}
         <button
           onClick={() => onEdit?.(vehicle.id)}
-          className="flex items-center justify-center gap-1 rounded-lg border border-gray-300 bg-white px-3 py-2 text-xs font-medium text-gray-700 hover:bg-gray-50 transition"
+          className="flex items-center justify-center gap-0.5 rounded-lg border border-gray-300 bg-white px-2.5 py-1.5 text-[11px] font-medium text-gray-700 hover:bg-gray-50 transition"
         >
-          <PencilSimple size={14} />
+          <PencilSimple size={12} />
           Edit
         </button>
 
         {/* Remove Button */}
         <button
           onClick={() => onRemove?.(vehicle.id)}
-          className="flex items-center justify-center gap-1 rounded-lg border border-red-300 bg-red-50 px-3 py-2 text-xs font-medium text-red-600 hover:bg-red-100 transition"
+          className="flex items-center justify-center gap-0.5 rounded-lg border border-red-300 bg-red-50 px-2.5 py-1.5 text-[11px] font-medium text-red-600 hover:bg-red-100 transition"
         >
-          <Trash size={14} />
+          <Trash size={12} />
           Remove
         </button>
       </div>

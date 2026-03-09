@@ -30,7 +30,12 @@ const services = [
     title: "Emergency Fuel Delivery",
     desc: "Fast fuel delivery when you're stranded",
     img: "/images/towing-services/services/EmergencyFuelDelivery.png",
-    points: ["All fuel types", "Quick delivery", "Fair pricing", "Convenient payment"],
+    points: [
+      "All fuel types",
+      "Quick delivery",
+      "Fair pricing",
+      "Convenient payment",
+    ],
   },
   {
     title: "Jump Start Service",
@@ -47,7 +52,12 @@ const services = [
     title: "Lockout Service",
     desc: "Locked out of your vehicle? We can help",
     img: "/images/towing-services/services/LockoutService.png",
-    points: ["Non-destructive entry", "All vehicle types", "Quick service", "Licensed technicians"],
+    points: [
+      "Non-destructive entry",
+      "All vehicle types",
+      "Quick service",
+      "Licensed technicians",
+    ],
   },
   {
     title: "Long Distance Towing",
@@ -66,7 +76,6 @@ export default function ServicesPage() {
   return (
     <section className="w-full py-16 bg-white">
       <div className="max-w-7xl mx-auto px-4">
-
         {/* BADGE */}
         <div className="w-full flex justify-center mb-4">
           <span className="bg-orange-50 text-orange-600 px-4 py-1 rounded-full text-sm">
@@ -81,14 +90,15 @@ export default function ServicesPage() {
 
         {/* SUBTEXT */}
         <p className="text-center text-gray-600 text-sm max-w-3xl mx-auto mt-3">
-          We are India’s leading 24/7 roadside assistance and towing service provider with over 15 years of experience.
-          Our mission is to provide fast, reliable, and professional towing services to drivers across the country.
-          Comprehensive assistance when you need it most. Transparent pricing, expert service.
+          We are India’s leading 24/7 roadside assistance and towing service
+          provider with over 15 years of experience. Our mission is to provide
+          fast, reliable, and professional towing services to drivers across the
+          country. Comprehensive assistance when you need it most. Transparent
+          pricing, expert service.
         </p>
 
         {/* GRID SERVICES */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
-
           {services.map((s, i) => (
             <div
               key={i}
@@ -111,7 +121,10 @@ export default function ServicesPage() {
                 {/* POINTS LIST */}
                 <ul className="mt-3 space-y-2">
                   {s.points.map((pt, idx) => (
-                    <li key={idx} className="flex items-start gap-2 text-gray-700 text-sm">
+                    <li
+                      key={idx}
+                      className="flex items-start gap-2 text-gray-700 text-sm"
+                    >
                       <CheckCircle2 className="w-4 h-4 text-green-600 mt-0.5" />
                       {pt}
                     </li>
@@ -130,7 +143,6 @@ export default function ServicesPage() {
             </div>
           ))}
         </div>
-
       </div>
     </section>
   );

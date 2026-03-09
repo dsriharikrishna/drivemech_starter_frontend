@@ -1,9 +1,7 @@
-import SelectServiceLayout from './SelectServiceLayout'
+import SelectServiceLayout from "./SelectServiceLayout";
 
 const page = () => {
-  return (
-    <SelectServiceLayout />
-  )
-}
+  return <SelectServiceLayout />;
+};
 
-export default page
+export default page;

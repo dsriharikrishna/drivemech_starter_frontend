@@ -1,11 +1,8 @@
-import React from 'react'
-import CreateMpinPage from '../../../../../../components/auth/mpin/CreateMpinPage'
+import CreateMpinPage from "@/components/auth/mpin/CreateMpinPage";
+import React from "react";
 
 const page = () => {
-  return (
-    <CreateMpinPage />
-  )
-}
+  return <CreateMpinPage />;
+};
 
-export default page
-
+export default page;

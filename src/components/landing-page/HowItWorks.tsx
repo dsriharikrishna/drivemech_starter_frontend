@@ -33,8 +33,8 @@ export default function HowItWorks() {
               How It <span className="text-red-500">Works</span>
             </h1>
             <p className="text-lg text-gray-600 leading-relaxed">
-              Discover how DriveMech makes your car maintenance effortless.
-              From booking to completion, enjoy full transparency and quality at
+              Discover how DriveMech makes your car maintenance effortless. From
+              booking to completion, enjoy full transparency and quality at
               every step.
             </p>
           </div>
@@ -58,9 +58,7 @@ export default function HowItWorks() {
                   <h3 className="text-lg font-bold text-gray-900">
                     {feature.title}
                   </h3>
-                  <p className="text-gray-600 text-sm">
-                    {feature.description}
-                  </p>
+                  <p className="text-gray-600 text-sm">{feature.description}</p>
                 </div>
               </div>
             ))}

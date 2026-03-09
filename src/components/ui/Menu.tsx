@@ -1,6 +1,12 @@
 "use client";
 
-import { useState, useEffect, useLayoutEffect, useRef, useCallback } from "react";
+import {
+  useState,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useCallback,
+} from "react";
 import { createPortal } from "react-dom";
 import { DotsThreeVertical } from "phosphor-react";
 import Link from "next/link";
@@ -132,7 +138,8 @@ export default function Menu({
       </button>
 
       {/* Floating popup in portal (never clipped), auto-flips up/down */}
-      {open && portalRef.current &&
+      {open &&
+        portalRef.current &&
         createPortal(
           <>
             {/* backdrop for outside click */}
@@ -148,8 +155,8 @@ export default function Menu({
                 placement === "top" ? "origin-bottom" : "origin-top"
               }`}
               style={{
-                top: placement !== 'top' ?  pos.top-20 : pos.top+23,
-                left: pos.left-22,
+                top: placement !== "top" ? pos.top - 20 : pos.top + 23,
+                left: pos.left - 22,
                 width,
                 zIndex,
                 maxHeight: "min(calc(100vh - 16px), 360px)", // guard for very small viewports

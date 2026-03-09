@@ -1,7 +1,7 @@
-import MpinVerifyPage from '@/components/auth/mpin/MpinVerifyPage';
+import MpinVerifyPage from "@/components/auth/mpin/MpinVerifyPage";
 
 const page = () => {
-    return <MpinVerifyPage />;
+  return <MpinVerifyPage />;
 };
 
-export default page
+export default page;

@@ -1,10 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
+import Avatar from "@/components/ui/Avatar";
 import { ChevronDown } from "lucide-react";
 import UserDropdown from "@/components/modals/UserDropdown";
-import { User } from "phosphor-react";
 
 interface AvatarMenuProps {
   onLogout?: () => void;
@@ -28,20 +27,15 @@ export default function AvatarMenu({ onLogout }: AvatarMenuProps) {
       {/* BUTTON */}
       <button
         onClick={() => setUserDropdownOpen((s) => !s)}
-        className="flex items-center border border-gray-200 rounded-md px-3 py-1.5 text-sm text-gray-600 hover:bg-gray-50 transition">
-        {userPhoto ? (
-          <Image
-            src={userPhoto}
-            alt="English"
-            width={24}
-            height={24} 
-            className="mr-2"
-          />
-        ) : (
-          <div className="w-8 h-8 rounded-md bg-gray-100 flex items-center justify-center">
-            <User size={20} weight="fill" className="text-gray-600" />
-          </div>
-        )}
+        className="flex items-center border border-gray-200 rounded-md px-3 py-1.5 text-sm text-gray-600 hover:bg-gray-50 transition"
+      >
+        <Avatar
+          src={userPhoto}
+          name="User"
+          size="xs"
+          alt="User Avatar"
+          className="mr-2"
+        />
 
         {/* Chevron */}
         <ChevronDown className="w-4 h-4 text-gray-500" />
@@ -53,6 +47,6 @@ export default function AvatarMenu({ onLogout }: AvatarMenuProps) {
         onClose={() => setUserDropdownOpen(false)}
         onLogout={handleLogout}
       />
-    </div >
+    </div>
   );
 }

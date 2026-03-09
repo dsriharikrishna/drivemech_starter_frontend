@@ -1,6 +1,19 @@
+"use client";
+import { useRouter } from "next/navigation";
+import Button from "../ui/Button";
 import Divider from "../ui/Divider";
+import { useCallback } from "react";
+import { ArrowRight } from "lucide-react";
 
-export default function SparePartsSection() {
+export default function SparePartsSection({
+  showButton,
+}: {
+  showButton?: boolean;
+}) {
+  const router = useRouter();
+  const handleViewAllSpareParts = useCallback(() => {
+    router.push("/spare-parts");
+  }, [router]);
   const spareParts = [
     // First Row
     { title: "Alloys", image: "/images/spareparts/Alloys.png" },
@@ -11,15 +24,21 @@ export default function SparePartsSection() {
     { title: "Filters", image: "/images/spareparts/Filters.png" },
     // Second Row
     { title: "Exhaust", image: "/images/spareparts/Exhaust.png" },
-    { title: "Electrical Parts", image: "/images/spareparts/ElectricalParts.png" },
+    {
+      title: "Electrical Parts",
+      image: "/images/spareparts/ElectricalParts.png",
+    },
     { title: "Sound System", image: "/images/spareparts/SoundSystem.png" },
-    { title: "Air Conditioning", image: "/images/spareparts/AirConditioning.png" },
+    {
+      title: "Air Conditioning",
+      image: "/images/spareparts/AirConditioning.png",
+    },
     { title: "Steering", image: "/images/spareparts/Steering.png" },
     { title: "Car Care", image: "/images/spareparts/CarCare.png" },
   ];
 
   return (
-    <section className="py-16 bg-gray-50" >
+    <section className="py-16 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main Heading */}
         <div className="text-center mb-12">
@@ -54,6 +73,19 @@ export default function SparePartsSection() {
           ))}
         </div>
       </div>
+      {showButton && (
+        <div className="flex justify-center mt-8">
+          <Button
+            variant="custom"
+            size="md"
+            className="text-white bg-green-500 hover:bg-green-600"
+            endIcon={<ArrowRight className="w-5 h-5" />}
+            onClick={handleViewAllSpareParts}
+          >
+            View All Spare Parts
+          </Button>
+        </div>
+      )}
     </section>
   );
 }

@@ -7,7 +7,6 @@ export default function PartnerHeroSection() {
   return (
     <section className="w-full py-16 bg-white">
       <div className="max-w-7xl mx-auto px-4 flex flex-col lg:flex-row items-center gap-10">
-
         {/* LEFT SIDE TEXT */}
         <div className="flex-1">
           <span className="bg-orange-50 text-orange-600 px-4 py-1 rounded-full text-xs">
@@ -20,7 +19,9 @@ export default function PartnerHeroSection() {
           </h2>
 
           <p className="text-gray-600 text-sm mt-2 max-w-md">
-            Partner with DriveMech to grow your towing business. Access thousands of customers, operational support, and industry-leading earnings.
+            Partner with DriveMech to grow your towing business. Access
+            thousands of customers, operational support, and industry-leading
+            earnings.
           </p>
 
           {/* Buttons */}
@@ -58,7 +59,6 @@ export default function PartnerHeroSection() {
             alt="Partnership"
           />
         </div>
-
       </div>
     </section>
   );

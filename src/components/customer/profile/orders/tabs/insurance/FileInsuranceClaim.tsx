@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const FileInsuranceClaim = () => {
-  return (
-    <div>FileInsuranceClaim</div>
-  )
-}
+  return <div>FileInsuranceClaim</div>;
+};
 
-export default FileInsuranceClaim
+export default FileInsuranceClaim;

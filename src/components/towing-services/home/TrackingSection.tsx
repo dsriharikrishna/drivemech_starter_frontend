@@ -25,10 +25,8 @@ export default function TrackingSection() {
   return (
     <section className="w-full py-10">
       <div className="max-w-7xl mx-auto px-4">
-
         {/* FLEX WRAPPER */}
         <div className="flex flex-col lg:flex-row gap-5 items-center lg:items-start">
-
           {/* LEFT IMAGE */}
           <div className="w-full lg:flex-1">
             <img
@@ -40,7 +38,6 @@ export default function TrackingSection() {
 
           {/* RIGHT CONTENT */}
           <div className="w-full lg:flex-3">
-
             {/* Label */}
             <span className="bg-orange-50 text-orange-600 px-3 py-1 rounded-full text-xs sm:text-sm inline-block mb-3 sm:mb-4">
               Live Tracking
@@ -52,8 +49,8 @@ export default function TrackingSection() {
             </h2>
 
             <p className="text-gray-600 text-sm sm:text-base leading-relaxed mt-3">
-              Know exactly where your driver is with our advanced GPS tracking system.
-              Get accurate ETAs and real-time updates.
+              Know exactly where your driver is with our advanced GPS tracking
+              system. Get accurate ETAs and real-time updates.
             </p>
 
             {/* FEATURES GRID */}
@@ -84,10 +81,8 @@ export default function TrackingSection() {
             >
               Try Live Tracking
             </Button>
-
           </div>
         </div>
-
       </div>
     </section>
   );

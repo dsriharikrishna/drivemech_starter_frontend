@@ -6,7 +6,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import CommonTextInput from "@/components/forms/CommonTextInput";
 import CommonTextArea from "@/components/forms/CommonTextArea";
 import Button from "@/components/ui/Button";
-import { partnerSchema, type RegisterFormData } from "@/schemas/partner.schemas";
+import {
+  partnerSchema,
+  type RegisterFormData,
+} from "@/schemas/partner.schemas";
 import PartnerSuccessPage from "./PartnerSuccessPage";
 
 interface PartnerApplicationProps {
@@ -16,8 +19,15 @@ interface PartnerApplicationProps {
   setData: (value: RegisterFormData | null) => void;
 }
 
-export function PartnerApplicationForm({ isSubmitted, setIsSubmitted, data, setData }: PartnerApplicationProps) {
-  const [submittedData, setSubmittedData] = useState<RegisterFormData | null>(null);
+export function PartnerApplicationForm({
+  isSubmitted,
+  setIsSubmitted,
+  data,
+  setData,
+}: PartnerApplicationProps) {
+  const [submittedData, setSubmittedData] = useState<RegisterFormData | null>(
+    null
+  );
 
   const methods = useForm<RegisterFormData>({
     resolver: zodResolver(partnerSchema),
@@ -26,11 +36,11 @@ export function PartnerApplicationForm({ isSubmitted, setIsSubmitted, data, setD
 
   const onSubmit = async (data: RegisterFormData) => {
     try {
-            // TODO: Implement API call to submit partner application
+      // TODO: Implement API call to submit partner application
       // Example: await submitPartnerApplication(data);
 
       // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
 
       // Store submitted data and show success page
       setSubmittedData(data);
@@ -50,12 +60,12 @@ export function PartnerApplicationForm({ isSubmitted, setIsSubmitted, data, setD
   return (
     <section className="w-full py-16 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4">
-
         <h2 className="text-center text-2xl font-semibold text-gray-heading">
           Apply to Become a Partner
         </h2>
         <p className="text-center text-gray-500 text-sm mt-1">
-          Fill out the form below and our partnership team will contact you within 24 hours
+          Fill out the form below and our partnership team will contact you
+          within 24 hours
         </p>
 
         <FormProvider {...methods}>
@@ -63,7 +73,6 @@ export function PartnerApplicationForm({ isSubmitted, setIsSubmitted, data, setD
             onSubmit={methods.handleSubmit(onSubmit)}
             className="mt-10 bg-white p-8 rounded-2xl border border-gray-200 space-y-5"
           >
-
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <CommonTextInput
                 name="company"
@@ -107,19 +116,24 @@ export function PartnerApplicationForm({ isSubmitted, setIsSubmitted, data, setD
               rows={4}
             />
 
-            <Button variant="gradient" fullWidth type="submit" disabled={methods.formState.isSubmitting}>
-              {methods.formState.isSubmitting ? "Submitting..." : "Submit Application"}
+            <Button
+              variant="gradient"
+              fullWidth
+              type="submit"
+              disabled={methods.formState.isSubmitting}
+            >
+              {methods.formState.isSubmitting
+                ? "Submitting..."
+                : "Submit Application"}
             </Button>
 
             <p className="text-center text-gray-500 text-xs mt-2">
-              By submitting, you agree to our Terms of Service and Privacy Policy.
+              By submitting, you agree to our Terms of Service and Privacy
+              Policy.
             </p>
           </form>
         </FormProvider>
-
       </div>
     </section>
   );
 }
-
-

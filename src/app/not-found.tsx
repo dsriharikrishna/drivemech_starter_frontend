@@ -6,10 +6,8 @@ import Link from "next/link";
 export default function NotFound() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 px-6 text-center">
-
       {/* Car Animation */}
       <div className="relative w-full max-w-md h-32 overflow-hidden mb-4">
-
         {/* Road */}
         <div className="absolute bottom-0 left-0 w-full h-2 bg-gray-300 rounded-full" />
 

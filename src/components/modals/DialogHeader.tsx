@@ -14,12 +14,10 @@ export default function DialogHeader({
   onClose,
 }: DialogHeaderProps) {
   return (
-    <div className="flex items-start justify-between mb-4">
+    <div className="flex items-start justify-between mb-4 pb-2 px-2 border-b border-border">
       <div>
         <h2 className="text-xl font-bold text-gray-900">{title}</h2>
-        {subtitle && (
-          <p className="text-sm text-gray-600 mt-1">{subtitle}</p>
-        )}
+        {subtitle && <p className="text-sm text-gray-600 mt-1">{subtitle}</p>}
       </div>
 
       {onClose && (

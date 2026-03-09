@@ -1,6 +1,6 @@
 "use client";
 
-import CustomCard from "@/components/ui/CustomCard";  // citation above
+import CustomCard from "@/components/ui/CustomCard"; // citation above
 import Button from "@/components/ui/Button";
 
 const services = [
@@ -25,7 +25,6 @@ export default function ServicesSection() {
   return (
     <section className="w-full py-10 bg-white">
       <div className="max-w-7xl mx-auto px-4">
-
         {/* Heading */}
         <h2 className="text-gray-heading text-3xl font-semibold text-center">
           Comprehensive Auto Services
@@ -33,7 +32,8 @@ export default function ServicesSection() {
 
         {/* Sub text */}
         <p className="text-gray-600 text-sm text-center mt-2 mb-10">
-          From emergency towing to roadside assistance, we've got you covered 24/7.
+          From emergency towing to roadside assistance, we've got you covered
+          24/7.
         </p>
 
         {/* Cards */}
@@ -67,7 +67,6 @@ export default function ServicesSection() {
             </CustomCard>
           ))}
         </div>
-
       </div>
     </section>
   );

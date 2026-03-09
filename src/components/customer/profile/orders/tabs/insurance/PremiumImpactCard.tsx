@@ -7,12 +7,14 @@ export default function PremiumImpactCard({
   currentPremium,
   newPremium,
   difference,
-}:any) {
+}: any) {
   return (
-    <CustomCard className="p-5 bg-purple-50 border border-purple-200 rounded-xl">
-      <Typography weight="semibold">💲 Premium Impact</Typography>
+    <CustomCard className="p-4 bg-purple-50 border border-purple-200 rounded-xl">
+      <Typography weight="semibold" className="text-xs">
+        💲 Premium Impact
+      </Typography>
 
-      <div className="mt-3 space-y-2 text-sm">
+      <div className="mt-2.5 space-y-1.5 text-xs">
         <div className="flex justify-between">
           <span>Current Premium:</span>
           <span>${currentPremium}/year</span>
@@ -29,7 +31,9 @@ export default function PremiumImpactCard({
           }`}
         >
           <span>Difference:</span>
-          <span>{difference > 0 ? "+" : ""}${difference}/year</span>
+          <span>
+            {difference > 0 ? "+" : ""}${difference}/year
+          </span>
         </div>
       </div>
     </CustomCard>

@@ -6,14 +6,17 @@ interface Props {
   banks: BankOption[];
   selected: string;
   setSelected: (name: string) => void;
-  handleNext: () => void
-
+  handleNext: () => void;
 }
 
-export default function OnlineBankingPanel({ banks, selected, setSelected ,handleNext}: Props) {
+export default function OnlineBankingPanel({
+  banks,
+  selected,
+  setSelected,
+  handleNext,
+}: Props) {
   return (
     <div className="border border-gray-200 rounded-3xl p-4 flex flex-col gap-1 bg-white">
-
       {banks.map((bank) => (
         <div key={bank.name}>
           <div
@@ -31,9 +34,7 @@ export default function OnlineBankingPanel({ banks, selected, setSelected ,handl
                   onChange={() => setSelected(bank.name)}
                   className="w-4 h-4 text-blue-500 focus:ring-blue-500"
                 />
-                <span className="text-[15px] text-[#1A1A1A]">
-                  {bank.name}
-                </span>
+                <span className="text-[15px] text-[#1A1A1A]">{bank.name}</span>
               </div>
 
               {/* Logo */}
@@ -49,7 +50,10 @@ export default function OnlineBankingPanel({ banks, selected, setSelected ,handl
             {/* CTA button (compact spacing) */}
             {selected === bank.name && (
               <div className="mt-2">
-                <button onClick={handleNext} className="w-full py-3 rounded-xl text-white font-semibold text-[15px] bg-gradient-to-r from-[#FF7B34] to-[#FF8F3C] shadow hover:opacity-95 transition">
+                <button
+                  onClick={handleNext}
+                  className="w-full py-3 rounded-xl text-white font-semibold text-[15px] bg-gradient-to-r from-[#FF7B34] to-[#FF8F3C] shadow hover:opacity-95 transition"
+                >
                   Proceed to Pay $579
                 </button>
               </div>
@@ -62,7 +66,6 @@ export default function OnlineBankingPanel({ banks, selected, setSelected ,handl
           )}
         </div>
       ))}
-
     </div>
   );
 }

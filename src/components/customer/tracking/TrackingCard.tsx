@@ -16,7 +16,6 @@ interface CardProps {
 export default function TrackingCard({ summary, steps }: CardProps) {
   return (
     <div className="bg-white border border-border rounded-xl shadow-sm p-6">
-
       {/* SUMMARY — TRUE 4-COLUMN LAYOUT */}
       <div
         className="

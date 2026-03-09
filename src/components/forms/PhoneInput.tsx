@@ -20,11 +20,13 @@ interface PhoneInputProps {
   required?: boolean;
   className?: string;
   value?: any;
+  error?: string;
   onChange?: (value: any) => void;
+  disabled?: boolean;
 
   // NEW props
-  p?: string;   // padding
-  h?: string;   // height
+  p?: string; // padding
+  h?: string; // height
 }
 
 export default function PhoneInput({
@@ -35,10 +37,16 @@ export default function PhoneInput({
   countryOptions = [],
   required = false,
   className = "",
+  disabled = false,
   p = "px-3 py-2",
-  h = "h-[40px]"
+  h = "h-[40px]",
+  error: propError = "",
 }: PhoneInputProps) {
-  const { register, setValue, formState: { errors } } = useFormContext();
+  const {
+    register,
+    setValue,
+    formState: { errors },
+  } = useFormContext();
 
   const [selectedCountry, setSelectedCountry] = useState<CountryOption>({
     code: "IN",
@@ -53,7 +61,29 @@ export default function PhoneInput({
   }, [countryOptions]);
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [dropdownPosition, setDropdownPosition] = useState<"bottom" | "top">(
+    "bottom"
+  );
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const inputWrapperRef = useRef<HTMLDivElement>(null);
+
+  // Calculate dropdown position based on available space
+  useEffect(() => {
+    if (dropdownOpen && inputWrapperRef.current) {
+      const rect = inputWrapperRef.current.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      const spaceBelow = viewportHeight - rect.bottom;
+      const spaceAbove = rect.top;
+      const dropdownHeight = 240; // max-h-60 = 240px
+
+      // Position dropdown upward if there's more space above or insufficient space below
+      if (spaceBelow < dropdownHeight && spaceAbove > spaceBelow) {
+        setDropdownPosition("top");
+      } else {
+        setDropdownPosition("bottom");
+      }
+    }
+  }, [dropdownOpen]);
 
   useEffect(() => {
     const handler = (e: MouseEvent) => {
@@ -70,30 +100,33 @@ export default function PhoneInput({
     setValue(name, raw, { shouldValidate: true });
   };
 
-  const error = errors[name]?.message as string | undefined;
+  const error = propError || (errors[name]?.message as string | undefined);
 
   return (
     <div className="flex flex-col w-full relative" ref={dropdownRef}>
       {/* LABEL */}
       {label && (
-        <label className="block text-sm font-semibold text-gray-700 mb-2">
+        <label className="inputLabel mb-1">
           {label} {required && <span className="text-red-500">*</span>}
         </label>
       )}
 
       {/* INPUT WRAPPER */}
       <div
+        ref={inputWrapperRef}
         className={`
           flex items-center w-full border rounded-xl bg-white relative h-[40px]
           ${p}
           ${error ? "border-red-500" : "border-gray-300"}
+          ${disabled ? "bg-gray-100 cursor-not-allowed" : ""}
         `}
       >
         {/* FLAG + COUNTRY CODE */}
         <button
           type="button"
-          onClick={() => setDropdownOpen(!dropdownOpen)}
-          className="flex items-center gap-2 pr-3 border-r border-gray-200 cursor-pointer"
+          onClick={() => !disabled && setDropdownOpen(!dropdownOpen)}
+          disabled={disabled}
+          className={`flex items-center gap-2 pr-3 border-r border-gray-200 ${disabled ? "cursor-not-allowed opacity-60" : "cursor-pointer"}`}
         >
           <span className="text-gray-700 font-medium">
             {selectedCountry.code}
@@ -115,13 +148,19 @@ export default function PhoneInput({
           maxLength={15}
           onChange={handleChange}
           placeholder={placeholder}
-          className={`w-full pl-3 text-sm text-gray-700 placeholder-gray-400 bg-white focus:outline-none h-full ${className}`}
+          disabled={disabled}
+          className={`w-full pl-3 text-sm text-gray-700 placeholder-gray-400 bg-white focus:outline-none h-full ${disabled ? "cursor-not-allowed bg-gray-100" : ""} ${className}`}
         />
       </div>
 
       {/* DROPDOWN LIST */}
       {dropdownOpen && (
-        <div className="absolute left-0 mt-16 bg-white border border-gray-100 shadow-lg rounded-xl w-auto z-30">
+        <div
+          className={`
+            absolute left-0 bg-white border border-gray-100 shadow-lg rounded-xl w-auto z-30
+            ${dropdownPosition === "top" ? "bottom-full mb-2" : "top-full mt-2"}
+          `}
+        >
           <ul className="max-h-60 overflow-y-auto py-2">
             {countryOptions.map((c) => (
               <li key={c.iso}>

@@ -8,7 +8,6 @@ import { PartnerApplicationForm } from "./PartnerApplicationForm";
 import PartnerSuccessPage from "./PartnerSuccessPage";
 import { RegisterFormData } from "@/schemas/partner.schemas";
 
-
 export default function PartnerPage() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [data, setData] = useState<RegisterFormData | null>(null);
@@ -19,7 +18,6 @@ export default function PartnerPage() {
 
   return (
     <div className="flex flex-col w-full">
-
       {/* HERO SECTION */}
       <PartnerHeroSection />
 
@@ -35,9 +33,9 @@ export default function PartnerPage() {
       <PartnerApplicationForm
         isSubmitted={isSubmitted}
         setIsSubmitted={setIsSubmitted}
-        data={data} setData={setData}
+        data={data}
+        setData={setData}
       />
-
     </div>
   );
 }

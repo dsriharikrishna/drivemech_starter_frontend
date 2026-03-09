@@ -1,7 +1,7 @@
 import CreateMpinPage from "@/components/auth/mpin/CreateMpinPage";
 
 const page = () => {
-    return <CreateMpinPage />;
-}
+  return <CreateMpinPage />;
+};
 
-export default page
+export default page;

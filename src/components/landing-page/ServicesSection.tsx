@@ -1,74 +1,71 @@
-
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight } from "lucide-react";
 
 const services = [
   {
-    title: 'Air Conditioning',
-    description: 'Lorem ipsum dolor sit amet, adipiscing elit consectetur.',
-    image: '/images/ourservices/AirConditioning.png'
+    title: "Air Conditioning",
+    description: "Lorem ipsum dolor sit amet, adipiscing elit consectetur.",
+    image: "/images/ourservices/AirConditioning.png",
   },
   {
-    title: 'Roadworthy Inspection',
-    description: 'Lorem ipsum dolor sit amet, adipiscing elit consectetur.',
-    image: '/images/ourservices/Roadworthyinspection.png'
+    title: "Roadworthy Inspection",
+    description: "Lorem ipsum dolor sit amet, adipiscing elit consectetur.",
+    image: "/images/ourservices/Roadworthyinspection.png",
   },
   {
-    title: 'Auto Glass',
-    description: 'Lorem ipsum dolor sit amet, adipiscing elit consectetur.',
-    image: '/images/ourservices/AutoGlass.png'
+    title: "Auto Glass",
+    description: "Lorem ipsum dolor sit amet, adipiscing elit consectetur.",
+    image: "/images/ourservices/AutoGlass.png",
   },
   {
-    title: 'Spark Plug',
-    description: 'Lorem ipsum dolor sit amet, adipiscing elit consectetur.',
-    image: '/images/ourservices/SparkPlug.png'
+    title: "Spark Plug",
+    description: "Lorem ipsum dolor sit amet, adipiscing elit consectetur.",
+    image: "/images/ourservices/SparkPlug.png",
   },
   {
-    title: 'Battery',
-    description: 'Lorem ipsum dolor sit amet, adipiscing elit consectetur.',
-    image: '/images/ourservices/Battery.png'
+    title: "Battery",
+    description: "Lorem ipsum dolor sit amet, adipiscing elit consectetur.",
+    image: "/images/ourservices/Battery.png",
   },
   {
-    title: 'Suspension and Steering',
-    description: 'Lorem ipsum dolor sit amet, adipiscing elit consectetur.',
-    image: '/images/ourservices/SuspensionSteering.png'
+    title: "Suspension and Steering",
+    description: "Lorem ipsum dolor sit amet, adipiscing elit consectetur.",
+    image: "/images/ourservices/SuspensionSteering.png",
   },
   {
-    title: 'Brakes',
-    description: 'Lorem ipsum dolor sit amet, adipiscing elit consectetur.',
-    image: '/images/ourservices/Battery.png' 
+    title: "Brakes",
+    description: "Lorem ipsum dolor sit amet, adipiscing elit consectetur.",
+    image: "/images/ourservices/Battery.png",
   },
   {
-    title: 'Timing belt/chain',
-    description: 'Lorem ipsum dolor sit amet, adipiscing elit consectetur.',
-    image: '/images/ourservices/Timingbelt.png'
+    title: "Timing belt/chain",
+    description: "Lorem ipsum dolor sit amet, adipiscing elit consectetur.",
+    image: "/images/ourservices/Timingbelt.png",
   },
   {
-    title: 'Clutch',
-    description: 'Lorem ipsum dolor sit amet, adipiscing elit consectetur.',
-    image: '/images/ourservices/Clutch.png'
+    title: "Clutch",
+    description: "Lorem ipsum dolor sit amet, adipiscing elit consectetur.",
+    image: "/images/ourservices/Clutch.png",
   },
   {
-    title: 'Transmission / Differential',
-    description: 'Lorem ipsum dolor sit amet, adipiscing elit consectetur.',
-    image: '/images/ourservices/Transmission.png'
+    title: "Transmission / Differential",
+    description: "Lorem ipsum dolor sit amet, adipiscing elit consectetur.",
+    image: "/images/ourservices/Transmission.png",
   },
   {
-    title: 'Oil leak inspection',
-    description: 'Lorem ipsum dolor sit amet, adipiscing elit consectetur.',
-    image: '/images/ourservices/Oilleakinspection.png'
+    title: "Oil leak inspection",
+    description: "Lorem ipsum dolor sit amet, adipiscing elit consectetur.",
+    image: "/images/ourservices/Oilleakinspection.png",
   },
   {
-    title: 'Wheels & Tyres',
-    description: 'Lorem ipsum dolor sit amet, adipiscing elit consectetur.',
-    image: '/images/ourservices/Wheels.png'
+    title: "Wheels & Tyres",
+    description: "Lorem ipsum dolor sit amet, adipiscing elit consectetur.",
+    image: "/images/ourservices/Wheels.png",
   },
 ];
-
 
 export default function ServicesSection() {
   return (
     <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 my-10 bg-white rounded-xl ">
-
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-center mb-12 text-center sm:text-left">
         <div className="relative mb-6 sm:mb-0">
@@ -104,8 +101,10 @@ export default function ServicesSection() {
               </div>
 
               {/* Description */}
-              <div className='flex-3 flex flex-col gap-2'>
-                <h6 className="text-md font-semibold text-gray-900">{service.title}</h6>
+              <div className="flex-3 flex flex-col gap-2">
+                <h6 className="text-md font-semibold text-gray-900">
+                  {service.title}
+                </h6>
                 <p className="text-gray-600 font-manrope text-sm leading-relaxed">
                   {service.description}
                 </p>

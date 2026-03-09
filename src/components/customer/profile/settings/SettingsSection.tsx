@@ -11,10 +11,11 @@ export default function SettingsSection({
 }) {
   return (
     <div className="rounded-xl border border-border overflow-hidden bg-white">
-      
       {/* HEADER */}
-      <div className="bg-gray-50 px-4 py-3 border-b border-border">
-        <Typography weight="semibold">{title}</Typography>
+      <div className="bg-gray-50 px-3 py-2.5 border-b border-border">
+        <Typography weight="semibold" className="text-xs">
+          {title}
+        </Typography>
       </div>
 
       {/* CONTENT (rows) */}

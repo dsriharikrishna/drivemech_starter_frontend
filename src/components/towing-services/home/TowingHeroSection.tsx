@@ -5,17 +5,22 @@ import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store/store";
-import { setFormData } from "@/store/slices/towing-services/towingServiceSlice";
+import { setFormData } from "@/store/slices/customer/towing-services/towingServiceSlice";
 
 import Typography from "@/components/ui/Typography";
 
-import { towingHeroSchema, type TowingHeroFormData } from "@/schemas/towing-hero.schema";
+import {
+  towingHeroSchema,
+  type TowingHeroFormData,
+} from "@/schemas/towing-hero.schema";
 import TowingServiceForm from "./TowingServiceForm";
 import AvailableTowTrucks from "./AvailableTowTrucks";
 
 export default function TowingHeroSection() {
   const dispatch = useDispatch();
-  const showAvailableTrucks = useSelector((state: RootState) => state.towingService.showAvailableTrucks);
+  const showAvailableTrucks = useSelector(
+    (state: RootState) => state.towingService.showAvailableTrucks
+  );
 
   const methods = useForm<TowingHeroFormData>({
     resolver: zodResolver(towingHeroSchema),
@@ -31,7 +36,7 @@ export default function TowingHeroSection() {
   });
 
   const onSubmit = (data: TowingHeroFormData) => {
-        // Store form data in Redux (this also sets showAvailableTrucks to true)
+    // Store form data in Redux (this also sets showAvailableTrucks to true)
     dispatch(setFormData(data));
   };
 
@@ -40,10 +45,8 @@ export default function TowingHeroSection() {
       <section className="w-full bg-gray-50">
         {/* container width roughly same as screenshot */}
         <div className="w-full mx-auto">
-
           {/* layout: left bigger (2fr) and right narrow (1fr) */}
           <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-4 items-stretch">
-
             {/* LEFT: Hero image + overlay + text */}
             <div className="relative rounded-r-xl overflow-hidden h-[520px]">
               <img
@@ -93,7 +96,6 @@ export default function TowingHeroSection() {
             ) : (
               <AvailableTowTrucks />
             )}
-
           </div>
         </div>
       </section>

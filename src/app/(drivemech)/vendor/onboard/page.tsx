@@ -1,9 +1,7 @@
-import SelectService from './SelectService'
+import SelectService from "./SelectService";
 
 const page = () => {
-  return (
-    <SelectService />
-  )
-}
+  return <SelectService />;
+};
 
-export default page
+export default page;

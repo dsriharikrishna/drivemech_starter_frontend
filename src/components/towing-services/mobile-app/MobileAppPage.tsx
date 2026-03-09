@@ -8,7 +8,6 @@ export default function MobileAppPage() {
       <PlayStoreSection />
       <AppFeaturesSection />
       <TestimonialsSection />
-
     </div>
   );
 }

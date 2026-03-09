@@ -1,13 +1,16 @@
-'use client';
+"use client";
 
 import Image from "next/image";
-import { Workshop } from "@/types/workshops";
+import { Workshop } from "@/types/customer/workshop/workshops";
 import { Star } from "lucide-react";
 
-export default function WorkshopCardSmall({ workshop }: { workshop: Workshop }) {
+export default function WorkshopCardSmall({
+  workshop,
+}: {
+  workshop: Workshop;
+}) {
   return (
     <div className="bg-white p-4 rounded-xl border shadow-sm flex gap-4 hover:shadow-md transition cursor-pointer">
-      
       <div className="h-14 w-14 rounded-lg overflow-hidden bg-gray-100">
         <Image src={workshop.logo} width={56} height={56} alt={workshop.name} />
       </div>
@@ -40,7 +43,6 @@ export default function WorkshopCardSmall({ workshop }: { workshop: Workshop }) 
           Book Now
         </button>
       </div>
-
     </div>
   );
 }

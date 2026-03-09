@@ -9,13 +9,11 @@ import { Mail, Phone, MapPin } from "lucide-react";
 export default function ContactPage() {
   const methods = useForm();
 
-  const onSubmit = (data: any) => {
-      };
+  const onSubmit = (data: any) => {};
 
   return (
     <section className="w-full py-14">
       <div className="max-w-6xl mx-auto px-4">
-
         {/* PAGE HEADING */}
         <h2 className="text-gray-heading text-3xl font-semibold text-center">
           Contact Us
@@ -26,17 +24,17 @@ export default function ContactPage() {
 
         {/* LAYOUT WRAPPER */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mt-10">
-
           {/* CONTACT FORM */}
           <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
-
             <h3 className="text-xl font-semibold text-gray-heading mb-4">
               Send Us a Message
             </h3>
 
             <FormProvider {...methods}>
-              <form onSubmit={methods.handleSubmit(onSubmit)} className="space-y-4">
-
+              <form
+                onSubmit={methods.handleSubmit(onSubmit)}
+                className="space-y-4"
+              >
                 {/* Name */}
                 <CommonTextInput
                   name="name"
@@ -71,17 +69,20 @@ export default function ContactPage() {
                 />
 
                 {/* Button */}
-                <Button type="submit" variant="gradient" fullWidth className="mt-3">
+                <Button
+                  type="submit"
+                  variant="gradient"
+                  fullWidth
+                  className="mt-3"
+                >
                   Send Message
                 </Button>
-
               </form>
             </FormProvider>
           </div>
 
           {/* CONTACT INFO PANEL */}
           <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm flex flex-col gap-6">
-
             <div>
               <h3 className="text-xl font-semibold text-gray-heading">
                 Contact Information
@@ -122,7 +123,6 @@ export default function ContactPage() {
             <div className="w-full h-56 bg-gray-100 rounded-lg flex items-center justify-center text-gray-500 text-sm">
               Google Map Placeholder
             </div>
-
           </div>
         </div>
       </div>

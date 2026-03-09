@@ -25,7 +25,6 @@ export default function ServiceHeaderCard() {
         height={200}
         className="rounded-xl mt-3 w-full object-cover"
       />
-      
     </div>
   );
 }

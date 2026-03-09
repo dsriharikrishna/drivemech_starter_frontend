@@ -1,53 +1,46 @@
 import React from "react";
 
 type AvatarProps = {
-  src?: React.ReactNode;
-  alt?: string;
+  src?: string;
   name?: string;
-  size?: "sm" | "md" | "lg" | "xl";
-  rounded?: "full" | "md" | "lg" | "none";
+  size?: "xs" | "sm" | "md" | "lg" | "xl";
   className?: string;
+  alt?: string;
 };
 
-const sizeClasses: Record<NonNullable<AvatarProps["size"]>, string> = {
-  sm: "w-8 h-8 text-sm",
-  md: "w-10 h-10 text-base",
-  lg: "w-14 h-14 text-lg",
-  xl: "w-20 h-20 text-xl",
+const sizeClasses = {
+  xs: "w-5 h-5 text-[10px]",
+  sm: "w-8 h-8 text-xs",
+  md: "w-10 h-10 text-sm",
+  lg: "w-14 h-14 text-base",
+  xl: "w-20 h-20 text-lg",
 };
 
 const Avatar: React.FC<AvatarProps> = ({
   src,
-  alt = "Avatar",
-  name = "NA",
-  size = "md",
-  rounded = "full",
+  name = "",
+  size = "xs",
   className = "",
+  alt = "",
 }) => {
   const initials = name
+    .trim()
     .split(" ")
     .map((n) => n[0])
     .join("")
-    .toUpperCase()
-    .slice(0, 2);
+    .slice(0, 2)
+    .toUpperCase();
 
   return (
     <div
-      className={`relative flex items-center justify-center bg-gray-200 text-gray-700 font-semibold ${sizeClasses[size]} rounded-${rounded} overflow-hidden ${className}`}
+      className={`relative flex items-center justify-center rounded-full overflow-hidden 
+        bg-gray-300 text-white font-semibold shadow-sm border border-gray-200
+        ${sizeClasses[size]} ${className}`}
     >
       {src ? (
-        typeof src === "string" ? (
-          <img
-            src={src}
-            alt={alt}
-            className="object-cover"
-            sizes="(max-width: 768px) 100vw"
-          />
-        ) : (
-          <>{src}</>
-        )
+        <img src={src} alt={alt} className="w-full h-full object-cover" />
       ) : (
-        <span>{initials}</span>
+        <span className="select-none">{initials || "?"}</span>
       )}
     </div>
   );

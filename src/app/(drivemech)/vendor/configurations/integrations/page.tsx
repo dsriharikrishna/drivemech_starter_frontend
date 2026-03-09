@@ -1,28 +1,120 @@
-import React from 'react'
+"use client";
+
+import { CalculatorIcon, CarIcon, MegaPhoneIcon, PaypalIcon, POSIcon, SquareIcon, StripeIcon } from "@/components/icons/DashboardIcons";
+import IntegrationCard from "@/components/vendor/campaigns/IntegrationCard";
+import { Car, DollarSign, TrendingUp, CreditCard, } from "lucide-react";
 
 const IntegrationsPage = () => {
-    return (
-        <div className="w-full h-full p-8">
-            <div className="max-w-7xl mx-auto">
-                <h1 className="text-3xl font-bold text-gray-900 mb-2">Integrations</h1>
-                <p className="text-gray-600 mb-8">
-                    Manage third-party integrations and API connections
-                </p>
+  const integrations = [
+    {
+      icon: <CarIcon size={24} className="bg-orange-600 text-white" />,
+      title: "Automotives",
+      description: "Connect with automotive tools and services",
+      iconBgColor: "bg-orange-100",
+      items: [
+        {
+          name: "AutoMate Pro",
+          icon: <CarIcon size={16} className="text-gray-600" /> ,
+          status: "connected" as const,
+        },
+        {
+          name: "CarVIN Scanner",
+          icon: <CarIcon size={16} className="text-gray-600" />,
+          status: "available" as const,
+        },
+        {
+          name: "Pass Inventory",
+          icon: <CarIcon size={16} className="text-gray-600" />,
+          status: "available" as const,
+        },
+      ],
+    },
+    {
+      icon: <CalculatorIcon size={24} className="bg-orange-600 text-white" />,
+      title: "Accounting",
+      description: "Manage Finances and Accounting",
+      iconBgColor: "bg-orange-100",
+      items: [
+        {
+          name: "QuickBooks",
+          icon: <CalculatorIcon size={16} className="text-gray-600" />,
+          status: "connected" as const,
+        },
+        {
+          name: "Xero",
+          icon: <CalculatorIcon size={16} className="text-gray-600" />,
+          status: "available" as const,
+        },
+        {
+          name: "FreshBooks",
+          icon: <CalculatorIcon size={16} className="text-gray-600" />,
+          status: "available" as const,
+        },
+      ],
+    },
+    {
+      icon: <MegaPhoneIcon size={24} className="bg-orange-600 text-white" />,
+      title: "Marketing",
+      description: "Boost your Marketing Efforts",
+      iconBgColor: "bg-orange-100",
+      items: [
+        {
+          name: "SMS Gateway",
+          icon: <MegaPhoneIcon size={16} className="text-gray-600" />,
+          status: "connected" as const,
+        },
+        {
+          name: "Email Marketing",
+          icon: <MegaPhoneIcon size={16} className="text-gray-600" />,
+          status: "available" as const,
+        },
+        {
+          name: "Google Ads",
+          icon: <MegaPhoneIcon size={16} className="text-gray-600" />,
+          status: "available" as const,
+        },
+      ],
+    },
+    {
+      icon: <POSIcon size={24} className="bg-orange-600 text-white" />,
+      title: "POS",
+      description: "Point of Sale and Payment Systems",
+      iconBgColor: "bg-orange-100",
+      items: [
+        {
+          name: "Square",
+          icon: <SquareIcon size={16} className="text-gray-600" />,
+          status: "connected" as const,
+        },
+        {
+          name: "Stripe",
+          icon: <StripeIcon size={16} />,
+          status: "available" as const,
+        },
+        {
+          name: "PayPal",
+          icon: <PaypalIcon size={16} />,
+          status: "available" as const,
+        },
+      ],
+    },
+  ];
 
-                <div className="bg-white rounded-xl shadow-sm p-8 border border-gray-200">
-                    <div className="text-center py-12">
-                        <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <svg className="w-8 h-8 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" />
-                            </svg>
-                        </div>
-                        <h3 className="text-xl font-semibold text-gray-900 mb-2">Integrations</h3>
-                        <p className="text-gray-500">This section is under development</p>
-                    </div>
-                </div>
-            </div>
+  return (
+    <div className="w-full h-full p-0">
+      <div className="max-w-7xl mx-auto">
+        {/* Simple Header */}
+        <h1 className="text-2xl font-bold text-gray-900 mb-6">Integrations</h1>
+
+        {/* Integration Cards Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {integrations.map((integration, index) => (
+            <IntegrationCard key={index} {...integration} />
+          ))}
         </div>
-    )
-}
+      </div>
+    </div>
+  );
+};
 
-export default IntegrationsPage
+export default IntegrationsPage;

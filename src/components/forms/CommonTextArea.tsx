@@ -38,21 +38,32 @@ export default function CommonTextArea({
   const actualRegister = register || formContext?.register;
   const errors = formContext?.formState.errors;
 
-  const formError = error || (errors?.[name]?.message as string);
+  // Handle nested field errors (e.g., "branches.0.branchName")
+  const getNestedError = (errors: any, path: string): any => {
+    const keys = path.split(/[.[\]]/).filter(Boolean);
+    let current = errors;
+    for (const key of keys) {
+      if (current?.[key] === undefined) return undefined;
+      current = current[key];
+    }
+    return current;
+  };
+
+  const fieldError = error ? { message: error } : getNestedError(errors, name);
+  const formError = fieldError?.message as string | undefined;
 
   return (
     <div className={`flex flex-col ${className}`}>
       {label && (
         <label htmlFor={name} className="inputLabel mb-1 ">
-          {label} {required && <span className="text-red-500 ml-[-2px] ">*</span>}
+          {label}{" "}
+          {required && <span className="text-red-500 ml-[-2px] ">*</span>}
         </label>
       )}
 
       <div className="relative">
         {leftIcon && (
-          <div className="absolute left-3 top-3 text-gray-400">
-            {leftIcon}
-          </div>
+          <div className="absolute left-3 top-3 text-gray-400">{leftIcon}</div>
         )}
 
         <textarea
@@ -70,15 +81,11 @@ export default function CommonTextArea({
         />
 
         {icon && (
-          <div className="absolute top-3 right-3 text-gray-500">
-            {icon}
-          </div>
+          <div className="absolute top-3 right-3 text-gray-500">{icon}</div>
         )}
       </div>
 
-      {formError && (
-        <p className="mt-1 text-sm text-red-600">{formError}</p>
-      )}
+      {formError && <p className="mt-1 text-sm text-red-600">{formError}</p>}
     </div>
   );
 }

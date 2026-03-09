@@ -1,17 +1,13 @@
-'use client';
+"use client";
 
-import React from 'react';
+import React from "react";
 
 interface Props {
   children: React.ReactNode;
 }
 
 const LeftLayout: React.FC<Props> = ({ children }) => {
-  return (
-    <div className="w-full lg:flex-3 space-y-4">
-      {children}
-    </div>
-  );
+  return <div className="w-full md:flex-3 min-w-0 space-y-4">{children}</div>;
 };
 
 export default LeftLayout;

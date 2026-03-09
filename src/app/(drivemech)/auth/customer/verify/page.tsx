@@ -1,7 +1,7 @@
 import OtpVerifyPage from "@/components/auth/verify/OtpVerifyPage";
 
 const page = () => {
-    return <OtpVerifyPage />;
+  return <OtpVerifyPage />;
 };
 
 export default page;

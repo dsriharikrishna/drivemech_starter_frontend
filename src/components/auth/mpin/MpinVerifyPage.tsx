@@ -8,8 +8,9 @@ import Button from "@/components/ui/Button";
 
 export default function MpinVerifyPage() {
   const router = useRouter();
-  const pathname = typeof window !== 'undefined' ? window.location.pathname : '';
-  const userType = pathname.includes('/vendor') ? 'vendor' : 'customer';
+  const pathname =
+    typeof window !== "undefined" ? window.location.pathname : "";
+  const userType = pathname.includes("/vendor") ? "vendor" : "customer";
   const authPrefix = `/auth/${userType}`;
   const { handleSubmit } = useForm({
     mode: "onChange",
@@ -56,7 +57,10 @@ export default function MpinVerifyPage() {
     }
   };
 
-  const handleKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (
+    index: number,
+    e: React.KeyboardEvent<HTMLInputElement>
+  ) => {
     if (e.key === "Backspace") {
       if (mpin[index]) {
         // clear current
@@ -79,7 +83,10 @@ export default function MpinVerifyPage() {
 
   const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
     e.preventDefault();
-    const pasted = e.clipboardData.getData("text").replace(/\D/g, "").slice(0, DIGITS);
+    const pasted = e.clipboardData
+      .getData("text")
+      .replace(/\D/g, "")
+      .slice(0, DIGITS);
     if (!pasted) return;
     const arr = Array(DIGITS).fill("");
     pasted.split("").forEach((ch, i) => {
@@ -112,7 +119,9 @@ export default function MpinVerifyPage() {
 
     if (ok) {
       // success — route to home or wherever
-      router.push(userType === 'vendor' ? "/vendor/dashboard" : "/customer/services");
+      router.push(
+        userType === "vendor" ? "/vendor/dashboard" : "/vehicles/add"
+      );
     } else {
       // failed
       setAttemptsLeft((p) => {
@@ -148,8 +157,12 @@ export default function MpinVerifyPage() {
       </div>
 
       {/* Title */}
-      <h2 className="text-lg font-semibold text-gray-900 text-center">Welcome Back!</h2>
-      <p className="text-sm text-gray-500 text-center mt-1">Enter your 4-digit MPIN</p>
+      <h2 className="text-lg font-semibold text-gray-900 text-center">
+        Welcome Back!
+      </h2>
+      <p className="text-sm text-gray-500 text-center mt-1">
+        Enter your 4-digit MPIN
+      </p>
 
       {/* MPIN inputs */}
       <div className="mt-5">
@@ -173,7 +186,8 @@ export default function MpinVerifyPage() {
                 className={`w-12 h-12 sm:w-14 sm:h-14 text-center text-lg sm:text-2xl font-semibold rounded-md transition-all
                 ${showError ? "border border-red-400" : "border border-gray-300"}
                 focus:outline-none focus:ring-2 focus:ring-orange-200`}
-              />);
+              />
+            );
           })}
         </div>
 
@@ -181,12 +195,26 @@ export default function MpinVerifyPage() {
         {error && (
           <div className="flex items-start gap-2 text-red-600 text-sm mt-3 justify-center">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-              <path d="M11.998 2C6.477 2 2 6.477 2 12s4.477 10 9.998 10C17.52 22 22 17.523 22 12S17.52 2 11.998 2zM12 8v6" stroke="#DC2626" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-              <path d="M12 17h.01" stroke="#DC2626" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+              <path
+                d="M11.998 2C6.477 2 2 6.477 2 12s4.477 10 9.998 10C17.52 22 22 17.523 22 12S17.52 2 11.998 2zM12 8v6"
+                stroke="#DC2626"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M12 17h.01"
+                stroke="#DC2626"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
             </svg>
             <div>
               <div className="font-medium">Incorrect MPIN.</div>
-              <div className="text-xs text-red-500">{attemptsLeft} attempts remaining</div>
+              <div className="text-xs text-red-500">
+                {attemptsLeft} attempts remaining
+              </div>
             </div>
           </div>
         )}
@@ -238,11 +266,14 @@ export default function MpinVerifyPage() {
 
       {/* Footer */}
       <p className="text-[11px] text-gray-500 text-center mt-5">
-        MPIN provides quick access while maintaining security. Your MPIN is encrypted and stored securely.
+        MPIN provides quick access while maintaining security. Your MPIN is
+        encrypted and stored securely.
       </p>
 
       <p className="text-[11px] text-gray-400 text-center mt-3">
-        By continuing, you agree to our <span className="text-blue-600">Terms of Service</span> and <span className="text-blue-600">Privacy Policy</span>.
+        By continuing, you agree to our{" "}
+        <span className="text-blue-600">Terms of Service</span> and{" "}
+        <span className="text-blue-600">Privacy Policy</span>.
       </p>
     </div>
   );

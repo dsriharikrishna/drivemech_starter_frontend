@@ -1,88 +1,76 @@
 "use client";
 
-import React from "react";
+import { Download } from "lucide-react";
 import Image from "next/image";
-import { X } from "lucide-react";
+import { useCallback } from "react";
 
 export default function TowInvoice({
-  onClose,
+  orderId = "TOW-001",
 }: {
-  onClose: () => void;
+  orderId?: string;
 }) {
+  const handleDownload = useCallback(() => {
+    alert("Downloading invoice...");
+  }, []);
+
   return (
-    <div className="w-full sm:w-2xl md:w-3xl mx-auto bg-white pb-10 rounded-xl">
-
-      {/* COMPANY INFO */}
-      <div className="border rounded-xl p-4 mb-6">
-        <p className="font-semibold text-gray-800">DriveMech Towing Services</p>
-        <p className="text-sm text-gray-500">123 Auto Street, Hyderabad</p>
-        <p className="text-sm text-gray-500">GSTIN: 29ABCDE1234F1Z9</p>
+    <div className="w-full max-w-2xl mx-auto p-4 bg-white rounded-xl border">
+      <div className="text-center mb-3">
+        <Image
+          src="/images/logo.png"
+          width={80}
+          height={80}
+          alt="Logo"
+          className="mx-auto mb-2"
+        />
+        <h2 className="text-lg font-bold">Towing Invoice</h2>
+        <p className="text-xs text-gray-500">Order ID: {orderId}</p>
       </div>
 
-      {/* ORDER INFO */}
-      <div className="border rounded-xl p-4 mb-6">
+      <div className="border-t border-b py-3 mb-3 space-y-1.5 text-xs">
         <div className="flex justify-between">
-          <p className="text-sm text-gray-600">Tow Request ID</p>
-          <p className="font-semibold">TOW-001</p>
+          <span className="text-gray-600">Pickup Location:</span>
+          <span className="font-medium">123 Main St, Downtown</span>
         </div>
-        <div className="flex justify-between mt-2">
-          <p className="text-sm text-gray-600">Date</p>
-          <p className="font-medium">28 July 2025</p>
+        <div className="flex justify-between">
+          <span className="text-gray-600">Drop Location:</span>
+          <span className="font-medium">A to Z Garage</span>
+        </div>
+        <div className="flex justify-between">
+          <span className="text-gray-600">Distance:</span>
+          <span className="font-medium">12.5 km</span>
+        </div>
+        <div className="flex justify-between">
+          <span className="text-gray-600">Date:</span>
+          <span className="font-medium">28 July 2025, 4:45 PM</span>
         </div>
       </div>
 
-      {/* BILLING DETAILS */}
-      <div className="border rounded-xl p-4 mb-6">
-        <h3 className="font-semibold mb-3">Billing Details</h3>
-
-        <div className="flex justify-between text-sm py-1">
+      <div className="space-y-1.5 text-xs mb-3">
+        <div className="flex justify-between">
           <span>Base Fare</span>
-          <span>$60.00</span>
+          <span>$50.00</span>
         </div>
-
-        <div className="flex justify-between text-sm py-1">
-          <span>Distance Charges</span>
-          <span>$20.00</span>
+        <div className="flex justify-between">
+          <span>Distance Charge</span>
+          <span>$25.00</span>
         </div>
-
-        <div className="flex justify-between text-sm py-1">
+        <div className="flex justify-between">
           <span>Service Fee</span>
-          <span>$5.00</span>
+          <span>$10.00</span>
         </div>
-
-        <div className="border-t my-3"></div>
-
-        <div className="flex justify-between text-lg font-semibold text-orange-500">
-          <span>Total Paid</span>
-          <span>$85.00</span>
+        <div className="flex justify-between font-semibold text-base border-t pt-1.5 mt-1.5">
+          <span>Total</span>
+          <span className="text-orange-500">$85.00</span>
         </div>
       </div>
 
-      {/* DRIVER DETAILS */}
-      <div className="border rounded-xl p-4 mb-6">
-        <h3 className="font-semibold mb-3">Driver Details</h3>
-
-        <div className="flex items-center gap-3">
-          <Image
-            src="/images/default-avatar.png"
-            width={55}
-            height={55}
-            alt="driver"
-            className="rounded-full object-cover"
-          />
-
-          <div>
-            <p className="font-semibold">John Smith</p>
-            <p className="text-gray-600 text-sm">
-              ⭐ 4.8 • Heavy Duty Tow Truck
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* DOWNLOAD BUTTON */}
-      <button className="w-full mt-4 bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-xl font-semibold">
-        Download PDF
+      <button
+        onClick={handleDownload}
+        className="w-full bg-orange-500 hover:bg-orange-600 text-white py-2.5 rounded-xl font-semibold flex items-center justify-center gap-1.5 text-xs"
+      >
+        <Download size={16} />
+        Download Invoice
       </button>
     </div>
   );

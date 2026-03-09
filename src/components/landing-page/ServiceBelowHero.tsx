@@ -2,13 +2,13 @@
 
 import { Card } from "../ui/Card";
 
-
 interface ServiceItem {
   title: string;
   description: string;
   button: string;
   image: string;
   size?: "sm" | "md" | "lg";
+  path?: string;
 }
 
 interface ServiceBelowHeroProps {
@@ -18,9 +18,8 @@ interface ServiceBelowHeroProps {
 
 export default function ServiceBelowHero({
   services = defaultServices,
-  className = ""
+  className = "",
 }: ServiceBelowHeroProps) {
-
   return (
     <section className={`py-8 md:py-12 lg:py-16 bg-gray-50 ${className}`}>
       <div className="max-w-7xl mx-auto px-4 ">
@@ -34,6 +33,7 @@ export default function ServiceBelowHero({
                 button={service.button}
                 image={service.image}
                 size={service.size || "md"}
+                path={service.path}
               />
             </div>
           ))}
@@ -47,30 +47,38 @@ export default function ServiceBelowHero({
 const defaultServices: ServiceItem[] = [
   {
     title: "Spare Parts",
-    description: "Dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.",
+    description:
+      "Dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.",
     button: "Buy Spares",
     image: "/images/spareparts.png",
-    size: "md"
+    size: "md",
+    path: "/spare-parts",
   },
   {
     title: "Road Side Assistance",
-    description: "Dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.",
+    description:
+      "Dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.",
     button: "Book Service",
     image: "/images/truck.png",
-    size: "md"
+    size: "md",
+    path: "/towing-services",
   },
   {
     title: "Insurance Claims",
-    description: "Dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.",
+    description:
+      "Dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.",
     button: "Claim Insurance",
     image: "/images/carinsurance.png",
-    size: "md"
+    size: "md",
+    path: "/insurance-claims",
   },
   {
     title: "Roadworthy Inspections",
-    description: "Dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.",
+    description:
+      "Dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.",
     button: "Book Inspection",
     image: "/images/carinsurance.png",
-    size: "md"
-  }
+    size: "md",
+    path: "/roadworthy-inspections",
+  },
 ];

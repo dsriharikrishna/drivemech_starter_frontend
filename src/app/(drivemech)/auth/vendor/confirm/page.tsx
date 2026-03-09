@@ -1,9 +1,7 @@
-import SuccessPage from '@/components/auth/confirm/SuccessPage'
+import SuccessPage from "@/components/auth/confirm/SuccessPage";
 
 const page = () => {
-  return (
-    <SuccessPage />
-  )
-}
+  return <SuccessPage />;
+};
 
-export default page
+export default page;

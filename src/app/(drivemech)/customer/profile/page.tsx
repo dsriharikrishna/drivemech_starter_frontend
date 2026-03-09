@@ -1,9 +1,7 @@
-import ProfileLayout from './ProfileLayout'
+import ProfileLayout from "./ProfileLayout";
 
 const page = () => {
-  return (
-    <ProfileLayout />
-  )
-}
+  return <ProfileLayout />;
+};
 
-export default page
+export default page;

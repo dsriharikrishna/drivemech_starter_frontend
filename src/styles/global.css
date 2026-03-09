@@ -15,7 +15,7 @@
   --color-primary-200: #ffbda3;
   --color-primary-300: #ff9c75;
   --color-primary-400: #ff7c47;
-  --color-primary-500: #FF5C00;
+  --color-primary-500: #ff5c00;
   /* Base orange */
   --color-primary-600: #e55200;
   --color-primary-700: #cc4900;
@@ -151,8 +151,22 @@
   --color-danger-900: hsl(0 84% 20%);
 
   /* Fonts */
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, monospace;
+
+  /* Animations */
+  --animate-spin-slow: spin 8s linear infinite;
+  --animate-spin-reverse-slow: spin-reverse 6s linear infinite;
+
+  @keyframes spin-reverse {
+    from {
+      transform: rotate(0deg);
+    }
+
+    to {
+      transform: rotate(-360deg);
+    }
+  }
 }
 
 /* =========================
@@ -161,44 +175,44 @@
 
 /* Star Rating Color */
 .text-star {
-  color: #EFB100;
+  color: #efb100;
 }
 
 .fill-star {
-  fill: #EFB100;
+  fill: #efb100;
 }
 
 /* Inspection Section */
 .bg-inspection {
-  background-color: #FFF3EA;
+  background-color: #fff3ea;
 }
 
 .border-inspection {
-  border-color: #F5D6C5;
+  border-color: #f5d6c5;
 }
 
 .text-inspection {
-  color: #8B4513;
+  color: #8b4513;
 }
 
 /* Fixed Price Section */
 .bg-fixed-price {
-  background-color: #E8F9F1;
+  background-color: #e8f9f1;
 }
 
 .border-fixed-price {
-  border-color: #CDEFE1;
+  border-color: #cdefe1;
 }
 
 /* =========================
    Base Styles
 ========================= */
 .bg-hero {
-  background-image: url('/images/HeroBg.png');
+  background-image: url("/images/HeroBg.png");
 }
 
 .inputLabel {
-  color: #0F172B;
+  color: #0f172b;
   font-family: Manrope, sans-serif;
   font-weight: 600;
   font-size: 14px;
@@ -209,13 +223,20 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans, Arial, Helvetica, sans-serif);
+  font-family: var(--font-sans,
+      "Manrope",
+      ui-sans-serif,
+      system-ui,
+      sans-serif);
+  overflow-x: hidden;
 }
 
 .container {
+  width: 100%;
   max-width: 1280px;
+  /* matches Tailwind's max-w-7xl */
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 24px 48px;
 }
 
 @keyframes gradient-x {
@@ -238,41 +259,56 @@ body {
 }
 
 /* =========================
-   Universal Custom Scrollbar
-   Matching Your Theme
+   Universal Auto-Hiding Scrollbar
+   (Show only on hover/scroll)
 ========================= */
 
 /* Firefox */
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--color-secondary-300) var(--color-secondary-50);
+  scrollbar-color: transparent transparent;
+  transition: scrollbar-color 0.3s ease;
+}
+
+/* Show scrollbar when hovering over the container */
+*:hover {
+  scrollbar-color: var(--color-secondary-300) transparent;
 }
 
 /* WebKit browsers (Chrome, Safari, Edge) */
 ::-webkit-scrollbar {
-  width: 4px;
-  height: 5px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-secondary-50);
-  border-radius: 4px;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-secondary-300);
-  border-radius: 4px;
-  border: 1px solid var(--color-secondary-50);
+  background-color: transparent;
+  border-radius: 20px;
+  border: 2px solid transparent;
+  background-clip: content-box;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-secondary-400);
-}
-
-::-webkit-scrollbar-thumb:active {
-  background: var(--color-secondary-500);
+*:hover::-webkit-scrollbar-thumb {
+  background-color: var(--color-secondary-300);
 }
 
 ::-webkit-scrollbar-corner {
-  background: var(--color-secondary-50);
+  background: transparent;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
 }

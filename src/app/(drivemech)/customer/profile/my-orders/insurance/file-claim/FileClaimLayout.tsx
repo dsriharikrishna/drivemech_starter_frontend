@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import Image from "next/image";
 import {
   ArrowLeft,
   Upload as UploadIcon,
@@ -27,12 +26,27 @@ import DialogHeader from "@/components/modals/DialogHeader";
 import DialogFooter from "@/components/modals/DialogFooter";
 
 const CLAIM_TYPES = [
-  { key: "accident", label: "Accident Damage", icon: "🚗", policeRequired: false },
+  {
+    key: "accident",
+    label: "Accident Damage",
+    icon: "🚗",
+    policeRequired: false,
+  },
   { key: "theft", label: "Vehicle Theft", icon: "🔒", policeRequired: true },
-  { key: "natural", label: "Natural Disaster", icon: "🌪️", policeRequired: false },
+  {
+    key: "natural",
+    label: "Natural Disaster",
+    icon: "🌪️",
+    policeRequired: false,
+  },
   { key: "fire", label: "Fire Damage", icon: "🔥", policeRequired: false },
   { key: "vandalism", label: "Vandalism", icon: "🔨", policeRequired: false },
-  { key: "mechanical", label: "Mechanical Breakdown", icon: "⚙️", policeRequired: false },
+  {
+    key: "mechanical",
+    label: "Mechanical Breakdown",
+    icon: "⚙️",
+    policeRequired: false,
+  },
   { key: "other", label: "Other", icon: "📋", policeRequired: false },
 ];
 
@@ -93,7 +107,8 @@ export default function FileClaimLayout({ policyId }: { policyId: string }) {
     const total = [...files, ...valid].slice(0, 10);
     setFiles(total);
   }
-  const removeFile = (i: number) => setFiles((p) => p.filter((_, x) => x !== i));
+  const removeFile = (i: number) =>
+    setFiles((p) => p.filter((_, x) => x !== i));
 
   // Validation
   const isValid =
@@ -122,8 +137,7 @@ export default function FileClaimLayout({ policyId }: { policyId: string }) {
     setSubmittedMeta(meta);
     setShowDialog(true);
     setSubmitting(false);
-
-      };
+  };
 
   return (
     <FormProvider {...methods}>
@@ -131,7 +145,10 @@ export default function FileClaimLayout({ policyId }: { policyId: string }) {
         <div className="max-w-5xl mx-auto px-4">
           {/* Header */}
           <div className="flex items-center gap-3 mb-6 pb-2 border-b border-border">
-            <button onClick={() => router.back()} className="p-2 hover:bg-gray-100 rounded-lg">
+            <button
+              onClick={() => router.back()}
+              className="p-2 hover:bg-gray-100 rounded-lg"
+            >
               <ArrowLeft size={20} />
             </button>
 
@@ -207,11 +224,16 @@ export default function FileClaimLayout({ policyId }: { policyId: string }) {
                 <div className="flex gap-3">
                   <FileText className="text-red-600" />
                   <div>
-                    <Typography weight="semibold">Police Report Required</Typography>
+                    <Typography weight="semibold">
+                      Police Report Required
+                    </Typography>
                     <Typography variant="body" className="mt-1">
                       This claim type requires a police report (FIR).
                     </Typography>
-                    <CheckboxInput name="fir" label="I have filed a police report" />
+                    <CheckboxInput
+                      name="fir"
+                      label="I have filed a police report"
+                    />
                   </div>
                 </div>
               </CustomCard>
@@ -221,7 +243,12 @@ export default function FileClaimLayout({ policyId }: { policyId: string }) {
             <CustomCard className="p-4">
               <Typography weight="semibold">Incident Details</Typography>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                <CommonTextInput name="incidentDate" label="Date of Incident" type="date" required />
+                <CommonTextInput
+                  name="incidentDate"
+                  label="Date of Incident"
+                  type="date"
+                  required
+                />
                 <CommonTextInput
                   name="claimAmount"
                   label="Claim Amount"
@@ -239,7 +266,9 @@ export default function FileClaimLayout({ policyId }: { policyId: string }) {
                 required
                 className="mt-4"
               />
-              <div className="text-xs text-gray-400 text-right">{(incidentDesc ?? "").length}/500 characters</div>
+              <div className="text-xs text-gray-400 text-right">
+                {(incidentDesc ?? "").length}/500 characters
+              </div>
             </CustomCard>
 
             {/* Contact Info */}
@@ -248,13 +277,26 @@ export default function FileClaimLayout({ policyId }: { policyId: string }) {
                 Your Contact Information
               </Typography>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <CommonTextInput name="witnessPhone" label="Witness Phone" placeholder="+91 XXXXX XXXXX" />
-                <CommonTextInput name="email" label="Email Address" required placeholder="your@email.com" />
+                <CommonTextInput
+                  name="witnessPhone"
+                  label="Witness Phone"
+                  placeholder="+91 XXXXX XXXXX"
+                />
+                <CommonTextInput
+                  name="email"
+                  label="Email Address"
+                  required
+                  placeholder="your@email.com"
+                />
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                 <CommonTextInput name="witnessName" label="Witness Name" />
-                <CommonTextInput name="witnessPhone2" label="Witness Phone" placeholder="+91 XXXXX XXXXX" />
+                <CommonTextInput
+                  name="witnessPhone2"
+                  label="Witness Phone"
+                  placeholder="+91 XXXXX XXXXX"
+                />
               </div>
             </CustomCard>
 
@@ -267,27 +309,46 @@ export default function FileClaimLayout({ policyId }: { policyId: string }) {
               <label className="block">
                 <div className="w-full border border-gray-200 rounded-xl py-10 px-6 text-center bg-gray-50 hover:bg-gray-100 cursor-pointer">
                   <UploadIcon className="mx-auto text-gray-500" />
-                  <div className="mt-2 text-sm text-gray-500">Upload Documents</div>
-                  <div className="mt-1 text-xs text-gray-400">Max 10 files, 10MB each</div>
-                  <input type="file" multiple accept=".jpg,.jpeg,.png,.pdf" onChange={handleFileUpload} className="hidden" />
+                  <div className="mt-2 text-sm text-gray-500">
+                    Upload Documents
+                  </div>
+                  <div className="mt-1 text-xs text-gray-400">
+                    Max 10 files, 10MB each
+                  </div>
+                  <input
+                    type="file"
+                    multiple
+                    accept=".jpg,.jpeg,.png,.pdf"
+                    onChange={handleFileUpload}
+                    className="hidden"
+                  />
                 </div>
               </label>
 
               {files.length > 0 && (
                 <div className="mt-3 space-y-2">
                   {files.map((f, i) => (
-                    <div key={i} className="flex items-center justify-between bg-gray-50 border p-2 rounded-lg">
+                    <div
+                      key={i}
+                      className="flex items-center justify-between bg-gray-50 border p-2 rounded-lg"
+                    >
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 bg-white border rounded flex items-center justify-center text-sm">
                           {f.name.split(".").pop()?.toUpperCase()}
                         </div>
                         <div>
                           <div className="font-medium">{f.name}</div>
-                          <div className="text-xs text-gray-400">{(f.size / 1024 / 1024).toFixed(2)} MB</div>
+                          <div className="text-xs text-gray-400">
+                            {(f.size / 1024 / 1024).toFixed(2)} MB
+                          </div>
                         </div>
                       </div>
 
-                      <Button size="sm" variant="outline" onClick={() => removeFile(i)}>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => removeFile(i)}
+                      >
                         Remove
                       </Button>
                     </div>
@@ -302,7 +363,10 @@ export default function FileClaimLayout({ policyId }: { policyId: string }) {
                 <Clock className="text-green-600" />
                 <div>
                   <Typography weight="semibold">Claim Processing</Typography>
-                  <Typography variant="body">Claims are processed within 7–10 business days. You’ll get regular updates.</Typography>
+                  <Typography variant="body">
+                    Claims are processed within 7–10 business days. You’ll get
+                    regular updates.
+                  </Typography>
                 </div>
               </div>
             </CustomCard>

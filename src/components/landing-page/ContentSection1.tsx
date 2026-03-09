@@ -11,14 +11,15 @@ export default function ContentSection1() {
             opacity: 1,
           }}
         >
-
           {/* ✅ Text Section */}
           <div className="flex-1 w-full space-y-4 sm:space-y-6 py-5 text-center lg:text-left">
             <h1 className="font-manrope font-bold text-[28px] sm:text-[36px] md:text-[45px] leading-tight text-[#232947]">
               <span className="text-[#FF7A1A] font-bold">For Garages:</span>{" "}
               <span className="text-[#232947] font-bold">
-                Streamline<br className="hidden sm:block" />
-                Your Operations,<br className="hidden sm:block" />
+                Streamline
+                <br className="hidden sm:block" />
+                Your Operations,
+                <br className="hidden sm:block" />
                 Grow Your Business.
               </span>
             </h1>
@@ -47,7 +48,6 @@ export default function ContentSection1() {
               priority
             />
           </div>
-
         </div>
       </div>
     </section>

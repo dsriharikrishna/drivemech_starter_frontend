@@ -92,12 +92,10 @@ export default function TrackBookingLayout() {
 
   return (
     <FormProvider {...form}>
-      <div className="p-4 max-w-7xl mx-auto flex flex-col gap-4">
+      <div className="p-4 container mx-auto flex flex-col gap-4">
         <div className="flex flex-col lg:flex-row gap-4">
-
           {/* LEFT SIDE */}
           <LeftLayout>
-            <div className="mx-auto p-2">
               {/* HEADER */}
               <ModuleHeader
                 title="Track Booking"
@@ -113,13 +111,11 @@ export default function TrackBookingLayout() {
                 }}
                 steps={timeline}
               />
-            </div>
           </LeftLayout>
 
           {/* RIGHT SIDE */}
           <RightLayout>
             <div className="flex flex-col gap-0 p-2 bg-white rounded-2xl">
-
               <h2 className="text-md font-semibold">Your Booking Summary</h2>
 
               {/* Vehicle Details */}
@@ -131,10 +127,17 @@ export default function TrackBookingLayout() {
                   </div>
 
                   <div className="flex justify-center">
-                    <Image src="/images/workshop/car.png" width={130} height={80} alt="" />
+                    <Image
+                      src="/images/workshop/car.png"
+                      width={130}
+                      height={80}
+                      alt=""
+                    />
                   </div>
 
-                  <p className="text-sm text-center font-medium mt-2">Toyota Hilux</p>
+                  <p className="text-sm text-center font-medium mt-2">
+                    Toyota Hilux
+                  </p>
                   <p className="text-xs text-center text-gray-500">
                     2021 Petrol Automatic 2.5 Liters Hybrid AWD-i
                   </p>
@@ -201,10 +204,8 @@ export default function TrackBookingLayout() {
                   </div>
                 </div>
               </Section>
-
             </div>
           </RightLayout>
-
         </div>
       </div>
     </FormProvider>

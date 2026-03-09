@@ -9,16 +9,16 @@ interface Props {
 
 export default function PersonalDetails({ form }: Props) {
   return (
-    <div className="p-4 border border-gray-200 rounded-xl bg-white">
-      <p className="font-medium mb-3">Personal Details *</p>
+    <div className="p-3 border border-gray-200 rounded-xl bg-white">
+      <p className="text-sm font-medium mb-2">Personal Details *</p>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
         <CommonTextInput
           name="fullName"
           label="Full Name"
           form={form}
           placeholder="Full Name"
-          icon={<User className="w-4 h-4 text-gray-400" />}
+          icon={<img src="/svgs/select-service/user-icon.svg" alt="User" />}
         />
 
         <CommonTextInput
@@ -26,7 +26,7 @@ export default function PersonalDetails({ form }: Props) {
           label="Phone"
           form={form}
           placeholder="+33 | X XX XX XX XX"
-          icon={<Phone className="w-4 h-4 text-gray-400" />}
+          icon={<img src="/svgs/select-service/mobile-icon.svg" alt="Phone" />}
         />
 
         <CommonTextInput
@@ -34,7 +34,7 @@ export default function PersonalDetails({ form }: Props) {
           label="Email"
           form={form}
           placeholder="Email"
-          icon={<Mail className="w-4 h-4 text-gray-400" />}
+          icon={<img src="/svgs/select-service/mail-icon.svg" alt="Mail" />}
         />
       </div>
     </div>

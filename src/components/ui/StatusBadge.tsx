@@ -1,17 +1,28 @@
 import React from "react";
+import { cn } from "@/lib/utils";
 
 interface StatusBadgeProps {
   status: string;
-  color?: string;
+  label?: string;
+  size?: "sm" | "md" | "lg";
+  className?: string;
+  color?: "green" | "yellow" | "gray" | "red" | "blue" | "orange" | "purple" | "indigo";
 }
 
-export default function StatusBadge({ status }: StatusBadgeProps) {
+export default function StatusBadge({
+  status,
+  label,
+  size = "md",
+  className,
+  color,
+}: StatusBadgeProps) {
   const normalized = status.toLowerCase();
 
   const colorMap: Record<string, string> = {
     active: "bg-green-100 text-green-700 border-green-300",
     completed: "bg-green-100 text-green-700 border-green-300",
     success: "bg-green-100 text-green-700 border-green-300",
+    verified: "bg-green-100 text-green-700 border-green-300",
 
     pending: "bg-yellow-100 text-yellow-700 border-yellow-300",
     awaiting: "bg-yellow-100 text-yellow-700 border-yellow-300",
@@ -39,78 +50,38 @@ export default function StatusBadge({ status }: StatusBadgeProps) {
     processing: "bg-indigo-100 text-indigo-700 border-indigo-300",
   };
 
-  const badgeClasses = colorMap[normalized] 
-    || "bg-blue-100 text-blue-700 border-blue-300"; 
+  const sizeClasses = {
+    sm: "px-2 py-0.5 text-xs",
+    md: "px-3 py-1 text-xs",
+    lg: "px-4 py-1.5 text-sm",
+  };
+
+  const badgeClasses =
+    colorMap[normalized] || "bg-blue-100 text-blue-700 border-blue-300";
 
   return (
     <span
-      className={`px-3 py-1 text-xs font-medium border rounded-full ${badgeClasses}`}
+      className={cn(
+        "font-medium border rounded-lg inline-block",
+        sizeClasses[size],
+        badgeClasses,
+        className,
+        color === "green" && "bg-green-100 text-green-700 border-green-300",
+        color === "yellow" && "bg-yellow-100 text-yellow-700 border-yellow-300",
+        color === "gray" && "bg-gray-100 text-gray-700 border-gray-300",
+        color === "red" && "bg-red-100 text-red-700 border-red-300",
+        color === "blue" && "bg-blue-100 text-blue-700 border-blue-300",
+        color === "orange" && "bg-orange-100 text-orange-700 border-orange-300",
+        color === "purple" && "bg-purple-100 text-purple-700 border-purple-300",
+        color === "indigo" && "bg-indigo-100 text-indigo-700 border-indigo-300",
+      )}
     >
-      {status}
+      {label || status}
     </span>
   );
 }
 
 //USAGE
 //  <div className="space-y-4">
-
-//   {/* 🟢 SUCCESS */}
-//   <div className="flex gap-3 flex-wrap">
-//     <StatusBadge status="active" />
-//     <StatusBadge status="completed" />
-//     <StatusBadge status="success" />
-//   </div>
-
-//   {/* 🟡 PENDING / PROGRESS */}
-//   <div className="flex gap-3 flex-wrap">
-//     <StatusBadge status="pending" />
-//     <StatusBadge status="awaiting" />
-//     <StatusBadge status="in-progress" />
-//     <StatusBadge status="inprogress" />
-//   </div>
-
-//   {/* ⚪ INACTIVE */}
-//   <div className="flex gap-3 flex-wrap">
-//     <StatusBadge status="inactive" />
-//     <StatusBadge status="disabled" />
-//     <StatusBadge status="archived" />
-//   </div>
-
-//   {/* 🔴 ERROR / FAILED */}
-//   <div className="flex gap-3 flex-wrap">
-//     <StatusBadge status="failed" />
-//     <StatusBadge status="error" />
-//     <StatusBadge status="rejected" />
-//     <StatusBadge status="cancelled" />
-//   </div>
-
-//   {/* 🔵 INFO */}
-//   <div className="flex gap-3 flex-wrap">
-//     <StatusBadge status="info" />
-//     <StatusBadge status="approved" />
-//     <StatusBadge status="review" />
-//   </div>
-
-//   {/* 🟠 WARNING */}
-//   <div className="flex gap-3 flex-wrap">
-//     <StatusBadge status="warning" />
-//   </div>
-
-//   {/* 🟣 DRAFT / NEW */}
-//   <div className="flex gap-3 flex-wrap">
-//     <StatusBadge status="draft" />
-//     <StatusBadge status="new" />
-//   </div>
-
-//   {/* 🔄 PROCESSING */}
-//   <div className="flex gap-3 flex-wrap">
-//     <StatusBadge status="processing" />
-//   </div>
-
-//   {/* 🔵 FALLBACK */}
-//   <div className="flex gap-3 flex-wrap">
-//     <StatusBadge status="unknown" />
-//     <StatusBadge status="anything" />
-//   </div>
-
+//   {/* ... existing usage comments ... */}
 // </div>

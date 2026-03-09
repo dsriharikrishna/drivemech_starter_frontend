@@ -12,18 +12,14 @@ export default function TimelineItem({ step }: Props) {
     <CheckCircle className="text-green-500 w-5 h-5" />
   ) : (
     <Circle
-      className={`w-5 h-5 ${
-        isActive ? "text-green-500" : "text-gray-400"
-      }`}
+      className={`w-5 h-5 ${isActive ? "text-green-500" : "text-gray-400"}`}
     />
   );
 
   return (
     <div className="grid grid-cols-12 items-start gap-3 py-2">
       {/* ICON */}
-      <div className="col-span-1 flex justify-center pt-1">
-        {icon}
-      </div>
+      <div className="col-span-1 flex justify-center pt-1">{icon}</div>
 
       {/* TEXT */}
       <div className="col-span-8">

@@ -18,6 +18,8 @@ interface ModalDropdownProps {
   className?: string;
   buttonClassName?: string;
   error?: string;
+  label?: string;
+  required?: boolean;
 }
 
 export default function ModalDropdown({
@@ -29,13 +31,40 @@ export default function ModalDropdown({
   className = "",
   buttonClassName = "",
   error,
+  label,
+  required = false,
 }: ModalDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [dropdownPosition, setDropdownPosition] = useState<"bottom" | "top">(
+    "bottom"
+  );
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  // Calculate dropdown position based on available space
+  useEffect(() => {
+    if (isOpen && buttonRef.current) {
+      const rect = buttonRef.current.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      const spaceBelow = viewportHeight - rect.bottom;
+      const spaceAbove = rect.top;
+      const dropdownHeight = 240; // max-h-60 = 240px
+
+      // Position dropdown upward if there's more space above or insufficient space below
+      if (spaceBelow < dropdownHeight && spaceAbove > spaceBelow) {
+        setDropdownPosition("top");
+      } else {
+        setDropdownPosition("bottom");
+      }
+    }
+  }, [isOpen]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setIsOpen(false);
       }
     };
@@ -51,13 +80,23 @@ export default function ModalDropdown({
 
   return (
     <div className={`relative ${className}`} ref={dropdownRef}>
+      {/* Label */}
+      {label && (
+        <label className="inputLabel mb-1">
+          {label}
+          {required && <span className="text-red-500 ml-1">*</span>}
+        </label>
+      )}
       {/* Dropdown Button */}
       <button
+        ref={buttonRef}
         type="button"
         onClick={() => !disabled && setIsOpen(!isOpen)}
         disabled={disabled}
-        className={`flex items-center justify-between w-full px-4 h-[40px] text-sm text-left bg-white border rounded-xl ${buttonClassName} ${error ? 'border-red-500' : 'border-gray-300'
-          } ${disabled ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500'
+        className={`flex items-center justify-between w-full px-4 h-[40px] text-sm text-left bg-white border rounded-xl ${buttonClassName} ${error ? "border-red-500" : "border-gray-300"
+          } ${disabled
+            ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+            : "hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
           }`}
       >
         <span
@@ -73,13 +112,16 @@ export default function ModalDropdown({
       </button>
 
       {/* Error Message */}
-      {error && (
-        <p className="mt-1 text-xs text-red-500">{error}</p>
-      )}
+      {error && <p className="mt-1 text-xs text-red-500">{error}</p>}
 
       {/* Dropdown Menu */}
       {isOpen && (
-        <div className="absolute z-100 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-auto">
+        <div
+          className={`
+            absolute z-50 w-full bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-auto
+            ${dropdownPosition === "top" ? "bottom-full mb-1" : "top-full mt-1"}
+          `}
+        >
           <div className="py-1">
             {items.length === 0 ? (
               <div className="px-4 py-3 text-sm text-gray-500 text-center">
@@ -100,7 +142,9 @@ export default function ModalDropdown({
                   <div className="flex flex-col">
                     <span className="text-[14px] font-medium">{item.name}</span>
                     {item.description && (
-                      <span className="text-[12px] text-gray-500 mt-1">{item.description}</span>
+                      <span className="text-[12px] text-gray-500 mt-1">
+                        {item.description}
+                      </span>
                     )}
                   </div>
                 </button>

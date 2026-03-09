@@ -1,6 +1,6 @@
 export interface Order {
   orderId: string;
-  status: 'pending' | 'in-progress' | 'completed' | 'cancelled';
+  status: "pending" | "in-progress" | "completed" | "cancelled";
   date: string;
   serviceType: string;
   vehicle: {
@@ -19,7 +19,7 @@ export interface Order {
     price: number;
   }>;
   total: number;
-  paymentStatus: 'paid' | 'pending' | 'failed';
+  paymentStatus: "paid" | "pending" | "failed";
   paymentMethod: string;
   notes?: string;
   assignedMechanic?: {

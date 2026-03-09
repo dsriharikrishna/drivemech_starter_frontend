@@ -1,10 +1,8 @@
-import React from 'react'
-import MyPaymentsLayout from './MyPaymentsLayout'
+import React from "react";
+import MyPaymentsLayout from "./MyPaymentsLayout";
 
 const page = () => {
-  return (
-    <MyPaymentsLayout />
-  )
-}
+  return <MyPaymentsLayout />;
+};
 
-export default page
+export default page;

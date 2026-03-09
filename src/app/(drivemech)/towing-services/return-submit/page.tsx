@@ -1,10 +1,8 @@
-import React from 'react'
-import ReturnSubmitLayout from './ReturnSubmitLayout'
+import React from "react";
+import ReturnSubmitLayout from "./ReturnSubmitLayout";
 
 const page = () => {
-  return (
-    <ReturnSubmitLayout />
-  )
-}
+  return <ReturnSubmitLayout />;
+};
 
-export default page
+export default page;

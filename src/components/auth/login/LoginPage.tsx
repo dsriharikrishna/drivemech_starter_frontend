@@ -27,8 +27,9 @@ import { loginSchema } from "@/schemas/auth/login.schema";
 export default function LoginPage() {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const pathname = typeof window !== 'undefined' ? window.location.pathname : '';
-  const userType = pathname.includes('/vendor') ? 'vendor' : 'customer';
+  const pathname =
+    typeof window !== "undefined" ? window.location.pathname : "";
+  const userType = pathname.includes("/vendor") ? "vendor" : "customer";
   const authPrefix = `/auth/${userType}`;
 
   const loading = useAppSelector(selectAuthLoading);
@@ -68,10 +69,16 @@ export default function LoginPage() {
       }
       if (isPhoneInput(identifier.trim())) {
         setMode("phone");
-        setValue("phone", identifier.trim(), { shouldValidate: true, shouldDirty: true });
+        setValue("phone", identifier.trim(), {
+          shouldValidate: true,
+          shouldDirty: true,
+        });
       } else if (isEmailInput(identifier.trim())) {
         setMode("email");
-        setValue("email", identifier.trim(), { shouldValidate: true, shouldDirty: true });
+        setValue("email", identifier.trim(), {
+          shouldValidate: true,
+          shouldDirty: true,
+        });
       } else {
         setMode("initial");
       }
@@ -83,9 +90,12 @@ export default function LoginPage() {
   // When mode changes, clear the other field so RHF doesn't keep stale values
   useEffect(() => {
     if (mode === "phone") {
-      setValue("email", "");
+      setValue("email", "", { shouldValidate: false });
     } else if (mode === "email") {
-      setValue("phone", "");
+      setValue("phone", "", { shouldValidate: false });
+    } else if (mode === "initial") {
+      setValue("email", "", { shouldValidate: false });
+      setValue("phone", "", { shouldValidate: false });
     }
   }, [mode, setValue]);
 
@@ -116,23 +126,29 @@ export default function LoginPage() {
     return false;
   }, [mode, identifier, formvalues.phone, formvalues.email]);
 
-
   async function onSubmit(data: any) {
+    console.log("Form submitted with data:", data);
+    console.log("Auth prefix:", authPrefix);
+
     // Normalize payload: pick phone or email as identifier
     const payload = { ...data };
-    console.log(payload);
+    console.log("Payload:", payload);
+
+    // Navigate to verify page
+    console.log("Navigating to:", `${authPrefix}/verify`);
+    router.push(`${authPrefix}/verify`);
 
     // Determine verification method
-    let method: "email" | "phone" | null = null;
+    // let method: "email" | "phone" | null = null;
 
-    if (!payload.phone && isPhoneInput(payload.identifier || "")) {
-      payload.phone = (payload.identifier || "").replace(/\D/g, "");
-      method = "phone";
-    }
-    if (!payload.email && isEmailInput(payload.identifier || "")) {
-      payload.email = payload.identifier;
-      method = "email";
-    }
+    // if (!payload.phone && isPhoneInput(payload.identifier || "")) {
+    //   payload.phone = (payload.identifier || "").replace(/\D/g, "");
+    //   method = "phone";
+    // }
+    // if (!payload.email && isEmailInput(payload.identifier || "")) {
+    //   payload.email = payload.identifier;
+    //   method = "email";
+    // }
 
     // TODO: Integrate Redux thunks
     // const result = await dispatch(loginUser(payload));
@@ -141,7 +157,7 @@ export default function LoginPage() {
     //   if (method) {
     //     dispatch(setVerificationMethod(method));
     //   }
-    router.push(`${authPrefix}/verify`);
+    //   router.push(`${authPrefix}/verify`);
     // }
   }
 
@@ -175,7 +191,12 @@ export default function LoginPage() {
 
       {/* FORM */}
       <FormProvider {...methods}>
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3">
+        <form
+          onSubmit={handleSubmit(onSubmit, (errors) =>
+            console.log("Form validation errors:", errors)
+          )}
+          className="flex flex-col gap-3"
+        >
           {/* Animated Input Zone (keeps stable height to avoid layout jumps) */}
           <div className="min-h-[90px] relative">
             <AnimatePresence mode="wait">
@@ -243,9 +264,8 @@ export default function LoginPage() {
             className="py-2 rounded-xl font-semibold"
             disabled={!getValidation()}
           >
-            {!getValidation() ? "Submitting..." : "Verify with OTP"}
+            {getValidation() ? "Verify with OTP" : "Enter Mobile / Email"}
           </Button>
-
 
           {/* Divider */}
           <div className="flex items-center gap-3">
@@ -276,7 +296,6 @@ export default function LoginPage() {
           >
             Register
           </button>
-
         </form>
       </FormProvider>
     </div>

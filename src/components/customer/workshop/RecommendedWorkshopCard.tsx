@@ -26,14 +26,10 @@ export default function RecommendedWorkshopCard({
 }: RecommendedWorkshopCardProps) {
   return (
     <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-4 w-[250px]">
-
       {/* TOP SECTION */}
       <div className="flex items-center gap-3">
         {/* Logo */}
-        <img
-          src={logo}
-          className="w-12 h-12 object-contain rounded-md"
-        />
+        <img src={logo} className="w-12 h-12 object-contain rounded-md" />
 
         <div>
           <h3 className="font-semibold text-base">{name}</h3>
@@ -41,7 +37,7 @@ export default function RecommendedWorkshopCard({
           {/* Rating */}
           <div className="flex items-center gap-1 text-sm">
             <span className="font-semibold">{rating}</span>
-            <Star size={12}color="#EFB100" fill="#EFB100" />            
+            <Star size={12} color="#EFB100" fill="#EFB100" />
             <span className="text-gray-500">({reviews})</span>
           </div>
         </div>
@@ -56,7 +52,11 @@ export default function RecommendedWorkshopCard({
 
         <span className="flex items-center gap-1 text-blue-600">
           {driveTime}
-          <img src="/images/workshop/direction-fill.png" alt="Drive Time" className="object-contain" />
+          <img
+            src="/images/workshop/direction-fill.png"
+            alt="Drive Time"
+            className="object-contain"
+          />
         </span>
       </div>
 
@@ -79,7 +79,6 @@ export default function RecommendedWorkshopCard({
       >
         {buttonText}
       </button>
-
     </div>
   );
 }

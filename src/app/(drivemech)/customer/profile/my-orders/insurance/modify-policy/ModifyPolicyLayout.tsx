@@ -66,7 +66,9 @@ export default function ModifyPolicyLayout({ policyId }: { policyId: string }) {
 
   // form derived values
   const selectedCoverage = watch("newCoverage");
-  const selectedOption = COVERAGE_OPTIONS.find((o) => o.id === selectedCoverage);
+  const selectedOption = COVERAGE_OPTIONS.find(
+    (o) => o.id === selectedCoverage
+  );
   const newPremium = selectedOption?.premium ?? policy.premium;
   const difference = newPremium - policy.premium;
   const effectiveDate = watch("effectiveDate");
@@ -103,7 +105,10 @@ export default function ModifyPolicyLayout({ policyId }: { policyId: string }) {
       <div className="max-w-5xl mx-auto p-6 space-y-6">
         {/* HEADER */}
         <div className="flex items-center gap-3 pb-2 border-b border-border">
-          <button onClick={() => router.back()} className="p-2 rounded-lg hover:bg-gray-100">
+          <button
+            onClick={() => router.back()}
+            className="p-2 rounded-lg hover:bg-gray-100"
+          >
             <ArrowLeft size={22} />
           </button>
           <div>
@@ -125,7 +130,9 @@ export default function ModifyPolicyLayout({ policyId }: { policyId: string }) {
             title="Coverage Amount"
             description="Increase or decrease sum assured"
             expanded={openSection === "coverage"}
-            onClick={() => setOpenSection(openSection === "coverage" ? null : "coverage")}
+            onClick={() =>
+              setOpenSection(openSection === "coverage" ? null : "coverage")
+            }
           />
 
           {openSection === "coverage" && (
@@ -162,13 +169,19 @@ export default function ModifyPolicyLayout({ policyId }: { policyId: string }) {
                   />
                 </div>
                 {!effectiveDate && (
-                  <p className="text-xs text-red-500 mt-2">Changes will take effect from this date</p>
+                  <p className="text-xs text-red-500 mt-2">
+                    Changes will take effect from this date
+                  </p>
                 )}
               </div>
 
               <Divider className="my-5" />
 
-              <PremiumImpactCard currentPremium={policy.premium} newPremium={newPremium} difference={difference} />
+              <PremiumImpactCard
+                currentPremium={policy.premium}
+                newPremium={newPremium}
+                difference={difference}
+              />
             </CustomCard>
           )}
 
@@ -178,7 +191,9 @@ export default function ModifyPolicyLayout({ policyId }: { policyId: string }) {
             title="Add-ons & Riders"
             description="Modify additional coverage"
             expanded={openSection === "addons"}
-            onClick={() => setOpenSection(openSection === "addons" ? null : "addons")}
+            onClick={() =>
+              setOpenSection(openSection === "addons" ? null : "addons")
+            }
           />
           {openSection === "addons" && (
             <CustomCard className="p-4">
@@ -195,12 +210,16 @@ export default function ModifyPolicyLayout({ policyId }: { policyId: string }) {
             title="Deductible Amount"
             description="Change your deductible"
             expanded={openSection === "deductible"}
-            onClick={() => setOpenSection(openSection === "deductible" ? null : "deductible")}
+            onClick={() =>
+              setOpenSection(openSection === "deductible" ? null : "deductible")
+            }
           />
           {openSection === "deductible" && (
             <CustomCard className="p-4">
               <Typography weight="semibold">Deductible</Typography>
-              <Typography variant="small" color="muted">Deductible controls placeholder.</Typography>
+              <Typography variant="small" color="muted">
+                Deductible controls placeholder.
+              </Typography>
             </CustomCard>
           )}
 
@@ -210,19 +229,27 @@ export default function ModifyPolicyLayout({ policyId }: { policyId: string }) {
             title="Update Beneficiary"
             description="Change nominee details"
             expanded={openSection === "beneficiary"}
-            onClick={() => setOpenSection(openSection === "beneficiary" ? null : "beneficiary")}
+            onClick={() =>
+              setOpenSection(
+                openSection === "beneficiary" ? null : "beneficiary"
+              )
+            }
           />
           {openSection === "beneficiary" && (
             <CustomCard className="p-4">
               <Typography weight="semibold">Update Beneficiary</Typography>
-              <Typography variant="small" color="muted">Beneficiary UI placeholder.</Typography>
+              <Typography variant="small" color="muted">
+                Beneficiary UI placeholder.
+              </Typography>
             </CustomCard>
           )}
         </div>
 
         {/* Note */}
         <CustomCard className="p-4 bg-orange-50 border-orange-200 text-sm mt-5">
-          <Typography weight="semibold" className="text-orange-700">Please note</Typography>
+          <Typography weight="semibold" className="text-orange-700">
+            Please note
+          </Typography>
           <ul className="mt-2 space-y-1 text-gray-700">
             <li>• Changes are subject to underwriting approval</li>
             <li>• Premium adjustment will be processed within 48 hours</li>
@@ -232,20 +259,26 @@ export default function ModifyPolicyLayout({ policyId }: { policyId: string }) {
 
         {/* Footer */}
         <div className="flex gap-4">
-          <Button fullWidth variant="outline" onClick={() => router.back()}>Cancel</Button>
-          <Button fullWidth variant="gradient" onClick={() => {
-            // If user has selected coverage and date, submit; otherwise, expand coverage section
-            if (selectedCoverage && effectiveDate) {
-              // open both inline submitted and modal
-              const id = generateRequestId();
-              setRequestId(id);
-              setOpenSection("submitted");
-              setShowSuccessModal(true);
-            } else {
-              // open coverage to prompt user to fill required fields
-              setOpenSection("coverage");
-            }
-          }}>
+          <Button fullWidth variant="outline" onClick={() => router.back()}>
+            Cancel
+          </Button>
+          <Button
+            fullWidth
+            variant="gradient"
+            onClick={() => {
+              // If user has selected coverage and date, submit; otherwise, expand coverage section
+              if (selectedCoverage && effectiveDate) {
+                // open both inline submitted and modal
+                const id = generateRequestId();
+                setRequestId(id);
+                setOpenSection("submitted");
+                setShowSuccessModal(true);
+              } else {
+                // open coverage to prompt user to fill required fields
+                setOpenSection("coverage");
+              }
+            }}
+          >
             Confirm Changes
           </Button>
         </div>
@@ -254,8 +287,12 @@ export default function ModifyPolicyLayout({ policyId }: { policyId: string }) {
         {openSection === "submitted" && requestId && (
           <div className="text-center py-10 space-y-4">
             <div className="text-6xl text-blue-600">✔</div>
-            <Typography variant="h4" weight="semibold">Request Submitted!</Typography>
-            <Typography color="muted">Your policy modification is under review</Typography>
+            <Typography variant="h4" weight="semibold">
+              Request Submitted!
+            </Typography>
+            <Typography color="muted">
+              Your policy modification is under review
+            </Typography>
 
             <CustomCard className="p-5 text-left space-y-3">
               <Typography weight="semibold">Modification Request ID</Typography>
@@ -265,21 +302,37 @@ export default function ModifyPolicyLayout({ policyId }: { policyId: string }) {
 
               <Divider />
 
-              <p><strong>Modification Type:</strong> Coverage Amount</p>
-              <p><strong>New Premium:</strong> ${newPremium}/year</p>
-              <p><strong>Effective Date:</strong> {effectiveDate || "N/A"}</p>
+              <p>
+                <strong>Modification Type:</strong> Coverage Amount
+              </p>
+              <p>
+                <strong>New Premium:</strong> ${newPremium}/year
+              </p>
+              <p>
+                <strong>Effective Date:</strong> {effectiveDate || "N/A"}
+              </p>
             </CustomCard>
 
-            <Button fullWidth variant="gradient" onClick={() => router.push("/customer/profile/my-orders")}>
+            <Button
+              fullWidth
+              variant="gradient"
+              onClick={() => router.push("/customer/profile/my-orders")}
+            >
               Done
             </Button>
           </div>
         )}
 
         {/* Success modal (ClaimSubmitted) - Option C: show modal too */}
-        <Dialog isOpen={showSuccessModal} onClose={() => setShowSuccessModal(false)}>
+        <Dialog
+          isOpen={showSuccessModal}
+          onClose={() => setShowSuccessModal(false)}
+        >
           <DialogBody className="p-4">
-            <DialogHeader title="Request Submitted" onClose={() => setShowSuccessModal(false)} />
+            <DialogHeader
+              title="Request Submitted"
+              onClose={() => setShowSuccessModal(false)}
+            />
             {requestId ? (
               <ClaimSubmitted
                 claimId={requestId}

@@ -5,14 +5,17 @@ import { ArrowLeft } from "lucide-react";
 interface ModuleHeaderProps {
   title: string;
   onBack?: () => void;
-  rightSlot?: React.ReactNode; 
+  rightSlot?: React.ReactNode;
 }
 
-export default function ModuleHeader({ title, onBack, rightSlot }: ModuleHeaderProps) {
+export default function ModuleHeader({
+  title,
+  onBack,
+  rightSlot,
+}: ModuleHeaderProps) {
   return (
-    <div className="bg-white border-b border-border px-4 py-2 rounded-2xl mb-2">
+    <div className="bg-white border-b border-border px-4 py-2 rounded-2xl">
       <div className="flex items-center justify-between">
-        
         {/* LEFT SECTION — Back + Title */}
         <div className="flex items-center gap-2">
           {onBack && (

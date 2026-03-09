@@ -29,7 +29,6 @@ export default function WhyChooseUsSection() {
   return (
     <section className="w-full py-10">
       <div className="max-w-7xl mx-auto px-4">
-
         {/* HEADING */}
         <h2 className="text-gray-heading text-3xl font-semibold text-center">
           Why Choose Us?
@@ -37,7 +36,6 @@ export default function WhyChooseUsSection() {
 
         {/* FLEX CARD WRAPPER */}
         <div className="flex flex-col md:flex-row flex-wrap gap-4 mt-10">
-
           {reasons.map((r, i) => (
             <div
               key={i}
@@ -60,9 +58,7 @@ export default function WhyChooseUsSection() {
               </div>
             </div>
           ))}
-
         </div>
-
       </div>
     </section>
   );

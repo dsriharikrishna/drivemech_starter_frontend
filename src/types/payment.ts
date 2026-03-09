@@ -1,9 +1,4 @@
-export type PaymentMethod =
-  | "saved"
-  | "upi"
-  | "card"
-  | "online"
-  | "workshop";
+export type PaymentMethod = "saved" | "upi" | "card" | "online" | "workshop";
 
 export interface SavedCard {
   id: string;

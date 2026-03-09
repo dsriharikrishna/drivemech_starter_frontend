@@ -28,13 +28,16 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [scrolled]);
 
-  const handleNavigation = useCallback((path: string) => {
-    if (path === "customer") {
-      router.replace("/auth/customer/login");
-    } else {
-      router.replace("/auth/vendor/login")
-    }
-  }, [router])
+  const handleNavigation = useCallback(
+    (path: string) => {
+      if (path === "customer") {
+        router.replace("/auth/customer/login");
+      } else {
+        router.replace("/auth/vendor/login");
+      }
+    },
+    [router]
+  );
 
   const handleLogout = useCallback(() => {
     setShowLogoutDialog(true);
@@ -53,31 +56,33 @@ export default function Navbar() {
       className={`fixed w-full top-0 z-50 transition-shadow duration-300 bg-white`}
     >
       <nav
-        className="mx-auto flex w-full max-w-7xl items-center justify-between px-3 py-3 sm:px-5 lg:px-6"
+        className="mx-auto flex w-full items-center justify-between px-3 py-3 sm:px-5 lg:px-6"
         aria-label="Global"
       >
         {/* --- Left: Logo and Tagline --- */}
         <div className="flex items-center space-x-3">
-          <Link href="/" className="flex items-center">
+          <div className="rounded-full overflow-hidden shrink-0" onClick={() => router.push("/")}>
             <img
               src="/images/DriveMechLogo.png"
-              alt="DriveMech Logo"
-              className="w-[160px] h-[45px]"
+              alt="logo"
+              className="object-cover w-[250px] h-[50px]"
             />
-          </Link>
+          </div>
           {/* --- Center: Location --- */}
           <button
-            onClick={() => router.push('/location')}
+            onClick={() => router.push("/location")}
             className="hidden md:flex items-center text-sm text-gray-700 hover:text-primary transition-colors"
           >
-            <Image
+            <img
               src="/images/MapPin.png"
               alt="Map Icon"
               width={22}
               height={22}
               className="mr-2"
             />
-            <span className="text-[15px] font-medium text-[#333]">Hyderabad</span>
+            <span className="text-[15px] font-medium text-[#333]">
+              Hyderabad
+            </span>
           </button>
         </div>
 
@@ -101,7 +106,9 @@ export default function Navbar() {
 
           {/* ?            <> */}
           <Button
-            onClick={() => { handleNavigation("workshop") }}
+            onClick={() => {
+              handleNavigation("workshop");
+            }}
             variant="primary"
             className="border border-[#FF5C00] text-[#FF5C00] hover:bg-[#FF5C00] hover:text-white transition-all duration-200 px-5 py-2 rounded-md text-sm font-medium whitespace-nowrap"
           >
@@ -109,7 +116,9 @@ export default function Navbar() {
           </Button>
 
           <Button
-            onClick={() => { handleNavigation("customer") }}
+            onClick={() => {
+              handleNavigation("customer");
+            }}
             variant="primary"
             className="bg-[#FF5C00] hover:bg-[#E55200] text-white transition-all duration-200 px-5 py-2 rounded-md text-sm font-medium whitespace-nowrap"
           >
@@ -146,7 +155,7 @@ export default function Navbar() {
               {/* Location */}
               <button
                 onClick={() => {
-                  router.push('/location');
+                  router.push("/location");
                   setMobileMenuOpen(false);
                 }}
                 className="flex items-center text-sm text-gray-700 hover:text-primary transition-colors"
@@ -184,12 +193,13 @@ export default function Navbar() {
             </div>
           </div>
 
-
           {/* Navigation Links */}
           <nav className="flex-1 overflow-y-auto p-4 space-y-1">
             <button
               onClick={() => {
-                document.getElementById('home')?.scrollIntoView({ behavior: 'smooth' });
+                document
+                  .getElementById("home")
+                  ?.scrollIntoView({ behavior: "smooth" });
                 setMobileMenuOpen(false);
               }}
               className="w-full text-left flex items-center px-4 py-3 text-gray-800 hover:bg-gray-50 rounded-md font-medium"
@@ -198,7 +208,9 @@ export default function Navbar() {
             </button>
             <button
               onClick={() => {
-                document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' });
+                document
+                  .getElementById("services")
+                  ?.scrollIntoView({ behavior: "smooth" });
                 setMobileMenuOpen(false);
               }}
               className="w-full text-left flex items-center px-4 py-3 text-gray-800 hover:bg-gray-50 rounded-md font-medium"
@@ -207,7 +219,9 @@ export default function Navbar() {
             </button>
             <button
               onClick={() => {
-                document.getElementById('garages')?.scrollIntoView({ behavior: 'smooth' });
+                document
+                  .getElementById("garages")
+                  ?.scrollIntoView({ behavior: "smooth" });
                 setMobileMenuOpen(false);
               }}
               className="w-full text-left flex items-center px-4 py-3 text-gray-800 hover:bg-gray-50 rounded-md font-medium"
@@ -216,7 +230,9 @@ export default function Navbar() {
             </button>
             <button
               onClick={() => {
-                document.getElementById('insurance')?.scrollIntoView({ behavior: 'smooth' });
+                document
+                  .getElementById("insurance")
+                  ?.scrollIntoView({ behavior: "smooth" });
                 setMobileMenuOpen(false);
               }}
               className="w-full text-left flex items-center px-4 py-3 text-gray-800 hover:bg-gray-50 rounded-md font-medium"
@@ -225,7 +241,9 @@ export default function Navbar() {
             </button>
             <button
               onClick={() => {
-                document.getElementById('spare-parts')?.scrollIntoView({ behavior: 'smooth' });
+                document
+                  .getElementById("spare-parts")
+                  ?.scrollIntoView({ behavior: "smooth" });
                 setMobileMenuOpen(false);
               }}
               className="w-full text-left flex items-center px-4 py-3 text-gray-800 hover:bg-gray-50 rounded-md font-medium"
@@ -234,7 +252,9 @@ export default function Navbar() {
             </button>
             <button
               onClick={() => {
-                document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' });
+                document
+                  .getElementById("how-it-works")
+                  ?.scrollIntoView({ behavior: "smooth" });
                 setMobileMenuOpen(false);
               }}
               className="w-full text-left flex items-center px-4 py-3 text-gray-800 hover:bg-gray-50 rounded-md font-medium"
@@ -243,7 +263,9 @@ export default function Navbar() {
             </button>
             <button
               onClick={() => {
-                document.getElementById('key-features')?.scrollIntoView({ behavior: 'smooth' });
+                document
+                  .getElementById("key-features")
+                  ?.scrollIntoView({ behavior: "smooth" });
                 setMobileMenuOpen(false);
               }}
               className="w-full text-left flex items-center px-4 py-3 text-gray-800 hover:bg-gray-50 rounded-md font-medium"
@@ -252,7 +274,9 @@ export default function Navbar() {
             </button>
             <button
               onClick={() => {
-                document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
+                document
+                  .getElementById("about")
+                  ?.scrollIntoView({ behavior: "smooth" });
                 setMobileMenuOpen(false);
               }}
               className="w-full text-left flex items-center px-4 py-3 text-gray-800 hover:bg-gray-50 rounded-md font-medium"
@@ -261,7 +285,9 @@ export default function Navbar() {
             </button>
             <button
               onClick={() => {
-                document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                document
+                  .getElementById("contact")
+                  ?.scrollIntoView({ behavior: "smooth" });
                 setMobileMenuOpen(false);
               }}
               className="w-full text-left flex items-center px-4 py-3 text-gray-800 hover:bg-gray-50 rounded-md font-medium"
@@ -275,14 +301,18 @@ export default function Navbar() {
             <div className="space-y-3">
               <Button
                 variant="gradient"
-                onClick={() => { handleNavigation("workshop") }}
+                onClick={() => {
+                  handleNavigation("workshop");
+                }}
                 className="block w-full text-center border border-[#FF5C00] text-[#FF5C00] hover:bg-[#FF5C00]/5 px-4 py-2.5 rounded-md font-medium text-sm"
               >
                 Login as Workshop
               </Button>
               <Button
                 variant="gradient"
-                onClick={() => { handleNavigation("customer") }}
+                onClick={() => {
+                  handleNavigation("customer");
+                }}
                 className="block w-full text-center bg-[#FF5C00] hover:bg-[#E55200] text-white px-4 py-2.5 rounded-md font-medium text-sm"
               >
                 Login as Customer
@@ -294,10 +324,17 @@ export default function Navbar() {
 
       {/* Logout Confirmation Dialog */}
       {showLogoutDialog && (
-        <Dialog onClose={() => setShowLogoutDialog(false)} isOpen={showLogoutDialog}>
+        <Dialog
+          onClose={() => setShowLogoutDialog(false)}
+          isOpen={showLogoutDialog}
+        >
           <div className="bg-white rounded-lg p-6 max-w-sm w-full mx-4">
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">Confirm Logout</h3>
-            <p className="text-gray-600 mb-6">Are you sure you want to logout from your account?</p>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+              Confirm Logout
+            </h3>
+            <p className="text-gray-600 mb-6">
+              Are you sure you want to logout from your account?
+            </p>
 
             <div className="flex gap-3 justify-end">
               <Button

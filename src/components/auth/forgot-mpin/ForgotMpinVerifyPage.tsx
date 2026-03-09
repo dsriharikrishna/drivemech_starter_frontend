@@ -13,22 +13,27 @@ export default function ForgotMpinVerifyPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const email = searchParams.get("email") || "example@gmail.com";
-  const pathname = typeof window !== 'undefined' ? window.location.pathname : '';
-  const userType = pathname.includes('/vendor') ? 'vendor' : 'customer';
+  const pathname =
+    typeof window !== "undefined" ? window.location.pathname : "";
+  const userType = pathname.includes("/vendor") ? "vendor" : "customer";
   const authPrefix = `/auth/${userType}`;
 
   const methods = useForm({
     resolver: zodResolver(otpVerifySchema),
     defaultValues: {
       email: email,
-      phone: "",
+      phone: undefined,  // must be undefined (not "") so Zod's optional() skips min(10)
       code: "",
     },
     mode: "onBlur",
     reValidateMode: "onBlur",
   });
 
-  const { handleSubmit, formState: { errors, isSubmitting }, setValue } = methods;
+  const {
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    setValue,
+  } = methods;
 
   const [otp, setOtp] = useState<string[]>(Array(6).fill(""));
   const inputRefs = useRef<Array<HTMLInputElement | null>>([]);
@@ -63,7 +68,10 @@ export default function ForgotMpinVerifyPage() {
     }
   };
 
-  const handleKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (
+    index: number,
+    e: React.KeyboardEvent<HTMLInputElement>
+  ) => {
     if (e.key === "Backspace") {
       if (otp[index]) {
         const copy = [...otp];
@@ -84,7 +92,10 @@ export default function ForgotMpinVerifyPage() {
 
   const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
     e.preventDefault();
-    const pasted = e.clipboardData.getData("text").replace(/\D/g, "").slice(0, 6);
+    const pasted = e.clipboardData
+      .getData("text")
+      .replace(/\D/g, "")
+      .slice(0, 6);
     if (!pasted) return;
 
     const arr = Array(6).fill("");
@@ -103,16 +114,20 @@ export default function ForgotMpinVerifyPage() {
 
   const isOtpComplete = otp.every((digit) => digit !== "");
 
-  const onSubmit = async (data: { email?: string; phone?: string; code: string }) => {
+  const onSubmit = async (data: {
+    email?: string;
+    phone?: string;
+    code: string;
+  }) => {
     // TODO: Remove console log
     console.log(data);
     // TODO: Implement OTP verification API call
 
     // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    // await new Promise((resolve) => setTimeout(resolve, 1000));
 
     // After successful verification, redirect to reset MPIN
-    // router.push("/auth/mpin/reset");
+    router.push(`${authPrefix}/mpin/create`);
   };
 
   const handleResend = () => {
@@ -122,13 +137,19 @@ export default function ForgotMpinVerifyPage() {
   };
 
   const handleChangeEmail = () => {
-    console.log("Change email clicked, navigating to:", `${authPrefix}/forgot-mpin`);
+    console.log(
+      "Change email clicked, navigating to:",
+      `${authPrefix}/forgot-mpin`
+    );
     router.push(`${authPrefix}/forgot-mpin`);
   };
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-md bg-white rounded-2xl shadow-xl border border-gray-200 p-8">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="w-full max-w-md bg-white rounded-2xl shadow-xl border border-gray-200 p-8"
+      >
         {/* Logo */}
         <div className="text-center mb-6">
           <div className="mx-auto w-36 h-10 relative mb-2">
@@ -144,11 +165,15 @@ export default function ForgotMpinVerifyPage() {
 
         {/* Title */}
         <h2 className="text-2xl font-bold text-gray-900 mb-1">Forget MPIN?</h2>
-        <p className="text-sm text-gray-500 mb-6">Verify your identity to reset your MPIN</p>
+        <p className="text-sm text-gray-500 mb-6">
+          Verify your identity to reset your MPIN
+        </p>
 
         {/* Check Your Email Box */}
         <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 mb-6">
-          <h3 className="text-sm font-semibold text-gray-800 mb-2">Check Your Email</h3>
+          <h3 className="text-sm font-semibold text-gray-800 mb-2">
+            Check Your Email
+          </h3>
           <p className="text-xs text-gray-600">
             We've sent a 6-digit verification code to{" "}
             <span className="font-semibold text-gray-900">{email}</span>
@@ -192,8 +217,8 @@ export default function ForgotMpinVerifyPage() {
           type="submit"
           // disabled={!isOtpComplete || isSubmitting}
           className={`w-full py-3 rounded-lg font-semibold mb-3 ${isOtpComplete
-            ? "bg-gray-900 hover:bg-black text-white"
-            : "bg-gray-200 text-gray-400 cursor-not-allowed"
+              ? "bg-gray-900 hover:bg-black text-white"
+              : "bg-gray-200 text-gray-400 cursor-not-allowed"
             }`}
         >
           {isSubmitting ? "Verifying..." : "Verify Code"}
@@ -225,7 +250,8 @@ export default function ForgotMpinVerifyPage() {
         {/* Footer */}
         <p className="text-[11px] text-gray-500 text-center leading-relaxed">
           By continuing, you agree to our{" "}
-          <span className="text-blue-600 cursor-pointer">Terms of Service</span> and{" "}
+          <span className="text-blue-600 cursor-pointer">Terms of Service</span>{" "}
+          and{" "}
           <span className="text-blue-600 cursor-pointer">Privacy Policy</span>
         </p>
       </form>

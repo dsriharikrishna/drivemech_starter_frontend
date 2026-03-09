@@ -1,13 +1,18 @@
 "use client";
 
-import React from "react";
+import React, { useCallback } from "react";
 import Image from "next/image";
 
 const GARAGE_ICON = "/mnt/data/9390e684-2a79-4ab6-af47-66c43268816f.png";
 
-export default function DownLoadSpareInvoice({ orderId = "SPR-001", onClose }: { orderId?: string; onClose?: () => void }) {
-  const handleDownload = () => {
-    // Stubbed PDF generation — replace with real API call returning blob/url
+export default function DownLoadSpareInvoice({
+  orderId = "SPR-001",
+  onClose,
+}: {
+  orderId?: string;
+  onClose?: () => void;
+}) {
+  const handleDownload = useCallback(() => {
     const html = `<h1>Invoice - ${orderId}</h1><p>Thanks for your order.</p>`;
     const blob = new Blob([html], { type: "text/html" });
     const url = URL.createObjectURL(blob);
@@ -18,33 +23,33 @@ export default function DownLoadSpareInvoice({ orderId = "SPR-001", onClose }: {
     a.click();
     a.remove();
     URL.revokeObjectURL(url);
-  };
+  }, [orderId]);
 
   return (
     <div className="w-full md:w-3xl mx-auto">
-      <div className="flex items-center gap-4 mb-6">
-        <div className="w-16 h-16 rounded-full bg-orange-100 flex items-center justify-center overflow-hidden">
-          <Image src={GARAGE_ICON} alt="garage" width={48} height={48} />
+      <div className="flex items-center gap-3 mb-4">
+        <div className="w-14 h-14 rounded-full bg-orange-100 flex items-center justify-center overflow-hidden">
+          <Image src={GARAGE_ICON} alt="garage" width={44} height={44} />
         </div>
         <div>
-          <h2 className="text-lg font-semibold">Invoice</h2>
-          <p className="text-sm text-gray-500">Order ID: {orderId}</p>
+          <h2 className="text-base font-semibold">Invoice</h2>
+          <p className="text-xs text-gray-500">Order ID: {orderId}</p>
         </div>
       </div>
 
-      <div className="border rounded-xl p-4 mb-4">
+      <div className="border rounded-xl p-3 mb-3">
         <div className="flex justify-between items-start">
           <div>
-            <p className="font-semibold">A to Z Garage</p>
-            <p className="text-sm text-gray-500">123 Main Street, City</p>
+            <p className="font-semibold text-xs">A to Z Garage</p>
+            <p className="text-xs text-gray-500">123 Main Street, City</p>
           </div>
           <div className="text-right">
-            <p className="font-semibold text-orange-500">$168.00</p>
-            <p className="text-sm text-gray-500">Paid</p>
+            <p className="font-semibold text-orange-500 text-xs">$168.00</p>
+            <p className="text-xs text-gray-500">Paid</p>
           </div>
         </div>
-        <div className="border-t my-3" />
-        <table className="w-full text-sm">
+        <div className="border-t my-2.5" />
+        <table className="w-full text-xs">
           <thead className="text-left text-gray-500">
             <tr>
               <th>Item</th>
@@ -68,16 +73,16 @@ export default function DownLoadSpareInvoice({ orderId = "SPR-001", onClose }: {
         </table>
       </div>
 
-      <div className="flex gap-3">
+      <div className="flex gap-2.5">
         <button
           onClick={handleDownload}
-          className="flex-1 bg-orange-500 hover:bg-orange-600 text-white rounded-xl py-1.5 font-semibold"
+          className="flex-1 bg-orange-500 hover:bg-orange-600 text-white rounded-xl py-1.5 font-semibold text-xs"
         >
           Download Invoice
         </button>
         <button
           onClick={onClose}
-          className="flex-1 border rounded-xl py-1.5 font-semibold hover:bg-gray-50"
+          className="flex-1 border rounded-xl py-1.5 font-semibold hover:bg-gray-50 text-xs"
         >
           Close
         </button>

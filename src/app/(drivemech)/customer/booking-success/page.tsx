@@ -1,9 +1,7 @@
-import BookingSuccessLayout from './BookingSuccessLayout'
+import BookingSuccessLayout from "./BookingSuccessLayout";
 
 const page = () => {
-  return (
-    <BookingSuccessLayout />
-  )
-}
+  return <BookingSuccessLayout />;
+};
 
-export default page
+export default page;

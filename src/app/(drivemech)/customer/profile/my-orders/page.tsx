@@ -1,9 +1,7 @@
-import MyOrdersLayout from './MyOrdersLayout'
+import MyOrdersLayout from "./MyOrdersLayout";
 
 const page = () => {
-  return (
-    <MyOrdersLayout />
-  )
-}
+  return <MyOrdersLayout />;
+};
 
-export default page
+export default page;

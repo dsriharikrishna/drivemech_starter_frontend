@@ -12,7 +12,11 @@ export default function TrackPage() {
   return (
     <FormProvider {...methods}>
       <div className="w-full ">
-        {step === "enter" ? <EnterTrackingScreen setStep={setStep} /> : <LiveTrackingScreen />}
+        {step === "enter" ? (
+          <EnterTrackingScreen setStep={setStep} />
+        ) : (
+          <LiveTrackingScreen />
+        )}
       </div>
     </FormProvider>
   );

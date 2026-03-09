@@ -1,5 +1,12 @@
 import CustomCard from "@/components/ui/CustomCard";
-import { Wallet, BarChart, ShieldCheck, Timer, Users, Award } from "lucide-react";
+import {
+  Wallet,
+  BarChart,
+  ShieldCheck,
+  Timer,
+  Users,
+  Award,
+} from "lucide-react";
 
 export function PartnerBenefitsSection() {
   const benefits = [
@@ -38,7 +45,6 @@ export function PartnerBenefitsSection() {
   return (
     <section className="w-full py-16 bg-white">
       <div className="max-w-7xl mx-auto px-4 text-center">
-
         <h2 className="text-2xl font-semibold text-gray-heading">
           Partner Benefits & Support
         </h2>
@@ -51,13 +57,14 @@ export function PartnerBenefitsSection() {
             <CustomCard key={i} className="flex gap-4 p-4 border rounded-xl">
               <div className="bg-orange-50 p-3 rounded-lg">{b.icon}</div>
               <div className="text-left">
-                <h3 className="font-semibold text-gray-heading text-sm">{b.title}</h3>
+                <h3 className="font-semibold text-gray-heading text-sm">
+                  {b.title}
+                </h3>
                 <p className="text-gray-500 text-xs mt-1">{b.desc}</p>
               </div>
             </CustomCard>
           ))}
         </div>
-
       </div>
     </section>
   );

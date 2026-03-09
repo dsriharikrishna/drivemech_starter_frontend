@@ -1,58 +1,170 @@
 export const SPARE_PARTS_CATEGORIES = [
-    {
-        id: 'truck-spare-parts',
-        name: 'Truck spare parts',
-        icon: 'truck',
-        href: '/spare-parts/truck'
-    },
-    {
-        id: 'motorcycle-spare-parts',
-        name: 'Motorcycle spare parts',
-        icon: 'motorcycle',
-        href: '/spare-parts/motorcycle'
-    },
-    {
-        id: 'tires',
-        name: 'Tires',
-        icon: 'tire',
-        href: '/spare-parts/tires'
-    },
-    {
-        id: 'rims',
-        name: 'Rims',
-        icon: 'rim',
-        href: '/spare-parts/rims'
-    },
-    {
-        id: 'tools',
-        name: 'Tools',
-        icon: 'tools',
-        href: '/spare-parts/tools'
-    },
-    {
-        id: 'car-accessories',
-        name: 'Car Accessories',
-        icon: 'car-accessories',
-        href: '/spare-parts/car-accessories'
-    },
-    {
-        id: 'engine-oil',
-        name: 'Engine Oil',
-        icon: 'engine-oil',
-        href: '/spare-parts/engine-oil'
-    },
-    {
-        id: 'filters',
-        name: 'Filters',
-        icon: 'filters',
-        href: '/spare-parts/filters'
-    },
-    {
-        id: 'brakes',
-        name: 'Brakes',
-        icon: 'brakes',
-        href: '/spare-parts/brakes'
-    }
+  {
+    id: "engine-oil",
+    name: "Engine Oil",
+    icon: "engine-oil",
+    href: "/spare-parts/engine-oil",
+    children: [
+      { name: "Synthetic Oil", href: "/spare-parts/engine-oil/synthetic" },
+      { name: "Mineral Oil", href: "/spare-parts/engine-oil/mineral" },
+      { name: "Diesel Engine Oil", href: "/spare-parts/engine-oil/diesel" },
+      { name: "5W-30", href: "/spare-parts/engine-oil/5w-30" },
+      { name: "5W-40", href: "/spare-parts/engine-oil/5w-40" },
+      { name: "10W-40", href: "/spare-parts/engine-oil/10w-40" },
+    ],
+  },
+  {
+    id: "tires",
+    name: "Tires",
+    icon: "tire",
+    href: "/spare-parts/tires",
+    children: [
+      { name: "Summer Tires", href: "/spare-parts/tires/summer" },
+      { name: "Winter Tires", href: "/spare-parts/tires/winter" },
+      { name: "All-Season Tires", href: "/spare-parts/tires/all-season" },
+      { name: "Off-Road Tires", href: "/spare-parts/tires/off-road" },
+      { name: "Performance Tires", href: "/spare-parts/tires/performance" },
+    ],
+  },
+  {
+    id: "lubricants",
+    name: "Lubricants",
+    icon: "car-accessories",
+    href: "/spare-parts/lubricants",
+    children: [
+      {
+        name: "Automatic Transmission Oil",
+        href: "/spare-parts/lubricants/auto-trans",
+      },
+      { name: "Brake Fluid", href: "/spare-parts/lubricants/brake-fluid" },
+      { name: "Gear Oil", href: "/spare-parts/lubricants/gear-oil" },
+      { name: "Hydraulic Oil", href: "/spare-parts/lubricants/hydraulic-oil" },
+      { name: "Coolant", href: "/spare-parts/lubricants/coolant" },
+      { name: "Engine Oil", href: "/spare-parts/lubricants/engine-oil" },
+      { name: "Oil Additives", href: "/spare-parts/lubricants/oil-additives" },
+      {
+        name: "Windshield Washer Fluid",
+        href: "/spare-parts/lubricants/washer-fluid",
+      },
+      { name: "Servo Oil", href: "/spare-parts/lubricants/servo-oil" },
+    ],
+  },
+  {
+    id: "filters",
+    name: "Filters",
+    icon: "filters",
+    href: "/spare-parts/filters",
+    children: [
+      { name: "Oil Filter", href: "/spare-parts/filters/oil" },
+      { name: "Air Filter", href: "/spare-parts/filters/air" },
+      { name: "Fuel Filter", href: "/spare-parts/filters/fuel" },
+      { name: "Cabin Filter", href: "/spare-parts/filters/cabin" },
+    ],
+  },
+  {
+    id: "motor",
+    name: "Motor",
+    icon: "motorcycle",
+    href: "/spare-parts/motor",
+    children: [
+      { name: "Pistons", href: "/spare-parts/motor/pistons" },
+      { name: "Valves", href: "/spare-parts/motor/valves" },
+      { name: "Crankshaft", href: "/spare-parts/motor/crankshaft" },
+      { name: "Camshaft", href: "/spare-parts/motor/camshaft" },
+    ],
+  },
+  {
+    id: "windscreen",
+    name: "Windscreen Washer System",
+    icon: "tools",
+    href: "/spare-parts/windscreen",
+    children: [
+      { name: "Wiper Blades", href: "/spare-parts/windscreen/wipers" },
+      { name: "Washer Pumps", href: "/spare-parts/windscreen/pumps" },
+      { name: "Washer Fluid", href: "/spare-parts/windscreen/fluid" },
+    ],
+  },
+  {
+    id: "ignition",
+    name: "Ignition System & Glow Plug System",
+    icon: "brakes",
+    href: "/spare-parts/ignition",
+    children: [
+      { name: "Spark Plugs", href: "/spare-parts/ignition/spark-plugs" },
+      { name: "Ignition Coils", href: "/spare-parts/ignition/coils" },
+      { name: "Glow Plugs", href: "/spare-parts/ignition/glow-plugs" },
+    ],
+  },
+  {
+    id: "electrics",
+    name: "Electrics",
+    icon: "car-accessories",
+    href: "/spare-parts/electrics",
+    children: [
+      { name: "Batteries", href: "/spare-parts/electrics/batteries" },
+      { name: "Alternators", href: "/spare-parts/electrics/alternators" },
+      { name: "Starters", href: "/spare-parts/electrics/starters" },
+      { name: "Fuses", href: "/spare-parts/electrics/fuses" },
+      { name: "Sensors", href: "/spare-parts/electrics/sensors" },
+    ],
+  },
+  {
+    id: "suspension",
+    name: "Suspension",
+    icon: "rim",
+    href: "/spare-parts/suspension",
+    children: [
+      { name: "Shock Absorbers", href: "/spare-parts/suspension/shocks" },
+      { name: "Control Arms", href: "/spare-parts/suspension/control-arms" },
+      { name: "Springs", href: "/spare-parts/suspension/springs" },
+      { name: "Stabilizers", href: "/spare-parts/suspension/stabilizers" },
+    ],
+  },
+  {
+    id: "belts",
+    name: "Belt, Chains, Rollers",
+    icon: "tools",
+    href: "/spare-parts/belts",
+    children: [
+      { name: "Timing Belt", href: "/spare-parts/belts/timing" },
+      { name: "V-Ribbed Belt", href: "/spare-parts/belts/v-ribbed" },
+      { name: "Timing Chain", href: "/spare-parts/belts/chain" },
+    ],
+  },
+  {
+    id: "coolant",
+    name: "Cooling System",
+    icon: "engine-oil",
+    href: "/spare-parts/cooling",
+    children: [
+      { name: "Radiator", href: "/spare-parts/cooling/radiator" },
+      { name: "Water Pump", href: "/spare-parts/cooling/water-pump" },
+      { name: "Thermostat", href: "/spare-parts/cooling/thermostat" },
+    ],
+  },
+  {
+    id: "body",
+    name: "Body",
+    icon: "truck",
+    href: "/spare-parts/body",
+    children: [
+      { name: "Bumpers", href: "/spare-parts/body/bumpers" },
+      { name: "Mirrors", href: "/spare-parts/body/mirrors" },
+      { name: "Hoods", href: "/spare-parts/body/hoods" },
+      { name: "Grilles", href: "/spare-parts/body/grilles" },
+    ],
+  },
+  {
+    id: "heating",
+    name: "Heating and Ventilation",
+    icon: "brakes",
+    href: "/spare-parts/heating",
+    children: [
+      { name: "Heater Core", href: "/spare-parts/heating/core" },
+      { name: "Blower Motor", href: "/spare-parts/heating/blower" },
+      { name: "AC Compressor", href: "/spare-parts/heating/compressor" },
+    ],
+  },
 ] as const;
 
-export type SparePartCategory = typeof SPARE_PARTS_CATEGORIES[number];
+export type SparePartCategory = (typeof SPARE_PARTS_CATEGORIES)[number];

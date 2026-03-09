@@ -48,20 +48,20 @@ export default function BookingDetailsPage() {
     vehicle: {
       name: "Toyota Hilux",
       number: "AP 09 BU 0007",
-      image: "/images/workshop/car.png"
+      image: "/images/workshop/car.png",
     },
     workshop: {
       name: "A to Z Services",
       rating: 4.5,
       reviews: 120,
-      image: "/images/workshop/AtoZ.png"
+      image: "/images/workshop/AtoZ.png",
     },
     services: [
       { title: "Battery Replacement", price: 10 },
       { title: "Roadworthy Inspection / Pink Slips", price: 10 },
       { title: "Spark Plug", price: 10 },
       { title: "AC Antibacterial Clean", price: 10 },
-      { title: "AC Compressor Relay Replacement", price: 10 }
+      { title: "AC Compressor Relay Replacement", price: 10 },
     ],
     payment: {
       method: "Credit/Debit Card",
@@ -71,16 +71,29 @@ export default function BookingDetailsPage() {
         items: 230,
         addon: 100,
         tax: 150,
-        warranty: 99
-      }
-    }
+        warranty: 99,
+      },
+    },
   };
 
-  const { bookingId, status, serviceDate, serviceTime, vehicle, workshop, services, payment } = bookingData;
-  const { items: itemsTotal, addon: addOns, tax, warranty: safetyAndWarranty } = payment.breakdown;
+  const {
+    bookingId,
+    status,
+    serviceDate,
+    serviceTime,
+    vehicle,
+    workshop,
+    services,
+    payment,
+  } = bookingData;
+  const {
+    items: itemsTotal,
+    addon: addOns,
+    tax,
+    warranty: safetyAndWarranty,
+  } = payment.breakdown;
   return (
-    <div className="px-6 py-6 max-w-7xl mx-auto">
-
+    <div className="container mx-auto p-8">
       {/* HEADER */}
       <header className="flex items-center gap-2 mb-2 bg-white p-4 rounded-2xl">
         <ArrowLeftIcon className="w-5 h-5 text-gray-600" />
@@ -89,7 +102,6 @@ export default function BookingDetailsPage() {
 
       {/* TOP CARDS */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
-
         {/* BOOKING ID */}
         <BookingIdCard bookingId={bookingId} status={status} />
 
@@ -97,7 +109,11 @@ export default function BookingDetailsPage() {
         <ServiceDateCard date={serviceDate} time={serviceTime} />
 
         {/* VEHICLE */}
-        <VehicleCard name={vehicle.name} number={vehicle.number} img={vehicle.image} />
+        <VehicleCard
+          name={vehicle.name}
+          number={vehicle.number}
+          img={vehicle.image}
+        />
 
         {/* WORKSHOP */}
         <BookingWorkshopCard
@@ -110,7 +126,6 @@ export default function BookingDetailsPage() {
 
       {/* SERVICE + PAYMENT SECTIONS */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-
         {/* SERVICE DETAILS */}
         <CustomCard>
           <h3 className="font-semibold text-gray-800 mb-4">Service Details</h3>
@@ -118,7 +133,9 @@ export default function BookingDetailsPage() {
           <ul className="text-sm space-y-3">
             {services.map((s, i) => (
               <li key={i} className="flex justify-between pb-2">
-                <span>{i + 1}. {s.title}</span>
+                <span>
+                  {i + 1}. {s.title}
+                </span>
                 <strong>${s.price}</strong>
               </li>
             ))}
@@ -143,14 +160,26 @@ export default function BookingDetailsPage() {
             <span className="text-green-600">{payment.status}</span>
           </div>
 
-          <h4 className="font-semibold text-gray-700 mt-4 mb-3">Bill Details</h4>
+          <h4 className="font-semibold text-gray-700 mt-4 mb-3">
+            Bill Details
+          </h4>
 
           {/* BILL DETAILS */}
           <div className="text-sm space-y-2 pb-3 border-b border-gray-200">
-            <div className="flex justify-between"><span>Items total</span> <span>${payment.breakdown.items}</span></div>
-            <div className="flex justify-between"><span>Add-On - Services</span> <span>${payment.breakdown.addon}</span></div>
-            <div className="flex justify-between"><span>Tax</span> <span>${payment.breakdown.tax}</span></div>
-            <div className="flex justify-between"><span>Safety & Warranty</span> <span>${payment.breakdown.warranty}</span></div>
+            <div className="flex justify-between">
+              <span>Items total</span> <span>${payment.breakdown.items}</span>
+            </div>
+            <div className="flex justify-between">
+              <span>Add-On - Services</span>{" "}
+              <span>${payment.breakdown.addon}</span>
+            </div>
+            <div className="flex justify-between">
+              <span>Tax</span> <span>${payment.breakdown.tax}</span>
+            </div>
+            <div className="flex justify-between">
+              <span>Safety & Warranty</span>{" "}
+              <span>${payment.breakdown.warranty}</span>
+            </div>
           </div>
 
           {/* GRAND TOTAL */}
@@ -159,7 +188,6 @@ export default function BookingDetailsPage() {
             <span>${payment.amount}</span>
           </div>
         </CustomCard>
-
       </div>
 
       {/* FOOTER BUTTONS */}

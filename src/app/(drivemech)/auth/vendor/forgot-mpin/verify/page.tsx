@@ -1,8 +1,7 @@
-import ForgotMpinVerifyPage from '@/components/auth/forgot-mpin/ForgotMpinVerifyPage';
+import ForgotMpinVerifyPage from "@/components/auth/forgot-mpin/ForgotMpinVerifyPage";
 
 const page = () => {
-  return <ForgotMpinVerifyPage />
-}
+  return <ForgotMpinVerifyPage />;
+};
 
-export default page
-
+export default page;

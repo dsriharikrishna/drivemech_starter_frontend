@@ -5,24 +5,35 @@ export function PartnerFleetSection() {
     {
       title: "Flatbed Tow Trucks",
       img: "/images/towing-services/partners/PartnersFleet.png",
-      points: ["Secured transportation", "Low-angle loading", "Ideal for luxury cars"],
+      points: [
+        "Secured transportation",
+        "Low-angle loading",
+        "Ideal for luxury cars",
+      ],
     },
     {
       title: "Heavy Duty Towing",
       img: "/images/towing-services/partners/PartnersFleet.png",
-      points: ["For commercial trucks", "Oversized vehicles", "Specialized equipment"],
+      points: [
+        "For commercial trucks",
+        "Oversized vehicles",
+        "Specialized equipment",
+      ],
     },
     {
       title: "Motorcycle Towing",
       img: "/images/towing-services/partners/PartnersFleet.png",
-      points: ["Specialized equipment", "Strap-lock system", "All vehicle types"],
+      points: [
+        "Specialized equipment",
+        "Strap-lock system",
+        "All vehicle types",
+      ],
     },
   ];
 
   return (
     <section className="w-full py-16 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 text-center">
-
         <h2 className="text-2xl font-semibold text-gray-heading">
           Our Professional Fleet
         </h2>
@@ -40,11 +51,16 @@ export function PartnerFleetSection() {
               />
 
               <div className="p-4 text-left">
-                <h3 className="font-semibold text-gray-heading">{item.title}</h3>
+                <h3 className="font-semibold text-gray-heading">
+                  {item.title}
+                </h3>
 
                 <ul className="mt-2 space-y-1">
                   {item.points.map((pt, i) => (
-                    <li key={i} className="text-sm text-gray-600 flex items-start gap-1">
+                    <li
+                      key={i}
+                      className="text-sm text-gray-600 flex items-start gap-1"
+                    >
                       <span className="text-orange-500">•</span> {pt}
                     </li>
                   ))}
@@ -53,7 +69,6 @@ export function PartnerFleetSection() {
             </CustomCard>
           ))}
         </div>
-
       </div>
     </section>
   );

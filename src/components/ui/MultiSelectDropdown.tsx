@@ -81,8 +81,8 @@ const MultiSelectDropdown: React.FC<MultiSelectDropdownProps> = ({
   const filteredOptions = onSearch
     ? options
     : options.filter((o) =>
-        o.name.toLowerCase().includes(searchTerm.toLowerCase())
-      );
+      o.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
   const colorVariants = {
     primary: "border-primary focus:ring-primary focus:border-primary",
@@ -93,7 +93,7 @@ const MultiSelectDropdown: React.FC<MultiSelectDropdownProps> = ({
     <div ref={dropdownRef} className="relative w-full">
       {/* Label */}
       {label && (
-        <label className="block text-sm font-semibold text-secondary-700 mb-1">
+        <label className="inputLabel mb-1">
           {label}
           {required && <span className="text-red-500 ml-1">*</span>}
         </label>
@@ -104,7 +104,7 @@ const MultiSelectDropdown: React.FC<MultiSelectDropdownProps> = ({
         type="button"
         onClick={toggleDropdown}
         className={`flex justify-between items-center w-full px-3 py-2 text-sm border border-gray-300 rounded-lg bg-white 
-        focus:outline-none focus:ring-2 focus:ring-offset-1 
+        focus:outline-none focus:ring-2 focus:ring-offset-1 min-h-[40px]
         ${colorVariants[variant]}  
         ${error ? "border-red-500 focus:ring-red-500" : ""}`}
       >
@@ -135,9 +135,8 @@ const MultiSelectDropdown: React.FC<MultiSelectDropdownProps> = ({
             />
           )}
           <ChevronDown
-            className={`w-4 h-4 transition-transform duration-200 ${
-              open ? "rotate-180" : ""
-            }`}
+            className={`w-4 h-4 transition-transform duration-200 ${open ? "rotate-180" : ""
+              }`}
           />
         </div>
       </button>

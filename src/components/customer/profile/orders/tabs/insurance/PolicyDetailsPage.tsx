@@ -6,6 +6,9 @@ import { useParams, useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import Divider from "@/components/ui/Divider";
 import cookieService from "@/services/cookieService";
+import Button from "@/components/ui/Button";
+import { DownloadIcon } from "@/components/icons/TransactionIcons";
+import DialogHeader from "@/components/modals/DialogHeader";
 
 /* ------------------------------------------
    MAIN POLICY DETAILS PAGE
@@ -37,7 +40,7 @@ export default function PolicyDetailsPage({ id }: PolicyDetailsPageProps) {
     const policyId = id || cookieService.get("policyId");
 
     if (!policyId) {
-      console.error('Policy ID is missing');
+      console.error("Policy ID is missing");
       return;
     }
     router.push(`/customer/profile/my-orders/insurance/${path}/${policyId}`);
@@ -48,7 +51,6 @@ export default function PolicyDetailsPage({ id }: PolicyDetailsPageProps) {
 
   return (
     <div className="max-w-6xl mx-auto p-6 space-y-6">
-
       {/* HEADER */}
       <div className="flex items-center gap-3">
         <button
@@ -66,7 +68,6 @@ export default function PolicyDetailsPage({ id }: PolicyDetailsPageProps) {
 
       {/* MAIN GRID */}
       <div className="grid lg:grid-cols-3 gap-6">
-
         {/* LEFT SECTION */}
         <div className="lg:col-span-2 space-y-6">
           <PolicyInfoCard policy={policy} />
@@ -80,31 +81,47 @@ export default function PolicyDetailsPage({ id }: PolicyDetailsPageProps) {
 
           {/* ACTION BUTTONS */}
           <div className="grid grid-cols-3 gap-3 mt-5">
-
             {/* FILE CLAIM */}
             <button
-              onClick={() => navigateTo('file-claim')}
+              onClick={() => navigateTo("file-claim")}
               className="border border-border p-1 rounded-xl flex flex-col items-center hover:bg-gray-50"
             >
-              <img src="/svgs/shield-icon.svg" alt="File Claim" className="w-[18px] h-[18px]" />
+              <img
+                src="/svgs/policy-shield-icon.svg"
+                alt="File Claim"
+                className="w-[18px] h-[18px]"
+              />
               <span className="text-xs mt-1">File Claim</span>
             </button>
 
             {/* ADD NOMINEE */}
             <button
-              onClick={() => navigateTo('add-nominee')}
+              onClick={() => navigateTo("add-nominee")}
               className="border border-border p-1 rounded-xl flex flex-col items-center hover:bg-gray-50"
             >
-              <img src="/svgs/user-icon.svg" alt="Add Nominee" className="w-[18px] h-[18px]" />
+              <img
+                src="/svgs/user-icon.svg"
+                alt="Add Nominee"
+                className="w-[18px] h-[18px]"
+              />
               <span className="text-xs mt-1">Add Nominee</span>
             </button>
 
             {/* MODIFY POLICY */}
             <button
-              onClick={() => navigateTo('modify-policy')}
+              onClick={() => navigateTo("modify-policy")}
               className="border border-border p-1 rounded-xl flex flex-col items-center hover:bg-gray-50"
             >
-              <img src="/svgs/edit-icon.svg" alt="Modify" className="w-[18px] h-[18px]" />
+              <svg
+                className="w-[18px] h-[18px]"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+              </svg>
               <span className="text-xs mt-1">Modify Policy</span>
             </button>
           </div>
@@ -114,7 +131,11 @@ export default function PolicyDetailsPage({ id }: PolicyDetailsPageProps) {
             className="flex items-center justify-center gap-2 w-full bg-orange-500 text-white py-3 rounded-xl mt-5"
             onClick={() => setOpenRenew(true)}
           >
-            <svg className="w-[18px] h-[18px] fill-white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <svg
+              className="w-[18px] h-[18px] fill-white"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
               <path d="M12 16L7 11L8.4 9.55L11 12.15V4H13V12.15L15.6 9.55L17 11L12 16ZM6 20C5.45 20 4.979 19.804 4.587 19.412C4.195 19.02 3.99933 18.5493 4 18V15H6V18H18V15H20V18C20 18.55 19.804 19.021 19.412 19.413C19.02 19.805 18.5493 20.0007 18 20H6Z" />
             </svg>
             Renew Policy / Download PDF
@@ -122,11 +143,24 @@ export default function PolicyDetailsPage({ id }: PolicyDetailsPageProps) {
 
           <div className="grid grid-cols-2 gap-2 mt-2">
             <button className="border border-border p-1 rounded-xl hover:bg-gray-50 flex items-center justify-center gap-2">
-              <img src="/svgs/notify-icon.svg" alt="Notify" className="w-[18px] h-[18px]" />
+              <svg
+                className="w-[18px] h-[18px]"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+              </svg>
               Reminder
             </button>
             <button className="border border-border p-1 rounded-xl hover:bg-gray-50 flex items-center justify-center gap-2">
-              <img src="/svgs/claim-icon.svg" alt="Claim" className="w-[18px] h-[18px]" />
+              <img
+                src="/svgs/claim-Icon.svg"
+                alt="Claim"
+                className="w-[18px] h-[18px]"
+              />
               Claims
             </button>
           </div>
@@ -153,7 +187,12 @@ function PolicyInfoCard({ policy }: any) {
   return (
     <div className="border border-border rounded-xl p-5 bg-white space-y-4">
       <div className="flex items-center gap-3">
-        <Image src="/svgs/shield-icon.svg" width={32} height={32} alt="insurer" />
+        <Image
+          src="/svgs/policy-shield-icon.svg"
+          width={32}
+          height={32}
+          alt="insurer"
+        />
 
         <div>
           <h2 className="font-semibold">{policy.insurer}</h2>
@@ -212,7 +251,11 @@ function CoverageBox() {
       <ul className="space-y-2">
         {coverages.map((c) => (
           <li key={c} className="flex items-center gap-2 text-gray-700">
-            <img src="/svgs/check-icon.svg" alt="Coverage" className="w-[18px] h-[18px]" />
+            <img
+              src="/svgs/check-Icon.svg"
+              alt="Coverage"
+              className="w-[18px] h-[18px]"
+            />
             {c}
           </li>
         ))}
@@ -241,7 +284,7 @@ function StatusCard({ policy }: any) {
   return (
     <div className="rounded-xl border border-border p-5 bg-white">
       <div className="flex items-center gap-3 p-3 rounded-xl bg-green-50">
-        <img src="/svgs/check-icon.svg" alt="Shield" className="w-6 h-6" />
+        <img src="/svgs/check-Icon.svg" alt="Shield" className="w-6 h-6" />
 
         <div>
           <p className="font-semibold text-green-700">Policy Active</p>
@@ -291,7 +334,6 @@ function RenewPolicyModal({ policy, onClose }: any) {
   return (
     <ModalShell title="Renew Policy" onClose={onClose}>
       <div className="space-y-4">
-
         <p className="text-gray-700">
           Renew your policy now to avoid expiration and enjoy continued
           protection.
@@ -304,13 +346,9 @@ function RenewPolicyModal({ policy, onClose }: any) {
           </p>
         </div>
 
-        <button
-          className="w-full bg-orange-500 text-white py-3 rounded-xl"
-          onClick={onClose}
-        >
-          <img src="/svgs/download-icon.svg" alt="Download" className="w-[18px] h-[18px]" />
+        <Button size="sm" startIcon={<DownloadIcon />} onClick={onClose}>
           Download Policy PDF
-        </button>
+        </Button>
       </div>
     </ModalShell>
   );
@@ -325,12 +363,7 @@ function ModalShell({ title, children, onClose }: any) {
       <div className="absolute inset-0 bg-black/30" onClick={onClose} />
 
       <div className="relative w-full max-w-2xl bg-white rounded-2xl shadow p-6 z-50 animate-fadeIn">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-semibold">{title}</h3>
-          <button onClick={onClose} className="text-gray-400 hover:text-black">
-            ✕
-          </button>
-        </div>
+        <DialogHeader title={title} onClose={onClose} />
 
         {children}
       </div>

@@ -11,7 +11,6 @@ export default function UpiPanel({ handleNext }: Props) {
 
   return (
     <div className="bg-white rounded-2xl p-6 border border-border flex flex-col gap-6">
-
       <div className="flex items-center gap-3">
         <input
           type="radio"
@@ -23,7 +22,9 @@ export default function UpiPanel({ handleNext }: Props) {
       </div>
 
       <div className="space-y-3">
-        <label className="block text-sm font-medium text-gray-700">UPI ID</label>
+        <label className="block text-sm font-medium text-gray-700">
+          UPI ID
+        </label>
 
         <div className="flex gap-3">
           <CommonTextInput
@@ -40,7 +41,10 @@ export default function UpiPanel({ handleNext }: Props) {
         </div>
       </div>
 
-      <button onClick={handleNext} className="w-full bg-gray-100 text-gray-700 py-3 rounded-xl font-semibold text-base hover:bg-gray-200 transition-colors">
+      <button
+        onClick={handleNext}
+        className="w-full bg-gray-100 text-gray-700 py-3 rounded-xl font-semibold text-base hover:bg-gray-200 transition-colors"
+      >
         Proceed to Pay $579
       </button>
     </div>

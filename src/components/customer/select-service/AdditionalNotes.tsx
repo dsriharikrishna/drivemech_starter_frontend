@@ -35,7 +35,6 @@ export default function RichNoteEditor({ form }: Props) {
 
   return (
     <div className="p-4 border border-gray-200 rounded-xl bg-white relative">
-
       {/* Header */}
       <div className="flex justify-between items-center">
         <p className="font-medium">Additional Note for the Mechanic</p>
@@ -44,7 +43,6 @@ export default function RichNoteEditor({ form }: Props) {
 
       {/* Editor Box */}
       <div className="mt-3 border border-gray-200 rounded-lg p-3 min-h-[150px]">
-
         {/* Placeholder logic */}
         <div
           ref={editorRef}
@@ -62,7 +60,6 @@ export default function RichNoteEditor({ form }: Props) {
 
         {/* Toolbar */}
         <div className="flex items-center justify-between mt-3 text-gray-500">
-
           {/* Left side icons */}
           <div className="flex gap-4">
             <Bold className="w-4 h-4 cursor-pointer" />
@@ -78,10 +75,8 @@ export default function RichNoteEditor({ form }: Props) {
             <MoreVertical className="w-4 h-4 cursor-pointer" />
             <Trash2 className="w-4 h-4 cursor-pointer" />
           </div>
-
         </div>
       </div>
-
     </div>
   );
 }

@@ -26,7 +26,9 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   async (error: AxiosError) => {
-    const originalRequest = error.config as InternalAxiosRequestConfig & { _retry?: boolean };
+    const originalRequest = error.config as InternalAxiosRequestConfig & {
+      _retry?: boolean;
+    };
 
     // Handle 401 Unauthorized - token expired
     if (error.response?.status === 401 && !originalRequest._retry) {
@@ -39,8 +41,8 @@ api.interceptors.response.use(
       } catch (refreshError) {
         // Redirect to login or clear tokens
         tokenService.clearTokens();
-        if (typeof window !== 'undefined') {
-          window.location.href = '/auth/login';
+        if (typeof window !== "undefined") {
+          window.location.href = "/auth/login";
         }
         return Promise.reject(refreshError);
       }
@@ -48,23 +50,30 @@ api.interceptors.response.use(
 
     // Handle network errors
     if (!error.response) {
-      return Promise.reject(new Error('Network error. Please check your connection.'));
+      return Promise.reject(
+        new Error("Network error. Please check your connection.")
+      );
     }
 
     // Handle timeout errors
-    if (error.code === 'ECONNABORTED') {
-      return Promise.reject(new Error('Request timeout. Please try again.'));
+    if (error.code === "ECONNABORTED") {
+      return Promise.reject(new Error("Request timeout. Please try again."));
     }
 
     // Return error with proper message
     const errorData = error.response?.data as { message?: string } | undefined;
-    const errorMessage = errorData?.message || error.message || 'An error occurred';
+    const errorMessage =
+      errorData?.message || error.message || "An error occurred";
     return Promise.reject(new Error(errorMessage));
   }
 );
 
 // Fixed apiDelete - support for body in DELETE requests
-export async function apiDelete<T>(url: string, data?: any, config?: any): Promise<T> {
+export async function apiDelete<T>(
+  url: string,
+  data?: any,
+  config?: any
+): Promise<T> {
   const res = await api.delete<T>(url, { data, ...config });
   return res.data;
 }
@@ -75,17 +84,29 @@ export async function apiGet<T>(url: string, config?: any): Promise<T> {
   return res.data;
 }
 
-export async function apiPost<T>(url: string, body?: any, config?: any): Promise<T> {
+export async function apiPost<T>(
+  url: string,
+  body?: any,
+  config?: any
+): Promise<T> {
   const res = await api.post<T>(url, body, config);
   return res.data;
 }
 
-export async function apiPut<T>(url: string, body?: any, config?: any): Promise<T> {
+export async function apiPut<T>(
+  url: string,
+  body?: any,
+  config?: any
+): Promise<T> {
   const res = await api.put<T>(url, body, config);
   return res.data;
 }
 
-export async function apiPatch<T>(url: string, body?: any, config?: any): Promise<T> {
+export async function apiPatch<T>(
+  url: string,
+  body?: any,
+  config?: any
+): Promise<T> {
   const res = await api.patch<T>(url, body, config);
   return res.data;
 }

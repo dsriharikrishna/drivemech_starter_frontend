@@ -9,7 +9,6 @@ import PlayStoreSection from "@/components/landing-page/PlayStoreSection";
 const TowingHomePage = () => {
   return (
     <div className="flex flex-col w-full gap-4">
-
       {/* Full-width hero */}
       <TowingHeroSection />
 
@@ -32,7 +31,6 @@ const TowingHomePage = () => {
       <div className="max-w-7xl mx-auto w-full px-4">
         <PlayStoreSection />
       </div>
-
     </div>
   );
 };

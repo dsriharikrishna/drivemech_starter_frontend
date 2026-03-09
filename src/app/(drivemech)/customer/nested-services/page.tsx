@@ -1,9 +1,7 @@
-import NestedServicesLayout from './NestedServiceLayout'
+import NestedServicesLayout from "./NestedServiceLayout";
 
 const page = () => {
-  return (
-    <NestedServicesLayout />
-  )
-}
+  return <NestedServicesLayout />;
+};
 
-export default page
+export default page;

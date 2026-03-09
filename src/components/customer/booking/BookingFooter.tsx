@@ -6,22 +6,24 @@ import { useRouter } from "next/navigation";
 export default function BookingFooter() {
   const router = useRouter();
 
-  const handleNavigate = useCallback((path: string) => {
-    if (path === "cancel-booking") {
-      router.push("/customer/cancel-booking");
-    } else if (path === "invoice") {
-      router.push("/customer/download-invoice");
-    } else if (path === "contact") {
-      router.push("/customer/contact-workshop");
-    } else {
-      router.push("/");
-    }
-  }, [router]);
+  const handleNavigate = useCallback(
+    (path: string) => {
+      if (path === "cancel-booking") {
+        router.push("/customer/cancel-booking");
+      } else if (path === "invoice") {
+        router.push("/customer/download-invoice");
+      } else if (path === "contact") {
+        router.push("/customer/contact-workshop");
+      } else {
+        router.push("/");
+      }
+    },
+    [router]
+  );
 
   return (
     <>
       <footer className="flex flex-col md:flex-row gap-4 mt-8 justify-center">
-        
         <button
           onClick={() => handleNavigate("cancel-booking")}
           className="bg-red-500 text-white py-1.5 px-3 cursor-pointer rounded-lg w-full md:w-1/3"
@@ -42,7 +44,6 @@ export default function BookingFooter() {
         >
           Contact Workshop
         </button>
-
       </footer>
 
       <div className="text-center mt-6 text-gray-600 text-md">

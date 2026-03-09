@@ -28,10 +28,10 @@ const serviceIcons: Record<string, string> = {
   "AC Service": "/images/workshop/ACService.png",
   "Exterior Wash": "/images/workshop/ExteriorWash.png",
   "Interior Cleaning": "/images/workshop/InteriorCleaning.png",
-  "Battery": "/images/workshop/Battery.png",
-  "Radiator": "/images/workshop/Radiator.png",
+  Battery: "/images/workshop/Battery.png",
+  Radiator: "/images/workshop/Radiator.png",
   "Car Wash": "/images/workshop/CarWash.png",
-  "Transmission": "/images/workshop/Transmission.png",
+  Transmission: "/images/workshop/Transmission.png",
 };
 
 export default function MechanicCard({
@@ -56,7 +56,6 @@ export default function MechanicCard({
     >
       {/* ===================== MAIN FLEX LAYOUT ===================== */}
       <div className="flex flex-col lg:flex-row gap-3">
-
         {/* ===================== LEFT SECTION (~35%) ===================== */}
         <div className="flex-[0.45] flex flex-col gap-2">
           {/* Logo and Header Info */}
@@ -75,7 +74,9 @@ export default function MechanicCard({
               <div className="flex items-center gap-1">
                 <span className="text-base font-semibold">{ratings}</span>
                 <Star size={16} className="fill-yellow-400 text-yellow-400" />
-                <span className="text-xs text-gray-500">({reviews} Reviews)</span>
+                <span className="text-xs text-gray-500">
+                  ({reviews} Reviews)
+                </span>
               </div>
 
               <div className="flex items-start gap-1 mt-1.5 text-xs text-gray-500">
@@ -92,17 +93,22 @@ export default function MechanicCard({
               </div>
 
               <div className="mt-1">
-                <span className="text-green-600 font-medium text-xs">{status}</span>
+                <span className="text-green-600 font-medium text-xs">
+                  {status}
+                </span>
               </div>
             </div>
           </div>
 
           {/* What we do */}
           <div>
-            <h3 className="font-semibold text-sm text-gray-900 mb-2">What we do</h3>
+            <h3 className="font-semibold text-sm text-gray-900 mb-2">
+              What we do
+            </h3>
             <div className="grid grid-cols-2 gap-2">
               {tags.map((tag) => {
-                const iconPath = serviceIcons[tag] || "/images/workshop/PeriodicService.png";
+                const iconPath =
+                  serviceIcons[tag] || "/images/workshop/PeriodicService.png";
                 return (
                   <div
                     key={tag}
@@ -125,7 +131,6 @@ export default function MechanicCard({
 
         {/* ===================== RIGHT SECTION (~65%) ===================== */}
         <div className="flex-[0.65] grid grid-cols-1 md:grid-cols-2 gap-3">
-
           {/* Services Requiring Inspection */}
           <div className="bg-orange-50 border border-orange-200 rounded-xl p-3 flex flex-col">
             <h3 className="font-semibold text-sm text-orange-700">
@@ -160,7 +165,9 @@ export default function MechanicCard({
 
           {/* Fixed Price Services */}
           <div className="bg-teal-50 border border-teal-200 rounded-xl p-3 flex flex-col">
-            <h3 className="font-semibold text-sm text-teal-800">Fixed Price Services</h3>
+            <h3 className="font-semibold text-sm text-teal-800">
+              Fixed Price Services
+            </h3>
 
             <p className="text-xs text-gray-600 mt-1 mb-2">
               These services have fixed prices

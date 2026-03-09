@@ -32,8 +32,17 @@ interface TowingServiceFormProps {
   onSubmit: (data: TowingHeroFormData) => void;
 }
 
-export default function TowingServiceForm({ onSubmit }: TowingServiceFormProps) {
-  const { handleSubmit, setValue, watch, clearErrors, trigger, formState: { isSubmitting, errors } } = useFormContext<TowingHeroFormData>();
+export default function TowingServiceForm({
+  onSubmit,
+}: TowingServiceFormProps) {
+  const {
+    handleSubmit,
+    setValue,
+    watch,
+    clearErrors,
+    trigger,
+    formState: { isSubmitting, errors },
+  } = useFormContext<TowingHeroFormData>();
 
   const selectedMake = watch("make");
   const selectedModel = watch("model");
@@ -60,8 +69,11 @@ export default function TowingServiceForm({ onSubmit }: TowingServiceFormProps) 
       <div className="w-full max-w-md mx-auto">
         <CustomCard className="p-6 border border-gray-200 rounded-2xl shadow-sm">
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-
-            <Typography variant="h5" weight="semibold" className="text-gray-800">
+            <Typography
+              variant="h5"
+              weight="semibold"
+              className="text-gray-800"
+            >
               Search Towing Services
             </Typography>
 
@@ -84,7 +96,11 @@ export default function TowingServiceForm({ onSubmit }: TowingServiceFormProps) 
             {/* Vehicle details header */}
             <div className="flex items-center gap-2 mt-2">
               <CarFront className="w-4 text-gray-600" />
-              <Typography variant="body" weight="medium" className="text-gray-700">
+              <Typography
+                variant="body"
+                weight="medium"
+                className="text-gray-700"
+              >
                 Vehicle Details
               </Typography>
             </div>

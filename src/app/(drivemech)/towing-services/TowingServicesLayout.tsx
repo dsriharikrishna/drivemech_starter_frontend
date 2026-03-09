@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import Navbar from "@/components/Layout/Navbar";
 import TowingHeader from "@/components/towing-services/TowingHeader";
 
@@ -15,24 +15,29 @@ import TowingHomePage from "@/components/towing-services/home/TowingHomePage";
 export default function TowingServicesLayout() {
   const [page, setPage] = useState("home");
 
-  const renderPage = () => {
+  const renderPage = useCallback(() => {
     switch (page) {
-      case "services": return <ServicesPage />;
-      case "track": return <TrackPage />;
-      case "bookings": return <BookingsPage />;
-      case "app": return <MobileAppPage />;
-      case "partners": return <PartnersPage />;
-      case "contact": return <ContactPage />;
-      default: return <TowingHomePage />;
+      case "services":
+        return <ServicesPage />;
+      case "track":
+        return <TrackPage />;
+      case "bookings":
+        return <BookingsPage />;
+      case "app":
+        return <MobileAppPage />;
+      case "partners":
+        return <PartnersPage />;
+      case "contact":
+        return <ContactPage />;
+      default:
+        return <TowingHomePage />;
     }
-  };
+  }, [page]);
 
   return (
-    <div className="min-h-screen w-full">
-
+    <div className="min-h-full w-full">
       {/* ✅ BOTH HEADERS FIXED PROPERLY */}
       <div className="fixed top-0 left-0 w-full z-50 bg-white">
-
         {/* ✅ MAIN NAVBAR (LOGO, LOGIN, LOCATION, ETC) */}
         <div className="border-b">
           <Navbar />

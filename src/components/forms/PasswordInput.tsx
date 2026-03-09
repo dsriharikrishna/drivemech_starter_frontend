@@ -1,4 +1,4 @@
-    "use client";
+"use client";
 import { useFormContext } from "react-hook-form";
 import { Eye, EyeSlash } from "phosphor-react";
 import { useState } from "react";
@@ -24,7 +24,7 @@ export default function PasswordInput({
 
   return (
     <div className="mb-3">
-      <label htmlFor={name} className="inputLabel">
+      <label htmlFor={name} className="inputLabel mb-1 block">
         {label}
       </label>
       <div className="relative">
@@ -32,11 +32,9 @@ export default function PasswordInput({
           id={name}
           type={show ? "text" : "password"}
           placeholder={placeholder}
-          className={`border placeHolder${
-            error ? "border-red-500 bg-red-50" : "border-gray-300"
-          } text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 pr-10`}
+          className={`border placeHolder${error ? "border-red-500 bg-red-50" : "border-gray-300"
+            } text-sm rounded-xl h-[40px] px-3 focus:ring-blue-500 focus:border-blue-500 block w-full pr-10`}
           {...register(name)}
-          
         />
         <button
           type="button"

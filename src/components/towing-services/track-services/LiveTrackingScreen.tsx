@@ -6,10 +6,8 @@ import { Clock, Flag, MapPin } from "phosphor-react";
 export const LiveTrackingScreen = () => (
   <section className="w-full py-6 px-4">
     <div className="mx-auto flex flex-col lg:flex-row gap-6">
-
       {/* LEFT MAIN AREA */}
       <div className="flex flex-col gap-5 flex-1">
-
         {/* MAP AREA */}
         <div className="w-full h-[340px] md:h-[420px] bg-gray-200 rounded-xl overflow-hidden">
           <img
@@ -21,14 +19,15 @@ export const LiveTrackingScreen = () => (
 
         {/* INFO CARDS ROW */}
         <div className="flex flex-col md:flex-row gap-4">
-
           {/* Pickup */}
           <div className="flex items-start gap-3 border border-gray-200 p-4 rounded-xl flex-1">
             <div className="bg-blue-100 text-blue-600 p-2 rounded-lg">
               <MapPin className="w-5 h-5" />
             </div>
             <div>
-              <p className="font-semibold text-gray-800 text-sm">Pickup Location</p>
+              <p className="font-semibold text-gray-800 text-sm">
+                Pickup Location
+              </p>
               <p className="text-gray-600 text-xs">
                 123 Main Road, NH-123, Hyderabad-54
               </p>
@@ -70,13 +69,11 @@ export const LiveTrackingScreen = () => (
               ETA calculated using real-time traffic data
             </p>
           </div>
-
         </div>
       </div>
 
       {/* RIGHT PANEL */}
       <div className="flex flex-col gap-6 w-full lg:w-[360px]">
-
         {/* DRIVER CARD */}
         <CustomCard className="border border-gray-200 rounded-xl p-5">
           <p className="font-semibold text-gray-heading text-sm mb-3">
@@ -102,7 +99,9 @@ export const LiveTrackingScreen = () => (
             </div>
             <div className="flex justify-between">
               <span className="text-gray-600">Vehicle Type</span>
-              <span className="font-semibold text-gray-800">Flatbed Tow Truck</span>
+              <span className="font-semibold text-gray-800">
+                Flatbed Tow Truck
+              </span>
             </div>
           </div>
 
@@ -123,7 +122,6 @@ export const LiveTrackingScreen = () => (
           </p>
 
           <div className="flex flex-col gap-0">
-
             {/* Timeline Steps */}
             {[
               { label: "Request Received", time: "2:15 PM", completed: true },
@@ -134,19 +132,22 @@ export const LiveTrackingScreen = () => (
               { label: "Dropoff", pending: true },
             ].map((step, i) => (
               <div key={i} className="flex gap-3 items-start">
-
                 {/* Bullet + Line */}
                 <div className="flex flex-col items-center">
                   <span
                     className={`w-3 h-3 rounded-full ${
-                      step.completed || step.current ? "bg-green-500" : "bg-gray-300"
+                      step.completed || step.current
+                        ? "bg-green-500"
+                        : "bg-gray-300"
                     }`}
                   ></span>
 
                   {i < 5 && (
                     <span
                       className={`w-[2px] h-10 ${
-                        step.completed || step.current ? "bg-green-300" : "bg-gray-200"
+                        step.completed || step.current
+                          ? "bg-green-300"
+                          : "bg-gray-200"
                       }`}
                     ></span>
                   )}
@@ -155,19 +156,21 @@ export const LiveTrackingScreen = () => (
                 {/* Step Text */}
                 <div>
                   <div className="flex items-center gap-2">
-                    <p className="font-semibold text-gray-800 text-sm">{step.label}</p>
+                    <p className="font-semibold text-gray-800 text-sm">
+                      {step.label}
+                    </p>
                     {step.current && (
                       <span className="px-2 py-[2px] text-[10px] bg-orange-100 text-orange-600 rounded-full">
                         Current
                       </span>
                     )}
                   </div>
-                  <p className="text-gray-500 text-xs">{step.time || "Pending"}</p>
+                  <p className="text-gray-500 text-xs">
+                    {step.time || "Pending"}
+                  </p>
                 </div>
-
               </div>
             ))}
-
           </div>
         </CustomCard>
       </div>

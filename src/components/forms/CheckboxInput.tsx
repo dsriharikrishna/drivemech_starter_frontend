@@ -16,13 +16,8 @@ export default function CheckboxInput({ name, label }: Props) {
 
   return (
     <div className="flex items-start gap-2 mb-2">
-      <input
-        type="checkbox"
-        id={name}
-        {...register(name)}
-        className="mt-1"
-      />
-      <label htmlFor={name} className="text-sm text-gray-700">
+      <input type="checkbox" id={name} {...register(name)} className="mt-1" />
+      <label htmlFor={name} className="inputLabel">
         {label}
       </label>
       {error && <p className="text-sm text-red-500 mt-1">{error}</p>}

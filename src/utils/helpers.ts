@@ -4,11 +4,11 @@
  * Formats a date string to a human-readable format
  */
 export function formatDate(date: string | Date): string {
-  const d = typeof date === 'string' ? new Date(date) : date;
-  return new Intl.DateTimeFormat('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
+  const d = typeof date === "string" ? new Date(date) : date;
+  return new Intl.DateTimeFormat("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
   }).format(d);
 }
 
@@ -16,14 +16,17 @@ export function formatDate(date: string | Date): string {
  * Formats a date string to a relative time format (e.g., "2 hours ago")
  */
 export function formatRelativeTime(date: string | Date): string {
-  const d = typeof date === 'string' ? new Date(date) : date;
+  const d = typeof date === "string" ? new Date(date) : date;
   const now = new Date();
   const diffInSeconds = Math.floor((now.getTime() - d.getTime()) / 1000);
 
-  if (diffInSeconds < 60) return 'just now';
-  if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)} minutes ago`;
-  if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)} hours ago`;
-  if (diffInSeconds < 604800) return `${Math.floor(diffInSeconds / 86400)} days ago`;
+  if (diffInSeconds < 60) return "just now";
+  if (diffInSeconds < 3600)
+    return `${Math.floor(diffInSeconds / 60)} minutes ago`;
+  if (diffInSeconds < 86400)
+    return `${Math.floor(diffInSeconds / 3600)} hours ago`;
+  if (diffInSeconds < 604800)
+    return `${Math.floor(diffInSeconds / 86400)} days ago`;
 
   return formatDate(d);
 }
@@ -40,7 +43,7 @@ export function validateEmail(email: string): boolean {
  * Formats a phone number
  */
 export function formatPhoneNumber(phone: string): string {
-  const cleaned = phone.replace(/\D/g, '');
+  const cleaned = phone.replace(/\D/g, "");
   const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
   if (match) {
     return `(${match[1]}) ${match[2]}-${match[3]}`;
@@ -51,9 +54,12 @@ export function formatPhoneNumber(phone: string): string {
 /**
  * Formats a price to currency
  */
-export function formatCurrency(amount: number, currency: string = 'USD'): string {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
+export function formatCurrency(
+  amount: number,
+  currency: string = "USD"
+): string {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
     currency: currency,
   }).format(amount);
 }
@@ -63,7 +69,7 @@ export function formatCurrency(amount: number, currency: string = 'USD'): string
  */
 export function truncate(str: string, length: number): string {
   if (str.length <= length) return str;
-  return str.slice(0, length) + '...';
+  return str.slice(0, length) + "...";
 }
 
 /**
@@ -87,16 +93,14 @@ export function debounce<T extends (...args: any[]) => any>(
   };
 }
 
-
-// generate flag based on the coutry code 
+// generate flag based on the coutry code
 export function getFlagUrl(iso: string) {
   return `https://flagcdn.com/${iso.toLowerCase()}.svg`;
 }
 
-
 export function isPhoneInput(value: string): boolean {
-  if (!value) return false;                
-  return /^[0-9]+$/.test(value.trim());   
+  if (!value) return false;
+  return /^[0-9]+$/.test(value.trim());
 }
 
 export function isEmailInput(value: string): boolean {

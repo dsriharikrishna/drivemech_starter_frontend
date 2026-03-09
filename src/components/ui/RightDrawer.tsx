@@ -1,5 +1,3 @@
-
-
 "use client";
 
 import { X } from "phosphor-react";
@@ -47,7 +45,12 @@ const RightDrawer = ({
           {/* Header */}
           <div className="flex items-center justify-between px-6 py-3 border-b border-gray-200">
             <h5 className="font-semibold text-gray-800 truncate">{title}</h5>
-            <Button onClick={onClose} size="sm" variant="gradient" aria-label="Close">
+            <Button
+              onClick={onClose}
+              size="sm"
+              variant="gradient"
+              aria-label="Close"
+            >
               <X size={20} weight="duotone" color="#fff" />
             </Button>
           </div>
@@ -61,4 +64,3 @@ const RightDrawer = ({
 );
 
 export default RightDrawer;
-

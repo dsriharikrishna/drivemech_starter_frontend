@@ -1,9 +1,7 @@
-import { WorkShopLayout } from './WorkShopLayout'
+import { WorkShopLayout } from "./WorkShopLayout";
 
 const page = () => {
-  return (
-    <WorkShopLayout />
-  )
-}
+  return <WorkShopLayout />;
+};
 
-export default page
+export default page;

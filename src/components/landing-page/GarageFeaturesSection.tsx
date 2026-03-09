@@ -4,24 +4,28 @@ export default function GarageFeaturesSection() {
   const features = [
     {
       title: "New Customer Acquisition",
-      description: "Expand your reach and get direct booking requests from thousands of users.",
+      description:
+        "Expand your reach and get direct booking requests from thousands of users.",
       icon: "/images/Garages/Group.png",
     },
     {
       title: "Efficient Booking Management",
-      description: "View, accept, and manage all your bookings from one intuitive dashboard.",
-      icon: "/images/Garages/Isolation_Mode.png"
+      description:
+        "View, accept, and manage all your bookings from one intuitive dashboard.",
+      icon: "/images/Garages/Isolation_Mode.png",
     },
     {
       title: "Employee & Task Assignment",
-      description: "Assign jobs to your team members and track their progress effortlessly.",
-      icon: "/images/Garages/Dashboard.png"
+      description:
+        "Assign jobs to your team members and track their progress effortlessly.",
+      icon: "/images/Garages/Dashboard.png",
     },
     {
       title: "Performance Analytics",
-      description: "Gain insights into your business performance and customer feedback.",
-      icon: "/images/Garages/Tracking.png"
-    }
+      description:
+        "Gain insights into your business performance and customer feedback.",
+      icon: "/images/Garages/Tracking.png",
+    },
   ];
 
   return (
@@ -52,8 +56,12 @@ export default function GarageFeaturesSection() {
                 />
               </div>
               <div className="flex flex-col gap-0.5 justify-start items-start">
-                <h3 className="text-xl font-bold text-gray-900">{feature.title}</h3>
-                <p className="text-gray-600 leading-relaxed">{feature.description}</p>
+                <h3 className="text-xl font-bold text-gray-900">
+                  {feature.title}
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  {feature.description}
+                </p>
               </div>
             </div>
           ))}

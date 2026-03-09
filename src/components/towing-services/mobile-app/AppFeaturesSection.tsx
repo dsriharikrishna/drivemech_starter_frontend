@@ -1,4 +1,11 @@
-import { Smartphone, Bell, Shield, CreditCard, History, Fingerprint } from "lucide-react";
+import {
+  Smartphone,
+  Bell,
+  Shield,
+  CreditCard,
+  History,
+  Fingerprint,
+} from "lucide-react";
 import CustomCard from "@/components/ui/CustomCard";
 
 export default function AppFeaturesSection() {
@@ -38,31 +45,33 @@ export default function AppFeaturesSection() {
   return (
     <section className="w-full py-16 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 text-center">
-
         {/* Heading */}
         <h2 className="text-3xl font-semibold text-gray-heading">
           Everything You Need in One App
         </h2>
         <p className="text-sm text-gray-600 mt-2">
-          Download the DriveMech app for the fastest, most convenient way to request towing and roadside assistance.
+          Download the DriveMech app for the fastest, most convenient way to
+          request towing and roadside assistance.
         </p>
 
         {/* Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
           {features.map((f, i) => (
-            <CustomCard key={i} className="flex gap-4 p-5 border rounded-xl bg-white">
-              <div className="bg-orange-50 p-3 rounded-xl">
-                {f.icon}
-              </div>
+            <CustomCard
+              key={i}
+              className="flex gap-4 p-5 border rounded-xl bg-white"
+            >
+              <div className="bg-orange-50 p-3 rounded-xl">{f.icon}</div>
 
               <div className="text-left">
-                <h3 className="font-semibold text-gray-heading text-sm">{f.title}</h3>
+                <h3 className="font-semibold text-gray-heading text-sm">
+                  {f.title}
+                </h3>
                 <p className="text-gray-500 text-xs mt-1">{f.desc}</p>
               </div>
             </CustomCard>
           ))}
         </div>
-
       </div>
     </section>
   );

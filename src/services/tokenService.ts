@@ -1,5 +1,5 @@
 // src/services/tokenService.ts
-import cookieService from './cookieService';
+import cookieService from "./cookieService";
 
 /**
  * Token Service
@@ -7,7 +7,7 @@ import cookieService from './cookieService';
  */
 export const tokenService = {
   getAccessToken: (): string | null => {
-    if (typeof window === 'undefined') return null;
+    if (typeof window === "undefined") return null;
     try {
       return cookieService.getAccessToken() || null;
     } catch {
@@ -16,17 +16,17 @@ export const tokenService = {
   },
 
   setAccessToken: (token: string): void => {
-    if (typeof window === 'undefined') return;
+    if (typeof window === "undefined") return;
     cookieService.setAccessToken(token);
   },
 
   removeAccessToken: (): void => {
-    if (typeof window === 'undefined') return;
-    cookieService.remove('accessToken');
+    if (typeof window === "undefined") return;
+    cookieService.remove("accessToken");
   },
 
   getRefreshToken: (): string | null => {
-    if (typeof window === 'undefined') return null;
+    if (typeof window === "undefined") return null;
     try {
       return cookieService.getRefreshToken() || null;
     } catch {
@@ -35,22 +35,22 @@ export const tokenService = {
   },
 
   setRefreshToken: (token: string): void => {
-    if (typeof window === 'undefined') return;
+    if (typeof window === "undefined") return;
     cookieService.setRefreshToken(token);
   },
 
   removeRefreshToken: (): void => {
-    if (typeof window === 'undefined') return;
-    cookieService.remove('refreshToken');
+    if (typeof window === "undefined") return;
+    cookieService.remove("refreshToken");
   },
 
   clearTokens: (): void => {
-    if (typeof window === 'undefined') return;
+    if (typeof window === "undefined") return;
     cookieService.clearTokens();
   },
 
   isAuthenticated: (): boolean => {
-    if (typeof window === 'undefined') return false;
+    if (typeof window === "undefined") return false;
     return cookieService.isAuthenticated();
   },
 };

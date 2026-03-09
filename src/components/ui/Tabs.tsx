@@ -1,51 +1,92 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 
-interface TabItem {
-label: string;
-value: string;
+interface Tab {
+  id: string;
+  label: string;
 }
 
 interface TabsProps {
-tabs: TabItem[];
-defaultValue?: string;
-onChange?: (value: string) => void;
+  tabs: Tab[];
+  activeTab?: string;
+  onTabChange?: (tabId: string) => void;
+  variant?: "default" | "pills";
 }
 
-export default function Tabs({ tabs, defaultValue, onChange }: TabsProps) {
-const [active, setActive] = useState(defaultValue || tabs[0].value);
+const Tabs: React.FC<TabsProps> = ({
+  tabs,
+  activeTab: controlledActiveTab,
+  onTabChange,
+  variant = "default",
+}) => {
+  const [internalActiveTab, setInternalActiveTab] = useState(tabs[0]?.id || "");
 
-const handleClick = (value: string) => {
-setActive(value);
-onChange?.(value);
+  const activeTab =
+    controlledActiveTab !== undefined ? controlledActiveTab : internalActiveTab;
+
+  const handleTabClick = (tabId: string) => {
+    if (controlledActiveTab === undefined) {
+      setInternalActiveTab(tabId);
+    }
+    onTabChange?.(tabId);
+  };
+
+  if (variant === "pills") {
+    return (
+      <div className="w-full overflow-x-auto scrollbar-hide">
+        <div className="flex flex-nowrap gap-1 p-0.5 w-fit rounded-xl">
+          {tabs.map((tab) => {
+            const isActive = tab.id === activeTab;
+
+            return (
+              <button
+                key={tab.id}
+                type="button"
+                onClick={() => handleTabClick(tab.id)}
+                className={`
+                                px-6 py-2 cursor-pointer rounded-md text-sm font-bold transition-all duration-300 whitespace-nowrap flex-shrink-0
+                                ${isActive
+                    ? "bg-[#E7F0FF]  text-[#2B7FFF] shadow-sm"
+                    : "text-slate-400 hover:text-slate-600 hover:bg-slate-50/50"
+                  }
+                            `}
+              >
+                {tab.label}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="w-full overflow-x-auto scrollbar-hide">
+      <div className="flex flex-nowrap gap-2 border-b border-slate-100 min-w-full">
+        {tabs.map((tab) => {
+          const isActive = tab.id === activeTab;
+
+          return (
+            <button
+              key={tab.id}
+              type="button"
+              onClick={() => handleTabClick(tab.id)}
+              className={`
+                            px-6 py-3 cursor-pointer text-sm font-bold transition-all whitespace-nowrap flex-shrink-0
+                            ${isActive
+                  ? "text-[#2B7FFF] bg-gradient-to-b from-[#E7F0FF] to-[#FFFFFF] rounded-t-xl"
+                  : "text-slate-400 hover:text-slate-600 hover:bg-slate-50/30 rounded-t-xl"
+                }
+                        `}
+            >
+              {tab.label}
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
 };
 
-return (
-<div className="border-b border-gray-200">
-    <div className="flex gap-8 px-1">
-    {tabs.map((tab) => {
-        const isActive = tab.value === active;
-        return (
-        <button
-            key={tab.value}
-            onClick={() => handleClick(tab.value)}
-            className={`pb-3 pt-1 text-sm font-medium transition-all ${
-            isActive
-                ? "text-blue-600"
-                : "text-gray-500 hover:text-gray-700"
-            }`}
-        >
-            <div className="relative">
-            {tab.label}
-            {isActive && (
-                <span className="absolute -bottom-1 left-0 w-full h-[2px] bg-blue-600 rounded-full"></span>
-            )}
-            </div>
-        </button>
-        );
-    })}
-    </div>
-</div>
-);
-}
+export default Tabs;

@@ -1,10 +1,8 @@
-import React from 'react'
-import ConfirmBookingLayout from './ConfirmBookingLayout'
+import React from "react";
+import ConfirmBookingLayout from "./ConfirmBookingLayout";
 
 const page = () => {
-  return (
-    <ConfirmBookingLayout />
-  )
-}
+  return <ConfirmBookingLayout />;
+};
 
-export default page
+export default page;

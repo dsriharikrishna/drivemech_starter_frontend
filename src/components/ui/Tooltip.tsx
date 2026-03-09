@@ -6,7 +6,11 @@ interface TooltipProps {
   children: React.ReactNode;
 }
 
-export default function Tooltip({ label, placement = "right", children }: TooltipProps) {
+export default function Tooltip({
+  label,
+  placement = "right",
+  children,
+}: TooltipProps) {
   // Define position classes based on placement
   const positionClasses = {
     right: "left-full ml-5",
@@ -16,11 +20,11 @@ export default function Tooltip({ label, placement = "right", children }: Toolti
   };
 
   const arrowPosition = {
-  top: "bottom-[-4px] left-1/2 -translate-x-1/2",
-  bottom: "top-[-4px] right-3",
-  left: "right-[-4px] top-1/2 -translate-y-1/2",
-  right: "left-[-4px] top-1/2 -translate-y-1/2",
-};
+    top: "bottom-[-4px] left-1/2 -translate-x-1/2",
+    bottom: "top-[-4px] right-3",
+    left: "right-[-4px] top-1/2 -translate-y-1/2",
+    right: "left-[-4px] top-1/2 -translate-y-1/2",
+  };
 
   return (
     <div className="relative group flex items-center justify-center">
@@ -34,8 +38,9 @@ export default function Tooltip({ label, placement = "right", children }: Toolti
         {label}
         {/* Tooltip Arrow */}
         {/* <div className="tooltip-arrow" data-popper-arrow></div> */}
-        <div className={`absolute w-2 h-2 rotate-45 bg-gray-900 dark:bg-gray-700 ${arrowPosition[placement]}`}></div>
-
+        <div
+          className={`absolute w-2 h-2 rotate-45 bg-gray-900 dark:bg-gray-700 ${arrowPosition[placement]}`}
+        ></div>
       </div>
     </div>
   );

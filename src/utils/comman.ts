@@ -2,16 +2,20 @@
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 if (!BASE_URL) {
-  if (typeof window === 'undefined') {
+  if (typeof window === "undefined") {
     // Server-side: throw error during build
-    throw new Error('NEXT_PUBLIC_API_BASE_URL environment variable is not defined');
+    throw new Error(
+      "NEXT_PUBLIC_API_BASE_URL environment variable is not defined"
+    );
   } else {
     // Client-side: use fallback and log warning
-    console.error('⚠️ NEXT_PUBLIC_API_BASE_URL is not defined. Using fallback.');
+    console.error(
+      "⚠️ NEXT_PUBLIC_API_BASE_URL is not defined. Using fallback."
+    );
   }
 }
 
-const FALLBACK_URL = 'http://localhost:3000';
+const FALLBACK_URL = "http://localhost:3000";
 const API_BASE_URL = BASE_URL || FALLBACK_URL;
 
 const config = {

@@ -34,11 +34,10 @@ export const useApiInterceptor = () => {
 
             if (response?.accessToken) {
               // Update header for all next requests
-              api.defaults.headers.common[
-                "Authorization"
-              ] = `Bearer ${response.accessToken}`;
+              api.defaults.headers.common["Authorization"] =
+                `Bearer ${response.accessToken}`;
 
-                            // Retry original request
+              // Retry original request
               return api(originalRequest);
             }
           } catch (refreshError) {
@@ -52,10 +51,9 @@ export const useApiInterceptor = () => {
       }
     );
 
-    
     // Cleanup on unmount
     return () => {
       api.interceptors.response.eject(interceptor);
-          };
+    };
   }, [dispatch, router]);
 };

@@ -16,19 +16,30 @@ export default function ModeOfService({ form, modes = [] }: Props) {
 
   // Default modes if not provided
   const defaultModes = [
-    { id: "pickup", label: "Pickup", description: "We'll pick up your vehicle" },
-    { id: "walkin", label: "Walk In", description: "Visit our workshop directly" },
+    {
+      id: "pickup",
+      label: "Pickup",
+      description: "We'll pick up your vehicle",
+    },
+    {
+      id: "walkin",
+      label: "Walk In",
+      description: "Visit our workshop directly",
+    },
   ];
 
   const serviceModes = modes.length > 0 ? modes : defaultModes;
 
   return (
-    <div className="p-4 border border-gray-200 rounded-xl bg-white">
-      <p className="font-medium mb-3">Mode Of Service</p>
+    <div className="p-3 border border-gray-200 rounded-xl bg-white">
+      <p className="text-sm font-medium mb-2">Mode Of Service</p>
 
-      <div className="flex flex-col md:flex-row item-center flex-wrap gap-6">
+      <div className="flex flex-col md:flex-row item-center flex-wrap gap-4">
         {serviceModes.map((serviceMode) => (
-          <label key={serviceMode.id} className="flex-1 flex items-center gap-2 cursor-pointer">
+          <label
+            key={serviceMode.id}
+            className="flex-1 flex items-center gap-2 cursor-pointer"
+          >
             <input
               type="radio"
               value={serviceMode.id}
@@ -37,7 +48,9 @@ export default function ModeOfService({ form, modes = [] }: Props) {
               className="w-4 h-4 text-orange-500 border-gray-300 focus:ring-orange-500"
             />
             <div>
-              <span className="font-medium text-gray-900">{serviceMode.label}</span>
+              <span className="text-sm font-medium text-gray-900">
+                {serviceMode.label}
+              </span>
             </div>
           </label>
         ))}

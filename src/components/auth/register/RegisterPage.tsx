@@ -25,8 +25,9 @@ import { registerOtpSchema } from "@/schemas/auth/register.schema";
 export default function RegisterPage() {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const pathname = typeof window !== 'undefined' ? window.location.pathname : '';
-  const userType = pathname.includes('/vendor') ? 'vendor' : 'customer';
+  const pathname =
+    typeof window !== "undefined" ? window.location.pathname : "";
+  const userType = pathname.includes("/vendor") ? "vendor" : "customer";
   const authPrefix = `/auth/${userType}`;
 
   const loading = useAppSelector(selectAuthLoading);
@@ -44,7 +45,11 @@ export default function RegisterPage() {
     reValidateMode: "onBlur",
   });
 
-  const { handleSubmit, watch, formState: { errors, isSubmitting } } = methods;
+  const {
+    handleSubmit,
+    watch,
+    formState: { errors, isSubmitting },
+  } = methods;
 
   const formvalues = watch();
 
@@ -108,7 +113,6 @@ export default function RegisterPage() {
       {/* FORM */}
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
-
           {/* First + Last Name */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 w-full">
             <CommonTextInput
@@ -152,10 +156,11 @@ export default function RegisterPage() {
             type="submit"
             disabled={!getValidation()}
             className={`w-full text-white py-3 rounded-xl font-semibold 
-                   ${getValidation()
-                ? "bg-orange-500 hover:bg-orange-600"
-                : "bg-orange-300 cursor-not-allowed"
-              }`}
+                   ${
+                     getValidation()
+                       ? "bg-orange-500 hover:bg-orange-600"
+                       : "bg-orange-300 cursor-not-allowed"
+                   }`}
           >
             Register
           </Button>
@@ -167,6 +172,7 @@ export default function RegisterPage() {
 
           <Button
             type="button"
+            variant="custom"
             disabled={isSubmitting}
             onClick={() => router.replace(`${authPrefix}/login`)}
             className="w-full bg-gray-900 hover:bg-black text-white py-3 rounded-xl font-semibold"

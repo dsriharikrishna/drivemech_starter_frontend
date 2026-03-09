@@ -1,19 +1,24 @@
 "use client";
 
-import React, { Suspense } from 'react'
-import ForgotMpinVerifyPage from '../../../../../../components/auth/forgot-mpin/ForgotMpinVerifyPage'
+import React, { Suspense } from "react";
+import ForgotMpinVerifyPage from "../../../../../../components/auth/forgot-mpin/ForgotMpinVerifyPage";
 
 function ForgotMpinVerifyWrapper() {
   return (
-    <Suspense fallback={<div className="w-full max-w-md bg-white rounded-2xl shadow-xl border border-gray-200 p-8"><div className="text-center">Loading...</div></div>}>
+    <Suspense
+      fallback={
+        <div className="w-full max-w-md bg-white rounded-2xl shadow-xl border border-gray-200 p-8">
+          <div className="text-center">Loading...</div>
+        </div>
+      }
+    >
       <ForgotMpinVerifyPage />
     </Suspense>
-  )
+  );
 }
 
 const page = () => {
-  return <ForgotMpinVerifyWrapper />
-}
+  return <ForgotMpinVerifyWrapper />;
+};
 
-export default page
-
+export default page;

@@ -1,10 +1,7 @@
-import PricingLayout from './PricingLayout'
+import PricingLayout from "./PricingLayout";
 
 const page = () => {
-  return (
-    <PricingLayout />
-  )
+  return <PricingLayout />;
+};
 
-}
-
-export default page
+export default page;

@@ -1,6 +1,12 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  useCallback,
+  useMemo,
+} from "react";
 import { FormProvider, useForm, Controller } from "react-hook-form";
 import { Car, Truck, FileArrowUp, FileText, Trash } from "phosphor-react";
 import { Motorbike } from "lucide-react";
@@ -9,7 +15,7 @@ import Typography from "@/components/ui/Typography";
 import Button from "@/components/ui/Button";
 import CustomCard from "@/components/ui/CustomCard";
 import CommonTextInput from "@/components/forms/CommonTextInput";
-import ToggleSwitch from "@/components/ui/ToogleSwitch";
+import ToggleSwitch from "@/components/ui/ToggleSwitch";
 
 export type VehicleFormValues = {
   vehicleType: "car" | "bike" | "truck";
@@ -121,61 +127,87 @@ export default function AddVehicleForm({
     });
   }
 
-  const onSubmit = (data: VehicleFormValues) => {
-    const final = { ...data, regDocs: regFiles, insDocs: insFiles };
+  const onSubmit = useCallback(
+    (data: VehicleFormValues) => {
+      const final = { ...data, regDocs: regFiles, insDocs: insFiles };
 
-    if (mode === "edit") {
-    } else {
-    }
+      if (mode === "edit") {
+      } else {
+      }
 
-    onClose?.();
-  };
+      onClose?.();
+    },
+    [regFiles, insFiles, mode, onClose]
+  );
+
+  const vehicleTypes = useMemo(() => ["car", "bike", "truck"], []);
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-2">
-
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-1.5">
         {/* HEADER */}
-        <div className="pb-2 border-b border-border ">
-          <Typography variant="h4" weight="semibold" className="p-2">
+        <div className="pb-1.5 border-b border-border ">
+          <Typography variant="h4" weight="semibold" className="p-1.5">
             {mode === "edit" ? "Edit Vehicle" : "Add Vehicle"}
           </Typography>
         </div>
 
-
         {/* Vehicle Type */}
-        <CustomCard className="p-4">
-          <Typography weight="semibold" className="text-sm">Vehicle Type *</Typography>
+        <CustomCard className="p-3">
+          <Typography weight="semibold" className="text-xs">
+            Vehicle Type *
+          </Typography>
 
-          <div className="flex gap-3 mt-3">
-            {["car", "bike", "truck"].map((t) => (
+          <div className="flex gap-2 mt-2">
+            {vehicleTypes.map((t) => (
               <button
                 type="button"
                 key={t}
                 onClick={() => setValue("vehicleType", t as any)}
-                className={`px-4 py-3 rounded-xl border flex flex-col items-center gap-2 text-sm transition 
+                className={`px-3 py-2 rounded-xl border flex flex-col items-center gap-1.5 text-xs transition 
                 ${selectedType === t ? "bg-primary-500 text-white border-primary-500" : "border-gray-300 hover:bg-gray-50"}`}
               >
-                {t === "car" && <Car size={24} weight={selectedType === t ? "fill" : "regular"} />}
-                {t === "bike" && <Motorbike size={24} strokeWidth={selectedType === t ? 2.5 : 2} />}
-                {t === "truck" && <Truck size={24} weight={selectedType === t ? "fill" : "regular"} />}
-                <span className="text-xs font-medium capitalize">{t}</span>
+                {t === "car" && (
+                  <Car
+                    size={20}
+                    weight={selectedType === t ? "fill" : "regular"}
+                  />
+                )}
+                {t === "bike" && (
+                  <Motorbike
+                    size={20}
+                    strokeWidth={selectedType === t ? 2.5 : 2}
+                  />
+                )}
+                {t === "truck" && (
+                  <Truck
+                    size={20}
+                    weight={selectedType === t ? "fill" : "regular"}
+                  />
+                )}
+                <span className="text-[11px] font-medium capitalize">{t}</span>
               </button>
             ))}
           </div>
         </CustomCard>
 
         {/* ---------------- Vehicle Details ---------------- */}
-        <CustomCard className="p-4 space-y-4">
-          <Typography weight="semibold" className="text-base">Add Vehicle Details</Typography>
+        <CustomCard className="p-3 space-y-3">
+          <Typography weight="semibold" className="text-sm">
+            Add Vehicle Details
+          </Typography>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <Controller
               name="state"
               control={control}
               rules={{ required: "State required" }}
               render={({ field }) => (
-                <CommonTextInput {...field} label="State *" placeholder="State" />
+                <CommonTextInput
+                  {...field}
+                  label="State *"
+                  placeholder="State"
+                />
               )}
             />
 
@@ -184,7 +216,11 @@ export default function AddVehicleForm({
               control={control}
               rules={{ required: "Registration required" }}
               render={({ field }) => (
-                <CommonTextInput {...field} label="Vehicle Reg No. *" placeholder="e.g., ABC 1234-D" />
+                <CommonTextInput
+                  {...field}
+                  label="Vehicle Reg No. *"
+                  placeholder="e.g., ABC 1234-D"
+                />
               )}
             />
 
@@ -192,66 +228,129 @@ export default function AddVehicleForm({
               name="make"
               control={control}
               rules={{ required: "Make required" }}
-              render={({ field }) => <CommonTextInput {...field} label="Make *" placeholder="Toyota" />}
+              render={({ field }) => (
+                <CommonTextInput
+                  {...field}
+                  label="Make *"
+                  placeholder="Toyota"
+                />
+              )}
             />
 
             <Controller
               name="model"
               control={control}
               rules={{ required: "Model required" }}
-              render={({ field }) => <CommonTextInput {...field} label="Model *" placeholder="e.g., Camry, Hilux" />}
+              render={({ field }) => (
+                <CommonTextInput
+                  {...field}
+                  label="Model *"
+                  placeholder="e.g., Camry, Hilux"
+                />
+              )}
             />
 
             <Controller
               name="cc"
               control={control}
-              render={({ field }) => <CommonTextInput {...field} label="Cubic Capacity" placeholder="e.g., 1000cc" />}
+              render={({ field }) => (
+                <CommonTextInput
+                  {...field}
+                  label="Cubic Capacity"
+                  placeholder="e.g., 1000cc"
+                />
+              )}
             />
 
             <Controller
               name="mfgYear"
               control={control}
-              render={({ field }) => <CommonTextInput {...field} label="Mfg. Year" type="number" placeholder="2018" />}
+              render={({ field }) => (
+                <CommonTextInput
+                  {...field}
+                  label="Mfg. Year"
+                  type="number"
+                  placeholder="2018"
+                />
+              )}
             />
           </div>
         </CustomCard>
 
         {/* Technical details */}
-        <CustomCard className="p-3 space-y-4">
-          <Typography weight="semibold">Technical Details</Typography>
+        <CustomCard className="p-2.5 space-y-3">
+          <Typography weight="semibold" className="text-xs">
+            Technical Details
+          </Typography>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <CommonTextInput label="Chassis Number" placeholder="JT3HN86R9Y0123456" name="chassisNo" />
-            <CommonTextInput label="Insurance Expiry Date" placeholder="DD-MM-YY" type="date" name="insuranceExpiry" />
-            <CommonTextInput label="Purchase Date" placeholder="DD-MM-YY" type="date" name="purchaseDate" />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <CommonTextInput
+              label="Chassis Number"
+              placeholder="JT3HN86R9Y0123456"
+              name="chassisNo"
+            />
+            <CommonTextInput
+              label="Insurance Expiry Date"
+              placeholder="DD-MM-YY"
+              type="date"
+              name="insuranceExpiry"
+            />
+            <CommonTextInput
+              label="Purchase Date"
+              placeholder="DD-MM-YY"
+              type="date"
+              name="purchaseDate"
+            />
           </div>
         </CustomCard>
 
         {/* Insurance info */}
-        <CustomCard className="p-3 space-y-4">
-          <Typography weight="semibold">Insurance Information</Typography>
+        <CustomCard className="p-2.5 space-y-3">
+          <Typography weight="semibold" className="text-xs">
+            Insurance Information
+          </Typography>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <CommonTextInput label="Insurance Provider" placeholder="GEICO" name="insuranceProvider" />
-            <CommonTextInput label="Engine Number" placeholder="2GD-FTV123456" name="engineNo" />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <CommonTextInput
+              label="Insurance Provider"
+              placeholder="GEICO"
+              name="insuranceProvider"
+            />
+            <CommonTextInput
+              label="Engine Number"
+              placeholder="2GD-FTV123456"
+              name="engineNo"
+            />
           </div>
         </CustomCard>
 
         {/* Service history */}
-        <CustomCard className="p-3 space-y-4">
-          <Typography weight="semibold">Service History</Typography>
+        <CustomCard className="p-2.5 space-y-3">
+          <Typography weight="semibold" className="text-xs">
+            Service History
+          </Typography>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <CommonTextInput label="Last Service Date" placeholder="DD-MM-YY" type="date" name="lastServiceDate" />
-            <CommonTextInput label="Odometer (km)" type="number" placeholder="45000" name="odometer" />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <CommonTextInput
+              label="Last Service Date"
+              placeholder="DD-MM-YY"
+              type="date"
+              name="lastServiceDate"
+            />
+            <CommonTextInput
+              label="Odometer (km)"
+              type="number"
+              placeholder="45000"
+              name="odometer"
+            />
           </div>
         </CustomCard>
 
         {/* Default toggle */}
-        <CustomCard className="p-4 bg-orange-50 border-orange-200 flex items-center justify-between">
+        <CustomCard className="p-3 bg-orange-50 border-orange-200 flex items-center justify-between">
           <div>
-            <p className="font-semibold text-sm">Set as Default Vehicle</p>
-            <Typography variant="small" color="muted" className="text-xs">
+            <p className="font-semibold text-xs">Set as Default Vehicle</p>
+            <Typography variant="small" color="muted" className="text-[11px]">
               This vehicle will be auto-selected for bookings
             </Typography>
           </div>
@@ -260,16 +359,21 @@ export default function AddVehicleForm({
             name="isDefault"
             control={control}
             render={({ field }) => (
-              <ToggleSwitch checked={field.value} onChange={(checked) => field.onChange(checked)} />
+              <ToggleSwitch
+                checked={field.value}
+                onChange={(checked) => field.onChange(checked)}
+              />
             )}
           />
         </CustomCard>
 
         {/* Documents (file uploads) */}
-        <CustomCard className="p-3 space-y-4">
-          <Typography weight="semibold">Documents (Optional)</Typography>
+        <CustomCard className="p-2.5 space-y-3">
+          <Typography weight="semibold" className="text-xs">
+            Documents (Optional)
+          </Typography>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {/* Registration Certificate */}
             <div>
               <input
@@ -281,34 +385,48 @@ export default function AddVehicleForm({
                 onChange={handleRegUpload}
               />
 
-              <div className="flex items-center gap-3">
-                <Button variant="outline" type="button" className="flex items-center gap-2" onClick={() => regInputRef.current?.click()}>
-                  <FileArrowUp size={16} /> Upload Registration Certificate
+              <div className="flex items-center gap-2.5">
+                <Button
+                  variant="outline"
+                  type="button"
+                  className="flex items-center gap-1.5 text-xs"
+                  onClick={() => regInputRef.current?.click()}
+                >
+                  <FileArrowUp size={14} /> Upload Registration Certificate
                 </Button>
 
-                <span className="text-xs text-gray-500">
+                <span className="text-[11px] text-gray-500">
                   {regFiles.length}/{MAX_FILES}
                 </span>
               </div>
 
               {regFiles.length > 0 && (
-                <div className="mt-3 space-y-2">
+                <div className="mt-2 space-y-1.5">
                   {regFiles.map((f, i) => (
-                    <div key={i} className="flex items-center justify-between p-2 border rounded-md bg-gray-50">
-                      <div className="flex items-center gap-3">
-                        <FileText size={20} weight="duotone" className="text-gray-600" />
+                    <div
+                      key={i}
+                      className="flex items-center justify-between p-1.5 border rounded-md bg-gray-50"
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <FileText
+                          size={18}
+                          weight="duotone"
+                          className="text-gray-600"
+                        />
                         <div>
-                          <p className="font-medium text-sm">{f.name}</p>
-                          <p className="text-xs text-gray-500">{(f.size / 1024 / 1024).toFixed(2)} MB</p>
+                          <p className="font-medium text-xs">{f.name}</p>
+                          <p className="text-[11px] text-gray-500">
+                            {(f.size / 1024 / 1024).toFixed(2)} MB
+                          </p>
                         </div>
                       </div>
 
                       <button
                         type="button"
                         onClick={() => removeRegFile(i)}
-                        className="text-red-600 hover:bg-red-50 border rounded-md px-3 py-1 flex items-center gap-1"
+                        className="text-red-600 hover:bg-red-50 border rounded-md px-2.5 py-0.5 flex items-center gap-0.5 text-xs"
                       >
-                        <Trash size={14} /> Remove
+                        <Trash size={12} /> Remove
                       </button>
                     </div>
                   ))}
@@ -327,34 +445,48 @@ export default function AddVehicleForm({
                 onChange={handleInsUpload}
               />
 
-              <div className="flex items-center gap-3">
-                <Button variant="outline" type="button" className="flex items-center gap-2" onClick={() => insInputRef.current?.click()}>
-                  <FileArrowUp size={16} /> Upload Insurance Policy
+              <div className="flex items-center gap-2.5">
+                <Button
+                  variant="outline"
+                  type="button"
+                  className="flex items-center gap-1.5 text-xs"
+                  onClick={() => insInputRef.current?.click()}
+                >
+                  <FileArrowUp size={14} /> Upload Insurance Policy
                 </Button>
 
-                <span className="text-xs text-gray-500">
+                <span className="text-[11px] text-gray-500">
                   {insFiles.length}/{MAX_FILES}
                 </span>
               </div>
 
               {insFiles.length > 0 && (
-                <div className="mt-3 space-y-2">
+                <div className="mt-2 space-y-1.5">
                   {insFiles.map((f, i) => (
-                    <div key={i} className="flex items-center justify-between p-2 border rounded-md bg-gray-50">
-                      <div className="flex items-center gap-3">
-                        <FileText size={20} weight="duotone" className="text-gray-600" />
+                    <div
+                      key={i}
+                      className="flex items-center justify-between p-1.5 border rounded-md bg-gray-50"
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <FileText
+                          size={18}
+                          weight="duotone"
+                          className="text-gray-600"
+                        />
                         <div>
-                          <p className="font-medium text-sm">{f.name}</p>
-                          <p className="text-xs text-gray-500">{(f.size / 1024 / 1024).toFixed(2)} MB</p>
+                          <p className="font-medium text-xs">{f.name}</p>
+                          <p className="text-[11px] text-gray-500">
+                            {(f.size / 1024 / 1024).toFixed(2)} MB
+                          </p>
                         </div>
                       </div>
 
                       <button
                         type="button"
                         onClick={() => removeInsFile(i)}
-                        className="text-red-600 hover:bg-red-50 border rounded-md px-3 py-1 flex items-center gap-1"
+                        className="text-red-600 hover:bg-red-50 border rounded-md px-2.5 py-0.5 flex items-center gap-0.5 text-xs"
                       >
-                        <Trash size={14} /> Remove
+                        <Trash size={12} /> Remove
                       </button>
                     </div>
                   ))}
@@ -364,8 +496,8 @@ export default function AddVehicleForm({
           </div>
         </CustomCard>
 
-        <div className="flex justify-center pt-4">
-          <Button type="submit" variant="gradient" className="px-8">
+        <div className="flex justify-center pt-3">
+          <Button type="submit" variant="gradient" className="px-6 text-xs">
             {mode === "edit" ? "Update Vehicle" : "Save Vehicle Details"}
           </Button>
         </div>

@@ -1,9 +1,7 @@
-import ForgotMpinPage from "@/components/auth/forgot-mpin/ForgotMpinPage"
+import ForgotMpinPage from "@/components/auth/forgot-mpin/ForgotMpinPage";
 
 const page = () => {
-  return (
-    <ForgotMpinPage />
-  )
-}
+  return <ForgotMpinPage />;
+};
 
-export default page
+export default page;

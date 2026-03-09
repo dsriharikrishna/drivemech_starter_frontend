@@ -2,13 +2,7 @@
 
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import {
-  CheckCircle,
-  WarningCircle,
-  Info,
-  Warning,
-  X,
-} from "phosphor-react";
+import { CheckCircle, WarningCircle, Info, Warning, X } from "phosphor-react";
 
 type ToastType = "success" | "error" | "warning" | "info";
 
@@ -25,19 +19,22 @@ export default function ToastManager() {
   const toastIdRef = useRef(0);
 
   /** Add a toast */
-  const addToast = useCallback((message: string, type: ToastType = "success") => {
-    const id = ++toastIdRef.current;
-    const newToast = { id, message, type };
+  const addToast = useCallback(
+    (message: string, type: ToastType = "success") => {
+      const id = ++toastIdRef.current;
+      const newToast = { id, message, type };
 
-    setToasts((active) => {
-      if (active.length === 0) {
-        startTimer(id);
-        return [newToast];
-      }
-      setQueue((q) => [...q, newToast]);
-      return active;
-    });
-  }, []);
+      setToasts((active) => {
+        if (active.length === 0) {
+          startTimer(id);
+          return [newToast];
+        }
+        setQueue((q) => [...q, newToast]);
+        return active;
+      });
+    },
+    []
+  );
 
   /** Auto-remove timer */
   const startTimer = (id: number) => {
@@ -120,7 +117,9 @@ export default function ToastManager() {
               <div className="shrink-0">{style.icon}</div>
 
               <div className="flex flex-col flex-grow">
-                <div className={`font-semibold mb-1 select-none ${style.titleClass}`}>
+                <div
+                  className={`font-semibold mb-1 select-none ${style.titleClass}`}
+                >
                   {style.title}
                 </div>
                 <div className={`text-sm select-text ${style.msgClass}`}>
@@ -142,8 +141,6 @@ export default function ToastManager() {
     </div>
   );
 }
-
-
 
 // addToast("Login successful!", "success");
 // addToast("Invalid credentials", "error");

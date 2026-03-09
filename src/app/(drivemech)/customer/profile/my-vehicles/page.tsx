@@ -1,10 +1,7 @@
-
-import MyVehiclesLayout from './MyVehicleLayout'
+import MyVehiclesLayout from "./MyVehicleLayout";
 
 const page = () => {
-  return (
-    <MyVehiclesLayout />
-  )
-}
+  return <MyVehiclesLayout />;
+};
 
-export default page
+export default page;

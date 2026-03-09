@@ -14,9 +14,9 @@ export default function Page() {
     if (id) {
       cookieService.set("policyId", id, {
         expires: 1, // 1 day
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict' as const,
-        path: '/',
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict" as const,
+        path: "/",
       });
     }
   }, [id]);

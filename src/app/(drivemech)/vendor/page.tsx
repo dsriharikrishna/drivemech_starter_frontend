@@ -1,9 +1,7 @@
-import DashboardLayout from "./dashboard/DashboardLayout"
+import DashboardLayout from "./dashboard/DashboardLayout";
 
 const page = () => {
-  return (
-    <DashboardLayout /> 
-  )
-}
+  return <DashboardLayout />;
+};
 
-export default page
+export default page;

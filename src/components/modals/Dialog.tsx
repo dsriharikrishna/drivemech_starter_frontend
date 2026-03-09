@@ -38,6 +38,7 @@ export default function Dialog({ children, isOpen, onClose }: DialogProps) {
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"
+        className="bg-white rounded-lg"
       >
         {children}
       </div>

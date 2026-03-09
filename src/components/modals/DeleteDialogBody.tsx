@@ -20,7 +20,6 @@ export default function DeleteDialogBody({
 }) {
   return (
     <div className="space-y-5">
-
       {/* TOP CONTENT */}
       <div className="bg-red-50 border border-red-200 rounded-xl p-4 flex items-start gap-4">
         <div className="flex items-center justify-center w-10 h-10 rounded-full bg-red-100">
@@ -37,19 +36,11 @@ export default function DeleteDialogBody({
 
       {/* FOOTER BUTTONS */}
       <div className="flex justify-end gap-3">
-        <Button
-          variant="outline"
-          className="px-5"
-          onClick={onCancel}
-        >
+        <Button variant="outline" className="px-5" onClick={onCancel}>
           {cancelLabel}
         </Button>
 
-        <Button
-          variant="primary"
-          className="px-5"
-          onClick={onConfirm}
-        >
+        <Button variant="primary" className="px-5" onClick={onConfirm}>
           {confirmLabel}
         </Button>
       </div>

@@ -11,14 +11,16 @@ import {
   getCitiesByState,
   selectStates,
   selectCitiesByState,
-  selectStatesLoading
+  selectStatesLoading,
 } from "@/store/slices/location/locationSlice";
 
 interface LocationSearchSectionProps {
   onSearch: (data: any) => void;
 }
 
-export default function LocationSearchSection({ onSearch }: LocationSearchSectionProps) {
+export default function LocationSearchSection({
+  onSearch,
+}: LocationSearchSectionProps) {
   const form = useFormContext();
   const dispatch = useAppDispatch();
   const states = useAppSelector(selectStates);
@@ -35,7 +37,7 @@ export default function LocationSearchSection({ onSearch }: LocationSearchSectio
   // Fetch cities when state is selected
   useEffect(() => {
     if (selectedState) {
-      const stateObj = states.find(s => s.name === selectedState);
+      const stateObj = states.find((s) => s.name === selectedState);
       if (stateObj) {
         dispatch(getCitiesByState(stateObj.id));
       }
@@ -43,10 +45,9 @@ export default function LocationSearchSection({ onSearch }: LocationSearchSectio
   }, [selectedState, dispatch, states]);
 
   const availableCities = useAppSelector((state) => {
-    const stateObj = states.find(s => s.name === selectedState);
+    const stateObj = states.find((s) => s.name === selectedState);
     return stateObj ? selectCitiesByState(stateObj.id)(state) : [];
   });
-
 
   const handleSearch = (data: any) => {
     onSearch(data);
@@ -60,24 +61,30 @@ export default function LocationSearchSection({ onSearch }: LocationSearchSectio
 
   return (
     <section className="flex flex-col items-center text-center px-4 py-4">
-
       <h1 className="text-4xl font-bold text-[#0D1A3D] mb-4">
         Find Trusted Garages Near You
       </h1>
 
       <p className="text-gray-500 max-w-2xl">
-        Select your state and city to discover verified garages and services across India.
+        Select your state and city to discover verified garages and services
+        across India.
       </p>
 
-      <form onSubmit={form.handleSubmit(handleSearch)} className="w-full max-w-2xl">
+      <form
+        onSubmit={form.handleSubmit(handleSearch)}
+        className="w-full max-w-2xl"
+      >
         <div className="flex flex-col sm:flex-row gap-4 mt-10">
-
           {/* State input */}
           <div className="flex-1">
             <CommonTextInput
               name="state"
               label=""
-              placeholder={statesLoading === "pending" ? "Loading states..." : "Select your state"}
+              placeholder={
+                statesLoading === "pending"
+                  ? "Loading states..."
+                  : "Select your state"
+              }
               leftIcon={<MapPin size={20} className="text-gray-400" />}
               className="mb-0"
               rules={{ required: "State is required" }}
@@ -97,7 +104,9 @@ export default function LocationSearchSection({ onSearch }: LocationSearchSectio
             <CommonTextInput
               name="city"
               label=""
-              placeholder={selectedState ? "Enter your city" : "Select state first"}
+              placeholder={
+                selectedState ? "Enter your city" : "Select state first"
+              }
               leftIcon={<MapPin size={20} className="text-gray-400" />}
               className="mb-0"
               rules={{ required: "City is required" }}
@@ -132,7 +141,14 @@ export default function LocationSearchSection({ onSearch }: LocationSearchSectio
       <div className="mt-8 w-full max-w-2xl">
         <p className="text-sm text-gray-500 mb-3">Popular States:</p>
         <div className="flex flex-wrap gap-2">
-          {["Maharashtra", "Karnataka", "Delhi", "Tamil Nadu", "Uttar Pradesh", "Gujarat"].map((state) => (
+          {[
+            "Maharashtra",
+            "Karnataka",
+            "Delhi",
+            "Tamil Nadu",
+            "Uttar Pradesh",
+            "Gujarat",
+          ].map((state) => (
             <button
               key={state}
               onClick={() => {

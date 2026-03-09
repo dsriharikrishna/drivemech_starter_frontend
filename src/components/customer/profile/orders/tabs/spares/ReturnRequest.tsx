@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback, useMemo } from "react";
 import Image from "next/image";
 import { Upload, ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -35,19 +35,40 @@ export default function ReturnRequest({ id }: { id: string }) {
   const [stage, setStage] = useState<"form" | "confirm" | "success">("form");
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
-  const products = [
-    { id: "p1", name: "Bosch Brake Pad Set", amount: 118, img: "/images/spares/brakepad.png" },
-    { id: "p2", name: "Bosch Air Filter", amount: 28, img: "/images/spares/airfilter.png" },
-    { id: "p3", name: "Wiper Blades Set", amount: 22, img: "/images/spares/wiper.png" },
-  ];
+  const products = useMemo(
+    () => [
+      {
+        id: "p1",
+        name: "Bosch Brake Pad Set",
+        amount: 118,
+        img: "/images/spares/brakepad.png",
+      },
+      {
+        id: "p2",
+        name: "Bosch Air Filter",
+        amount: 28,
+        img: "/images/spares/airfilter.png",
+      },
+      {
+        id: "p3",
+        name: "Wiper Blades Set",
+        amount: 22,
+        img: "/images/spares/wiper.png",
+      },
+    ],
+    []
+  );
 
-  const reasons = [
-    { id: "wrong", name: "Wrong Item Delivered" },
-    { id: "damaged", name: "Damaged Product" },
-    { id: "desc", name: "Not as Described" },
-    { id: "missing", name: "Missing Items" },
-    { id: "other", name: "Other" },
-  ];
+  const reasons = useMemo(
+    () => [
+      { id: "wrong", name: "Wrong Item Delivered" },
+      { id: "damaged", name: "Damaged Product" },
+      { id: "desc", name: "Not as Described" },
+      { id: "missing", name: "Missing Items" },
+      { id: "other", name: "Other" },
+    ],
+    []
+  );
 
   const methods = useForm<FormData>({
     defaultValues: {
@@ -63,24 +84,20 @@ export default function ReturnRequest({ id }: { id: string }) {
   const selectedProduct = products.find((p) => p.id === watch("product"));
   const selectedReason = reasons.find((r) => r.id === watch("reason"));
 
-  // ------------------------------
-  // FILE UPLOAD HANDLER (RHF Safe)
-  // ------------------------------
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files) return;
-    const fileList = Array.from(e.target.files);
-    setSelectedFiles(fileList);
-    setValue("files", e.target.files, { shouldValidate: true });
-  };
+  const handleFileUpload = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (!e.target.files) return;
+      const fileList = Array.from(e.target.files);
+      setSelectedFiles(fileList);
+      setValue("files", e.target.files, { shouldValidate: true });
+    },
+    [setValue]
+  );
 
-  // ------------------------------
-  // SUBMIT FORM → GO TO CONFIRM
-  // ------------------------------
-  const onSubmit: SubmitHandler<FormData> = () => {
-    // ensure product selected (RHF rules should already validate)
+  const onSubmit: SubmitHandler<FormData> = useCallback(() => {
     if (!watch("product")) return;
     setStage("confirm");
-  };
+  }, [watch]);
 
   // Dialog open flags
   const isConfirmOpen = stage === "confirm";
@@ -93,38 +110,55 @@ export default function ReturnRequest({ id }: { id: string }) {
     <FormProvider {...methods}>
       <div className="flex w-full h-full">
         <LeftLayout>
-          <form onSubmit={handleSubmit(onSubmit)} className="mx-auto p-4 flex flex-col gap-4">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="mx-auto p-3 flex flex-col gap-3"
+          >
             {/* HEADER */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2.5">
               <button
                 type="button"
                 onClick={() => router.back()}
-                className="p-2 hover:bg-gray-100 rounded-lg"
+                className="p-1.5 hover:bg-gray-100 rounded-lg"
               >
-                <ArrowLeft size={20} />
+                <ArrowLeft size={18} />
               </button>
-              <h1 className="text-xl font-semibold">Return or Replace</h1>
+              <h1 className="text-lg font-semibold">Return or Replace</h1>
             </div>
 
             {/* PRODUCT SUMMARY LIST */}
             <div className="border border-gray-200 rounded-xl p-2 bg-white">
-              <p className="font-semibold text-gray-700">Product Details</p>
-              <p className="text-xs text-gray-500">Order ID: {id}</p>
+              <p className="font-semibold text-gray-700 text-xs">
+                Product Details
+              </p>
+              <p className="text-[11px] text-gray-500">Order ID: {id}</p>
 
               {products.map((item) => (
-                <div key={item.id} className="flex justify-between border-b border-gray-200 py-3 px-1">
-                  <div className="flex items-center gap-3">
-                    <Image src={item.img} width={40} height={40} alt="product" />
-                    <p>{item.name}</p>
+                <div
+                  key={item.id}
+                  className="flex justify-between border-b border-gray-200 py-2.5 px-1"
+                >
+                  <div className="flex items-center gap-2.5">
+                    <Image
+                      src={item.img}
+                      width={36}
+                      height={36}
+                      alt="product"
+                    />
+                    <p className="text-xs">{item.name}</p>
                   </div>
-                  <p className="text-orange-500 font-semibold">${item.amount}</p>
+                  <p className="text-orange-500 font-semibold text-xs">
+                    ${item.amount}
+                  </p>
                 </div>
               ))}
             </div>
 
             {/* SELECT PRODUCT (RHF + Dropdown) */}
             <div className="border border-gray-200 rounded-xl p-4 bg-white space-y-2">
-              <label className="text-sm font-medium">Select Product to Return *</label>
+              <label className="text-sm font-medium">
+                Select Product to Return *
+              </label>
 
               <Controller
                 name="product"
@@ -133,7 +167,9 @@ export default function ReturnRequest({ id }: { id: string }) {
                 render={({ field }) => (
                   <ModalDropdown
                     items={products.map((p) => ({ id: p.id, name: p.name }))}
-                    selectedItem={products.find((p) => p.id === field.value) || null}
+                    selectedItem={
+                      products.find((p) => p.id === field.value) || null
+                    }
                     onSelect={(item) => field.onChange(item.id)}
                     placeholder="Choose a product"
                   />
@@ -152,7 +188,9 @@ export default function ReturnRequest({ id }: { id: string }) {
                 render={({ field }) => (
                   <ModalDropdown
                     items={reasons}
-                    selectedItem={reasons.find((r) => r.id === field.value) || null}
+                    selectedItem={
+                      reasons.find((r) => r.id === field.value) || null
+                    }
                     onSelect={(item) => field.onChange(item.id)}
                     placeholder="Select a reason"
                   />
@@ -175,11 +213,18 @@ export default function ReturnRequest({ id }: { id: string }) {
 
               <label className="px-4 py-2 bg-white border border-gray-200 rounded-lg cursor-pointer text-sm font-medium">
                 Upload Photos
-                <input type="file" multiple className="hidden" onChange={handleFileUpload} />
+                <input
+                  type="file"
+                  multiple
+                  className="hidden"
+                  onChange={handleFileUpload}
+                />
               </label>
 
               {selectedFiles.length > 0 && (
-                <p className="text-sm text-gray-600">{selectedFiles.length} file(s) selected</p>
+                <p className="text-sm text-gray-600">
+                  {selectedFiles.length} file(s) selected
+                </p>
               )}
             </div>
           </form>
@@ -191,10 +236,16 @@ export default function ReturnRequest({ id }: { id: string }) {
             <div className="border border-gray-200 rounded-xl p-5 bg-white">
               <p className="font-semibold text-gray-800">Pickup Address</p>
 
-              <p className="text-sm text-gray-700">123 Main Street, Apartment 4B</p>
-              <p className="text-sm text-gray-500 -mt-1">Downtown, City, State 12345</p>
+              <p className="text-sm text-gray-700">
+                123 Main Street, Apartment 4B
+              </p>
+              <p className="text-sm text-gray-500 -mt-1">
+                Downtown, City, State 12345
+              </p>
 
-              <button className="text-xs text-blue-600 mt-1">Change Address</button>
+              <button className="text-xs text-blue-600 mt-1">
+                Change Address
+              </button>
             </div>
 
             {/* REFUND METHOD */}
@@ -202,13 +253,21 @@ export default function ReturnRequest({ id }: { id: string }) {
               <p className="font-semibold text-gray-800">Refund Method</p>
 
               <div className="border border-orange-300 rounded-lg p-3 bg-orange-50">
-                <p className="text-sm font-medium text-gray-800">Original Payment Method</p>
-                <p className="text-xs text-gray-600">Refund to card ending in ****1234</p>
+                <p className="text-sm font-medium text-gray-800">
+                  Original Payment Method
+                </p>
+                <p className="text-xs text-gray-600">
+                  Refund to card ending in ****1234
+                </p>
               </div>
 
               <div className="border border-gray-200 rounded-lg p-3 bg-gray-50">
-                <p className="text-sm font-medium text-gray-800">DriveMech Wallet</p>
-                <p className="text-xs text-gray-600">Instant credit to your wallet</p>
+                <p className="text-sm font-medium text-gray-800">
+                  DriveMech Wallet
+                </p>
+                <p className="text-xs text-gray-600">
+                  Instant credit to your wallet
+                </p>
               </div>
             </div>
 
@@ -277,11 +336,20 @@ export default function ReturnRequest({ id }: { id: string }) {
       </Dialog>
 
       {/* Success Dialog */}
-      <Dialog isOpen={isSuccessOpen} onClose={() => { setStage("form"); router.push("/customer/profile/my-orders/spares"); }}>
+      <Dialog
+        isOpen={isSuccessOpen}
+        onClose={() => {
+          setStage("form");
+          router.push("/customer/profile/my-orders/spares");
+        }}
+      >
         <DialogBody className="p-4">
           <DialogHeader
             title={"Return Submitted"}
-            onClose={() => { setStage("form"); router.push("/customer/profile/my-orders/spares"); }}
+            onClose={() => {
+              setStage("form");
+              router.push("/customer/profile/my-orders/spares");
+            }}
           />
           <ReturnSubmitted
             returnId={id}

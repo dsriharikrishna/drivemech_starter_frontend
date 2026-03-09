@@ -27,7 +27,7 @@ export default function SharePercentageInput({
 
   return (
     <div className="space-y-2">
-      <label className="text-sm font-medium">
+      <label className="inputLabel">
         {label} <span className="text-red-500">*</span>
       </label>
 
@@ -40,7 +40,7 @@ export default function SharePercentageInput({
           return (
             <>
               {/* Rounded input with left percent chip */}
-              <div className="flex items-center border rounded-xl h-11 px-3 bg-white border-gray-200">
+              <div className="flex items-center border rounded-xl h-[40px] px-3 bg-white border-gray-200">
                 <div className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 text-gray-700 mr-3 text-xs">
                   <Percent size={14} />
                 </div>
@@ -51,7 +51,8 @@ export default function SharePercentageInput({
                   max={max}
                   value={v}
                   onChange={(e) => {
-                    const nv = e.target.value === "" ? "" : Number(e.target.value);
+                    const nv =
+                      e.target.value === "" ? "" : Number(e.target.value);
                     field.onChange(nv);
                   }}
                   className="w-full outline-none text-sm text-gray-700"

@@ -1,18 +1,20 @@
-import AddAddressForm, { AddAddressValues } from "@/components/customer/profile/address/AddAddressForm";
+import AddAddressForm, {
+  AddAddressValues,
+} from "@/components/customer/profile/address/AddAddressForm";
 
 interface PageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export default async function EditPage({ params }: PageProps) {
-  const { id } = params;
-  
+  const { id } = await params;
+
   // In a real app, you would fetch the data here
   // For example:
   // const addressData = await fetchAddressById(id);
-  
+
   // Mock data - replace with your actual data fetching
   const initialData: Partial<AddAddressValues> = {
     type: "home" as const,
@@ -26,10 +28,5 @@ export default async function EditPage({ params }: PageProps) {
     isDefault: true,
   };
 
-  return (
-    <AddAddressForm
-      mode="edit"
-      initialData={initialData}
-    />
-  );
+  return <AddAddressForm mode="edit" initialData={initialData} />;
 }

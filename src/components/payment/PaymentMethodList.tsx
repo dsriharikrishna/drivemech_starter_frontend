@@ -1,9 +1,4 @@
-import {
-  CreditCard,
-  QrCode,
-  Banknote,
-  Building,
-} from "lucide-react";
+import { CreditCard, QrCode, Banknote, Building } from "lucide-react";
 
 import PaymentOptionButton from "./PaymentOptionButton";
 import { PaymentMethod } from "@/types/payment";

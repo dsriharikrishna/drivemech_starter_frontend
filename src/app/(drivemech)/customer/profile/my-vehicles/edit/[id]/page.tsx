@@ -1,11 +1,11 @@
 import AddVehicleForm from "@/components/customer/profile/vehicles/AddVehicleForm";
 
 interface PageProps {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 export default async function EditPage({ params }: PageProps) {
-  const { id } = params;
+  const { id } = await params;
 
   // TODO: Replace with API request
   const initialData: Partial<any> = {
@@ -27,10 +27,6 @@ export default async function EditPage({ params }: PageProps) {
   };
 
   return (
-    <AddVehicleForm 
-      mode="edit"
-      initialData={initialData}
-      vehicleId={id}
-    />
+    <AddVehicleForm mode="edit" initialData={initialData} vehicleId={id} />
   );
 }

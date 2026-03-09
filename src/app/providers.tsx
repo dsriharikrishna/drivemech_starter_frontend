@@ -6,17 +6,12 @@ import { PersistGate } from "redux-persist/integration/react";
 import { useApiInterceptor } from "@/hooks/useApiInterceptor";
 import ToastManager from "@/hooks/ToastManager";
 
-export default function Providers({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function Providers({ children }: { children: React.ReactNode }) {
   function ApiInterceptorSetup() {
     useApiInterceptor();
     return null;
   }
   return (
-
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <ApiInterceptorSetup />

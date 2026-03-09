@@ -1,10 +1,8 @@
-import React from 'react'
-import MpinVerifyPage from './MpinVerifyPage'
+import MpinVerifyPage from "@/components/auth/mpin/MpinVerifyPage";
+import React from "react";
 
 const page = () => {
-  return (
-    <MpinVerifyPage />
-  )
-}
+  return <MpinVerifyPage />;
+};
 
-export default page
+export default page;

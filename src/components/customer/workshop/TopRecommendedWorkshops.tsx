@@ -26,7 +26,9 @@ export default function TopRecommendedWorkshops() {
 
   return (
     <div className="p-4 bg-gradient-to-r from-orange-50 to-orange-100 rounded-xl">
-      <h2 className="font-semibold text-lg mb-3">Top Recommended Workshops For You</h2>
+      <h2 className="font-semibold text-lg mb-3">
+        Top Recommended Workshops For You
+      </h2>
 
       <div className="flex gap-4 overflow-x-auto pb-2">
         {workshops.map((ws) => (

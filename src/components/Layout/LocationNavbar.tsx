@@ -8,24 +8,23 @@ export default function LocationNavbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navItems = [
-    "Home", 
-    "Services", 
-    "Track Services", 
-    "My Bookings", 
-    "Mobile App", 
-    "Partners", 
-    "Contact Us"
+    "Home",
+    "Services",
+    "Track Services",
+    "My Bookings",
+    "Mobile App",
+    "Partners",
+    "Contact Us",
   ];
 
   const handleNavClick = (item: string) => {
-        setMobileMenuOpen(false);
+    setMobileMenuOpen(false);
     // Add navigation logic here
   };
 
   return (
     <nav className="w-full py-2 bg-white shadow-sm border-t-2 border-gray-200">
       <div className="max-w-7xl mx-auto flex items-center justify-between px-3 sm:px-5 lg:px-8">
-        
         {/* Left nav items - Hidden on mobile */}
         <ul className="hidden md:flex items-center gap-6 lg:gap-10 text-gray-600 text-sm">
           {navItems.map((item) => (
@@ -83,7 +82,7 @@ export default function LocationNavbar() {
           <div className="p-4 border-t border-gray-100">
             <button
               onClick={() => {
-                                setMobileMenuOpen(false);
+                setMobileMenuOpen(false);
               }}
               className="flex items-center justify-center gap-2 w-full bg-orange-500 text-white px-5 py-3 rounded-xl text-sm font-medium hover:bg-orange-600 transition"
             >

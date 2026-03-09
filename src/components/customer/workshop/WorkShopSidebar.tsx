@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
 import { useState } from "react";
-import { Workshop } from "@/types/workshops";
+import { Workshop } from "@/types/customer/workshop/workshops";
 import ModalDropdown from "@/components/ui/DropDown";
 import WorkshopMap from "./WorkshopMap";
 import WorkshopCardSmall from "./WorkshopCardSmall";
@@ -12,9 +12,17 @@ interface DropdownItem {
   description?: string;
 }
 
-export default function WorkShopSidebar({ workshops }: { workshops: Workshop[] }) {
-  const [selectedDistance, setSelectedDistance] = useState<DropdownItem | null>(null);
-  const [selectedMechanic, setSelectedMechanic] = useState<DropdownItem | null>(null);
+export default function WorkShopSidebar({
+  workshops,
+}: {
+  workshops: Workshop[];
+}) {
+  const [selectedDistance, setSelectedDistance] = useState<DropdownItem | null>(
+    null
+  );
+  const [selectedMechanic, setSelectedMechanic] = useState<DropdownItem | null>(
+    null
+  );
 
   const distanceOptions: DropdownItem[] = [
     { id: "1", name: "1 km" },
@@ -65,7 +73,6 @@ export default function WorkShopSidebar({ workshops }: { workshops: Workshop[] }
           <WorkshopCardSmall key={w.id} workshop={w} />
         ))}
       </div>
-
     </aside>
   );
 }

@@ -1,100 +1,114 @@
 "use client";
 
-import { useState } from "react";
 import { CaretDown, Phone } from "phosphor-react";
+import ActionMenu from "@/components/vendor/ActionMenu";
+import Button from "../ui/Button";
 
-export default function TowingHeader({ onMenuChange, activePage }: { onMenuChange: (page: string) => void; activePage: string }) {
-  const [open, setOpen] = useState(false);
-
+export default function TowingHeader({
+  onMenuChange,
+  activePage,
+}: {
+  onMenuChange: (page: string) => void;
+  activePage: string;
+}) {
   const getButtonClass = (page: string) => {
     return activePage === page
-      ? "text-orange-500 font-medium"
-      : "text-gray-600 hover:text-orange-500";
+      ? "text-orange-500 font-medium cursor-pointer"
+      : "text-gray-600 hover:text-orange-500 cursor-pointer";
   };
 
+  const towingMenuItems = [
+    {
+      id: "local",
+      label: "Local Towing",
+      onClick: () => onMenuChange("local"),
+    },
+    {
+      id: "long-distance",
+      label: "Long-Distance Towing",
+      onClick: () => onMenuChange("long-distance"),
+    },
+    {
+      id: "bike",
+      label: "Bike Towing",
+      onClick: () => onMenuChange("bike"),
+    },
+  ];
+
+  const navItems = [
+    {
+      id: "home",
+      label: "Home",
+      onClick: () => onMenuChange("home"),
+    },
+    {
+      id: "services",
+      label: "Services",
+      onClick: () => onMenuChange("services"),
+    },
+    {
+      id: "track",
+      label: "Track Services",
+      onClick: () => onMenuChange("track"),
+    },
+    {
+      id: "bookings",
+      label: "My Bookings",
+      onClick: () => onMenuChange("bookings"),
+    },
+    {
+      id: "app",
+      label: "Mobile App",
+      onClick: () => onMenuChange("app"),
+    },
+    {
+      id: "partners",
+      label: "Partners",
+      onClick: () => onMenuChange("partners"),
+    },
+    {
+      id: "contact",
+      label: "Contact Us",
+      onClick: () => onMenuChange("contact"),
+    },
+  ];
+
   return (
-    <header className="w-full bg-white border-b border-border">
-      <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-3 py-3 sm:px-5 lg:px-6"
-      >
-
-        {/* LEFT — Dropdown */}
-        <div className="relative">
-          <button
-            onClick={() => setOpen(!open)}
-            className="bg-[#1E2A39] text-white px-5 py-2 rounded-lg flex items-center gap-2"
-          >
-            Towing Services
-            <CaretDown size={16} />
-          </button>
-
-          {open && (
-            <div className="absolute mt-2 w-48 bg-white rounded-lg shadow-lg border z-50">
-              <ul className="py-2 text-sm text-gray-700">
-                <li>
-                  <button
-                    onClick={() => onMenuChange("local")}
-                    className="block w-full text-left px-4 py-2 hover:bg-gray-100"
-                  >
-                    Local Towing
-                  </button>
-                </li>
-                <li>
-                  <button
-                    onClick={() => onMenuChange("long-distance")}
-                    className="block w-full text-left px-4 py-2 hover:bg-gray-100"
-                  >
-                    Long-Distance Towing
-                  </button>
-                </li>
-                <li>
-                  <button
-                    onClick={() => onMenuChange("bike")}
-                    className="block w-full text-left px-4 py-2 hover:bg-gray-100"
-                  >
-                    Bike Towing
-                  </button>
-                </li>
-              </ul>
+    <header className="w-full bg-white border-b border-border pt-1">
+      <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-3 py-3 sm:px-5 lg:px-6">
+        {/* LEFT — Dropdown using ActionMenu */}
+        <ActionMenu
+          items={towingMenuItems}
+          trigger={
+            <div className="bg-[#1E2A39] text-white px-5 py-2 rounded-lg flex items-center gap-2 cursor-pointer">
+              Towing Services
+              <CaretDown size={16} />
             </div>
-          )}
-        </div>
+          }
+          align="left"
+          width={200}
+        />
 
         {/* CENTER — Menu */}
         <nav className="hidden md:flex items-center gap-8 text-sm">
-          <button onClick={() => onMenuChange("home")} className={getButtonClass("home")}>
-            Home
-          </button>
-
-          <button onClick={() => onMenuChange("services")} className={getButtonClass("services")}>
-            Services
-          </button>
-
-          <button onClick={() => onMenuChange("track")} className={getButtonClass("track")}>
-            Track Services
-          </button>
-
-          <button onClick={() => onMenuChange("bookings")} className={getButtonClass("bookings")}>
-            My Bookings
-          </button>
-
-          <button onClick={() => onMenuChange("app")} className={getButtonClass("app")}>
-            Mobile App
-          </button>
-
-          <button onClick={() => onMenuChange("partners")} className={getButtonClass("partners")}>
-            Partners
-          </button>
-
-          <button onClick={() => onMenuChange("contact")} className={getButtonClass("contact")}>
-            Contact Us
-          </button>
+          {navItems.map((item) => (
+            <button
+              key={item.id}
+              onClick={item.onClick}
+              className={getButtonClass(item.id)}
+            >
+              {item.label}
+            </button>
+          ))}
         </nav>
 
         {/* RIGHT — Emergency */}
-        <button className="flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white px-5 py-2 rounded-lg text-sm shadow">
-          <Phone size={16} weight="bold" />
+        <Button
+          startIcon={<Phone size={16} weight="bold" />}
+          className="flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white px-5 py-2 rounded-lg text-sm shadow cursor-pointer"
+        >
           Emergency Call
-        </button>
+        </Button>
       </div>
     </header>
   );

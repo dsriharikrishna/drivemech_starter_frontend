@@ -1,9 +1,11 @@
-import TrackBookingLayout from './TracKBookingLayout'
+import TrackBookingLayout from "./TracKBookingLayout";
 
 const page = () => {
   return (
-    <><TrackBookingLayout /></>
-  )
-}
+    <>
+      <TrackBookingLayout />
+    </>
+  );
+};
 
-export default page
+export default page;

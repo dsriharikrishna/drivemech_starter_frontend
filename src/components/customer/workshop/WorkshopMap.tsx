@@ -1,16 +1,19 @@
-'use client';
+"use client";
 
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import * as L from "leaflet";
-import { Workshop } from "@/types/workshops";
+import { Workshop } from "@/types/customer/workshop/workshops";
 import "leaflet/dist/leaflet.css";
 
 // Fix for default markers
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 L.Icon.Default.mergeOptions({
-  iconRetinaUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png",
-  iconUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png",
-  shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
+  iconRetinaUrl:
+    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png",
+  iconUrl:
+    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png",
+  shadowUrl:
+    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
 });
 
 // Custom workshop icon
@@ -23,9 +26,10 @@ const workshopIcon = new L.Icon({
 
 export default function WorkshopMap({ workshops }: { workshops: Workshop[] }) {
   // Default center (Hyderabad)
-  const center = workshops.length > 0 
-    ? [workshops[0].lat, workshops[0].lng] 
-    : [17.3850, 78.4867];
+  const center =
+    workshops.length > 0
+      ? [workshops[0].lat, workshops[0].lng]
+      : [17.385, 78.4867];
 
   return (
     <div className="w-full h-[260px] rounded-xl overflow-hidden shadow-sm border">
@@ -41,11 +45,7 @@ export default function WorkshopMap({ workshops }: { workshops: Workshop[] }) {
         />
 
         {workshops.map((w) => (
-          <Marker 
-            key={w.id} 
-            position={[w.lat, w.lng]} 
-            icon={workshopIcon}
-          >
+          <Marker key={w.id} position={[w.lat, w.lng]} icon={workshopIcon}>
             <Popup>
               <div className="text-center">
                 <h3 className="font-semibold text-sm">{w.name}</h3>
@@ -56,7 +56,7 @@ export default function WorkshopMap({ workshops }: { workshops: Workshop[] }) {
                 </div>
                 <div className="mt-2">
                   {w.services.slice(0, 2).map((service, idx) => (
-                    <span 
+                    <span
                       key={idx}
                       className="inline-block bg-gray-100 text-xs px-2 py-1 rounded mr-1 mb-1"
                     >
@@ -68,7 +68,6 @@ export default function WorkshopMap({ workshops }: { workshops: Workshop[] }) {
             </Popup>
           </Marker>
         ))}
-
       </MapContainer>
     </div>
   );
